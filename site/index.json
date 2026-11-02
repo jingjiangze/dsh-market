@@ -393,7 +393,7 @@
         "en": "Unofficial DeepSeek Harness LLM provider plugin for Command Code, ported from pi-commandcode-provider (MIT). Registers the 'commandcode' provider route with a Models-page card and live model catalog.",
         "zh": "Unofficial DeepSeek Harness LLM provider plugin for Command Code, ported from pi-commandcode-provider (MIT). Registers the 'commandcode' provider route with a Models-page card and live model catalog."
       },
-      "icon": "https://cdn.jsdelivr.net/npm/@mars-sea/dsh-commandcode-provider@0.16.1/icon.svg",
+      "icon": "https://cdn.jsdelivr.net/npm/@mars-sea/dsh-commandcode-provider@0.16.2/icon.svg",
       "homepage": "https://github.com/Mars-Sea/dsh-commandcode-provider#readme",
       "repository": {
         "url": "https://github.com/Mars-Sea/dsh-commandcode-provider"
@@ -417,8 +417,8 @@
       },
       "versions": [
         {
-          "version": "0.16.1",
-          "publishTimestamp": 1793367679,
+          "version": "0.16.2",
+          "publishTimestamp": 1793373582,
           "source": {
             "type": "npm"
           },
@@ -553,7 +553,7 @@
         "en": "GitHub 趋势日报插件：每天定时 spawn 本地 trendradar 核心，抓取 Trending、生成中文简介与总结，提交到你的仓库并自动合并 PR。",
         "zh": "GitHub 趋势日报插件：每天定时 spawn 本地 trendradar 核心，抓取 Trending、生成中文简介与总结，提交到你的仓库并自动合并 PR。"
       },
-      "icon": "https://cdn.jsdelivr.net/npm/@morehao/dsh-github-trending@0.1.2/icon.svg",
+      "icon": "https://cdn.jsdelivr.net/npm/@morehao/dsh-github-trending@0.1.4/icon.svg",
       "author": "morehao",
       "homepage": "https://github.com/morehao/dsh-github-trending",
       "repository": {
@@ -578,8 +578,8 @@
       },
       "versions": [
         {
-          "version": "0.1.2",
-          "publishTimestamp": 1793371298,
+          "version": "0.1.4",
+          "publishTimestamp": 1793375998,
           "source": {
             "type": "npm"
           },
