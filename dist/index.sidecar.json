@@ -1,0 +1,227 @@
+{
+  "generatedAt": "2026-11-02T14:09:20.407Z",
+  "registry": "https://registry.npmjs.org",
+  "dshRuntime": "0.2.1-rc.5",
+  "gates": {
+    "minAgeDays": 3,
+    "maxPlugins": 80,
+    "requires": [
+      "dsh.bundle.patch",
+      "engines.dsh satisfied",
+      "no install script",
+      "clear license"
+    ]
+  },
+  "plugins": [
+    {
+      "name": "@ash-qw/dsh-theme-prts",
+      "version": "2.6.0",
+      "distIntegrity": "sha512-8kWyiK/gfIg1A4PfkIyv5Yf/LI4L4LnfBsHCN18kfePsRStvlatFRKeIo16rbpoTx+gNE7w6BdUMfUwuzeZziw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@ash-qw%2fdsh-theme-prts@2.6.0",
+      "unpackedSize": 2883327,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@changfenhuang/dsh-genui",
+      "version": "0.15.0",
+      "distIntegrity": "sha512-TEb7AThhe/GfFGoJ1i7TMZeOU6XKcy4qwYKFOgeZnpsyPCbIgQVm7XcIMAg2Zpy+MH0S4AZueUL1ch76CAX7CA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@changfenhuang%2fdsh-genui@0.15.0",
+      "unpackedSize": 13482545,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@dan-ai-studio/dshopencodego",
+      "version": "0.1.88",
+      "distIntegrity": "sha512-841suEUPVOaAohqhE/O5yEsy2yQ68juNoxmiS0+Xri5sT1b7oatMKvV9N++JXtUq5kn3LoFFLoEJqV29AZz49w==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@dan-ai-studio%2fdshopencodego@0.1.88",
+      "unpackedSize": 3753822,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@fffangchenghao/dsh-web-search",
+      "version": "0.24.0",
+      "distIntegrity": "sha512-BgSQvHuoKY0kO5jP7zxR7nl38P4W/Xo0HKiAI6MoXaWL6ojjAJk1YjuPBuf2A3XYLbEqjp9F3PcTckxcS3Voiw==",
+      "attestations": null,
+      "unpackedSize": 1214673,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@goodandready/dsh-clinebot",
+      "version": "0.6.23",
+      "distIntegrity": "sha512-/x5yTqnF6bNMdsaU3aM9kT+AnPTuSYlSJSrYrjTlTPkRFrvu/ef0RGwdOSo5O/pCsdaOnP5li3+G1LvyQgBgPA==",
+      "attestations": null,
+      "unpackedSize": 915700,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@goodandready/dsh-russian-lang",
+      "version": "0.4.7",
+      "distIntegrity": "sha512-Ng8ERdb3J8DvS8IGl1dAElCQijWPtk5KJ8cSijEDFZH0JTrCz3FxDSR/dKElVXBpv38yo+7kxkbgcj1JIPMM4w==",
+      "attestations": null,
+      "unpackedSize": 2811896,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@hytime/dsh-thinking-effort",
+      "version": "0.3.11",
+      "distIntegrity": "sha512-JeMEAZ6cwOVwsF7ZtOPixDLYivcYy2S78OTdo0F4z5Q+mWQNG2Q717ukwlB1xxk1I8geUB1wm+UIASdE0EHYKA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@hytime%2fdsh-thinking-effort@0.3.11",
+      "unpackedSize": 2547823,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@kenz1117/dsh-ui-usage-billing",
+      "version": "1.8.1",
+      "distIntegrity": "sha512-s05Yw2XmRTXYDSmA2ebXeB3AsZ9Ie5K6U1FTrajaZMhUgSL9wbQfGqTKh9kOeBCnxUZ2rhfEnQIy3oMwnsogjA==",
+      "attestations": null,
+      "unpackedSize": 1117113,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@lemoncat7/dsh-knowledge",
+      "version": "2.17.0",
+      "distIntegrity": "sha512-mX89xww1LFnE3hynoMo47SFy591PA+qWrhYkG3uGQUZKvQQGKuT3B7lvi9SCvjeO6/XRxhqLAFHiWy3Qys2drw==",
+      "attestations": null,
+      "unpackedSize": 4599190,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@mars-sea/dsh-commandcode-provider",
+      "version": "0.16.1",
+      "distIntegrity": "sha512-Ecqr4VnN+JJ9PefwcZWP5Uc1UVkts+eypkPDtuiX8FlKSXrsYSgM/LqQCRUzXypEh9ASevf1Xg97MVGVYNbCjw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@mars-sea%2fdsh-commandcode-provider@0.16.1",
+      "unpackedSize": 3622674,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@michengai/dsh-archive-manager",
+      "version": "1.1.22",
+      "distIntegrity": "sha512-EtQNkVh2utFN0ewSe9s/HjK858Xk42Mk/Hc9Boe4A9LttB2l9jPNA+Rr10aOEfX9WgPPn1R8AWVq1CjHbGKN6A==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-archive-manager@1.1.22",
+      "unpackedSize": 1141781,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@michengai/dsh-automation",
+      "version": "1.0.13",
+      "distIntegrity": "sha512-towe4JAO1Lw/dBQpIs4dCM2QRcuYGu3Sc1/8ll4p6gdozh399pHdM+KCT/sgoOm/C2nAHKwzpBvZn/8fEJx5UA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-automation@1.0.13",
+      "unpackedSize": 3297892,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@michengai/dsh-skills-manager",
+      "version": "1.2.23",
+      "distIntegrity": "sha512-bHwspWeTnOd8BW2Q+7+rIL8rytQP5eeLgnPRW3jugi228LtvxepYXk+wsh51zzqU5mU7nvJnyqxGpLfV1Z3Zrw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-skills-manager@1.2.23",
+      "unpackedSize": 1554724,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@nanmicoder/dsh-agent-teams",
+      "version": "0.1.28",
+      "distIntegrity": "sha512-/H3j8NfTbI6vmLaEYke1eV4SMAJTJjfkX6/Q1gul6YRc6FD4LYs6O6fi8foTSAmnBIQTiON45WPlZtMmRrEawQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@nanmicoder%2fdsh-agent-teams@0.1.28",
+      "unpackedSize": 3475423,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    },
+    {
+      "name": "@nonamelego/dsh-catppuccin",
+      "version": "0.6.5",
+      "distIntegrity": "sha512-CgwHSC5MOy/1jVQ1AdEtGJEmfx0XF3VbdoKtQHYhZir9htW/oBHLYyMJ1K5D5RELwD5efRhQCcmYuXVK05zpQA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@nonamelego%2fdsh-catppuccin@0.6.5",
+      "unpackedSize": 1147402,
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+name: crawl-and-deploy
+
+on:
+  schedule:
+    - cron: '17 3 * * *'   # daily 03:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'crawler/**'
+      - 'site/**'
+      - '.github/workflows/crawl.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crawl
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Selftest the gates
+        run: node crawler/crawl.mjs --selftest
+
+      - name: Crawl and build the index
+        env:
+          NPM_REGISTRY: https://registry.npmjs.org
+          DSH_RUNTIME_VERSION: 0.2.1-rc.5
+          MAX_PLUGINS: '200'
+        run: node crawler/crawl.mjs
+
+      - name: Assemble the site
+        run: |
+          cp dist/index.json site/index.json
+          cp dist/index.sidecar.json site/sidecar.json
+          cp dist/stats.json site/stats.json
+
+      - name: Commit the crawl result
+        run: |
+          git config user.name "dsh-market-bot"
+          git config user.email "dsh-market-bot@users.noreply.github.com"
+          git add dist site/index.json site/sidecar.json site/stats.json
+          if git diff --staged --quiet; then
+            echo "no change"
+          else
+            git commit -m "chore: crawl $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site --project-name=dsh-market --branch=main --commit-dirty=true
