@@ -1,0 +1,45 @@
+{
+  "_readme": "Hand-curated Chinese display text, used when a package ships no locale/zh.json. Keyed by npm package name; `version` pins the entry to one release.",
+  "@goodandready/dsh-context-lens": {
+    "version": "0.1.35",
+    "title": "上下文透镜",
+    "description": "把代码压成语义骨架、把测试与构建日志压成摘要，在工具输出进入模型前就省下 token。"
+  },
+  "dsh-plugin-ops-bundle": {
+    "version": "0.20.8",
+    "title": "插件运维体检",
+    "description": "设置页里的体检面板：扫描 profile、列出插件行、记录故障，并给一个基于共享引擎的诊断对话。"
+  },
+  "@goodandready/dsh-plugin-notify": {
+    "version": "0.4.8",
+    "title": "完成通知",
+    "description": "轮次完成、报错、等待审批时出声、弹提示、桌面推送或发 IM webhook，长任务不必一直盯着。"
+  },
+  "@treeseed/dsh-chapters": {
+    "version": "0.2.15",
+    "title": "章节归档",
+    "description": "逐字归档每一章并生成零 token 索引，让小上下文模型也能把长任务读下去。"
+  },
+  "dsh-plugin-appshot": {
+    "version": "0.4.2",
+    "title": "屏幕截图上下文",
+    "description": "在 Windows 与 macOS 上抓取上下文截图，让 agent 看到屏幕上正在发生什么。"
+  },
+  "@michengai/dsh-skills-manager": {
+    "version": "1.2.26",
+    "title": "技能管理器",
+    "description": "在 DSH 里统一加载并安全管理本机 Agent Skills。"
+  },
+  "@michengai/dsh-automation": {
+    "title": "自动化调度",
+    "description": "让编码任务按计划在独立的 DSH 会话里运行，并可从 Web 或 agent 侧管理定时任务。"
+  },
+  "@michengai/dsh-archive-manager": {
+    "title": "会话归档管理",
+    "description": "归档、恢复、收藏与永久删除会话，并可诊断损坏的会话日志。"
+  },
+  "@nanmicoder/dsh-agent-teams": {
+    "title": "多智能体团队",
+    "description": "用自然语言驱动多 agent 协作：队长、成员、带依赖的任务与消息传递，Web 界面带树状监视器。"
+  }
+}

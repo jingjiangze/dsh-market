@@ -9,7 +9,7 @@
 // Gates are deliberately conservative: a false "compatible" claim is worse than
 // a missing entry, because DSH checks compatibility twice (market from this
 // index, install from the real package manifest).
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -151,6 +151,74 @@ function localized(text) {
   return { en: text, zh: text }
 }
 
+// ------------------------------------------------------------------ taxonomy
+// Categories follow the shape community catalogs use (a declared id per plugin
+// plus a bilingual title on the index), kept deliberately small so a reader can
+// actually scan them.
+const CATEGORIES = {
+  safety: { en: 'Safety & Auditing', zh: '安全与审计' },
+  memory: { en: 'Memory & Knowledge', zh: '记忆与知识' },
+  models: { en: 'Models & Providers', zh: '模型与供应商' },
+  automation: { en: 'Automation & Teams', zh: '自动化与协作' },
+  devtools: { en: 'Developer Tools', zh: '开发者工具' },
+  integrations: { en: 'Integrations & Sharing', zh: '集成与分享' },
+  media: { en: 'Media & Vision', zh: '媒体与视觉' },
+  ui: { en: 'UI & Themes', zh: '界面与主题' },
+  other: { en: 'Other', zh: '其他' },
+}
+
+const CATEGORY_RULES = [
+  ['safety', /audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm-gate|guardian/],
+  ['memory', /memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|context|skill|prompt|chapter|archive/],
+  ['models', /provider|model|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token/],
+  ['automation', /automat|schedul|cron|workflow|agent-team|agent_team|multi-agent|swarm|orchestr|ralph|kanban|goal/],
+  ['devtools', /worktree|git|terminal|shell|lint|diff|debug|ide|editor|typescript|cli|search|index|normify/],
+  ['integrations', /feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|im\b|mcp/],
+  ['media', /image|video|tts|voice|audio|screenshot|vision|chart|canvas|3d\b|blender|music|pdf|office|docx|xlsx|poster/],
+  ['ui', /theme|skin|layout|sidebar|panel|badge|font|appearance|wallpaper|pet|meme|表情|界面|主题|catppuccin/],
+]
+
+function classify(...texts) {
+  const haystack = texts.filter(Boolean).join(' ').toLowerCase()
+  for (const [id, pattern] of CATEGORY_RULES) if (pattern.test(haystack)) return id
+  return 'other'
+}
+
+// --------------------------------------------------------------- localization
+// Prefer the text the author already ships: a package's own `locale/zh.json`
+// carries the localized title/description DSH shows, so no machine translation
+// is invented here. Curated overrides cover packages that ship none, and the
+// remainder falls back to English while saying so through a label.
+let ZH_OVERRIDES = {}
+try {
+  ZH_OVERRIDES = JSON.parse(await readFile(join(root, 'data', 'zh-overrides.json'), 'utf8'))
+} catch {
+  ZH_OVERRIDES = {}
+}
+
+async function authorZh(name, version) {
+  for (const file of ['locale/zh.json', 'locale/zh-CN.json', 'locale/zh_CN.json']) {
+    try {
+      const { body } = await getJSON(`https://cdn.jsdelivr.net/npm/${name}@${version}/${file}`)
+      const meta = body?.meta
+      if (meta && (meta.title || meta.description)) {
+        return {
+          title: meta.title ? String(meta.title) : undefined,
+          description: meta.description ? String(meta.description) : undefined,
+          source: 'native',
+        }
+      }
+    } catch {
+      // a missing locale file is the common case, not an error
+    }
+  }
+  const override = ZH_OVERRIDES[name]
+  if (override && (override.version === undefined || override.version === version)) {
+    return { title: override.title, description: override.description, source: 'override' }
+  }
+  return { source: 'fallback' }
+}
+
 function detectIcon(manifest) {
   const icon = manifest.icon
   if (typeof icon === 'string' && /\.(svg|png|jpe?g|webp)$/i.test(icon)) return icon.replace(/^\.\//, '')
@@ -244,17 +312,21 @@ async function main() {
         }
         const iconPath = detectIcon(man)
         const meta = man.metadata || {}
+        const enTitle = meta.title ? String(meta.title) : name
+        const enDescription = man.description ? String(man.description).slice(0, 280) : enTitle
+        const zh = await authorZh(name, version)
+        const category = classify(name, enTitle, enDescription, (man.keywords || []).join(' '))
         plugins.push({
           name,
-          ...(meta.title ? { title: localized(String(meta.title)) } : {}),
-          ...(man.description ? { description: localized(String(man.description).slice(0, 280)) } : {}),
+          title: { en: enTitle, zh: zh.title || enTitle },
+          description: { en: enDescription, zh: zh.description || enDescription },
           ...(iconPath ? { icon: `https://cdn.jsdelivr.net/npm/${name}@${version}/${iconPath}` } : {}),
           ...(typeof man.author === 'string'
             ? { author: man.author.replace(/\s*<[^>]*>/, '') }
             : man.author?.name ? { author: String(man.author.name) } : {}),
           ...(man.homepage ? { homepage: man.homepage } : {}),
           ...(man.repository?.url ? { repository: { url: String(man.repository.url).replace(/^git\+/, '').replace(/\.git$/, '') } } : {}),
-          metadata: { keywords: (man.keywords || []).slice(0, 8) },
+          metadata: { keywords: (man.keywords || []).slice(0, 8), category },
           versions: [{
             version,
             publishTimestamp: Math.floor(Date.parse(pack.time[version]) / 1000),
@@ -265,7 +337,8 @@ async function main() {
             distIntegrity: man.dist?.integrity,
             attestations: man.dist?.attestations?.url ?? null,
             unpackedSize: man.dist?.unpackedSize ?? null,
-            gates: ['bundle', 'engines.dsh', 'min-age', 'no-install-script', 'license'],
+            zhSource: zh.source,
+            gates: ['bundle', 'engines.dsh', 'min-age', 'no-install-script', 'license', 'category', 'zh'],
           },
         })
       } catch (err) {
@@ -283,26 +356,32 @@ async function main() {
     generatedAt: new Date().toISOString(),
     registry: REGISTRY,
     dshRuntime: DSH_RUNTIME,
-    gates: { minAgeDays: MIN_AGE_DAYS, maxPlugins: MAX_PLUGINS, requires: ['dsh.bundle.patch', 'engines.dsh satisfied', 'no install script', 'clear license'] },
-    plugins: kept.map((p) => ({ name: p.name, version: p.versions[0].version, ...p._sidecar })),
+    gates: { minAgeDays: MIN_AGE_DAYS, maxPlugins: MAX_PLUGINS, requires: ['dsh.bundle.patch', 'engines.dsh satisfied', 'no install script', 'clear license', 'declared category', 'bilingual text'] },
+    plugins: kept.map((p) => ({ name: p.name, version: p.versions[0].version, category: p.metadata.category, ...p._sidecar })),
   }
   const index = {
     format: 1,
     title: { en: 'DSH Plugin Index (auto-crawled)', zh: 'DSH 插件索引（自动爬取）' },
     description: {
-      en: 'Crawled from the public npm registry: packages that declare a DSH bundle and a satisfied engines.dsh range. Metadata only; the package decides what it installs.',
-      zh: '从公共 npm 源自动爬取：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。这里只有元数据，装什么以包为准。',
+      en: 'Crawled from the public npm registry: packages that declare a DSH bundle and a satisfied engines.dsh range. Bilingual titles and descriptions come from each package\'s own locale files where it ships them. Metadata only; the package decides what it installs.',
+      zh: '从公共 npm 源自动爬取：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。中英双语标题与简介优先取包自带 locale 文件，没有则用人工整理的覆盖表。这里只有元数据，装什么以包为准。',
     },
     metadata: {
-      categories: { plugins: { title: { en: 'Plugins', zh: '插件' } } },
+      categories: Object.fromEntries(Object.entries(CATEGORIES).map(([id, t]) => [id, { title: t }])),
       labels: {
         'auto-crawled': { title: { en: 'Auto-crawled', zh: '自动爬取' } },
         'engines-pinned': { title: { en: 'engines.dsh pinned', zh: '已钉 DSH 版本' } },
+        'zh-native': { title: { en: 'Chinese text from the package', zh: '中文取自包自带 locale' } },
+        'zh-override': { title: { en: 'Chinese text curated here', zh: '中文由本仓库整理' } },
+        'zh-fallback': { title: { en: 'Chinese text pending', zh: '中文待补（暂用英文）' } },
       },
     },
     plugins: kept.map(({ _sidecar, ...rest }) => ({
       ...rest,
-      metadata: { ...rest.metadata, category: 'plugins', labels: ['auto-crawled', 'engines-pinned'] },
+      metadata: {
+        ...rest.metadata,
+        labels: ['auto-crawled', 'engines-pinned', `zh-${_sidecar.zhSource}`],
+      },
     })),
   }
 
