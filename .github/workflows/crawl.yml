@@ -13,6 +13,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 concurrency:
   group: crawl
@@ -80,3 +81,12 @@ jobs:
             --title "chore(crawl): refresh plugin index" \
             --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates; validated in run ${GITHUB_RUN_ID} with the validator DSH itself runs, plus page-budget and registry checks."
           gh pr merge "$BRANCH" --squash --delete-branch
+
+      - name: Publish the merged catalog
+        # A merge pushed with the repository token does not start workflows on
+        # itself, so the deploy is dispatched explicitly instead of waiting for
+        # a push event that will never arrive.
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
