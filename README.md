@@ -55,10 +55,20 @@ node crawler/crawl.mjs                # 爬取并生成 dist/
 
 ## 站点（`site/`）
 
-- `index.html` **833 字节**（预算 <1KB，CI 会挡），`style.css` 2.6 KB 外链，**没有任何图片/字体/JS**。
-- 配色按 DSH 自己的语义 token 命名（`--dsw-alias-bg-base` / `bg-layer-1/2` / `border-l1/l2` / `brand-primary` / `label-primary|secondary`），字体栈首选 DSH 的品牌字体 Montserrat，缺字体时回落系统字体——所以不下载任何字体文件。
-- 图标不落盘：索引里直接写 `https://cdn.jsdelivr.net/npm/<pkg>@<ver>/<icon>`（镜像直链）。
-- `_headers` 给 Pages 加 CORS 与缓存头（`index.json` 300 s，对 DSH 的 10 分钟内存缓存足够）。
+- `index.html` **590 字节**：单行、无 `<html>/<head>/<body>` 包装、属性不加引号、无 meta description；CI 挡 1 KB。
+- **样式表走镜像**：`https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css`（2.6 KB，`text/css`）。不要换 raw.githubusercontent——它按 `text/plain` 返回，浏览器会拒绝加载 CSS。
+- 页面自身不带图片、字体、JS；索引里的图标全部是 jsDelivr 的 npm 直链。
+- 配色按 DSH 语义 token 命名（`--dsw-alias-*`），字体栈首选 DSH 品牌字体 Montserrat，缺字体回落系统字体。
+- `_headers` 只影响本站 JSON（`index.json` 300 s），不影响镜像资源。
+
+## 双语与分类
+
+- 每个插件都有 `{en, zh}` 标题与简介，并被归到一个声明过的类别（9 类：safety / ui / media / integrations / memory / models / automation / devtools / other）。
+- 中文来源优先级：**包自带 `locale/zh.json`** → **本仓库 `data/zh-overrides.json`**（可按 `version` 钉版）→ 兜底英文并标 `zh-fallback`（当前 0）。当前 38/38 双语：`zh-native` 13 + `zh-override` 25。
+- 标签写明来源（`zh-native` / `zh-override` / `zh-fallback`），数量统计进 `dist/stats.json`。
+- 分类规则在 `crawler/crawl.mjs` 的 `CATEGORY_RULES`，**必须带词边界**——裸子串会把 `inspired` 命中 `ide`、把主题插件误判成开发工具。
+- 不编造翻译：没有机器翻译，全部来自作者 locale 或仓库内人工整理。
+- **不在本机跑任何服务**：爬取、校验、发布都在 GitHub Actions；本地 `node crawler/crawl.mjs --dry-run` 只是一次性脚本。
 
 ## CI（三段流水线）
 
