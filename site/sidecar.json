@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T14:53:22.724Z",
+  "generatedAt": "2026-11-02T17:30:13.463Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -141,10 +141,10 @@
     },
     {
       "name": "@mars-sea/dsh-commandcode-provider",
-      "version": "0.16.1",
-      "distIntegrity": "sha512-Ecqr4VnN+JJ9PefwcZWP5Uc1UVkts+eypkPDtuiX8FlKSXrsYSgM/LqQCRUzXypEh9ASevf1Xg97MVGVYNbCjw==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@mars-sea%2fdsh-commandcode-provider@0.16.1",
-      "unpackedSize": 3622674,
+      "version": "0.16.2",
+      "distIntegrity": "sha512-bE7G9BetDClNJsS7U9M12C7XGfiXvP0sVdgUYciZ8thhS4VuaLk6oXoER9zJHF1EtN+6itIiBzsRAewRTsIUSw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@mars-sea%2fdsh-commandcode-provider@0.16.2",
+      "unpackedSize": 3623691,
       "gates": [
         "bundle",
         "engines.dsh",
@@ -197,10 +197,10 @@
     },
     {
       "name": "@morehao/dsh-github-trending",
-      "version": "0.1.2",
-      "distIntegrity": "sha512-8G/6IqPw1rMLOCxAWOc69ABUQBI5naltr8ocf4gSVyskmRot8zFjFz8U9DhlkEkmf6GsF7BxS/yj57B5Ye774A==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@morehao%2fdsh-github-trending@0.1.2",
-      "unpackedSize": 279050,
+      "version": "0.1.4",
+      "distIntegrity": "sha512-9a4siACPdJtl8xUJEbYmuio8PW0ExfC1agG8lpqZx4z1whgLhV1L2Z142jTHR/TPLFXqIDP/6TlKXbr859E7Yg==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@morehao%2fdsh-github-trending@0.1.4",
+      "unpackedSize": 281626,
       "gates": [
         "bundle",
         "engines.dsh",
