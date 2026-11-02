@@ -1,7 +1,10 @@
 name: crawl
 
-# Crawl on a schedule and propose the result as a pull request. Nothing lands on
-# main directly: `ci` validates the PR and merges it, `deploy` publishes main.
+# Crawl on a schedule, validate the result, then land it through a pull request:
+# crawl → tests → PR → squash-merge → deploy. The PR exists so every catalog
+# change has a reviewable diff and a green test run attached; the merge happens
+# in this workflow because pull requests opened with the repository token do not
+# start `pull_request` workflows (GitHub suppresses that recursion).
 on:
   schedule:
     - cron: '17 3 * * *'   # daily 03:17 UTC
@@ -25,7 +28,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Selftest the gates
+      - name: Install the real format-1 validator
+        run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+
+      - name: Gate selftest
         run: node crawler/crawl.mjs --selftest
 
       - name: Crawl
@@ -42,6 +48,9 @@ jobs:
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
+      - name: Validate before anything lands
+        run: node crawler/validate.mjs
+
       - id: diff
         name: Did the catalog change?
         run: |
@@ -53,7 +62,7 @@ jobs:
             git --no-pager diff --stat -- dist/index.json
           fi
 
-      - name: Open the crawl pull request
+      - name: Open and merge the crawl pull request
         if: steps.diff.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -69,4 +78,7 @@ jobs:
           git push -u origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
             --title "chore(crawl): refresh plugin index" \
-            --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates. ci validates this branch with the real format-1 validator and merges it when green."
+            --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates.
+
+Validated in run ${GITHUB_RUN_ID} with @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5 (the validator DSH itself runs), plus the page budget and registry checks."
+          gh pr merge "$BRANCH" --squash --delete-branch
