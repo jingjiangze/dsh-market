@@ -78,7 +78,5 @@ jobs:
           git push -u origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
             --title "chore(crawl): refresh plugin index" \
-            --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates.
-
-Validated in run ${GITHUB_RUN_ID} with @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5 (the validator DSH itself runs), plus the page budget and registry checks."
+            --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates; validated in run ${GITHUB_RUN_ID} with the validator DSH itself runs, plus page-budget and registry checks."
           gh pr merge "$BRANCH" --squash --delete-branch
