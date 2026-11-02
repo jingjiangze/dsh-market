@@ -44,14 +44,31 @@ try {
 if (parsed) {
   note('index', `${parsed.plugins.length} plugins, title=${JSON.stringify(parsed.title.en)}`)
   if (parsed.plugins.length === 0) fail('plugin count', 'index is empty')
+  const declaredCategories = new Set(Object.keys(parsed.metadata.categories))
+  const declaredLabels = new Set(Object.keys(parsed.metadata.labels))
   const seen = new Set()
+  const categoryUse = new Map()
   for (const plugin of parsed.plugins) {
     if (seen.has(plugin.name)) fail('duplicate plugin', plugin.name)
     seen.add(plugin.name)
     if (plugin.versions[0]?.engines?.dsh === undefined) {
       fail('missing engines.dsh', plugin.name)
     }
+    const category = plugin.metadata.category
+    if (!category) fail('missing category', plugin.name)
+    else if (!declaredCategories.has(category)) fail('undeclared category', `${plugin.name} -> ${category}`)
+    else categoryUse.set(category, (categoryUse.get(category) || 0) + 1)
+    for (const field of ['title', 'description']) {
+      const value = plugin[field]
+      if (!value || typeof value !== 'object' || !value.en || !value.zh) {
+        fail('bilingual text', `${plugin.name} ${field}`)
+      }
+    }
+    for (const label of plugin.metadata.labels ?? []) {
+      if (!declaredLabels.has(label)) fail('undeclared label', `${plugin.name} -> ${label}`)
+    }
   }
+  note('categories', [...categoryUse].sort((a, b) => b[1] - a[1]).map(([id, n]) => `${id}:${n}`).join(' '))
 }
 
 // 2. what is deployed must be what was validated
@@ -73,12 +90,27 @@ if (!styleBytes) fail('site/style.css', 'missing')
 else note('site/style.css', `${styleBytes} bytes`)
 
 const html = await read('site/index.html')
-for (const bad of ['127.0.0.1', 'localhost', 'file://', 'cdn.jsdelivr.net/gh/']) {
+for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
+// the page must not serve its own assets: the stylesheet comes from a mirror
+const MIRROR_CSS = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css'
+if (!html.includes(MIRROR_CSS)) fail('stylesheet mirror', 'index.html does not link the jsDelivr mirror')
+if (/href=["']?\/style\.css/.test(html)) fail('stylesheet origin', 'index.html still links the local /style.css')
 // assets should come from mirrors, not from the site itself
 for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
   if (html.includes(forbidden)) fail('site/index.html asset', `inlines ${forbidden}`)
+}
+
+if (!OFFLINE) {
+  const mirror = await fetch(MIRROR_CSS, { headers: { accept: 'text/css' }, signal: AbortSignal.timeout(20000) })
+    .catch((err) => ({ ok: false, status: err.message, headers: new Headers() }))
+  if (!mirror.ok) fail('stylesheet mirror reachability', `${MIRROR_CSS} -> ${mirror.status}`)
+  else {
+    const type = mirror.headers.get('content-type') ?? ''
+    if (!type.startsWith('text/css')) fail('stylesheet mirror type', `${MIRROR_CSS} -> ${type}`)
+    else note('stylesheet mirror', `200 ${type}`)
+  }
 }
 
 // 4. every published entry must be installable: the version exists, is a bundle,
