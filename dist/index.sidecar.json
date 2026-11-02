@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T18:01:23.729Z",
+  "generatedAt": "2026-11-02T18:11:31.730Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -18,11 +18,11 @@
     {
       "name": "@ash-qw/dsh-theme-prts",
       "version": "2.6.0",
-      "category": "devtools",
+      "category": "ui",
       "distIntegrity": "sha512-8kWyiK/gfIg1A4PfkIyv5Yf/LI4L4LnfBsHCN18kfePsRStvlatFRKeIo16rbpoTx+gNE7w6BdUMfUwuzeZziw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@ash-qw%2fdsh-theme-prts@2.6.0",
       "unpackedSize": 2883327,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -36,11 +36,11 @@
     {
       "name": "@changfenhuang/dsh-genui",
       "version": "0.15.0",
-      "category": "models",
+      "category": "ui",
       "distIntegrity": "sha512-TEb7AThhe/GfFGoJ1i7TMZeOU6XKcy4qwYKFOgeZnpsyPCbIgQVm7XcIMAg2Zpy+MH0S4AZueUL1ch76CAX7CA==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@changfenhuang%2fdsh-genui@0.15.0",
       "unpackedSize": 13482545,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -54,7 +54,7 @@
     {
       "name": "@dan-ai-studio/dshopencodego",
       "version": "0.1.88",
-      "category": "models",
+      "category": "integrations",
       "distIntegrity": "sha512-841suEUPVOaAohqhE/O5yEsy2yQ68juNoxmiS0+Xri5sT1b7oatMKvV9N++JXtUq5kn3LoFFLoEJqV29AZz49w==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@dan-ai-studio%2fdshopencodego@0.1.88",
       "unpackedSize": 3753822,
@@ -72,11 +72,11 @@
     {
       "name": "@fffangchenghao/dsh-web-search",
       "version": "0.24.0",
-      "category": "devtools",
+      "category": "integrations",
       "distIntegrity": "sha512-BgSQvHuoKY0kO5jP7zxR7nl38P4W/Xo0HKiAI6MoXaWL6ojjAJk1YjuPBuf2A3XYLbEqjp9F3PcTckxcS3Voiw==",
       "attestations": null,
       "unpackedSize": 1214673,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -90,11 +90,11 @@
     {
       "name": "@goodandready/dsh-clinebot",
       "version": "0.6.23",
-      "category": "models",
+      "category": "integrations",
       "distIntegrity": "sha512-/x5yTqnF6bNMdsaU3aM9kT+AnPTuSYlSJSrYrjTlTPkRFrvu/ef0RGwdOSo5O/pCsdaOnP5li3+G1LvyQgBgPA==",
       "attestations": null,
       "unpackedSize": 915700,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -108,11 +108,11 @@
     {
       "name": "@goodandready/dsh-russian-lang",
       "version": "0.4.7",
-      "category": "integrations",
+      "category": "other",
       "distIntegrity": "sha512-Ng8ERdb3J8DvS8IGl1dAElCQijWPtk5KJ8cSijEDFZH0JTrCz3FxDSR/dKElVXBpv38yo+7kxkbgcj1JIPMM4w==",
       "attestations": null,
       "unpackedSize": 2811896,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -130,7 +130,7 @@
       "distIntegrity": "sha512-JeMEAZ6cwOVwsF7ZtOPixDLYivcYy2S78OTdo0F4z5Q+mWQNG2Q717ukwlB1xxk1I8geUB1wm+UIASdE0EHYKA==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@hytime%2fdsh-thinking-effort@0.3.11",
       "unpackedSize": 2547823,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -144,11 +144,11 @@
     {
       "name": "@kenz1117/dsh-ui-usage-billing",
       "version": "1.8.1",
-      "category": "models",
+      "category": "ui",
       "distIntegrity": "sha512-s05Yw2XmRTXYDSmA2ebXeB3AsZ9Ie5K6U1FTrajaZMhUgSL9wbQfGqTKh9kOeBCnxUZ2rhfEnQIy3oMwnsogjA==",
       "attestations": null,
       "unpackedSize": 1117113,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -162,11 +162,11 @@
     {
       "name": "@lemoncat7/dsh-knowledge",
       "version": "2.17.0",
-      "category": "memory",
+      "category": "integrations",
       "distIntegrity": "sha512-mX89xww1LFnE3hynoMo47SFy591PA+qWrhYkG3uGQUZKvQQGKuT3B7lvi9SCvjeO6/XRxhqLAFHiWy3Qys2drw==",
       "attestations": null,
       "unpackedSize": 4599190,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -252,7 +252,7 @@
     {
       "name": "@morehao/dsh-github-trending",
       "version": "0.1.4",
-      "category": "devtools",
+      "category": "other",
       "distIntegrity": "sha512-9a4siACPdJtl8xUJEbYmuio8PW0ExfC1agG8lpqZx4z1whgLhV1L2Z142jTHR/TPLFXqIDP/6TlKXbr859E7Yg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@morehao%2fdsh-github-trending@0.1.4",
       "unpackedSize": 281626,
@@ -288,11 +288,11 @@
     {
       "name": "@nonamelego/dsh-catppuccin",
       "version": "0.6.5",
-      "category": "models",
+      "category": "ui",
       "distIntegrity": "sha512-CgwHSC5MOy/1jVQ1AdEtGJEmfx0XF3VbdoKtQHYhZir9htW/oBHLYyMJ1K5D5RELwD5efRhQCcmYuXVK05zpQA==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@nonamelego%2fdsh-catppuccin@0.6.5",
       "unpackedSize": 1147402,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -310,7 +310,7 @@
       "distIntegrity": "sha512-Ipd4ga3qPf/Q5fJtUGJpitNzwBWxVmG6bAowGXouyKsribKcUklplfxeIq/gph1JhRtd/SVFvBTIeBvvxM4tZg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@ponydev%2fdsh-model-usage@1.13.3",
       "unpackedSize": 428566,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -328,7 +328,7 @@
       "distIntegrity": "sha512-RA+7Cr19b6dZJxK8Yjbu3Gc95FD6KtcC5PQuI+Yn+DiAX/Imt79QgUPLl9taeSASexxY7YtrlTcBGW5qmcCvGg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@stardustlc%2fdsh-dream@0.13.7",
       "unpackedSize": 1176872,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -346,7 +346,7 @@
       "distIntegrity": "sha512-+gnpKSigkJMl8O9vCzOziWz1+W1d2gg9AU/oVsTorKXc+YFrcSB3/ildzBrVqHhkzdp4VwGgo9j2F3y4Llon3Q==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@stardustlc%2fdsh-suite@0.9.1",
       "unpackedSize": 690258,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -364,7 +364,7 @@
       "distIntegrity": "sha512-xCWO1cT0TNmMgPlNI9nkozs1jYJWuKudTdN2jyMHjANHJU4uR68OJAK15QUPOXQxhAI/1Hw8c8LOanhnH4KKWw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@weibaohui%2fskills-management@0.9.3",
       "unpackedSize": 407766,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -396,7 +396,7 @@
     {
       "name": "clearai-dsh",
       "version": "0.5.7",
-      "category": "devtools",
+      "category": "other",
       "distIntegrity": "sha512-EVfwKFCNDniQ7wz/cneUm1Mc4NZUuzacIvWqcf9FghCjCI8LsjZ2hmELfoE4vl8uFBaJeBiBdjkOsxyNblCY+Q==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/clearai-dsh@0.5.7",
       "unpackedSize": 1617869,
@@ -414,7 +414,7 @@
     {
       "name": "dsh-aiignore",
       "version": "0.37.0",
-      "category": "memory",
+      "category": "ui",
       "distIntegrity": "sha512-QLnxjsV62BMvkZ9jF649vr7ciLCaEAXSWVmjOyQvhEKuLrlUyqKe5E1+YyPlvjwvedTBMhTfvitshE/aq4hK8g==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-aiignore@0.37.0",
       "unpackedSize": 367528,
@@ -436,7 +436,7 @@
       "distIntegrity": "sha512-j1fz9tyHWB2NgxIT5JGJ9ieo/DluXYDI+6cBNSkxuGTZjso9I+c44kg7qcfSe5taeFNfs557ok0ECr5Q6se09A==",
       "attestations": null,
       "unpackedSize": 1518532,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -454,7 +454,7 @@
       "distIntegrity": "sha512-j6lokDt0QLP1BN7xYVEbEK/4OLPFXQaDsV9VC0v/mCIVUaeJs7g+934fjYttzcTGK3z8ouDTjtIOTgkthGFESg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-auto-review@0.15.0",
       "unpackedSize": 2572395,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -468,11 +468,11 @@
     {
       "name": "dsh-background-by-model",
       "version": "0.10.0",
-      "category": "models",
+      "category": "ui",
       "distIntegrity": "sha512-Q5Gu/AoSJmmF8J3OUXjB8G4Yg4iF4e4ZnUWqtJNkxZcMPvoHurdCGzCpuxsvyJuT7dA3PdsqalczUifxDSXKvQ==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-background-by-model@0.10.0",
       "unpackedSize": 679059,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -486,7 +486,7 @@
     {
       "name": "dsh-better-workspace",
       "version": "0.36.14",
-      "category": "devtools",
+      "category": "ui",
       "distIntegrity": "sha512-Rn5xOIXBkWAMjZuK5pZ948q5x4X6dMMQ82nPIzEG5bot+q1FqvkdzmzVuZ/GKx3V/wQzvx1VAf9tKJdAoYCJEw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-better-workspace@0.36.14",
       "unpackedSize": 785269,
@@ -508,7 +508,7 @@
       "distIntegrity": "sha512-yQIdXbl1j1nEngD9v4YE/gtqEAY3ZFd9yon8vmavwQuO/CZgrRDl7T4z1qTYWKhnPzYdBT7SFZKdgbovLWeHNw==",
       "attestations": null,
       "unpackedSize": 531788,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -526,7 +526,7 @@
       "distIntegrity": "sha512-O79l4JmK3G7ERK5z9xCEbe5dPo3r2khYnPOhIjj6N70HiZ98q0CmNWTpGjfqCUjoERZEhOUL2+bsZs7+dC9eRQ==",
       "attestations": null,
       "unpackedSize": 4690716,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -544,7 +544,7 @@
       "distIntegrity": "sha512-qe8hgnxKmQine725GPtRCqzkjsKgp9cZYmlP6L1ON1gcHczbv6w4tsKBweV4TGds1iro80n4HpRl+1fKNg2znQ==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-calendar@0.14.3",
       "unpackedSize": 1017851,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -558,11 +558,11 @@
     {
       "name": "dsh-chat-link-actions",
       "version": "0.6.13",
-      "category": "devtools",
+      "category": "integrations",
       "distIntegrity": "sha512-SFHLQBh9VoGMJjKmAGQqkJsTOQ7NQCpOA7XG1YSGp3VE9OkPdtVKueoRdJu2zz8P2yIfbA6h0EaYei0bgvIeNg==",
       "attestations": null,
       "unpackedSize": 185774,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -580,7 +580,7 @@
       "distIntegrity": "sha512-dtabgIWan5I0BNdBVH40CZh0VBzh10fX0HJgJbtuPoZhkhQX6Ans+EnJTxhKvc+zDA1lK6CRZT83iOLkl8hzQg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-checkpoint-rewind@0.6.34",
       "unpackedSize": 679076,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -598,7 +598,7 @@
       "distIntegrity": "sha512-ooSZGiFPCIi7Z/kt4gG11qa2Z2lc+bDmDnD4gBjSQuymFGZsbwMjl3J5aVWhl54ZMoS2D/SrqhwkoVC5MBQrFA==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-cite@0.7.7",
       "unpackedSize": 524858,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -612,7 +612,7 @@
     {
       "name": "dsh-client-ui-quote",
       "version": "0.14.0",
-      "category": "devtools",
+      "category": "other",
       "distIntegrity": "sha512-nlqiVGJu+xrRms+59Pahxnhy9ZYKZRN9Lrxi0ioO/wpPYLjMBT5Xs9qQVl6DMPL7LUDbuQeUQjYrig0vH3a3nA==",
       "attestations": null,
       "unpackedSize": 1619519,
@@ -630,11 +630,11 @@
     {
       "name": "dsh-comfyui",
       "version": "0.5.5",
-      "category": "memory",
+      "category": "media",
       "distIntegrity": "sha512-+tjtYtiSMhqJQra3oSfec2KSRMeP35nGW1XYTKRzsrO11lmbjlBqwmYguQA/+ga3QNRzQxREPW01qP/v4iTJHw==",
       "attestations": null,
       "unpackedSize": 4074951,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -688,7 +688,7 @@
       "distIntegrity": "sha512-gB/kWfnnOx/+i9b1yqwDGt0qxURGCMBXjLNlm/PfDsgsUmZYhw3BnLiPqR5kedBSVXSY7rzS2wInVjT9njFQkg==",
       "attestations": null,
       "unpackedSize": 552358,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
