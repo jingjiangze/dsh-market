@@ -168,14 +168,14 @@ const CATEGORIES = {
 }
 
 const CATEGORY_RULES = [
-  ['safety', /audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm-gate|guardian/],
-  ['memory', /memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|context|skill|prompt|chapter|archive/],
-  ['models', /provider|model|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token/],
-  ['automation', /automat|schedul|cron|workflow|agent-team|agent_team|multi-agent|swarm|orchestr|ralph|kanban|goal/],
-  ['devtools', /worktree|git|terminal|shell|lint|diff|debug|ide|editor|typescript|cli|search|index|normify/],
-  ['integrations', /feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|im\b|mcp/],
-  ['media', /image|video|tts|voice|audio|screenshot|vision|chart|canvas|3d\b|blender|music|pdf|office|docx|xlsx|poster/],
-  ['ui', /theme|skin|layout|sidebar|panel|badge|font|appearance|wallpaper|pet|meme|表情|界面|主题|catppuccin/],
+  ['safety', /\b(audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm)\b/],
+  ['ui', /\b(theme|themes|skin|appearance|wallpaper|background|layout|sidebar|panel|badge|font|pet|meme|catppuccin|prts)\b|界面|主题|壁纸/],
+  ['media', /\b(image|images|video|tts|voice|audio|screenshot|vision|chart|charts|canvas|blender|music|pdf|office|docx|xlsx|cad|poster|genui)\b/],
+  ['integrations', /\b(feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|mcp|bridge)\b/],
+  ['memory', /\b(memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|context|skill|skills|prompt|chapter|chapters|archive|dream|custom-mode)\b/],
+  ['models', /\b(provider|providers|model|models|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token|tokens)\b/],
+  ['automation', /\b(automation|scheduled|schedule|cron|workflow|agent-team|agent-teams|multi-agent|swarm|orchestrator|ralph|kanban|goal|checkpoint|rewind)\b/],
+  ['devtools', /\b(worktree|git|terminal|shell|lint|diff|debug|ide|editor|typescript|cli|search|index)\b/],
 ]
 
 function classify(...texts) {

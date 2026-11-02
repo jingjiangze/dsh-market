@@ -1,5 +1,5 @@
 {
-  "_readme": "Hand-curated Chinese display text, used when a package ships no locale/zh.json. Keyed by npm package name; `version` pins the entry to one release.",
+  "_readme": "Hand-curated Chinese display text, used when a package ships no locale/zh.json. Keyed by npm package name; `version` pins an entry to one release.",
   "@goodandready/dsh-context-lens": {
     "version": "0.1.35",
     "title": "上下文透镜",
@@ -41,5 +41,101 @@
   "@nanmicoder/dsh-agent-teams": {
     "title": "多智能体团队",
     "description": "用自然语言驱动多 agent 协作：队长、成员、带依赖的任务与消息传递，Web 界面带树状监视器。"
+  },
+  "@ash-qw/dsh-theme-prts": {
+    "title": "明日方舟 PRTS 主题",
+    "description": "非官方明日方舟 P.R.T.S. 风格界面主题，适配 DSH Web 与官方桌面端。"
+  },
+  "@changfenhuang/dsh-genui": {
+    "title": "生成式界面",
+    "description": "在助手回复里内联渲染图表、表单、测验、3D 场景等交互组件，并能把操作回调给模型。"
+  },
+  "@fffangchenghao/dsh-web-search": {
+    "title": "免密网页搜索",
+    "description": "八引擎融合检索、正文抓取与可引用研究，附带可复现的基准测试。"
+  },
+  "@goodandready/dsh-clinebot": {
+    "title": "Cline 订阅接入",
+    "description": "同步 ClineBot / ClinePass 订阅模型、额度耗尽提醒、会话指标、专用设置页与 /cline 命令。"
+  },
+  "@goodandready/dsh-russian-lang": {
+    "title": "俄语本地化",
+    "description": "整套俄语界面：内核加 85 个生态插件、约 1.2 万条 UI 文案全量覆盖。"
+  },
+  "@kenz1117/dsh-ui-usage-billing": {
+    "title": "用量与账单面板",
+    "description": "侧栏成本指标加大盘视图，按多供应商实时价格与会话日志里的真实用量计价。"
+  },
+  "@lemoncat7/dsh-knowledge": {
+    "title": "知识库",
+    "description": "本地与远程知识库：限定范围检索、可控写回，附带 Web 管理台。"
+  },
+  "@nonamelego/dsh-catppuccin": {
+    "title": "Catppuccin 主题",
+    "description": "四套 Catppuccin 配色加可切换毛玻璃皮肤，重映射全部设计变量。"
+  },
+  "dsh-any-background": {
+    "title": "任意背景",
+    "description": "自定义主题色（取色盘）与壁纸，支持透明度与模糊，主界面和聊天界面可分别设置。"
+  },
+  "dsh-background-by-model": {
+    "title": "按模型换壁纸",
+    "description": "按模型规则排序绑定各自的壁纸与构图，切模型就换背景。"
+  },
+  "dsh-auto-review": {
+    "title": "审批二次审核",
+    "description": "把审批请求交给第二个模型做只读复核，或交给本地小模型把关。"
+  },
+  "dsh-cad": {
+    "title": "CAD 查看",
+    "description": "cad_view / cad_info 工具，在对话里内嵌 3D（STL/OBJ/STEP/IGES）与 2D（DXF/SVG）查看卡片。"
+  },
+  "dsh-chat-link-actions": {
+    "title": "附件右键动作",
+    "description": "右键对话里的附件或路径，交给自定义动作：发送到微信联系人、用 Chrome 打开等。"
+  },
+  "dsh-checkpoint-rewind": {
+    "title": "检查点回滚",
+    "description": "会话、工作区、配置三态快照，/checkpoint 与 /rewind 一键回到任意检查点。"
+  },
+  "dsh-comfyui": {
+    "title": "ComfyUI 驱动",
+    "description": "让 agent 驱动本地或远程 ComfyUI 生成内容，自带工作流与素材管理面板。"
+  },
+  "dsh-custom-mode": {
+    "title": "自定义模式",
+    "description": "编辑系统提示词、基础模式与插件开关，定制助手的行为。"
+  },
+  "@weibaohui/skills-management": {
+    "title": "技能市场",
+    "description": "一页管理本机各 coding agent 的技能并收编进 DSH，内置 6600+ 技能市场，可搜索安装并显示注入开销。"
+  },
+  "@hytime/dsh-thinking-effort": {
+    "title": "思考强度档位",
+    "description": "给 pi-ai 第三方模型补上可配置的思考强度档位，并可设置子 agent 的默认思考强度。"
+  },
+  "@ponydev/dsh-model-usage": {
+    "title": "模型额度与用量",
+    "description": "实时显示各模型供应商的额度与用量：DeepSeek、GLM、OpenRouter、Kimi 以及自定义适配器。"
+  },
+  "@stardustlc/dsh-dream": {
+    "title": "任务经验沉淀",
+    "description": "把做过的任务沉淀成下次能用的经验，候选不自动采纳；两个自动开关可分别控制。"
+  },
+  "@stardustlc/dsh-suite": {
+    "title": "插件合集",
+    "description": "一次装齐 18 个独立插件，覆盖邮件、日历、记忆、媒体与开发工具，更新由用户决定。"
+  },
+  "dsh-bili-scroll": {
+    "title": "每天刷 B 站",
+    "description": "每天替你刷一轮 B 站：读字幕挑出值得看的，写一份日报并 @ 你。"
+  },
+  "dsh-calendar": {
+    "title": "日历空闲查询",
+    "description": "看清日程并找出当前日历里的合适空闲时间，需要自己的 CalDAV 账号。"
+  },
+  "dsh-cite": {
+    "title": "文献整理",
+    "description": "把零散的 DOI 与 BibTeX 整理成可用的文献库，联网补全靠 Crossref。"
   }
 }
