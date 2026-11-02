@@ -37,20 +37,3 @@ jobs:
 
       - name: Crawler still runs end to end
         run: node crawler/crawl.mjs --dry-run
-
-  automerge:
-    # A crawl PR merges itself once the tests above are green. Anything else
-    # (human PRs, dependency bumps) waits for review.
-    needs: test
-    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'crawl/')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Squash-merge the crawl PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
-        run: |
-          gh pr merge "$PR" --squash --delete-branch --repo "${{ github.repository }}"
