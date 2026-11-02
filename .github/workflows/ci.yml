@@ -1,0 +1,56 @@
+name: ci
+
+# Runs on every push and every pull request. A green run is the only thing that
+# may merge a crawl branch or publish the site, so the tests live here and the
+# deploy workflow only follows a merged main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install the real format-1 validator
+        run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+
+      - name: Gate selftest (positive + negative cases)
+        run: node crawler/crawl.mjs --selftest
+
+      - name: Validate the published index
+        run: node crawler/validate.mjs
+
+      - name: Crawler still runs end to end
+        run: node crawler/crawl.mjs --dry-run
+
+  automerge:
+    # A crawl PR merges itself once the tests above are green. Anything else
+    # (human PRs, dependency bumps) waits for review.
+    needs: test
+    if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'crawl/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Squash-merge the crawl PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr merge "$PR" --squash --delete-branch --repo "${{ github.repository }}"

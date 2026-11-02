@@ -1,18 +1,15 @@
-name: crawl-and-deploy
+name: crawl
 
+# Crawl on a schedule and propose the result as a pull request. Nothing lands on
+# main directly: `ci` validates the PR and merges it, `deploy` publishes main.
 on:
   schedule:
     - cron: '17 3 * * *'   # daily 03:17 UTC
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'crawler/**'
-      - 'site/**'
-      - '.github/workflows/crawl.yml'
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: crawl
@@ -31,9 +28,10 @@ jobs:
       - name: Selftest the gates
         run: node crawler/crawl.mjs --selftest
 
-      - name: Crawl and build the index
+      - name: Crawl
         env:
           NPM_REGISTRY: https://registry.npmjs.org
+          SEARCH_REGISTRY: https://registry.npmjs.org
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_PLUGINS: '200'
         run: node crawler/crawl.mjs
@@ -44,21 +42,34 @@ jobs:
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
-      - name: Commit the crawl result
+      - id: diff
+        name: Did the catalog change?
+        run: |
+          if git diff --quiet -- dist/index.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "no catalog change"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git --no-pager diff --stat -- dist/index.json
+          fi
+
+      - name: Open the crawl pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: crawl/${{ github.run_id }}
         run: |
           git config user.name "dsh-market-bot"
           git config user.email "dsh-market-bot@users.noreply.github.com"
-          git add dist site/index.json site/sidecar.json site/stats.json
-          if git diff --staged --quiet; then
-            echo "no change"
-          else
-            git commit -m "chore: crawl $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
-          fi
+          git switch -c "$BRANCH"
+          git add dist site
+          git commit -m "chore(crawl): refresh plugin index $(date -u +%Y-%m-%d)"
+          git push -u origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "chore(crawl): refresh plugin index $(date -u +%Y-%m-%d)" \
+            --body "Automated crawl.
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy site --project-name=dsh-market --branch=main --commit-dirty=true
+- kept: \`$(node -e "const s=require('./dist/stats.json');console.log(s.kept)")\` / candidates \`$(node -e "const s=require('./dist/stats.json');console.log(s.candidates)")\`
+- rejected: see \`dist/rejections.json\`
+
+\`ci\` validates this branch with the real format-1 validator and merges it when green."

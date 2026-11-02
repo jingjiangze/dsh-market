@@ -307,9 +307,14 @@ async function main() {
   }
 
   await mkdir(OUT, { recursive: true })
-  await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
-  await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
-  await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
+  const DRY = process.argv.includes('--dry-run')
+  if (DRY) {
+    console.log(`dry-run: would write ${kept.length} plugins (${JSON.stringify(index).length} bytes)`)
+  } else {
+    await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
+    await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
+    await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
+  }
 
   for (const r of rejections) bump(counts, r.why)
   const stats = {
