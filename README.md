@@ -2,17 +2,20 @@
 
 为 DeepSeek Harness（DSH）的「插件 → 发现」提供一份**自动生成、格式合规**的索引源。
 
-- 公开地址：`https://dsh.jiangjiangze.icu/index.json`（Cloudflare Pages，自定义域名）
-- 备用地址：`https://dsh-market.pages.dev/index.json`
-- 本仓库是真源：`dist/index.json` 由 GitHub Actions 每日爬取后提交
+- 主源（GitHub Pages，实测最稳）：`https://jingjiangze.github.io/dsh-market/index.json`
+- 品牌域名（Cloudflare Pages）：`https://dsh.jiangjiangze.icu/index.json`
+- 两个地址内容同源：都来自本仓库 `site/`，由 CI 生成后提交
 
 ## 加进 DSH
 
-「插件 → 发现 → 添加索引源」，粘贴：
+「插件 → 发现 → 添加索引源」，两个都加（互为主备）：
 
 ```
+https://jingjiangze.github.io/dsh-market/index.json
 https://dsh.jiangjiangze.icu/index.json
 ```
+
+> 为什么主源选 GitHub Pages：2026-11-02 本机直连实测 **3/3 成功，0.61–0.81 s**；同一份索引走 Cloudflare Pages 自定义域名时 **3 次里 1 次卡在 25 s 只收到 538 B**、其余 3.8–17.5 s（CF 边缘境内无节点，直连不稳；走代理 2/2 成功 1.9–2.9 s）。DSH 的 fetch 超时是 15 s，所以把 Pages 当人读站点、把 GitHub Pages 当机器源，两边都不丢。
 
 ## 它是什么 / 不是什么
 
