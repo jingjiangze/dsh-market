@@ -4,7 +4,7 @@
     "why": "not-a-bundle"
   },
   {
-    "name": "@dsh-market/schema",
+    "name": "@ericrisco/rsc",
     "why": "not-a-bundle"
   },
   {
@@ -12,7 +12,7 @@
     "why": "not-a-bundle"
   },
   {
-    "name": "@ericrisco/rsc",
+    "name": "@dsh-market/schema",
     "why": "not-a-bundle"
   },
   {
@@ -20,12 +20,16 @@
     "why": "not-a-bundle"
   },
   {
+    "name": "@memtensor/memos-local-plugin",
+    "why": "has-install-script"
+  },
+  {
     "name": "@memorax/memorax-code",
     "why": "not-a-bundle"
   },
   {
-    "name": "@memtensor/memos-local-plugin",
-    "why": "has-install-script"
+    "name": "@morlay/session-branch",
+    "why": "not-a-bundle"
   },
   {
     "name": "@morlay/session-rdb",
@@ -33,10 +37,6 @@
   },
   {
     "name": "@morlay/ui-conversation-message-actions",
-    "why": "not-a-bundle"
-  },
-  {
-    "name": "@morlay/session-branch",
     "why": "not-a-bundle"
   },
   {
@@ -52,11 +52,11 @@
     "why": "not-a-bundle"
   },
   {
-    "name": "cortico-world-fatfish",
+    "name": "code-monkey-ui",
     "why": "not-a-bundle"
   },
   {
-    "name": "code-monkey-ui",
+    "name": "cortico-world-fatfish",
     "why": "not-a-bundle"
   },
   {
@@ -64,22 +64,7 @@
     "why": "has-install-script"
   },
   {
-    "name": "@anionex/dsh-turn-rewind",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@anionex/dsh-vision-toolkit",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@argszero/cordis-plugin-thinking-loop-guard",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@aryacode/dsh-aryacode-polish",
+    "name": "@a9i5k4/dsh-auto-memory",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -89,12 +74,17 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@aryacode/dsh-engineering",
+    "name": "@argszero/cordis-plugin-thinking-loop-guard",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@a9i5k4/dsh-auto-memory",
+    "name": "@anionex/dsh-vision-toolkit",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@anionex/dsh-turn-rewind",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -104,17 +94,17 @@
     "detail": "0.2.1-rc.5"
   },
   {
+    "name": "@aryacode/dsh-aryacode-polish",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@aryacode/dsh-engineering",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
     "name": "@copylee/dsh-computer-use",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@copylee/dsh-office",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@askdkc/dsh-cli",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -129,7 +119,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@dfy-plugins/dsh-visualize",
+    "name": "@copylee/dsh-office",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@askdkc/dsh-cli",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -139,22 +134,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
+    "name": "@dfy-plugins/dsh-visualize",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
     "name": "@dfy-plugins/dsh-image-generation",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@dougen/dsh-deepseek-usage",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@dmh2002/dsh-connect-qoder",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@dsh-market/plugin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -164,17 +149,27 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@goodandready/dsh-lanmode",
+    "name": "@dmh2002/dsh-connect-qoder",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@goodandready/dsh-key-rotation",
+    "name": "@dougen/dsh-deepseek-usage",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@dsh-market/plugin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
     "name": "@furongjun1999/dsh-memory",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@goodandready/dsh-moa",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -199,17 +194,22 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@huanlin/dsh-plugin-better-locale",
+    "name": "@ggboy123/dsh-paper-reader",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@huai_xin/dsh-workbuddy",
+    "name": "@goodandready/dsh-subscriptions",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@goodandready/dsh-tts",
+    "name": "@goodandready/dsh-key-rotation",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@goodandready/dsh-lanmode",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -219,27 +219,17 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@goodandready/dsh-moa",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@ggboy123/dsh-paper-reader",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
     "name": "@goodandready/dsh-image-gen",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@iasiv5/dsh-skins",
+    "name": "@huanlin/dsh-plugin-better-locale",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kanadego/dsh-heartbeat",
+    "name": "@huai_xin/dsh-workbuddy",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -254,12 +244,37 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@goodandready/dsh-subscriptions",
+    "name": "@kenz1117/dsh-engram",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@goodandready/dsh-tts",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@kanadego/dsh-heartbeat",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
     "name": "@goodandready/dsh-time-machine",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@liuhange/dsh-gov-data-inspector",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@iasiv5/dsh-skins",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@ljwei-stak/dsh-boot-animation",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -274,12 +289,7 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kenz1117/dsh-engram",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@liuhange/dsh-gov-data-inspector",
+    "name": "@momasiku/dsh-pilot",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -299,24 +309,9 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ljwei-stak/dsh-boot-animation",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@momasiku/dsh-pilot",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
     "name": "@takboo/dsh-coopanion",
     "why": "too-recent",
     "detail": "< 3d old"
-  },
-  {
-    "name": "@restregular/dsh-memory",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
   },
   {
     "name": "@noob-stupid/dsh-plugin-console",
@@ -324,22 +319,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@try-works/dsh-memory",
+    "name": "@restregular/dsh-memory",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
     "name": "@openviking/dsh-memory-plugin",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@wxg-prc-cpg/browser-skill-dsh-plugin",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@wenbin_wb/dsh-bridge",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -354,7 +339,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@tencent-connect/dsh-qqbot",
+    "name": "@try-works/dsh-memory",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@wenbin_wb/dsh-bridge",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -364,12 +354,22 @@
     "detail": "0.2.1-rc.5"
   },
   {
+    "name": "@wxg-prc-cpg/dsh-weknora",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@tencent-connect/dsh-qqbot",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
     "name": "balance-dsh",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@yunmiao/studymate",
+    "name": "@wxg-prc-cpg/browser-skill-dsh-plugin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -379,12 +379,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@zaofan/dsh-qqbot",
+    "name": "@ychris12138/dsh-usage-stats",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ychris12138/dsh-usage-stats",
+    "name": "@yunmiao/studymate",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -394,7 +394,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@wxg-prc-cpg/dsh-weknora",
+    "name": "@zhangfengshun/dsh-remote-ssh",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "clawock-dsh",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -404,27 +409,7 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "billion-context-dsh",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
     "name": "beauticode-dsh",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@yottameta/yotta-skills-plugin",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@xbzbing/dsh-git-panel",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@zhangfengshun/dsh-remote-ssh",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -434,12 +419,17 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "deep-view",
+    "name": "@xbzbing/dsh-git-panel",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "ds-harness-remote",
+    "name": "@zaofan/dsh-qqbot",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "@yottameta/yotta-skills-plugin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -449,12 +439,7 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-agent-board",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "clawock-dsh",
+    "name": "ds-harness-remote",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -465,6 +450,16 @@
   },
   {
     "name": "ds-bot",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "deep-view",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-agent-board",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -489,17 +484,7 @@
     "detail": "< 3d old"
   },
   {
-    "name": "dsh-bloom-theme",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
     "name": "dsh-bili-watch",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-bottom-info-bar",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -509,17 +494,12 @@
     "detail": "< 3d old"
   },
   {
+    "name": "dsh-bottom-info-bar",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
     "name": "dsh-bill-ilife",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-chat-manager",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-chef",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -529,7 +509,7 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-chat-import",
+    "name": "dsh-bloom-theme",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -539,12 +519,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-composer-ux",
+    "name": "dsh-chat-manager",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-computer-use-win",
+    "name": "dsh-chat-import",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -554,27 +534,12 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-codex-connect",
+    "name": "dsh-chef",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-config-manager",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-codex-subscription",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-damage-pulse",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "dsh-dafeiyu",
+    "name": "dsh-computer-use-win",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
@@ -584,12 +549,47 @@
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "dsh-deepseek-web-login",
+    "name": "dsh-codex-connect",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-codex-subscription",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-config-manager",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-composer-ux",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-damage-pulse",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
     "name": "dsh-connect-workbuddy",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-deja",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-deepseek-web-login",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-dafeiyu",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   }
