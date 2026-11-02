@@ -1,0 +1,94 @@
+/* DSH-flavoured dark surface: semantic tokens named after the harness theme
+   (--dsw-alias-*), values approximated from the desktop dark palette. */
+:root {
+  --bg-base: #0b0e14;
+  --bg-layer-1: #121722;
+  --bg-layer-2: #171d2b;
+  --border-l1: #232b3d;
+  --border-l2: #2e3850;
+  --label-primary: #e8ecf6;
+  --label-secondary: #93a0b8;
+  --brand: #4d6bfe;
+  --brand-soft: #7c93ff;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --font: "Montserrat", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--label-primary);
+  background:
+    radial-gradient(900px 420px at 15% -10%, #1b2748 0%, transparent 60%),
+    radial-gradient(700px 380px at 85% 0%, #16233a 0%, transparent 55%),
+    var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  line-height: 1.6;
+}
+main { width: 100%; max-width: 620px; }
+header { margin-bottom: 22px; }
+h1 {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h1::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand);
+  box-shadow: 0 0 0 4px rgba(77, 107, 254, 0.18);
+}
+.sub { margin: 0; color: var(--label-secondary); font-size: 13px; }
+section {
+  background: linear-gradient(180deg, var(--bg-layer-2), var(--bg-layer-1));
+  border: 1px solid var(--border-l1);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+h2 { margin: 0 0 6px; font-size: 14px; font-weight: 500; }
+.hint { margin: 0 0 10px; color: var(--label-secondary); font-size: 12px; }
+pre {
+  margin: 0;
+  background: var(--bg-base);
+  border: 1px solid var(--border-l2);
+  border-radius: var(--radius-md);
+  padding: 11px 13px;
+  overflow-x: auto;
+}
+code {
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  color: var(--brand-soft);
+}
+nav { display: flex; flex-wrap: wrap; gap: 8px; }
+nav a {
+  flex: 1 1 auto;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12.5px;
+  color: var(--label-primary);
+  background: var(--bg-layer-1);
+  border: 1px solid var(--border-l1);
+  border-radius: 999px;
+  padding: 8px 14px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+nav a:hover { border-color: var(--brand); background: var(--bg-layer-2); }
+@media (max-width: 420px) {
+  h1 { font-size: 22px; }
+  section { padding: 15px 16px; }
+}

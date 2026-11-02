@@ -55,20 +55,37 @@ node crawler/crawl.mjs                # 爬取并生成 dist/
 
 ## 站点（`site/`）
 
-- `index.html` **695 字节**（目标 <1KB），全部样式内联，**零外部资源**：不加载字体、JS、图片。
-- `_headers` 给 Pages 加 CORS 与缓存头；`index.json` 缓存 300 s（对 DSH 的 10 分钟内存缓存足够）。
-- **图标不落盘**：生成器直接写 `https://cdn.jsdelivr.net/npm/<pkg>@<ver>/<icon>`（镜像直链），站点产物里没有任何图片资源。
-- 部署时 `dist/` 的 JSON 被复制进 `site/`，Pages 只上传 `site/`。
+- `index.html` **833 字节**（预算 <1KB，CI 会挡），`style.css` 2.6 KB 外链，**没有任何图片/字体/JS**。
+- 配色按 DSH 自己的语义 token 命名（`--dsw-alias-bg-base` / `bg-layer-1/2` / `border-l1/l2` / `brand-primary` / `label-primary|secondary`），字体栈首选 DSH 的品牌字体 Montserrat，缺字体时回落系统字体——所以不下载任何字体文件。
+- 图标不落盘：索引里直接写 `https://cdn.jsdelivr.net/npm/<pkg>@<ver>/<icon>`（镜像直链）。
+- `_headers` 给 Pages 加 CORS 与缓存头（`index.json` 300 s，对 DSH 的 10 分钟内存缓存足够）。
 
-## 部署
+## CI（三段流水线）
 
-GitHub Actions（`.github/workflows/crawl.yml`，每日 03:17 UTC + 手动触发）：
+| 工作流 | 触发 | 做什么 |
+|---|---|---|
+| `crawl.yml` | 每日 03:17 UTC + 手动 | 爬取 → 组装 `site/` → **只有目录变化才**推 `crawl/<run_id>` 分支并开 PR，不直推 main |
+| `ci.yml` | 每次 push / 每个 PR | 门禁自测 → **用官方 `@deepseek-ai/dsh-plugin-market-index` 真验证器**校验索引 → 页面预算与引用检查 → registry 回查 → `--dry-run` 冒烟；PR 来自 `crawl/` 分支且全绿时**自动 squash 合并** |
+| `deploy.yml` | main 的 `site/**`、`dist/**` 变化 | 同时发布 GitHub Pages 与 Cloudflare Pages（`wrangler`），只有通过 `ci` 的提交才会走到这里 |
+| `dependabot.yml` | 每周 | GitHub Actions 版本升级 PR（人工审） |
 
-1. 跑门禁自测 → 2. 爬取 → 3. 把产物复制进 `site/` → 4. 提交回仓库 → 5. `wrangler pages deploy site --project-name=dsh-market`。
+`ci` 里的检查（`crawler/validate.mjs`）：
 
-需要的仓库 secrets：`CLOUDFLARE_API_TOKEN`（Pages:Edit + DNS 所属 zone 权限）、`CLOUDFLARE_ACCOUNT_ID`。
+1. `parseMarketIndex()` —— 与 DSH 运行时同一份校验器，不是自己重写；
+2. `site/index.json` 必须与 `dist/index.json` **逐字节一致**（防止发布物与验证物脱节）；
+3. `site/index.html` < 1024 B，`style.css` 存在；
+4. 页面里不允许出现 `127.0.0.1` / `localhost` / `file://` / 内联图片字体；
+5. 每条 plugin 的 `name@version` 在 registry 上真实存在、仍声明 `dsh.bundle.patch`，且 `engines.dsh` 与索引里写的一致（防止**索引漂移**——DSH 安装侧会用真实包再判一次兼容性）。
 
-自定义域名 `dsh.jiangjiangze.icu` 由 Cloudflare Pages 的 custom domain 绑定，DNS 为同为该账号下的 CNAME（proxied）。
+本地复现（不需要网络可加 `--offline`）：
+
+```bash
+npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+node crawler/crawl.mjs --selftest
+node crawler/validate.mjs
+node crawler/crawl.mjs --dry-run
+```
+
 
 ## 已知限制
 
