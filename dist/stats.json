@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-02T14:09:20.414Z",
+  "registry": "https://registry.npmjs.org",
+  "dshRuntime": "0.2.1-rc.5",
+  "queries": [
+    "keywords:dsh-plugin",
+    "keywords:deepseek-harness",
+    "keywords:dsh"
+  ],
+  "candidates": 336,
+  "shortlisted": 68,
+  "kept": 15,
+  "rejected": 65,
+  "rejectReasons": {
+    "no-version-declares-compatible-engines.dsh": 53,
+    "not-a-bundle": 10,
+    "has-install-script": 2
+  },
+  "bytes": 13726,
+  "ms": 54089
+}
