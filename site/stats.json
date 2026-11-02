@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-02T17:44:04.486Z",
+  "at": "2026-11-02T18:01:23.732Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "queries": [
@@ -17,6 +17,6 @@
     "too-recent": 4,
     "has-install-script": 2
   },
-  "bytes": 33970,
-  "ms": 10758
+  "bytes": 36821,
+  "ms": 34953
 }
