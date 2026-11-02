@@ -59,17 +59,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: crawl/${{ github.run_id }}
         run: |
+          KEPT=$(node -e "console.log(require('./dist/stats.json').kept)")
+          TOTAL=$(node -e "console.log(require('./dist/stats.json').candidates)")
           git config user.name "dsh-market-bot"
           git config user.email "dsh-market-bot@users.noreply.github.com"
           git switch -c "$BRANCH"
           git add dist site
-          git commit -m "chore(crawl): refresh plugin index $(date -u +%Y-%m-%d)"
+          git commit -m "chore(crawl): refresh plugin index"
           git push -u origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
-            --title "chore(crawl): refresh plugin index $(date -u +%Y-%m-%d)" \
-            --body "Automated crawl.
-
-- kept: \`$(node -e "const s=require('./dist/stats.json');console.log(s.kept)")\` / candidates \`$(node -e "const s=require('./dist/stats.json');console.log(s.candidates)")\`
-- rejected: see \`dist/rejections.json\`
-
-\`ci\` validates this branch with the real format-1 validator and merges it when green."
+            --title "chore(crawl): refresh plugin index" \
+            --body "Automated crawl: kept ${KEPT} of ${TOTAL} candidates. ci validates this branch with the real format-1 validator and merges it when green."
