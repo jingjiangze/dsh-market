@@ -12,7 +12,9 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OFFLINE = process.argv.includes('--offline')
 const HTML_LIMIT = 1024
-const MAX_INDEX_BYTES = 8 * 1024 * 1024
+// 12 MB: a merged ~10k-entry index (slim catalog entries + verified ones) lands
+// around 9.6 MB, and DSH handles documents of this size (20k ≈ 7.6 MB bare).
+const MAX_INDEX_BYTES = 12 * 1024 * 1024
 
 const failures = []
 const notes = []
