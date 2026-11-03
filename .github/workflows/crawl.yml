@@ -54,7 +54,10 @@ jobs:
           cp dist/stats.json site/stats.json
 
       - name: Validate before anything lands
-        run: node crawler/validate.mjs
+        # Content checks only: the CDN copy of the site assets cannot be fresh
+        # before this branch merges, so mirror freshness is verified by `ci` and
+        # `deploy` on main instead of failing the crawl.
+        run: node crawler/validate.mjs --offline
 
       - id: diff
         name: Did the catalog change?
