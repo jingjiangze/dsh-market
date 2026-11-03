@@ -680,6 +680,9 @@ async function main() {
         title: { en: titleEn, zh: record.title?.zh || titleEn },
         description: { en: descEn, zh: descZh || descEn },
         ...(record.hintIcon ? { icon: record.hintIcon } : {}),
+        // Keep the repository: the enrich step turns it into stars, and a reader
+        // needs somewhere to look at the source.
+        ...(/^https?:\/\//i.test(String(record.hintRepo ?? '')) ? { repository: { url: String(record.hintRepo).replace(/\.git$/, '') } } : {}),
         metadata: {
           category: categoryFor(record, record.name, titleEn, descEn),
           labels,
