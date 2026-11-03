@@ -94,6 +94,19 @@ jobs:
           SOURCES: dshso,awesome,mydsh
         run: node crawler/crawl.mjs --publish-only
 
+      - name: Fill stars and weekly downloads
+        # Catalog-only entries carry a repository but no numbers. One GitHub call per
+        # distinct repo (token, budget, 3-day cache) fills stars; npm's public point
+        # API fills weekly downloads. Both are best-effort: what is fetched lands,
+        # the rest is retried next run.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ENRICH_CONCURRENCY: '10'
+          ENRICH_BUDGET_MS: '480000'
+          ENRICH_MAX_REPOS: '3500'
+          ENRICH_MAX_DOWNLOADS: '3000'
+        run: node crawler/enrich.mjs
+
       - name: Add the other languages
         # The detail drawer shows one language at a time, so every entry needs its
         # ja/ko/ru text: a bigger per-run budget fills a 10k catalogue in a few runs

@@ -60,6 +60,7 @@ function fromFormatOne(document, label) {
       hintVersion: newest?.version,
       hintPublishTimestamp: newest?.publishTimestamp,
       hintIcon: plugin.icon,
+      hintRepo: plugin.repository?.url ?? plugin.repository?.repo ?? plugin.repository,
       title: { en: textOf(plugin.title), zh: textOf(plugin.title) },
       description: { en: textOf(plugin.description), zh: textOf(plugin.description) },
       repo: plugin.repository?.url,
@@ -144,6 +145,7 @@ export async function discoverFederated(log = console.log) {
         existing.hintVersion ??= record.hintVersion
         existing.hintPublishTimestamp ??= record.hintPublishTimestamp
         existing.hintIcon ??= record.hintIcon
+        existing.hintRepo ??= record.hintRepo
         existing.description ??= record.description
         existing.title ??= record.title
         existing.repo ??= record.repo
