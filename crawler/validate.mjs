@@ -127,14 +127,14 @@ const html = await read('site/index.html')
 for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
-// The shell is only a frame: one placeholder node plus a loader that walks three
-// mirrors (dataset → jsDelivr → this site) with an 8 s timeout per tier. Both files
-// live in ONE content-addressed directory, so the loader can hold a single version.
-const versionMatch = html.match(/site\/a\/([0-9a-f]{10})"/) ?? html.match(/web\/a\/([0-9a-f]{10})"/)
+// The shell points at the dataset copy of one content-addressed directory and
+// carries an `onerror` hop to this site's own bundle; the bundle itself walks the
+// remaining mirror tiers for its stylesheet and its data.
+const versionMatch = html.match(/web\/a\/([0-9a-f]{10})\/style\.css/)
 const version = versionMatch?.[1]
-if (!version) fail('site/index.html', 'no content-addressed asset version in the loader')
+if (!version) fail('site/index.html', 'no content-addressed asset version')
 if (!/modelscope\.cn/.test(html)) fail('site/index.html', 'the dataset tier is not referenced')
-if (!/cdn\.jsdelivr\.net/.test(html)) fail('site/index.html', 'the mirror tier is not referenced')
+if (!/onerror=/.test(html)) fail('site/index.html', 'the bundle has no fallback to this site')
 if (version) {
   const dir = join(root, 'site', 'a', version)
   let css = null
@@ -151,9 +151,8 @@ if (version) {
     else note('site/a assets', `${version}/style.css ${css.length} B + app.js ${js.length} B match`)
   }
 }
-// the loader itself is allowed to be inline: it is the frame, ~0.5 KB, and the only
-// way to walk three mirrors before any bundle has loaded
-if (!/var T=\[/.test(html)) fail('site/index.html loader', 'the three-tier loader is missing')
+// the shell stays declarative: no inline logic, so it can stay tiny
+if (/<script(?![^>]*\bsrc=)/.test(html)) fail('site/index.html inline script', 'shell must not inline JavaScript')
 // no local raster/font/video assets: visuals are CSS or mirrored icons
 for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
   if (html.includes(forbidden)) fail('site/index.html asset', `inlines ${forbidden}`)

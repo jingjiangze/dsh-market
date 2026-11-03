@@ -39,11 +39,16 @@ for (const entry of await readdir(assetsDir, { withFileTypes: true })) {
 }
 
 const htmlPath = join(site, 'index.html')
+// Normalise back to the plain relative references first, so this stays idempotent.
 const authored = (await readFile(htmlPath, 'utf8'))
-  // normalise the tier list back to tokens so this stays idempotent
-  .replace(/var T=\[[^\]]*\]/, 'var T=["T1","T2","T3"]')
-const tiers = JSON.stringify(TIERS.map((base) => `${base}/${version}`))
-const updated = authored.replace('var T=["T1","T2","T3"]', `var T=${tiers}`)
+  .replace(/(<link rel=stylesheet href=)[^>]*>/i, '$1/style.css>')
+  .replace(/(<script type=module src=)[^>]*>/i, '$1/app.js>')
+// Tier 1 (the dataset) is what the shell points at; the bundle carries an
+// `onerror` hop to this site's own copy, and `ensureStyles` in the bundle walks
+// the rest of the tiers for the stylesheet.
+const updated = authored
+  .replace(/(<link rel=stylesheet href=)[^>]*>/i, `$1${TIERS[0]}/${version}/style.css>`)
+  .replace(/(<script type=module src=)[^>]*>/i, `$1${TIERS[0]}/${version}/app.js onerror="this.src='/app.js'">`)
 await writeFile(htmlPath, updated)
 
 const bytes = (await stat(htmlPath)).size
