@@ -220,9 +220,10 @@ header h1 {
 
 /* ── detail drawer ────────────────────────────────────────────────────── */
 dialog {
-  /* centred modal (was a right-hand drawer) */
+  /* centred modal that hugs its content (a stale CF deployment once shipped the
+     full-height drawer rule, which is what made this panel look empty) */
   margin: auto; padding: 0; width: min(720px, 92vw);
-  max-height: 86vh; height: auto; overflow-y: auto;
+  height: fit-content; max-height: 86vh; overflow-y: auto;
   color: var(--text);
   background: linear-gradient(180deg, #121a2b, #0a0f1a);
   border: 1px solid var(--line-2); border-radius: 18px;

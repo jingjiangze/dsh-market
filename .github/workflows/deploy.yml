@@ -39,15 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Trim the Cloudflare bundle
+        # Only the shell and its assets go to Cloudflare: the ~20 MB of index
+        # documents made wrangler's asset check return 500 and left the brand
+        # domain on an old deployment. The page reads its data from ModelScope.
+        run: |
+          mkdir -p site-cf
+          cp site/index.html site/style.css site/app.js site-cf/
+          cp site/_headers site-cf/ 2>/dev/null || true
+          cp site/stats.json site-cf/ 2>/dev/null || true
+          du -sh site-cf
       - uses: cloudflare/wrangler-action@v3
         # The brand domain mirrors GitHub Pages; it is not the source of truth.
-        # wrangler's asset check has returned 500 on a ~20 MB upload, which must
-        # not fail the whole deploy and hide the Pages result.
         continue-on-error: true
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy site --project-name=dsh-market --branch=main --commit-dirty=true
+          command: pages deploy site-cf --project-name=dsh-market --branch=main --commit-dirty=true
 
   verify:
     # Publishing is not done until the deployed bytes are the tested bytes.
