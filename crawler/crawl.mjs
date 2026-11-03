@@ -615,7 +615,7 @@ async function main() {
       if (cache.entries[record.name]) continue
       if (!record.hintVersion) continue
       const titleEn = record.title?.en || record.name
-      const descEn = String(record.description?.en ?? '').slice(0, 160)
+      const descEn = String(record.description?.en ?? '').trim().slice(0, 160) || titleEn
       const descZh = String(record.description?.zh ?? record.description?.en ?? '').slice(0, 160)
       const labels = displayLabels([
         ...(record.origins ?? []),
