@@ -460,15 +460,31 @@ async function main() {
     }))
   }
 
-  // 4. shape the document
-  const kept = plugins
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .slice(0, MAX_PLUGINS)
+  // 4. merge this run into the carried catalogue, then shape the document.
+  //    Verification is incremental (a cursor walks the pool), so the published
+  //    index must be cumulative — otherwise every run would only publish the
+  //    slice it happened to check and the catalogue would shrink.
+  const cachePath = join(root, 'data', 'catalog.json')
+  let cache = { entries: {} }
+  try {
+    cache = JSON.parse(await readFile(cachePath, 'utf8'))
+    if (!cache?.entries) cache = { entries: {} }
+  } catch {
+    cache = { entries: {} }
+  }
+  const verifiedAt = Date.now()
+  for (const { _sidecar, ...plugin } of plugins) {
+    cache.entries[plugin.name] = { plugin, sidecar: _sidecar, verifiedAt }
+  }
+  const carried = Object.values(cache.entries)
+    .sort((a, b) => (b.verifiedAt ?? 0) - (a.verifiedAt ?? 0) || a.plugin.name.localeCompare(b.plugin.name))
+  const kept = carried.slice(0, MAX_PLUGINS).map((entry) => ({ ...entry.plugin, _sidecar: entry.sidecar }))
 
   const sidecar = {
     generatedAt: new Date().toISOString(),
     registry: REGISTRY,
     dshRuntime: DSH_RUNTIME,
+    catalogue: { carried: carried.length, verifiedThisRun: plugins.length, published: kept.length },
     gates: { minAgeDays: MIN_AGE_DAYS, maxPlugins: MAX_PLUGINS, requires: ['dsh.bundle.patch', 'engines.dsh satisfied', 'no install script', 'clear license', 'declared category', 'bilingual text'] },
     plugins: kept.map((p) => ({ name: p.name, version: p.versions[0].version, category: p.metadata.category, ...p._sidecar })),
   }
@@ -512,6 +528,9 @@ async function main() {
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
     await mkdir(join(root, 'data'), { recursive: true })
     await writeFile(join(root, 'data', 'cursor.json'), JSON.stringify({ offset: nextCursor, pool: ordered.length, at: new Date().toISOString() }, null, 2) + '\n')
+    // Keep the carried catalogue bounded so the repository does not grow forever.
+    const trimmed = { entries: Object.fromEntries(carried.slice(0, 4000).map((entry) => [entry.plugin.name, entry])) }
+    await writeFile(cachePath, JSON.stringify(trimmed) + '\n')
   }
 
   for (const r of rejections) bump(counts, r.why)
