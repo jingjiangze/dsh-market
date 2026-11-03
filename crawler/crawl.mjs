@@ -234,6 +234,20 @@ function categoryFor(record, ...texts) {
   return classify(...texts)
 }
 
+// Only labels that change a reader's decision are published: which catalog listed
+// the plugin, whether that catalog verified it, and whether the Chinese text is
+// still a placeholder. "auto-crawled" and "engines-pinned" were true for every
+// entry and only added noise to every card.
+const KEEP_LABELS = new Set([
+  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh',
+  'trust-readme-verified', 'trust-repo-fallback',
+  'zh-fallback',
+])
+
+function displayLabels(labels) {
+  return [...new Set((labels ?? []).filter((label) => KEEP_LABELS.has(label)))].slice(0, 3)
+}
+
 // --------------------------------------------------------------- localization
 // Prefer the text the author already ships: a package's own `locale/zh.json`
 // carries the localized title/description DSH shows, so no machine translation
@@ -476,7 +490,12 @@ async function main() {
           metadata: {
             keywords: (man.keywords || []).slice(0, 8),
             category,
-            labels: ['auto-crawled', 'engines-pinned', `zh-${zh.source}`, ...(provenance.get(name)?.origins ?? ['src-npm']), ...(provenance.get(name)?.trust ?? [])],
+            ...(record?.stars ? { sortKeys: { stars: record.stars } } : {}),
+            labels: displayLabels([
+              ...(provenance.get(name)?.origins ?? ['src-npm']),
+              ...(provenance.get(name)?.trust ?? []),
+              `zh-${zh.source}`,
+            ]),
           },
           versions: [{
             version,
@@ -489,6 +508,7 @@ async function main() {
             attestations: man.dist?.attestations?.url ?? null,
             unpackedSize: man.dist?.unpackedSize ?? null,
             zhSource: zh.source,
+            stars: record?.stars ?? null,
             origins: [...(provenance.get(name)?.origins ?? ['src-npm'])],
             trust: [...(provenance.get(name)?.trust ?? [])],
             ...(zh.pinnedFor ? { zhPinnedFor: zh.pinnedFor } : {}),
@@ -530,7 +550,24 @@ async function main() {
       textOf(plugin.description),
       (plugin.metadata?.keywords ?? []).join(' '),
     )
-    return { ...plugin, metadata: { ...plugin.metadata, category }, _sidecar: entry.sidecar }
+    // Stars come from the catalog that listed the plugin; the federated discovery
+    // covers the whole pool every run, so cached entries get them too.
+    const stars = plugin.metadata?.sortKeys?.stars ?? entry.sidecar?.stars ?? provenance.get(plugin.name)?.stars ?? undefined
+    const metadata = {
+      ...plugin.metadata,
+      category,
+      labels: displayLabels(plugin.metadata?.labels),
+      ...(Number.isFinite(stars) && stars > 0 ? { sortKeys: { ...(plugin.metadata?.sortKeys ?? {}), stars } } : {}),
+    }
+    if (!metadata.sortKeys || Object.keys(metadata.sortKeys).length === 0) delete metadata.sortKeys
+    return { ...plugin, metadata, _sidecar: entry.sidecar }
+  })
+  // The index order is what a reader sees first (and what DSH's "default order"
+  // shows), so publish it sorted by stars rather than alphabetically.
+  kept.sort((a, b) => {
+    const sa = a.metadata?.sortKeys?.stars ?? 0
+    const sb = b.metadata?.sortKeys?.stars ?? 0
+    return sb - sa || a.name.localeCompare(b.name)
   })
 
   const sidecar = {
@@ -550,41 +587,46 @@ async function main() {
     },
     metadata: {
       categories: Object.fromEntries(Object.entries(CATEGORIES).map(([id, t]) => [id, { title: t }])),
+      // Only the labels a reader acts on are declared and shown. Everything else
+      // ("auto-crawled", "engines-pinned", the zh-source variants) was noise on
+      // every card, so it is neither published nor declared any more.
       labels: {
-        'auto-crawled': { title: { en: 'Auto-crawled', zh: '自动爬取' } },
-        'engines-pinned': { title: { en: 'engines.dsh pinned', zh: '已钉 DSH 版本' } },
-        'zh-native': { title: { en: 'Chinese text from the package', zh: '中文取自包自带 locale' } },
-        'zh-override': { title: { en: 'Chinese text curated here', zh: '中文由本仓库整理' } },
-        'zh-detected': { title: { en: 'Chinese text written by the author', zh: '中文为作者原文' } },
-        'zh-fallback': { title: { en: 'Chinese text pending', zh: '中文待补（暂用英文）' } },
-        'zh-catalog': { title: { en: 'Chinese text from a federated catalog', zh: '中文取自联邦目录' } },
-        'src-npm': { title: { en: 'Found on npm search', zh: 'npm 检索收录' } },
-        'src-dshso': { title: { en: 'Listed by dsh.so', zh: 'dsh.so 目录收录' } },
-        'src-awesome': { title: { en: 'Listed by awesome-dsh-plugin', zh: 'awesome-dsh-plugin 收录' } },
-        'src-mydsh': { title: { en: 'Listed by mydsh.xyz', zh: 'mydsh.xyz 收录' } },
-        'trust-readme-verified': { title: { en: 'Source checked it against its README', zh: '来源按其 README 核对过' } },
-        'trust-repo-fallback': { title: { en: 'Source pinned it by repository commit', zh: '来源按仓库提交固定' } },
-        'trust-unpinned': { title: { en: 'Source gave no pinned target', zh: '来源未给固定安装目标' } },
-        'trust-source-index': { title: { en: 'Listed in another market index', zh: '收录于其他市场索引' } },
+        'src-npm': { title: { en: 'npm', zh: 'npm' } },
+        'src-dshso': { title: { en: 'dsh.so', zh: 'dsh.so' } },
+        'src-awesome': { title: { en: 'awesome', zh: 'awesome' } },
+        'src-mydsh': { title: { en: 'mydsh', zh: 'mydsh' } },
+        'trust-readme-verified': { title: { en: 'README checked', zh: 'README 核对' } },
+        'trust-repo-fallback': { title: { en: 'repo pinned', zh: '仓库固定' } },
+        'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
+      },
+      // Star counts are carried from the catalogs that publish them, so "sort by
+      // stars" in DSH works on this index instead of only on dsh.so's own.
+      sortKeys: {
+        stars: { title: { en: 'Stars', zh: '星标' }, order: 'desc' },
       },
     },
     plugins: kept.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
-  // Two extra sources, split by where the entry was tested/curated: the domestic
-  // catalogs (dsh.so, mydsh.xyz, Chinese-authored text) versus the international
-  // ones (awesome-dsh-plugin and the raw npm search). Each is a complete format-1
-  // document, so a reader can add only the source that matches their network.
-  const labelsOf = (plugin) => plugin.metadata?.labels ?? []
-  const isCn = (plugin) => labelsOf(plugin).some((label) => ['src-dshso', 'src-mydsh', 'zh-native', 'zh-override', 'zh-catalog'].includes(label))
-  const isIntl = (plugin) => labelsOf(plugin).some((label) => ['src-awesome', 'src-npm'].includes(label))
+  // Two extra sources, split by where the entry was tested or curated: the
+  // domestic catalogs (dsh.so, mydsh.xyz, Chinese-authored text) versus the
+  // international ones (awesome-dsh-plugin, raw npm search). Each is a complete
+  // format-1 document, so a reader can add only the source that fits their network.
+  // The split is decided from the crawl bookkeeping (origins + where the Chinese
+  // text came from), not from the display labels, which are deliberately trimmed.
+  const isCnEntry = (entry) =>
+    (entry._sidecar?.origins ?? []).some((origin) => origin === 'src-dshso' || origin === 'src-mydsh') ||
+    ['native', 'override', 'catalog', 'detected'].includes(entry._sidecar?.zhSource)
+  const isIntlEntry = (entry) =>
+    (entry._sidecar?.origins ?? []).some((origin) => origin === 'src-awesome' || origin === 'src-npm')
+  const strip = ({ _sidecar, ...rest }) => rest
   const splitIndex = (predicate, titleEn, titleZh) => ({
     ...index,
     title: { en: titleEn, zh: titleZh },
-    plugins: index.plugins.filter(predicate),
+    plugins: kept.filter(predicate).map(strip),
   })
-  const cnIndex = splitIndex(isCn, 'DSH Plugin Index · domestic sources', 'DSH 插件索引 · 国内源')
-  const intlIndex = splitIndex(isIntl, 'DSH Plugin Index · international sources', 'DSH 插件索引 · 国际源')
+  const cnIndex = splitIndex(isCnEntry, 'DSH Plugin Index · domestic sources', 'DSH 插件索引 · 国内源')
+  const intlIndex = splitIndex(isIntlEntry, 'DSH Plugin Index · international sources', 'DSH 插件索引 · 国际源')
 
   await mkdir(OUT, { recursive: true })
   const DRY = process.argv.includes('--dry-run')

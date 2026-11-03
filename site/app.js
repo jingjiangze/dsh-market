@@ -10,7 +10,7 @@ const TRUST_LABEL = {
   'trust-unpinned': '未固定',
   'trust-source-index': '目录收录',
 }
-const state = { lang: 'zh', idx: 'index', query: '', category: 'all', limit: 60, data: null, stats: null, open: null }
+const state = { lang: 'zh', idx: 'index', query: '', category: 'all', limit: 60, sort: 'stars', data: null, stats: null, open: null }
 
 const $ = (id) => document.getElementById(id)
 const pick = (value, lang) => (typeof value === 'string' ? value : (value?.[lang] ?? value?.en ?? value?.zh ?? ''))
@@ -48,11 +48,26 @@ function badges(plugin) {
   return [...new Set([...sources, ...trust])].slice(0, 3)
 }
 
+function stars(plugin) {
+  const value = Number(plugin.metadata?.sortKeys?.stars ?? 0)
+  if (!value) return ''
+  return value >= 1000 ? `★ ${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}k` : `★ ${value}`
+}
+
+// Stars first (that is what a reader wants to see), then the index's own order.
+function byOrder(a, b) {
+  const sb = Number(b.metadata?.sortKeys?.stars ?? 0)
+  const sa = Number(a.metadata?.sortKeys?.stars ?? 0)
+  if (sb !== sa) return sb - sa
+  return a.name.localeCompare(b.name)
+}
+
 function card(plugin) {
   const version = plugin.versions?.[0]
   const icon = plugin.icon ? `<img loading=lazy src="${esc(plugin.icon)}" alt="">` : '<i class=dot></i>'
   const tags = [
     pick(state.data.metadata?.categories?.[plugin.metadata?.category]?.title, state.lang) || '其他',
+    stars(plugin),
     version?.version ? `v${version.version}` : '',
     plugin.author ?? '',
     day(version?.publishTimestamp),
@@ -64,7 +79,7 @@ function card(plugin) {
 function render() {
   const data = state.data
   if (!data) return
-  const plugins = data.plugins.filter(matches).sort((a, b) => a.name.localeCompare(b.name))
+  const plugins = data.plugins.filter(matches).sort(byOrder)
   const counts = new Map()
   for (const plugin of data.plugins) counts.set(plugin.metadata?.category ?? 'other', (counts.get(plugin.metadata?.category ?? 'other') ?? 0) + 1)
   const categories = Object.keys(data.metadata?.categories ?? {})

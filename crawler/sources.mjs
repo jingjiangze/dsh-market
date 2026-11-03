@@ -100,6 +100,7 @@ function fromMydsh(document, label) {
       record.trust.add('trust-unpinned')
       record.hintCategory ??= entry.category
       record.repo ??= entry.repo
+      record.stars ??= Number(entry.stars) || undefined
       record.description ??= { en: String(entry.summary ?? ''), zh: String(entry.summary ?? '') }
       found.set(parsed.name, record)
     }
