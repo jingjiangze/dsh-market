@@ -1,2324 +1,2415 @@
 [
   {
-    "name": "@kbaynes/dsh-exploration-kit",
+    "name": "deepshell-agent",
     "why": "no-latest-version"
   },
   {
-    "name": "@KhalidAlnujaidi/mr-meeseeks",
+    "name": "DeepSeekHarnessGreen",
     "why": "no-latest-version"
   },
   {
-    "name": "@keleus/deepseek-pet",
+    "name": "deepshell",
     "why": "no-latest-version"
   },
   {
-    "name": "@Khorsheed/dsh-basic",
+    "name": "DeepTail",
     "why": "no-latest-version"
   },
   {
-    "name": "@kejuecy/dsh-skills",
+    "name": "deepseekHarnessUI",
     "why": "no-latest-version"
   },
   {
-    "name": "@keith269/dsh-permission-rules",
+    "name": "deepsiper-enthea",
     "why": "no-latest-version"
   },
   {
-    "name": "@Khorsheed/dsh-plugins",
+    "name": "DeepSeekHarnessGuide",
     "why": "no-latest-version"
   },
   {
-    "name": "@kipozannaki/DSH-Headroom-Plugin",
+    "name": "DeepSeekHarnessRemoteGateway",
     "why": "no-latest-version"
   },
   {
-    "name": "@kihara777/dsh-api-balance",
+    "name": "DeepSeekHarnessSDK",
     "why": "no-latest-version"
   },
   {
-    "name": "@kirahvi03/Hackathon--Plug-In",
+    "name": "DeepSeekSpend",
     "why": "no-latest-version"
   },
   {
-    "name": "@kobenfang/dsh-bigfocus",
+    "name": "DeepSonder",
     "why": "no-latest-version"
   },
   {
-    "name": "@kobenfang/dsh-big8",
+    "name": "Deepseekharnessoneclickinstall",
     "why": "no-latest-version"
   },
   {
-    "name": "@kobenfang/dsh-biglead",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@KNLCXY/dsh-github-scripts",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-bigfood",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@KKKKeybird/dsh-turn-rail-persistent",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-bigfish",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@KrzysztofJohnson/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kovey/dsh-engineering-suite",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kok2891/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@koinrokka/dsh-plugins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-fruitpi",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-bigtimer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-eyes",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-bigseed",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@KostasZhdanov9930/dsh-permission-rules",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-bigplan",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kobenfang/dsh-listform",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lacroix68050/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kuanfu0430/dsh-compaction-tune",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kuanfu0430/dsh-sidebar-branch-chat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@l-vm2k/dsh-ayaka-theme",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@kxdyh/dsh-usage-meter",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Kuaizr/dsh-vps-live",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@leechen298/code2skill",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@leeingo136-blip/dsh-plugin-cfl",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@laohankk/dsh-crt-skins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lbxc/dsh-voice-input",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@leonathan369-droid/qq-bridge",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lemonhall/asd-ste100-skill-zh",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LeonieKarabacak542/jevcore",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lemoe-technology/dsh-plugins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lemonhall/dsh-skin-lucy",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lewandowski11609/jevcore",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lgtuusb/dsh-peer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lg114/dsh-md-live",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lianzhimanye/dsh-bard-0.03",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@liangkw16/dsh-web-control",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Liang-HZ/dsh-plugin-mcp-session-meta",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@liangTc/dsh-become-human",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@liangminhua/agent-notes-toolkit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linshule/dsh-balance",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lingfengQAQ/webnovel-writer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linakuznetsov47/jevcore",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lilygalli98227/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lilinhua0413/dsh-undici-timeout-fix",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LimiChan-2026/dsh-plugins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lirenjie95/IamChinese",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lithane/dsh-account-balance",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-chime",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-balance",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Linusteller/dsh-session-delete",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-web-start-ui",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-prompt-enhancer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-client-ui-lingxi",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-stats-panel",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-client-ui-skin-jarvis",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@linxin666/dsh-client-ui-skin-matrix",
+    "name": "deeptide",
     "why": "not-a-bundle"
   },
   {
-    "name": "@LJH-snow/dsh-tool-airtable",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-browser",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@liustack/dsh-plugin-inventory-groups",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@liupengyang-1008/dsh-plugin-development",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-cloudflare",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-aws",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-n8n",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-microsoft-365",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-discord",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-memory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-gmail",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-google-drive",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-figma",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-dockerhub",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-mongodb",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-context7",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-feishu",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-firecrawl",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-pane-viewer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lMarino48/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-redis",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-zendesk",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-stripe",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LJH-snow/dsh-tool-pagerduty",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-restart-button",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-lan-services",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-extensions-panel",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/archived-sessions",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-achievements",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-archive-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-wifi-access",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-abaqus",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/branch-map",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ln1m/dsh-skill-sets",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-answer-sound",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/ds-balance",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/approval-zh",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lnksoul1/prism-ui-design",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-image-describe",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-ask-mode",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-dwg-preview",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-cost-meter",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-github-upload",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-context-usage",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-chrome-browser",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-jingcha",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-enet-review",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-bundle-session-delete",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-audio-rail",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-element-context",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-plugin-document-editor",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-m3-monet",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-peak-reminder",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-mcp-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-paper-reader",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-pen",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-plugin-voice-input",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-plugin-data-mask",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-knowledgenet",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-prompt-forge",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-prompt-forecast",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-plugin-local-prompt-bridge",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-standalone-chat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-session-dustbin",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-secrets-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-session-retry",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-rtl-chat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-rewind-retry",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-prompt-optimizer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-reply-forge-v2",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-sync",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-session-delete",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-status-telemetry",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-task-notify",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-wallet-hud",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-ui-thinking-title",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-tool-imagegen",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-vision-fallback",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-usage-monitor",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-theme-everforest",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-team-workbench",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-turn-recap",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-video-wallpaper",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-ui-zoom",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-usage",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-usage-balance",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-xiaoyaoyou",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/kenlet-v2",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/tokensqueezer",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/think-level",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/opencode-go-quota",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-wyymusic-player",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/skills-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/jellyfish-theme",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/token-usage",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@locallens/dsh-tool-screenshot-ocr",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/dsh-web-fetch-lan",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@local/mermaid-chat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lonk1989/webclaw-oss",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LosEcher/dsh-terminal-render",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lorenzo092/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@loopx-project/loopx",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@loserfox/git-identity",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lql341/deepseek-harness-linux-desktop",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lpatel887/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LQH-A-A-O/dsh-bcut-edit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LQH-A-A-O/dsh-simple-drawing",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lovstudio/dsh-search-model",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@LucaHoward64253/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lSzymanski73/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ltl0312/my-dsh-plugins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lsl1931/dsh-resource-bar",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lxfebd/AgentPilot",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ly59162/dsh-noema",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@luobosibing2/deepseek-harness-jev",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@luoyukun3-oss/gh-my-posts",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@lunaship/dsh-cetus",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ManuelHussein8323/dsh-lowtide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@majinggui/dsh-plugin-skill-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Manta-Network/lifeclaw",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Maopk/dsh-termux-kit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Lyoko-Jeremie/dsh-plugin-usage-insights",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@M-Abozaid/limonene-mcp",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@marksimZ/dsh-session-radar",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@marquez807/dsh-experience-memory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@marksimZ/dsh-usage-kit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Marilynm09184/dsh-permission-rules",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@marksimZ/dsh-approval-guide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Margaux2074/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@marksimZ/dsh-balance-guard",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mateusztakahashi/dsh-lowtide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mattpocock-community/dsh-engineering-skills",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@masatot633/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MARUIZEWUDI/dsh-chatbox-compat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mcf171/dsh-session-delete",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MaxHou-infinity/dsh-mcp-session-recovery",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@max/dsh-cost-meter",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@maxesisnclaw/dsh-official-group-guard",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@meisijiya/dsh-plugin-recommendations",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MaybeMeibeMaybi/dsh-lan-remote-access",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MeiLopez/dsh-noema",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@maybemar/dsh-ctrl-c",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@maxcloser/a-share-screener-push",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Michel1130/dsh-noema",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mhxy13867806343/dsh-update-vd",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mengge237/dsh-legacy-compat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@memtensor/memos-local-plugin",
-    "why": "has-install-script"
-  },
-  {
-    "name": "@mikulo/dsh-translator",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@miho079/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mikulo/dsh-prompt-switcher",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@miloye7711-dotcom/dsh-local-model",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mMulder84/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@missher/dsh-project-ops",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Miyeoni61/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@miuzel/harness-reflex",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mixin-ai/dsh-git-branch-switcher",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@missher/dsh-session-bridge",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@missher/dsh-reasoning-effort",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@monika31250/dsh-noema",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MnemosyneOS/mnemosyne",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@moazzamak/dsh-code-review",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@MnemosyneOS/dsh-ai-memory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mnowak517/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mostkia/dsh-launcher",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mostkia/dsh-htmlui",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@morlay/session-branch",
+    "name": "delta",
     "why": "not-a-bundle"
   },
   {
-    "name": "@morlay/session-rdb",
+    "name": "deepwork",
     "why": "not-a-bundle"
   },
   {
-    "name": "@mrrisega/dsh-remote",
+    "name": "DeepWorker",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "deltabox-lite",
     "why": "not-a-bundle"
   },
   {
-    "name": "@morlay/ui-conversation-message-actions",
+    "name": "deepwiki-rs",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "delivery-review-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "deja-vu",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "deliverable-qa",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DeepTutor",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "deepwhale-desktop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dependency-cruiser",
     "why": "not-a-bundle"
   },
   {
-    "name": "@my-zzylearner/dsh-web-notify",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@muziixzx/dsh-taskdone-notify",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@myxiyues/dsh-window-size",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@my-dsh/dsh-web-search-tavily",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@mrwoov/dsh-agent-md",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@muwinds/dsh-archived-sessions",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Nao18242/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nanfangtown/file-checker",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@negriniainda/dsh-locale-ptbr",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nathan/dsh-model-list-search",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@N107meow/dsh-plugin-figma",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nateec/dsh-gitkraken",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nathalie431/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nanpaidashi/dsh-honcho-sync",
+    "name": "design-extract",
     "why": "not-a-bundle"
   },
   {
-    "name": "@nguyenhnhatquang/DSH-Plugins",
+    "name": "desktop-pack",
     "why": "no-latest-version"
   },
   {
-    "name": "@nguyen03601/dsh-crew",
+    "name": "Design-Agent",
     "why": "no-latest-version"
   },
   {
-    "name": "@NickyWooden/dsh-scrapling",
+    "name": "desktop-touch-mcp",
     "why": "no-latest-version"
   },
   {
-    "name": "@Nesarf/TastyLineOut",
+    "name": "designcraft-plugin",
     "why": "no-latest-version"
   },
   {
-    "name": "@nHoffmann770/rapid-mlx-dsh-provider",
+    "name": "desktop-cc-gui",
     "why": "no-latest-version"
   },
   {
-    "name": "@neutronslime/dsh-preset-switcher-fork",
+    "name": "desktop-gui-automation-cua",
     "why": "no-latest-version"
   },
   {
-    "name": "@noorszymanski408/dsh-permission-rules",
+    "name": "deskwhale-harness",
     "why": "no-latest-version"
   },
   {
-    "name": "@Noctfom/Galatea-Link-DSH",
+    "name": "dev-flow",
     "why": "no-latest-version"
   },
   {
-    "name": "@npopov865/dsh-permission-rules",
+    "name": "deskpet-bridge",
     "why": "no-latest-version"
   },
   {
-    "name": "@Noy700/rapid-mlx-dsh-provider",
+    "name": "desktop-hand",
     "why": "no-latest-version"
   },
   {
-    "name": "@oksure/dsh-client-ui-mobile-comfort",
+    "name": "dev-harness-runtime",
     "why": "no-latest-version"
   },
   {
-    "name": "@oDixon527/dsh-permission-rules",
+    "name": "dhs-tuicode",
     "why": "no-latest-version"
   },
   {
-    "name": "@NutshellLee/dsh-agent-restart",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@omareriksson018/dsh-lowtide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nx9161/war-room-protocol",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@oliblue-evan/dsh-cli-inventory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@nydsg/dsh-mindmap",
+    "name": "dib",
     "why": "not-a-bundle"
   },
   {
-    "name": "@openmaic/dsh-openmaic",
+    "name": "dhs-plugins",
     "why": "no-latest-version"
   },
   {
-    "name": "@OpencodeSilver/OpencodeSilver",
+    "name": "DHS-multi-agent-plugin",
     "why": "no-latest-version"
   },
   {
-    "name": "@omdsh-dev/dsh-bang-shell",
+    "name": "dev-workbench",
     "why": "no-latest-version"
   },
   {
-    "name": "@onfzi/dsh-plugin-usage-pulse",
+    "name": "dida-todo",
     "why": "no-latest-version"
   },
   {
-    "name": "@omarfischer4315/jevcore",
+    "name": "dfy-dsh-plugins",
     "why": "no-latest-version"
   },
   {
-    "name": "@p455enger/dsh-web-tray",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@orphiczhou/dsh-region-probe",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ottotheagent/otto-dsh",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@OrderG-X/dsh-cu",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@orphiczhou/dsh-session-tree",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pandarayc/dsh-skill-tier",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pablop35206/dsh-permission-rules",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pandey08613/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pedromarcioap/dsh-approval-notifier",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Pedro79066/dsh-lowtide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@PaoloSchwarz/jevcore",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@PandaBoby/dsh-rea",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pearjelly/deep-blend",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Physicolor/dsh-design-resources",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@PHM-Audit/dsh-action-guard",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@philmingdao/anno-dsh-native",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@PerryLink/dsh-attention-index",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@peterwangze/software-project-governance-plugin",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@petrak759/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@petraivanov400/dsh-noema",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@piedpiper911/dsh-workflow-canvas",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ptfm/dsh-github",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@psychiiii/dsh-three-window",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pomelotea-yuzu/dsh-add-files",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pomelotea-yuzu/dsh-memory-layered",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@pomelotea-yuzu/dsh-updater",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ploy1377/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@QT7-C23/DSH-Marketplace",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@qlheric/dsh-code-atlas",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@qlheric/dsh-toolbox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@qikairo7/dsh-usage-panel",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@QIN-SMART/dsh-plugin-kit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@RafaelFerrara60340/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ramwin/django-generic-websocket-project",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rakutek/dsh-intelligent-ui",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Rafayellllllllllllll/gesture-flower",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@qyjqio/dsh-cursor-toolkit",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@RafaelKim063/flameox",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@renge1145141919810/dsh-p5r-theme",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Relvato/dsh-plugin-relvato",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@retc1/harness-plugin-tutorial",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Ravomi/dsh-graphify-skill",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@reactive-resume/reactive-resume",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@reliable-ly0411/babeldoc-pdf-translate",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Rorato49012/dsh-permission-rules",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@RoseSamaras/reaudit-ai-plugin",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Roussel27423/engramory",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rkowalczyk2782/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@RicardoYan/dsh-symlink-passthrough",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rivenshanghai/dsh-toomuch-plugins",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@RyeSama/dsh-plugin-guard",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rshh0520/opencode-go-useage",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ruaibeite/dsh-undo",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ruaibeite/dsh-files-to-chat",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rpegorov/harness-review",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rycbartbad/dsh-key-manager",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rsdgnchen/dsh-terminal",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rsdgnchen/dsh-bottom-dock",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ruaibeite/dsh-auto-observe",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@rpegorov/agent-pet",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@SakuraYH1080/dsh-purge-dsh0.2.1",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Sanders1650/dsh-permission-rules",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@scholz91/dsh-crew",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@S-anZZz/dsh-deepseek-web-sync",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@SarahLombardo/dsh-lowtide",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@salexander493/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@ryujia92454/rapid-mlx-dsh-provider",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@Sacredbluedragon/dsh-memory-shield",
-    "why": "no-latest-version"
-  },
-  {
-    "name": "@sagentlab/navarch-runtime",
+    "name": "dialogic",
     "why": "not-a-bundle"
   },
   {
-    "name": "@kira905/dsh-ecosystem-panel",
+    "name": "dexthemes",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dictation-turbo",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "distill",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "DigUp",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DiscordChatExporter",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "diun",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "digler",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "django-generic-websocket-project",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dive",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "disk-sentinel",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dir-tree-dsh",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "distilly",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "DIzzy-DSH",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "distill-kura",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dock",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "doc-ocr",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dnglab",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "doc-watermark",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "docgen",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "DLR",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "docspell",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dockyard-dsh",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "docker-mailserver",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "domoticz",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "docs-retriever",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dolphin-pet-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dockpeek",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "docx",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "docling",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dotnet-deepseek-harness-desktop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dph-unarchive-sessions",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dph-taskboard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DPwhale-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "doubao-vision-dsh",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "doneos-packs",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "donecheck",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "drafta-mcp",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dompdf",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dragonfly-chatbot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DramaPilot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-api-usage",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "ds-balance-card",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-ask-graph",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-bot-android",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "Draw-A-Fortune",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DS-Bot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dreamina-canvas-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dreamina-design-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-bot-mobile-bridge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-kanban",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-mobile-skin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-turn-notify",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-image-skin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-pet",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-whale-ui",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-bot-mobile-web",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-football-agent",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "ds-spec-loop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "Dsh_Desktop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_deepseekapi_quota",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dscomputer-control",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_Desktop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_AutoLoad_workflow",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_desktop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsdragpasteall",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "DSH_Addy-Agent",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dscode",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_Creative_Workshop",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsbot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_plugins",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_launcher",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_Launch_Console",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_image-modlens-bridge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_Mobile",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_plugin_refresh",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_for_mac",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_plugin_swift_cycle",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_kline",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_desktop_for_linux",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_omnivision",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_use_browser",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_update_check",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_remote",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_VsCodeMode",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_ToSkin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_theme_Minecraft",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_session_folders",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_theme_terraria",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_resume_warehouse",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_StartTopDesk",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_plugins",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_tui",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_web_client_theme_switcher",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh_workflow",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH-",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-2origin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-101",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-0-tools",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-24-PA",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh--prompt--enhance",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH_xieshujing",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-2048",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-429-guard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-a-share-assistant",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-3d-preview",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-3d-plugin-graph",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-9router-web-search",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-404-panic-lock",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "Dsh-550-Boot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-550c-boot-deepseek",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-7",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-550w-boot",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-abs",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-a11y-audit",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-abacus",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-abstract-store",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-a11y-announcer",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-a2a-agent",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-a-stock-five-dimension",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ab-sample",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ac-save",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-access-mode",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-academic-research",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-academic-paper-search",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ac-size",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-academic-skill",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-access-review-proof",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ac-trouble",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-accounts-ui",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ace",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-account-glance",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-accounting-cert",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-account-hub",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-account-usage",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-account-balance-badge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-account-balance-pill",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-accessory-hub",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acp",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-acp-for-bitfun",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acne-care",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acp-adapter",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acp-interactive",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-acp-java-sdk",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-AcidCore-plugins",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acne-mark",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acp-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-active-listening",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-activity-heat",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-action",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acrylic-light",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-action-parity",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-activity-line",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acre2ha",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-actinium",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH-action",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-action-guard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-activity-view",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-acupoint",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adaptive-anchored-standard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adaptive-native-standard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ad-roi",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ad-bid",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adaptive-model-router",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-add-to-chat-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-addon-kit",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adaptive-update",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adhd-session-mode",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adhd-friendly",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-add-image-button",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-add-files",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adjudication",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-admin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-add-conversation",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ads",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-admin-mode",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adult-tension",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adversarial-roundtable",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adrian-agents-group-work",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adrian-inject-context",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adversary",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-advancesearch",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adversarial-review",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-adult-vaccine",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-adt",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-age-calc",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-advisor-3",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-age-edu",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ag-ui",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-afghanistan",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-age",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-agency-agents",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agency-market",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aemeath",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aemeath-skin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-advisor-locale-ja",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-arena",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-board-3",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-bridge-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH-agent-bridge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-activity",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-ask-timeout",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-arcade",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-bridge-4",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-compact",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-context-pruner",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-clean",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-contract",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-chat",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-compact-self",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-context-steward",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-checkpoint",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-browser-auto",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-dispatch-3",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-group-panel",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-evolve",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-gateway",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-flight-recorder",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-emotion",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-forge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-control",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-handoff-deliberation",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-guardian",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-llm",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-llm-retry",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-guard-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-log",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-in-browser",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-guard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-instructions",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-loop-engineering",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-memory",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-agent-manage",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-ops",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-menu",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-pill",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-model-router",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-ping",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-memory-5",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-preset-router",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-plugin-market",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-plugin-manager",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-preflight",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "DSH-agent-procedures",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-pricing",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-preset-switcher",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-plugin-research",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-pm",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-router",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-reflection",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-progress",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-rp",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-prompts",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-repair",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-restart",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-runtime",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-suite",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-self-test",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-sister",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-skill-forge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-skill-lifecycle",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-session-tools",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-state",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-sentinel",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team-console",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-taskboard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team-board",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-teams",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team-planner",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-sync-4",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team-room",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team-gui",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-teams-dashboard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-team",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-toolchain",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-token-stats",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-web-search",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-tool-filter",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-whale-girl",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-telegram",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-watch",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-toolface",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-trace",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-thinking",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agent-vision",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentmemory",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-Agentlink",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentobs",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentic-roleplay",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentforge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentframe-plugins",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentfuse-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agentbox",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agi-harness",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agnes-image-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-AgentTask",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aggression",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agnes-image-4",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agents-md",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agents-md-only",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agnes-3",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agents-md-settings",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agnes-omni",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-council",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-curfew",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agriculture-terms",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-agsh-context",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-bridge",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-memory-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-jobs",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-model-hub",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-exporter",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-image-design",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-models",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-passport-plugin",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-notepad",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-hub",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-providers",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-shopping-assistant",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-use",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-teacher",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-saas-deal-finder",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-ui-studio",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-terms",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-air-fryer",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-air-sense",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-air-plant",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-air-theme",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aiagent-taskboard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aionui-layout",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-air-purifier",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ai-worker",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aldehyde-control",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-airlock",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-aiservice-deeplink",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aitoearn",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ajw",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-albania",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-airport-time",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alarm",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aitestcase",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aitoubiaoling-bid-review",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alert-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-algo-compare",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alicoupon",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-algeria",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-algovault",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alert-inject",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alert-sound",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-algorithmic-art",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ally",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-altitude-sick",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aluminium",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-aloof-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-all-in",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alpha-guard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-alpha-desk",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-altitude",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchor",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-anal-gland",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-americium",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-amd-free-model",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ambiguity-handling",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ambience",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-amount-calc",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-amb-light",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-standard-profile",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-wsl",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-subagent",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-android-app",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-monitor",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-standard-plus",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anchored-preset-installer",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-angelina-pet",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-android-sandbox",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-android",
+    "why": "not-a-bundle"
+  },
+  {
+    "name": "dsh-anchored-flash",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-andorra",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-angelina-themes",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-angola",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anime-theme",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-angelina-theme",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-animation-studio",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anime-voice",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anima",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anime-skins",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anima-tags",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotation-jump",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotation-3",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ankh-guard",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotation-5",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotations-2",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ankle-sprain",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anime-wallpaper",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotation-cards",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anniversary",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anti-theft",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-antibiotic",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anti-loss",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annotator",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-annual-leave",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-antibrow",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-ansk-theme",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anthropic-image-clamp",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anti-slip",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-antigravity-acp",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-any-attachment",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-antigua",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-anxiety-check",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dsh-antimony",
+    "why": "no-latest-version"
+  },
+  {
+    "name": "dock-images",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kenz1117/dsh-engram",
+    "name": "dock-git",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@keenable/dsh-keenable",
+    "name": "dock-flash",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kira905/dsh-task-board-local",
+    "name": "dock-editor",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kennielearngames/dsh-arcade",
+    "name": "doco-dsh",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kc0ed/dsh-bottom-bar",
+    "name": "dknowc-dsh",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kinocode/dsh-lcu",
+    "name": "dock-markdown",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kirkchinese/dsh-capability-catalog",
+    "name": "doubao-dsh-plugin",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dock-media",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "design-playbook",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "devbits-web-search",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "ds-notify-plugin",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "ds-balance",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-550c-skin",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "ds-bot",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "ds-hentai",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-2sidebar",
     "why": "too-recent",
     "detail": "< 3d old"
   },
   {
-    "name": "@kissblank/dsh-session-manager",
+    "name": "dsh-a-stock-select",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-1024store",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-a2a",
+    "why": "no-version-declares-compatible-engines.dsh",
+    "detail": "0.2.1-rc.5"
+  },
+  {
+    "name": "dsh-2-atoll-notice",
     "why": "too-recent",
     "detail": "< 3d old"
   },
   {
-    "name": "@known-mouse/dsh-history-question-nav",
+    "name": "dph-fleet",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@koanjan/dsh-plugin-boundary",
+    "name": "dsh-accountdisplayname-edit",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@konnga/dsh-hud",
+    "name": "dsh-activity-bell",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lanbaolu/dsh-fail-soft",
+    "name": "dsh-acp-enhanced",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lalilulelo3/dsh-notify",
+    "name": "dsh-account-balance",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kyle123740/dsh-message-recall",
+    "name": "dsh-acp-paseo",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lantiosity/dsh-token-fee",
+    "name": "dsh-access-gate",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kissfire/dsh-skill-map",
+    "name": "dsh-account-meter",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kleinkross/dsh-reverie",
+    "name": "dsh-academic-switch",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@kuixiu/dsh-pet",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@leether/getnote-toolbox",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lanxing/dsh-skill-manager",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lengduan/dsh-client-ui-skin-815",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@leaf233/dsh-llm-rate-limiter",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lanxi266/dsh-cluster-plugin",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lengduan/dsh-usage-stats",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@leetoners/dsh-ui-subagent-monitor",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@left0ver/dsh-intelligent-ui",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@leolee9086/dsh-fetch-router",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lijian-ui/dsh-term",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lengquan88/dsh-dual-auto",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lidaxi/prompt-enhance",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lingfengmow/dsh-vault",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lengmoxxl/dsh-git",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lihuu/dsh-skill-bundle",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@linbin-mk/dsh-workspace-prompt",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@limuyang2/dsh-agent-team",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lenorin/dsh-tauri-launcher",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lijinhao315/dsh-question-index",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lijixu/bark-notify",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lixiangzhong/dsh-active-chat",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@liu__min/dsh-vision-bridge",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@linxin666/dsh-client-ui-skin-center",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@liuyu-f/dsh-plugin-session-cascade-delete",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@liuzw/dsh-pwa-ui",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@liuhange/dsh-gov-data-inspector",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@ljwei-stak/dsh-fixed-port-bridge",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lmmzss/dsh-plugin-balance",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@linenxi-ctrl/dsh-vision",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@littleplus/dsh-toolbox",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovstudio/dsh-better-restart",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovedolove/dsh-codebase-memory-mcp",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@loongsuite/dsh-plugin",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@loommii/dsh-provider-usage",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovedolove/veyra",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovstudio/dsh-inject-system-prompt",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lolkda/dsh-skills-manager",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@ljwei-stak/dsh-folding-windows",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lnsiaxe/dsh-web-restart",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovstudio/dsh-better-command",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lovstudio/dsh-frontend-inspector",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lucagiftzek/dsh-workspace-rail",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lucagiftzek/dsh-mail",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lucagiftzek/dsh-request-image-cap",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lr611/visionforge",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lucagiftzek/dsh-plugin-updates",
+    "name": "dsh-academic-skills",
     "why": "too-recent",
     "detail": "< 3d old"
   },
   {
-    "name": "@lucagiftzek/dsh-phone",
+    "name": "dsh-acceptance",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lucagiftzek/dsh-voice",
+    "name": "dsh-academy",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lucagiftzek/dsh-subagent-tiering",
+    "name": "dsh-adb-logcat",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lsfcy/dsh-composer-predictions",
+    "name": "dsh-adiv-theme",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lucagiftzek/dsh-fs-reobserve",
+    "name": "dsh-agent-blackbox",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lycheelink/dsh-workbench",
+    "name": "dsh-adaptive-reasoning",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@luziyang2026/dsh-question-nav",
+    "name": "dsh-adaptive-effort",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@lujianjun19/dsh-llm-github-copilot",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lxchapu/dsh-session-purge",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lyonleeeee/dsh-steer",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@macily.dots/dsh-prompt-inject",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lushdawn/dsh-codex-memories",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lyhalal/dsh-notification-center",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@lyhue1991/dsh-soup",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@marlonlau/dsh-wallpaper-engine",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-chinese-thinking",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-memory",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-capture",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mars.liu/dsh-graft",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mars.liu/dsh-rich-editor",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-guardian",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-habit",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-jubensha",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@memory455/dsh-jump-rail",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@memef1f1y/dsh-plugin-tts",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-skill-mcp-center",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mazov2love/dsh-remote-control",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mengli114/dsh-settings-nav-collapse",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@metaone01/dsh-better-float",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-node-appearance",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-plugin-center",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@metaone01/dsh-easy-hotkey",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@memef1f1y/dsh-plugin-proxy",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@max-null/dsh-chat-rail",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@microi.net/cli",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mhxy13867806343/dsh-desktop-extra",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mkaliezz/dsh-api-client",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mkaliezz/dsh-repo-map",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mkaliezz/dsh-docs",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@mishiqian/lan-im",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@morehao/dsh-skills-console",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@modusensus/dsh-mneme",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@moguiyu/dsh-tavily",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@moyu-good/dsh-lark-bridge",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@moruteaven/dsh-model-quickslots",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
+    "name": "dsh-adapt-packs",
+    "why": "too-recent",
+    "detail": "< 3d old"
   },
   {
-    "name": "@moyumole/dsh-plugin-updates",
+    "name": "dsh-activity-pane",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mkaliezz/dsh-error-explainer",
+    "name": "dsh-active-sessions",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mkaliezz/dsh-test-runner",
+    "name": "dsh-advanced-listening-settings",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mofeng2223/dsh-claude-provider",
+    "name": "dsh-advisor",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ne-ilyxa/dsh-session-drafts",
+    "name": "dsh-agent-board",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@motong/dsh-voice",
+    "name": "dsh-agent-alert",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mstar-harness/dsh",
+    "name": "dsh-agent-conductor",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@morlay/better-session",
+    "name": "dsh-agent-grid",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@nakamuraia/dsh-plugin-speech",
+    "name": "dsh-agent-instructions-editor",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mrweicodes/dsh-loop-guard",
+    "name": "dsh-agent-mailbox",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@multidsh/dsh-webui-auth",
+    "name": "dsh-agent-browser",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@mrweicodes/dsh-permgate",
+    "name": "dsh-agent-bridge",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@moruteaven/dsh-key-panel",
+    "name": "dsh-agent-graph",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@musitoolbox/dsh-remote",
+    "name": "dsh-agent-group",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@naivg/dsh-network",
+    "name": "dsh-agent-picker",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@noob-stupid/dsh-breadboard",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@norman-else/dsh-claude",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
-  },
-  {
-    "name": "@nianchu/dsh-rollback",
-    "why": "no-version-declares-compatible-engines.dsh",
-    "detail": "0.2.1-rc.5"
+    "name": "dsh-agent-soul",
+    "why": "too-recent",
+    "detail": "< 3d old"
   },
   {
-    "name": "@ninkch/dsh-infinite-canvas",
+    "name": "dsh-agent-plugins-market",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@neoxider/mcp-hub",
+    "name": "dsh-agent-sticky-note",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ningtian-byte/dsh-tokendashboard",
+    "name": "dsh-agent-outputs-reader",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@neptune810/dsh-model-router",
+    "name": "dsh-agent-pet",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@nethiel/dsh-llm-keypool",
+    "name": "dsh-agent-rules",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@nightpainters/dsh-ling",
+    "name": "dsh-agent-run-logger",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@nakie-zjm/dsh-session-delete",
+    "name": "dsh-agent-processes",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@opencode2dsh/dsh-plugin",
+    "name": "dsh-agent-observe",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ohmydsh/runtime",
+    "name": "dsh-agent-profiles",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@noob-stupid/dsh-connection-card-host",
+    "name": "dsh-agent-relay",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@oh-my-dsh/stent-pack",
+    "name": "dsh-agent-preset-branch",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@oihai/dsh-harness-trace",
+    "name": "dsh-agents-init",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@objectivex666/dsh-settings-search",
+    "name": "dsh-agy-cli",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@nszzj/dsh-scrcpy-core",
+    "name": "dsh-agents-visualization",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@omdsh-plugins/omdsh-codemode",
+    "name": "dsh-agentnoodle",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@omdsh-plugins/omdsh-basemode",
+    "name": "dsh-agent-teams-meta",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@octen.ai/dsh-octen",
+    "name": "dsh-agnes-image",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@njuptlzf/dsh-ponytail",
+    "name": "dsh-agentic-router",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@openworkproof/dsh-plugin",
+    "name": "dsh-agent-session-import",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@orderg-x/dsh-video-preview",
+    "name": "dsh-agentdebugx",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@openviking/dsh-memory-plugin",
+    "name": "dsh-agent-selector",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@orbisapp/remote-dsh",
+    "name": "dsh-agent-teams-fish",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@orderg-x/dsh-pages",
+    "name": "dsh-ai-library",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@orderg-x/dsh-mobile",
+    "name": "dsh-ai-arcade",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ottttto/dsh-scheduled-send",
+    "name": "dsh-ai-code-quality",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@pakiknowledge/dsh-client-ui-skin-claude",
+    "name": "dsh-ai-news",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@opencues/dsh",
+    "name": "dsh-agnes-tools",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@omdsh-plugins/omdsh-chatmode",
+    "name": "dsh-ai-prompt-optimizer",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@omdsh-plugins/omdsh-plughub",
+    "name": "dsh-ai-book-shelf",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@paicat1/dsh-screenshot",
+    "name": "dsh-ai-search",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@pengpeng6845/dsh-balance",
+    "name": "dsh-agnes-studio",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@pengls/dsh-quick-view",
+    "name": "dsh-agy-ui",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@puxora/dsh-browserpilot",
+    "name": "dsh-ai-suplex",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@q253595422/dsh-imagegen-video",
+    "name": "dsh-aliyun-balance",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@pioneer_zmc/dsh-workbench",
+    "name": "dsh-akn-plugin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@phynez_1103/dsh-session-cost",
+    "name": "dsh-alive",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@picgo/dsh-plugin",
+    "name": "dsh-air",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@panando/dsh-quote-sidechat",
+    "name": "dsh-all-enhance",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@pianner/dsh-session-manager",
+    "name": "dsh-aimy",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qiaoy01/mission",
+    "name": "dsh-ai-with-u",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@quekenao/dsh-auto-continue-community",
+    "name": "dsh-aliyun-coupon",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@railgun52/dsh-user-rules",
+    "name": "dsh-aidd",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@railgun52/dsh-mcp-servers",
+    "name": "dsh-aliyun-mcp",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qiuzhiyei/dsh-companion",
+    "name": "dsh-aloof",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qux-bbb/dsh-plugin-todo",
+    "name": "dsh-always-status-bar",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ragnoryok1/dsh-plugin-doctor",
+    "name": "dsh-always-on-top",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qomob/dsh-madrank",
+    "name": "dsh-alt-enter-newline",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qgynisc/dsh-inline-pastes",
+    "name": "dsh-angelsanddemon-fatesumphony-skin",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ragnoryok1/dsh-client-locale-ru",
+    "name": "dsh-all-search",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@qing3a/dsh-repo-context",
+    "name": "dsh-anagenesis",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@rayfalling/dsh-tool-visibility",
+    "name": "dsh-animation-principles",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@restregular/dsh-notepad",
+    "name": "dsh-alphasolve",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@restregular/dsh-skill-center",
+    "name": "dsh-animation-optimization",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@rjfan/dsh-presence",
+    "name": "dsh-anchor-rail",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@rebornace/dsh-tracescope",
+    "name": "dsh-answer-me-with-html",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@restregular/dsh-filekit",
+    "name": "dsh-antigravity-bridge",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@ringo-x/dsh-selection-translate",
+    "name": "dsh-antigravity-usage",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@rongyi7/dsh-spec",
+    "name": "dsh-antigravity",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@samuflore/dsh-query-balance",
+    "name": "dsh-answer-highlighter",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@runcross/dsh-simple-background",
+    "name": "dsh-any-audio",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@sakura12/oh-my-deepseekharness",
+    "name": "dsh-annotate-sync",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@samecorner/dsh-client-ui-token-usage",
+    "name": "dsh-antigravity-oauth",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   },
   {
-    "name": "@royalsan/dsh-github-trending",
+    "name": "dsh-antigravity-auth",
     "why": "no-version-declares-compatible-engines.dsh",
     "detail": "0.2.1-rc.5"
   }
