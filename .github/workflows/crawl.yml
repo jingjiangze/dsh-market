@@ -1,4 +1,4 @@
-﻿name: crawl
+name: crawl
 
 # Crawl on a schedule, validate the result, then land it through a pull request:
 # crawl 鈫?tests 鈫?PR 鈫?squash-merge 鈫?deploy. The PR exists so every catalog
@@ -41,7 +41,7 @@ jobs:
           SEARCH_REGISTRY: https://registry.npmjs.org
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_PLUGINS: '1500'
-          MAX_CANDIDATES: '600'
+          MAX_CANDIDATES: '2000'
           CONCURRENCY: '12'
           CRAWL_BUDGET_MS: '900000'
           SOURCES: dshso,awesome,mydsh
