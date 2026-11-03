@@ -49,7 +49,7 @@ const fetchStub = async (url) => {
 }
 
 const run = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console',
-  `${source}\nreturn { render, openDetail, state, chrome }`)
+  `${source}\nreturn { render, openDetail, openGuide, state, chrome }`)
 const api = run(document, localStorage, navigator, location, fetchStub, () => 0, console)
 await api.state.meta
 await new Promise((resolve) => setTimeout(resolve, 120))
@@ -79,15 +79,37 @@ if (!/data-copy=/.test(dialog.innerHTML)) problems.push('dialog has no install c
 if (!/data-next/.test(dialog.innerHTML) || !/class=nav/.test(dialog.innerHTML)) problems.push('dialog has no next/position controls')
 if (/class=dual/.test(dialog.innerHTML)) problems.push('dialog still renders the old bilingual columns')
 
-// Source segments must filter instead of refetching a different document.
-api.state.idx = 'index.cn'
+// Segments only change which index link is shown/copied — the list must not change.
+const before = (element('list').innerHTML.match(/class=card/g) ?? []).length
+api.state.copyTarget = 'index.cn'
 api.render()
-const cnCards = (element('list').innerHTML.match(/class=card/g) ?? []).length
-api.state.idx = 'index.intl'
-api.render()
-const intlCards = (element('list').innerHTML.match(/class=card/g) ?? []).length
-if (cnCards !== 1) problems.push(`domestic segment should show 1 entry, showed ${cnCards}`)
-if (intlCards !== 2) problems.push(`international segment should show 2 entries, showed ${intlCards}`)
+if (element('src').textContent !== 'https://jingjiangze.github.io/dsh-market/index.cn.json') problems.push('domestic segment did not switch the copied link')
+if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) problems.push('segment switch must not filter the list')
+
+// Integration guide modal.
+api.openGuide()
+if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
+if (!/index(\.cn|\.intl)?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
+
+// A second instance whose tier-1 source is down must fall through to tier 2.
+const brokenFetch = async (url) => {
+  if (String(url).includes('modelscope.cn')) throw new Error('tier down')
+  return fetchStub(url)
+}
+const api2 = run(document, localStorage, navigator, location, brokenFetch, () => 0, console)
+await api2.state.meta
+await new Promise((resolve) => setTimeout(resolve, 120))
+if (api2.state.plugins.length === 0) problems.push('fallback source did not load any plugin')
+if (api2.state.tier !== 1) problems.push(`expected tier 2 to answer, got tier ${api2.state.tier + 1}`)
+
+// Icon chain: an entry with only a repository URL must render the owner avatar.
+const avatarMeta = { ...META, total: 1, chunks: ['0.json'], categories: { agent: { title: { en: 'Agents', zh: '智能体' } } } }
+const avatarChunk = [{ n: 'x/avatar-only', t: '头像插件', e: 'Avatar only', d: '只有仓库', de: 'repo only', c: 'agent', v: '1.0.0', p: 1, g: 'https://github.com/someone.png?size=80' }]
+const avatarFetch = async (url) => ({ ok: true, json: async () => (String(url).endsWith('meta.json') ? avatarMeta : avatarChunk) })
+const api3 = run(document, localStorage, navigator, location, avatarFetch, () => 0, console)
+await api3.state.meta
+await new Promise((resolve) => setTimeout(resolve, 80))
+if (!element('list').innerHTML.includes('github.com/someone.png')) problems.push('repository-owner avatar is not used as the icon fallback')
 
 // Language switch must pick the ja translation out of x[][]
 api.state.lang = 'ja'

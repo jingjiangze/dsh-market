@@ -24,7 +24,9 @@
 * { box-sizing: border-box; }
 html { color-scheme: dark; scroll-behavior: smooth; }
 body {
-  margin: 0 auto; max-width: 1280px; padding: 0 18px 56px;
+  /* ~75% of the viewport, centred; below that it goes full width and stays fluid */
+  width: min(75vw, 1560px); min-width: 0;
+  margin: 0 auto; padding: 0 18px 56px;
   font-family: var(--font); font-size: 13.5px; line-height: 1.6;
   color: var(--text);
   background:
@@ -104,10 +106,28 @@ header h1 {
 }
 .src {
   display: flex; gap: 8px; align-items: center; margin-top: 10px;
-  padding: 7px 8px 7px 12px;
-  background: rgba(7, 9, 16, .82); border: 1px solid var(--line-2);
-  border-radius: var(--radius-sm);
+  padding: 7px 8px 7px 12px; cursor: copy;
+  border: 1px solid transparent; border-radius: var(--radius-sm);
+  /* rainbow that flows along the row — the whole row copies the index URL */
+  background:
+    linear-gradient(rgba(7, 9, 16, .94), rgba(7, 9, 16, .94)) padding-box,
+    linear-gradient(90deg, #4d6bfe, #8b5cf6, #22d3ee, #f472b6, #4d6bfe) border-box;
+  background-size: auto, 300% 100%;
+  animation: rainbow 7s linear infinite;
 }
+@keyframes rainbow {
+  from { background-position: 0 0, 0% 50%; }
+  to { background-position: 0 0, 300% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .src { animation: none; }
+}
+.src:hover code { color: #fff; }
+.ghost {
+  padding: 5px 12px; font-size: 12px; color: var(--muted);
+  background: rgba(7, 9, 16, .7); border: 1px solid var(--line-2); border-radius: 999px;
+}
+.ghost:hover { color: var(--text); border-color: rgba(124, 147, 255, .6); }
 .src code {
   flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   font-family: var(--mono); font-size: 12px; color: var(--brand-2);
@@ -200,18 +220,33 @@ header h1 {
 
 /* ── detail drawer ────────────────────────────────────────────────────── */
 dialog {
-  margin: 0 0 0 auto; padding: 0; width: min(760px, 94vw);
-  height: 100vh; max-height: 100vh;
+  /* centred modal (was a right-hand drawer) */
+  margin: auto; padding: 0; width: min(720px, 92vw);
+  max-height: 86vh; height: auto; overflow-y: auto;
   color: var(--text);
   background: linear-gradient(180deg, #121a2b, #0a0f1a);
-  border: 0; border-left: 1px solid var(--line-2);
-  box-shadow: -40px 0 100px -50px #000;
-  animation: slide .2s cubic-bezier(.22, .61, .36, 1);
+  border: 1px solid var(--line-2); border-radius: 18px;
+  box-shadow: 0 40px 120px -50px #000, inset 0 1px 0 rgba(255, 255, 255, .05);
+  animation: pop .18s cubic-bezier(.22, .61, .36, 1);
 }
-@keyframes slide { from { transform: translateX(28px); opacity: .55; } to { transform: none; opacity: 1; } }
+@keyframes pop { from { transform: scale(.97); opacity: .5; } to { transform: none; opacity: 1; } }
 dialog::backdrop { background: rgba(3, 5, 10, .7); backdrop-filter: blur(3px); }
 dialog h3 { margin: 0; padding: 20px 22px 6px; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
-.lead { margin: 0; padding: 0 22px 14px; font-size: 12.5px; color: var(--muted); }
+/* the description is the reason a reader opened the modal: make it the loudest
+   thing under the title */
+.lead {
+  margin: 0; padding: 0 22px 16px;
+  font-size: 14.5px; line-height: 1.75; color: #dbe3f6;
+  border-left: 3px solid rgba(124, 147, 255, .55);
+  padding-left: 16px; margin-left: 22px; padding-right: 22px;
+}
+.guide { margin: 0 22px 14px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.guide li { display: flex; gap: 10px; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.guide li b {
+  flex: 0 0 20px; height: 20px; display: grid; place-items: center;
+  font-size: 11px; font-weight: 600; color: #fff; border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--violet));
+}
 dialog dl {
   display: grid; grid-template-columns: 64px 1fr; gap: 6px 12px;
   margin: 0 22px 14px; padding: 12px 14px;
@@ -247,6 +282,9 @@ body > footer {
   font-size: 11.5px; color: var(--dim); text-align: center;
 }
 
+@media (max-width: 1200px) {
+  body { width: auto; max-width: calc(100vw - 24px); }
+}
 @media (max-width: 860px) {
   .wrap { grid-template-columns: 1fr; }
   #cats { position: static; flex-direction: row; flex-wrap: wrap; max-height: none; }

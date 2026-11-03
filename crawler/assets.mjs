@@ -47,10 +47,14 @@ const html = await readFile(htmlPath, 'utf8')
 // instead of nesting URLs.
 const relative = html
   .replace(/(<link rel=stylesheet href=)(?:[^ >]*\/)?style\.css/i, '$1/style.css')
-  .replace(/(<script type=module src=)(?:[^ >]*\/)?app\.js/i, '$1/app.js')
+  // drop any attributes a previous run appended, so this stays idempotent
+  .replace(/(<script type=module src=)(?:[^ >]*\/)?app\.js[^>]*/i, '$1/app.js')
 const updated = relative
   .replace(/(<link rel=stylesheet href=)[^ >]+/i, `$1${ASSET_BASE}/${cssHash}/style.css`)
-  .replace(/(<script type=module src=)[^ >]+/i, `$1${ASSET_BASE}/${jsHash}/app.js`)
+  // If the dataset copy of the bundle is unreachable, fall back to the same-origin
+  // copy published with this site (the stylesheet walks all three tiers inside
+  // app.js, because the 1 KiB shell cannot hold three absolute URLs).
+  .replace(/(<script type=module src=)[^ >]+/i, `$1${ASSET_BASE}/${jsHash}/app.js onerror="this.src='/app.js'"`)
 await writeFile(htmlPath, updated)
 
 const bytes = (await stat(htmlPath)).size
