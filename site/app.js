@@ -13,24 +13,40 @@ const PLACEHOLDER = {
   ko: '플러그인 · 작성자 · 키워드 검색',
   ru: 'Поиск плагинов, авторов, ключевых слов',
 }
-// Index sources are per language: the dataset carries one format-1 document per
-// language, so a Chinese reader can subscribe to the Chinese catalogue and a
-// Japanese reader to the Japanese one.
+// Index sources are per language, and where they live depends on the network:
+// the ModelScope dataset is fast inside China but unreachable from abroad, so a
+// reader outside China is pointed at (and served from) GitHub Pages instead.
 const DATASET = 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web'
-const INDEX_URL = {
-  all: 'https://jingjiangze.github.io/dsh-market/index.json',
-  zh: `${DATASET}/index.zh.json`,
-  en: `${DATASET}/index.en.json`,
-  ja: `${DATASET}/index.ja.json`,
-  ko: `${DATASET}/index.ko.json`,
-  ru: `${DATASET}/index.ru.json`,
-}
+const PAGES = 'https://jingjiangze.github.io/dsh-market'
+const SOURCES = ['all', 'zh', 'en', 'ja', 'ko', 'ru']
 const IDX_LABEL = { all: '全部', zh: '中文', en: 'English', ja: '日本語', ko: '한국어', ru: 'Русский' }
-const TIERS = [
-  'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/browse',
-  'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
-  'https://jingjiangze.github.io/dsh-market/browse',
-]
+
+// China: dataset first. Everywhere else: GitHub first (the dataset would just time
+// out). The tier that worked is remembered, so repeat visits skip the bad one.
+function inChina() {
+  const tz = String(Intl.DateTimeFormat().resolvedOptions().timeZone ?? '')
+  const lang = String(navigator.language ?? '').toLowerCase()
+  return /Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Hong_Kong|Macau|Taipei)$/.test(tz) || lang.startsWith('zh')
+}
+
+function indexUrl(id) {
+  if (id === 'all') return inChina() ? `${DATASET}/index.json` : `${PAGES}/index.json`
+  // Per-language documents live on the dataset; abroad the combined document on
+  // Pages already carries every language, so that is what is copied there.
+  return inChina() ? `${DATASET}/index.${id}.json` : `${PAGES}/index.json`
+}
+
+const TIERS = inChina()
+  ? [
+    `${DATASET}/browse`,
+    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
+    `${PAGES}/browse`,
+  ]
+  : [
+    `${PAGES}/browse`,
+    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
+    `${DATASET}/browse`,
+  ]
 const SRC_LABEL = { 'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome', 'src-mydsh': 'mydsh' }
 const TRUST_LABEL = { 'trust-readme-verified': 'README 核对', 'trust-repo-fallback': '仓库固定', 'zh-fallback': '中文待补', 'catalog-only': '仅目录', 'no-engines': '未声明版本' }
 const SORTS = [['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z']]
@@ -44,7 +60,7 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'index', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: -1, open: null, visible: [], guide: false }
+const state = { lang: 'zh', copyTarget: 'all', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false }
 
 const $ = (id) => document.getElementById(id)
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
@@ -126,7 +142,7 @@ function render() {
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
   $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
-  $('src').textContent = INDEX_URL[state.copyTarget]
+  $('src').textContent = indexUrl(state.copyTarget)
   const visible = pool.slice(0, state.limit)
   $('list').innerHTML = pool.length
     ? visible.map(card).join('') + (pool.length > visible.length ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
@@ -164,7 +180,7 @@ function detailHtml(entry) {
 
 function guideHtml() {
   const steps = (GUIDE[state.lang] ?? GUIDE.zh).map((text, index) => `<li><b>${index + 1}</b>${esc(text)}</li>`).join('')
-  const url = INDEX_URL[state.copyTarget]
+  const url = indexUrl(state.copyTarget)
   return `<h3>接入教程</h3><ol class=guide>${steps}</ol>`
     + `<p class=cmd><code>${esc(url)}</code><button data-copy="${esc(url)}">复制索引源</button></p>`
 }
@@ -203,6 +219,9 @@ async function fetchTiered(path) {
     try {
       const body = await withTimeout(`${TIERS[index]}/${path}`)
       state.tier = index
+      // Remember which mirror worked, so the next visit starts there instead of
+      // paying the dataset timeout from abroad.
+      try { localStorage.setItem('dsh-market-tier', String(index)) } catch {}
       return body
     } catch (error) {
       lastError = error
@@ -319,7 +338,7 @@ document.addEventListener('click', (event) => {
   }
   // Clicking the source row copies it (the whole row is the button).
   if (event.target.closest('.src')) {
-    navigator.clipboard?.writeText(INDEX_URL[state.copyTarget]).then(() => flash($('copy'), '已复制'))
+    navigator.clipboard?.writeText(indexUrl(state.copyTarget)).then(() => flash($('copy'), '已复制'))
     return
   }
   const opened = event.target.closest('[data-open]')
@@ -340,6 +359,9 @@ $('q').addEventListener('input', (event) => { state.query = event.target.value; 
 $('lang').addEventListener('change', (event) => {
   state.lang = event.target.value
   localStorage.setItem('dsh-market-lang', state.lang)
+  // Switching the interface language also switches the index link, so the copied
+  // URL always matches the language on screen.
+  if (SOURCES.includes(state.lang)) state.copyTarget = state.lang
   chrome()
   render()
   if ($('dlg').open) (state.guide ? openGuide() : state.open && openDetail(state.open))
@@ -366,4 +388,6 @@ if (LANGS.includes(saved)) state.lang = saved
 else if (!String(navigator.language ?? '').toLowerCase().startsWith('zh')) state.lang = 'en'
 chrome()
 loadIndex()
-setTimeout(ensureStyles, TIMEOUT)
+// 1.2 s is enough for the dataset copy to apply; abroad it 404s immediately, so
+// the fallback sheet lands before the reader notices unstyled text.
+setTimeout(ensureStyles, 1200)
