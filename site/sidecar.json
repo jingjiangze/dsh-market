@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T07:09:11.859Z",
+  "generatedAt": "2026-11-03T08:14:42.837Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -50,11 +50,36 @@
       "zhSource": "override",
       "origins": [
         "src-npm",
-        "src-awesome",
+        "src-dshso",
+        "src-awesome"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "@chengzhao-dev/dsh-quarto-book",
+      "version": "0.6.18",
+      "category": "ui",
+      "distIntegrity": "sha512-OIo4ixSPOqYH8QGc7ZAi4l+Lx1tUWFFXuXDJO2Ii7i/aNghPTgTohQRequ13hmAhQOGTbND0ntpp/uA4W2XGMw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@chengzhao-dev%2fdsh-quarto-book@0.6.18",
+      "unpackedSize": 2266677,
+      "zhSource": "native",
+      "origins": [
+        "src-npm",
         "src-dshso"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index"
       ],
       "gates": [
@@ -151,12 +176,12 @@
       "unpackedSize": 4599190,
       "zhSource": "override",
       "origins": [
-        "src-awesome",
-        "src-dshso"
+        "src-dshso",
+        "src-awesome"
       ],
       "trust": [
-        "trust-readme-verified",
-        "trust-source-index"
+        "trust-source-index",
+        "trust-readme-verified"
       ],
       "gates": [
         "bundle",
@@ -377,37 +402,12 @@
       "unpackedSize": 2152037,
       "zhSource": "detected",
       "origins": [
-        "src-awesome",
-        "src-dshso"
+        "src-dshso",
+        "src-awesome"
       ],
       "trust": [
-        "trust-readme-verified",
-        "trust-source-index"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "clearai-dsh",
-      "version": "0.5.7",
-      "category": "other",
-      "distIntegrity": "sha512-EVfwKFCNDniQ7wz/cneUm1Mc4NZUuzacIvWqcf9FghCjCI8LsjZ2hmELfoE4vl8uFBaJeBiBdjkOsxyNblCY+Q==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/clearai-dsh@0.5.7",
-      "unpackedSize": 1617869,
-      "zhSource": "native",
-      "origins": [
-        "src-npm",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-unpinned"
+        "trust-source-index",
+        "trust-readme-verified"
       ],
       "gates": [
         "bundle",
@@ -612,13 +612,13 @@
       "zhSource": "override",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1109,13 +1109,13 @@
       "unpackedSize": 383041,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1295,13 +1295,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1350,13 +1350,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1421,6 +1421,32 @@
       ]
     },
     {
+      "name": "dsh-dania-voice",
+      "version": "1.0.0",
+      "category": "media",
+      "distIntegrity": "sha512-lDJ1iNPyzKRTKJDXLFTnWQAVYdPcnTfSpJFBsUagcfuHQfLG4wInRjpdkqz+STyxvVLIopL3N2h0lp6HsQF/iA==",
+      "attestations": null,
+      "unpackedSize": 724873,
+      "zhSource": "detected",
+      "origins": [
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-data-quality",
       "version": "0.3.24",
       "category": "models",
@@ -1429,12 +1455,116 @@
       "unpackedSize": 927706,
       "zhSource": "fallback",
       "origins": [
+        "src-dshso",
         "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-deep-research",
+      "version": "0.1.1",
+      "category": "devtools",
+      "distIntegrity": "sha512-agbSln14Hqa6Ys9bQ4PC0PZcBaQUp+yhCcMyxT9muNyWRJWPQmoRDNVfbBINJh/6omNm8Spg8dGB7q4WvEJsJg==",
+      "attestations": null,
+      "unpackedSize": 164625,
+      "zhSource": "native",
+      "origins": [
         "src-dshso",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-defend",
+      "version": "0.3.25",
+      "category": "safety",
+      "distIntegrity": "sha512-H1+1s7mTDta9lJDZpRHGyGesnwfUcNJPYjkp8TiAQzVWGVVwZItsX4rB6urBkcLoDils1sSzLughSTOnXmbz2g==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-defend@0.3.25",
+      "unpackedSize": 521632,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-desktop-statusbar",
+      "version": "3.0.2",
+      "category": "models",
+      "distIntegrity": "sha512-SG619FMerqrS+m4ruy23lgI676hAM919KbS8lqlpF0TWaPQORj2uiy5DnxSC4cSWVY/U/C1acHOUOUf8cfTxMA==",
+      "attestations": null,
+      "unpackedSize": 1749747,
+      "zhSource": "native",
+      "origins": [
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-dingtalk",
+      "version": "0.3.7",
+      "category": "other",
+      "distIntegrity": "sha512-2fRx467YHdq3rIhya+wPUGMH+Bp6eZY1Fgz95opABrJFv4eh7HxVFj6yPg73DCVfFaedsvMV5yG+cs8UNcjf5g==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-dingtalk@0.3.7",
+      "unpackedSize": 391245,
+      "zhSource": "detected",
+      "origins": [
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
         "trust-source-index",
         "trust-unpinned"
       ],
@@ -1457,12 +1587,38 @@
       "unpackedSize": 622957,
       "zhSource": "fallback",
       "origins": [
+        "src-dshso",
         "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-draw",
+      "version": "0.2.24",
+      "category": "media",
+      "distIntegrity": "sha512-5BISEzGfHvY9xgRC6EbczQ2B8ZeuGJ9yXyNGfntYdbuH3E+o2WgDd4d2rj0oXIhaoqLIjBViijEAdRlkwe/4Dg==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-draw@0.2.24",
+      "unpackedSize": 1683224,
+      "zhSource": "fallback",
+      "origins": [
         "src-dshso",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
         "trust-unpinned"
       ],
@@ -1504,6 +1660,32 @@
       ]
     },
     {
+      "name": "dsh-fast",
+      "version": "0.2.27",
+      "category": "integrations",
+      "distIntegrity": "sha512-739W2wPEKbPeZj4BNFsRKg++NoLtNtkkedN+Zx7kLFsuCizmXD9KWwP/ZDka5fzzSKlOi8ShdGJDFX/ktDN/Mw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-fast@0.2.27",
+      "unpackedSize": 391311,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-ffmpeg",
       "version": "0.7.4",
       "category": "media",
@@ -1513,6 +1695,32 @@
       "zhSource": "detected",
       "origins": [
         "src-npm",
+        "src-dshso",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-file-history",
+      "version": "0.2.4",
+      "category": "devtools",
+      "distIntegrity": "sha512-VjAVnubb//pEYXNeVlrzPPV16xhBTYOO3eP1q5+AJg9GTVQqLgteiOqaqH23AqWRbyltBAWyp0NU11+CuZnCxQ==",
+      "attestations": null,
+      "unpackedSize": 877810,
+      "zhSource": "fallback",
+      "origins": [
         "src-dshso",
         "src-mydsh"
       ],
@@ -1566,13 +1774,13 @@
       "unpackedSize": 1070981,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1595,13 +1803,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1704,13 +1912,13 @@
       "unpackedSize": 1004712,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1732,13 +1940,13 @@
       "unpackedSize": 483626,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1761,13 +1969,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1790,12 +1998,39 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
+        "src-dshso",
         "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-mask",
+      "version": "0.2.23",
+      "category": "safety",
+      "distIntegrity": "sha512-wWy86LNLlsLuUdtT5c2SRUc9riZuR/QQlHdVQBkd3SP0cAqLCuJZeCVrrJBm4Pc7CaJ8V5+qcqa9JHAuo1Gfaw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-mask@0.2.23",
+      "unpackedSize": 266494,
+      "zhSource": "fallback",
+      "origins": [
+        "src-npm",
         "src-dshso",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
         "trust-unpinned"
       ],
@@ -1819,13 +2054,13 @@
       "zhSource": "detected",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1848,13 +2083,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1877,13 +2112,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1960,13 +2195,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -1989,13 +2224,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2018,13 +2253,13 @@
       "zhSource": "detected",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2128,13 +2363,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2156,13 +2391,13 @@
       "unpackedSize": 733707,
       "zhSource": "detected",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2185,13 +2420,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2214,13 +2449,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2296,13 +2531,13 @@
       "unpackedSize": 654270,
       "zhSource": "native",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2324,13 +2559,13 @@
       "unpackedSize": 564891,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2379,13 +2614,13 @@
       "unpackedSize": 826582,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2407,13 +2642,13 @@
       "unpackedSize": 370734,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2435,13 +2670,13 @@
       "unpackedSize": 1249176,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2517,13 +2752,13 @@
       "unpackedSize": 397271,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2546,13 +2781,13 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2574,13 +2809,13 @@
       "unpackedSize": 253032,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2602,13 +2837,13 @@
       "unpackedSize": 1054386,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2631,13 +2866,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2687,12 +2922,12 @@
       "zhSource": "native",
       "origins": [
         "src-npm",
-        "src-awesome",
-        "src-dshso"
+        "src-dshso",
+        "src-awesome"
       ],
       "trust": [
-        "trust-readme-verified",
-        "trust-source-index"
+        "trust-source-index",
+        "trust-readme-verified"
       ],
       "gates": [
         "bundle",
@@ -2714,13 +2949,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2742,13 +2977,13 @@
       "unpackedSize": 6442670,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2797,13 +3032,13 @@
       "unpackedSize": 46104230,
       "zhSource": "fallback",
       "origins": [
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -2826,13 +3061,13 @@
       "zhSource": "fallback",
       "origins": [
         "src-npm",
-        "src-awesome",
         "src-dshso",
+        "src-awesome",
         "src-mydsh"
       ],
       "trust": [
-        "trust-readme-verified",
         "trust-source-index",
+        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
