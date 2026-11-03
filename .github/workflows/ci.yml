@@ -32,6 +32,9 @@ jobs:
       - name: Gate selftest (positive + negative cases)
         run: node crawler/crawl.mjs --selftest
 
+      - name: Syntax-check the browser bundle
+        run: node --check site/app.js
+
       - name: Validate the published index
         run: node crawler/validate.mjs
 

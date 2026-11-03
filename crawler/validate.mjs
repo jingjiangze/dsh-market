@@ -89,27 +89,38 @@ const styleBytes = await size('site/style.css')
 if (!styleBytes) fail('site/style.css', 'missing')
 else note('site/style.css', `${styleBytes} bytes`)
 
+const appBytes = await size('site/app.js')
+if (!appBytes) fail('site/app.js', 'missing')
+else note('site/app.js', `${appBytes} bytes`)
+
 const html = await read('site/index.html')
 for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
-// the page must not serve its own assets: the stylesheet comes from a mirror
+// the page must not ship its own assets: CSS and JS come from a mirror
 const MIRROR_CSS = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css'
+const MIRROR_JS = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/app.js'
 if (!html.includes(MIRROR_CSS)) fail('stylesheet mirror', 'index.html does not link the jsDelivr mirror')
+if (!html.includes(MIRROR_JS)) fail('script mirror', 'index.html does not load the jsDelivr app.js')
 if (/href=["']?\/style\.css/.test(html)) fail('stylesheet origin', 'index.html still links the local /style.css')
+if (/src=["']?\/app\.js/.test(html)) fail('script origin', 'index.html still loads the local /app.js')
+// no inline logic: the shell stays declarative so it can stay tiny
+if (/<script(?![^>]*\bsrc=)/.test(html)) fail('site/index.html inline script', 'shell must not inline JavaScript')
 // assets should come from mirrors, not from the site itself
 for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
   if (html.includes(forbidden)) fail('site/index.html asset', `inlines ${forbidden}`)
 }
 
 if (!OFFLINE) {
-  const mirror = await fetch(MIRROR_CSS, { headers: { accept: 'text/css' }, signal: AbortSignal.timeout(20000) })
-    .catch((err) => ({ ok: false, status: err.message, headers: new Headers() }))
-  if (!mirror.ok) fail('stylesheet mirror reachability', `${MIRROR_CSS} -> ${mirror.status}`)
-  else {
-    const type = mirror.headers.get('content-type') ?? ''
-    if (!type.startsWith('text/css')) fail('stylesheet mirror type', `${MIRROR_CSS} -> ${type}`)
-    else note('stylesheet mirror', `200 ${type}`)
+  for (const [label, url, type] of [['stylesheet mirror', MIRROR_CSS, 'text/css'], ['script mirror', MIRROR_JS, 'javascript']]) {
+    const res = await fetch(url, { signal: AbortSignal.timeout(20000) })
+      .catch((err) => ({ ok: false, status: err.message, headers: new Headers() }))
+    if (!res.ok) fail(`${label} reachability`, `${url} -> ${res.status}`)
+    else {
+      const actual = res.headers.get('content-type') ?? ''
+      if (!actual.includes(type)) fail(`${label} type`, `${url} -> ${actual}`)
+      else note(label, `200 ${actual}`)
+    }
   }
 }
 

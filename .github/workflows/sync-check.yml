@@ -1,0 +1,34 @@
+name: sync-check
+
+# Watches what users actually download. The crawl only lands through a merged PR,
+# so a drift here means a publish or a CDN copy lagged behind the repository.
+on:
+  schedule:
+    - cron: '47 */3 * * *'   # every three hours, offset from the crawl
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install the real format-1 validator
+        run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+
+      - name: Compare the deployed index with the repository
+        run: node crawler/verify-deployed.mjs
+
+      - name: Ask for a redeploy when the copies drifted
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
