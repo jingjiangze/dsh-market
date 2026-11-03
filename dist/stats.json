@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-03T02:23:38.837Z",
+  "at": "2026-11-03T02:29:46.003Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "queries": [
@@ -9,14 +9,20 @@
   ],
   "candidates": 327,
   "shortlisted": 142,
-  "kept": 37,
-  "rejected": 123,
+  "kept": 38,
+  "rejected": 122,
   "rejectReasons": {
-    "no-version-declares-compatible-engines.dsh": 104,
+    "no-version-declares-compatible-engines.dsh": 103,
     "not-a-bundle": 15,
     "has-install-script": 3,
     "too-recent": 1
   },
-  "bytes": 33784,
-  "ms": 13858
+  "zh": {
+    "detected": 1,
+    "override": 20,
+    "native": 13,
+    "fallback": 4
+  },
+  "bytes": 34729,
+  "ms": 10367
 }
