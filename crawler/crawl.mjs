@@ -196,7 +196,7 @@ try {
   ZH_OVERRIDES = {}
 }
 
-async function authorZh(name, version) {
+async function authorZh(name, version, enTitle, enDescription) {
   for (const file of ['locale/zh.json', 'locale/zh-CN.json', 'locale/zh_CN.json']) {
     try {
       const { body } = await getJSON(`https://cdn.jsdelivr.net/npm/${name}@${version}/${file}`)
@@ -223,6 +223,13 @@ async function authorZh(name, version) {
       source: 'override',
       pinnedFor: override.version,
     }
+  }
+  // Many authors already write Chinese into the npm description. That is the
+  // author's own wording, so prefer it to English even though it is not a
+  // translation of it.
+  const cjk = (value) => /[\u4e00-\u9fff]/.test(String(value ?? ''))
+  if (cjk(enTitle) || cjk(enDescription)) {
+    return { title: enTitle, description: enDescription, source: 'detected' }
   }
   return { source: 'fallback' }
 }
@@ -322,7 +329,7 @@ async function main() {
         const meta = man.metadata || {}
         const enTitle = meta.title ? String(meta.title) : name
         const enDescription = man.description ? String(man.description).slice(0, 280) : enTitle
-        const zh = await authorZh(name, version)
+        const zh = await authorZh(name, version, enTitle, enDescription)
         const category = classify(name, enTitle, enDescription, (man.keywords || []).join(' '))
         plugins.push({
           name,
@@ -382,6 +389,7 @@ async function main() {
         'engines-pinned': { title: { en: 'engines.dsh pinned', zh: '已钉 DSH 版本' } },
         'zh-native': { title: { en: 'Chinese text from the package', zh: '中文取自包自带 locale' } },
         'zh-override': { title: { en: 'Chinese text curated here', zh: '中文由本仓库整理' } },
+        'zh-detected': { title: { en: 'Chinese text written by the author', zh: '中文为作者原文' } },
         'zh-fallback': { title: { en: 'Chinese text pending', zh: '中文待补（暂用英文）' } },
       },
     },
@@ -415,6 +423,11 @@ async function main() {
     kept: kept.length,
     rejected: rejections.length,
     rejectReasons: Object.fromEntries([...counts].sort((a, b) => b[1] - a[1])),
+    zh: kept.reduce((acc, plugin) => {
+      const source = plugin._sidecar.zhSource
+      acc[source] = (acc[source] || 0) + 1
+      return acc
+    }, {}),
     bytes: JSON.stringify(index).length,
     ms: Date.now() - started,
   }
