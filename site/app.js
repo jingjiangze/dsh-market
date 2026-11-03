@@ -320,5 +320,5 @@ $('a').innerHTML = SHELL
 chrome()
 loadIndex()
 // Tells the loader in index.html that this tier worked, so it stops escalating.
-window.__r = 1
+window.__r?.()
 setTimeout(ensureStyles, TIMEOUT)
