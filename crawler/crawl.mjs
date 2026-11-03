@@ -511,7 +511,19 @@ async function main() {
   }
   const carried = Object.values(cache.entries)
     .sort((a, b) => (b.verifiedAt ?? 0) - (a.verifiedAt ?? 0) || a.plugin.name.localeCompare(b.plugin.name))
-  const kept = carried.slice(0, MAX_PLUGINS).map((entry) => ({ ...entry.plugin, _sidecar: entry.sidecar }))
+  // Re-derive the category at publish time: the taxonomy changes faster than
+  // entries are re-verified, and a cached entry must not keep a dead category.
+  const textOf = (value) => (typeof value === 'string' ? value : (value?.en ?? ''))
+  const kept = carried.slice(0, MAX_PLUGINS).map((entry) => {
+    const plugin = entry.plugin
+    const category = classify(
+      plugin.name,
+      textOf(plugin.title),
+      textOf(plugin.description),
+      (plugin.metadata?.keywords ?? []).join(' '),
+    )
+    return { ...plugin, metadata: { ...plugin.metadata, category }, _sidecar: entry.sidecar }
+  })
 
   const sidecar = {
     generatedAt: new Date().toISOString(),
