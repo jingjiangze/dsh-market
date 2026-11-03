@@ -79,6 +79,23 @@ if (siteText === null) fail('site/index.json', 'missing')
 else if (siteText !== distText) fail('site/index.json', 'differs from dist/index.json')
 else note('site/index.json', 'byte-identical to dist/index.json')
 
+// The two per-source splits must also be valid format-1 documents: a reader may
+// subscribe to them alone.
+for (const name of ['index.cn.json', 'index.intl.json']) {
+  const text = await read(name).catch(() => null)
+  if (text === null) {
+    fail(name, 'missing')
+    continue
+  }
+  try {
+    const parsed = parseMarketIndex(JSON.parse(text), `https://jingjiangze.github.io/dsh-market/${name}`)
+    if (parsed.plugins.length === 0) fail(name, 'split is empty')
+    else note(name, `${parsed.plugins.length} plugins`)
+  } catch (err) {
+    fail(name, `${err.name}: ${err.message}`)
+  }
+}
+
 // 3. the landing page stays under the agreed budget and carries no local refs
 const htmlBytes = await size('site/index.html')
 if (htmlBytes === null) fail('site/index.html', 'missing')
