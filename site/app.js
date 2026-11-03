@@ -211,33 +211,43 @@ async function fetchTiered(path) {
   throw lastError ?? new Error('no source')
 }
 
-const EAGER_CHUNKS = 6
-
-// The whole catalogue is ~6.5 MB of chunks; the first six (~2 MB) are loaded up
-// front and the rest is pulled only when the reader asks for more, so the page is
-// usable immediately instead of waiting on the tail.
-async function loadChunks(count) {
-  const chunks = state.meta?.chunks ?? []
-  const target = Math.min(chunks.length, state.loaded + count)
-  while (state.loaded < target) {
-    const slice = await fetchTiered(chunks[state.loaded]).catch(() => null)
-    if (!slice) {
-      state.failed = true
-      break
-    }
-    state.plugins.push(...slice)
-    state.loaded++
-    render()
-  }
-  render()
-}
+// The whole catalogue is ~7 MB across ~44 chunks. The first chunk paints at once,
+// then every remaining chunk is pulled six at a time so the list, the search and the
+// counts all end up covering the full catalogue instead of a partial slice.
+const PARALLEL_CHUNKS = 6
 
 async function loadIndex() {
   try {
     state.meta = await fetchTiered('meta.json')
     state.plugins = []
     state.loaded = 0
-    await loadChunks(EAGER_CHUNKS)
+    const chunks = state.meta.chunks ?? []
+    if (!chunks.length) return render()
+
+    const first = await fetchTiered(chunks[0]).catch(() => null)
+    if (first) {
+      state.plugins.push(...first)
+      state.loaded = 1
+      render()
+    }
+
+    let cursor = 1
+    const worker = async () => {
+      while (cursor < chunks.length) {
+        const chunk = chunks[cursor++]
+        const slice = await fetchTiered(chunk).catch(() => null)
+        if (!slice) {
+          state.failed = true
+          return
+        }
+        state.plugins.push(...slice)
+        state.loaded++
+        // Re-render in batches: 44 renders of 10k cards would jank the page.
+        if (state.loaded % 4 === 0) render()
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(PARALLEL_CHUNKS, chunks.length - 1 || 1) }, worker))
+    render()
   } catch (error) {
     $('list').innerHTML = `<p class=empty>索引加载失败：${esc(error.message)}</p>`
   }
@@ -300,8 +310,6 @@ document.addEventListener('click', (event) => {
   if (more) {
     state.limit += 120
     render()
-    // Ran out of loaded entries? pull the next few chunks in the background.
-    if (state.visible.length <= state.limit && (state.meta?.chunks?.length ?? 0) > state.loaded) loadChunks(4)
     return
   }
   const copy = event.target.closest('[data-copy]')
