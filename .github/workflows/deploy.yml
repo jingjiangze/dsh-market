@@ -40,6 +40,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cloudflare/wrangler-action@v3
+        # The brand domain mirrors GitHub Pages; it is not the source of truth.
+        # wrangler's asset check has returned 500 on a ~20 MB upload, which must
+        # not fail the whole deploy and hide the Pages result.
+        continue-on-error: true
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
