@@ -40,12 +40,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Trim the Cloudflare bundle
-        # Only the shell and its assets go to Cloudflare: the ~20 MB of index
-        # documents made wrangler's asset check return 500 and left the brand
-        # domain on an old deployment. The page reads its data from ModelScope.
+        # Only the shell, its assets and the hashed copies go to Cloudflare: the
+        # ~20 MB of index documents made wrangler's asset check return 500 and left
+        # the brand domain on an old deployment. The page reads data from ModelScope.
         run: |
           mkdir -p site-cf
           cp site/index.html site/style.css site/app.js site-cf/
+          cp -r site/a site-cf/a
           cp site/_headers site-cf/ 2>/dev/null || true
           cp site/stats.json site-cf/ 2>/dev/null || true
           du -sh site-cf
