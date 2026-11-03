@@ -1,5 +1,21 @@
 {
   "_readme": "Hand-curated Chinese display text, used when a package ships no locale/zh.json. Keyed by npm package name; `version` pins an entry to one release.",
+  "@dsh-agentic-roleplay/core": {
+    "title": "角色扮演核心",
+    "description": "agentic 角色扮演套件的核心插件：角色扮演界面、编排与存储。"
+  },
+  "@kyoukisu/dsh-rich-ui": {
+    "title": "富文本回答卡片",
+    "description": "在 DSH 里渲染 ChatGPT 风格的富回答：实体面板、KPI 卡片、图表、表格、分层与本地控件。"
+  },
+  "dsh-arrowkey-nav": {
+    "title": "方向键导航",
+    "description": "给 DSH Web 界面加方向键导航：上下切当前会话、左右切工作区。"
+  },
+  "dsh-bash-terminal-ts": {
+    "title": "多壳终端",
+    "description": "一个 shell 工具走遍 PowerShell、Git Bash、MSYS2 与 WSL，并在底部停靠栏内置终端。"
+  },
   "@goodandready/dsh-context-lens": {
     "version": "0.1.35",
     "title": "上下文透镜",
