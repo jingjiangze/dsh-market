@@ -1,4 +1,4 @@
-﻿// Validate the published index before it is allowed to merge or deploy.
+// Validate the published index before it is allowed to merge or deploy.
 //
 // Uses the real format-1 validator from npm (@deepseek-ai/dsh-plugin-market-index),
 // so the check is the same one DSH itself runs 鈥?not a reimplementation.
@@ -126,11 +126,23 @@ if (!OFFLINE) {
     if (!actual.includes(type)) fail(`${label} type`, `${url} -> ${actual}`)
     else note(label, `200 ${actual}`)
     // A stale CDN copy is indistinguishable from a correct one by headers alone,
-    // so compare the bytes against the file that was just published.
-    const served = Buffer.from(await res.arrayBuffer())
+    // so compare the bytes against the file that was just published. jsDelivr
+    // caches @main for hours, so purge once and re-check before failing.
     const expected = await readFile(join(root, localPath))
+    let served = Buffer.from(await res.arrayBuffer())
     if (served.length !== expected.length) {
-      fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B 鈥?purge the CDN copy`)
+      const purgeUrl = `https://purge.jsdelivr.net/gh/jingjiangze/dsh-market@main/${localPath}`
+      const purged = await fetch(purgeUrl, { signal: AbortSignal.timeout(20000) }).then((r) => r.ok).catch(() => false)
+      if (purged) {
+        await new Promise((resolve) => setTimeout(resolve, 4000))
+        const again = await fetch(url, { signal: AbortSignal.timeout(20000), cache: 'no-cache' }).catch(() => null)
+        if (again?.ok) served = Buffer.from(await again.arrayBuffer())
+      }
+      if (served.length !== expected.length) {
+        fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B - purge the CDN copy`)
+      } else {
+        note(`${label} (purged)`, `200, ${served.length} B after cache purge`)
+      }
     }
   }
 }
