@@ -1,0 +1,64 @@
+name: translate
+
+# Fills the ja/ko/ru text for the catalogue and republishes the per-language
+# indexes. It runs on its own schedule so the crawl stays short: the crawl keeps a
+# small incremental pass (the content-hash cache makes it nearly free), and this job
+# works through the backlog.
+on:
+  schedule:
+    - cron: '37 * * * *'   # hourly, offset from the crawl
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch the published index
+        run: |
+          mkdir -p dist
+          curl -fsSL --retry 3 --max-time 180 https://jingjiangze.github.io/dsh-market/index.json -o dist/index.json
+          node -e "console.log('plugins', JSON.parse(require('fs').readFileSync('dist/index.json','utf8')).plugins.length)"
+
+      - name: Translate the backlog
+        env:
+          TRANSLATE_LANGS: ja,ko,ru
+          TRANSLATE_CONCURRENCY: '12'
+          TRANSLATE_MAX_STRINGS: '20000'
+          TRANSLATE_BUDGET_MS: '2100000'
+        run: node crawler/translate.mjs
+
+      - name: Build one index per language
+        run: node crawler/lang-index.mjs
+
+      - name: Publish the language indexes to the dataset
+        env:
+          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
+          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
+          MODELSCOPE_SKIP_DOCS: '0'
+        run: node crawler/ms-upload.mjs
+
+      - name: Commit the cache and the language indexes
+        # Same API path the crawl uses: `git push` is not reliable from the runner.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PUBLISH_PATHS: data dist
+          PUBLISH_MESSAGE: 'chore(i18n): fill ja/ko/ru text and refresh the per-language indexes'
+        run: |
+          set -o pipefail
+          node crawler/publish-api.mjs | tee /dev/stderr

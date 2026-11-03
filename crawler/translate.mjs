@@ -42,25 +42,32 @@ async function translate(text, lang) {
   if (OFFLINE) return null
   attempted++
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`
-  try {
-    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 dsh-market' }, signal: AbortSignal.timeout(CALL_TIMEOUT_MS) })
-    if (!res.ok) {
-      failed++
-      return null
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 dsh-market' }, signal: AbortSignal.timeout(CALL_TIMEOUT_MS) })
+      if (res.status === 429 || res.status >= 500) {
+        await new Promise((resolve) => setTimeout(resolve, 400 * (attempt + 1)))
+        continue
+      }
+      if (!res.ok) {
+        failed++
+        return null
+      }
+      const body = await res.json()
+      const out = (body?.[0] ?? []).map((part) => part?.[0] ?? '').join('').trim()
+      if (!out) {
+        failed++
+        return null
+      }
+      cache[key] = out
+      translated++
+      return out
+    } catch {
+      await new Promise((resolve) => setTimeout(resolve, 400 * (attempt + 1)))
     }
-    const body = await res.json()
-    const out = (body?.[0] ?? []).map((part) => part?.[0] ?? '').join('').trim()
-    if (!out) {
-      failed++
-      return null
-    }
-    cache[key] = out
-    translated++
-    return out
-  } catch {
-    failed++
-    return null
   }
+  failed++
+  return null
 }
 
 const started = Date.now()
