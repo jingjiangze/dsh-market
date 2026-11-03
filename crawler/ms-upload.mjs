@@ -23,6 +23,7 @@ const REPO = join(WORK, 'repo')
 const REMOTE = `https://www.modelscope.cn/datasets/${DATASET}.git`
 
 const git = (args, options = {}) => execFileSync('git', args, { cwd: options.cwd ?? REPO, encoding: 'utf8', stdio: options.stdio ?? 'pipe' })
+const firstLine = (error) => String(`${error.message ?? error}`).split('\n').find((line) => line.trim()) ?? 'unknown error'
 
 // The dataset carries gigabytes of unrelated assets, so clone blobless + shallow
 // and only check out the directory this project owns.
@@ -79,12 +80,41 @@ console.log(`ms-upload: ${plan.length} file(s) planned, ${changed} to write`)
 if (!changed) process.exit(0)
 if (DRY) process.exit(0)
 
-git(['add', 'web'])
-git(['-c', 'user.name=dsh-market-bot', '-c', 'user.email=dsh-market-bot@users.noreply.github.com', '-c', 'commit.gpgsign=false', 'commit', '-m', `publish site assets (${changed} file(s))`], { stdio: 'inherit' })
+// Identity and sparse checkout are configured explicitly: on a fresh runner the
+// dataset clone has no user config, and a failed commit there is otherwise opaque.
+try {
+  git(['config', 'user.name', 'dsh-market-bot'])
+  git(['config', 'user.email', 'dsh-market-bot@users.noreply.github.com'])
+  git(['config', 'commit.gpgsign', 'false'])
+  git(['add', '-A', 'web'])
+} catch (error) {
+  console.log(`ms-upload: staging failed (${firstLine(error)})`)
+  process.exit(1)
+}
+if (DRY) process.exit(0)
+
+let committed = false
+try {
+  const out = git(['commit', '-m', `publish site assets (${changed} file(s))`])
+  committed = !/nothing to commit/i.test(out)
+} catch (error) {
+  const text = `${error.stdout ?? ''}${error.stderr ?? ''}`
+  committed = !/nothing to commit/i.test(text)
+  if (!committed) console.log(`ms-upload: commit failed (${firstLine(error)})`)
+}
+if (!committed) {
+  console.log('ms-upload: dataset already up to date')
+  process.exit(0)
+}
 if (!TOKEN) {
   console.log('ms-upload: MODELSCOPE_TOKEN is missing, staged but not pushed')
   process.exit(0)
 }
 const authRemote = REMOTE.replace('https://', `https://oauth2:${TOKEN}@`)
-git(['-c', 'http.sslVerify=false', 'push', authRemote, `HEAD:${BRANCH}`], { stdio: 'inherit' })
+try {
+  git(['-c', 'http.sslVerify=false', 'push', authRemote, `HEAD:${BRANCH}`])
+} catch (error) {
+  console.log(`ms-upload: push failed (${firstLine(error)})`)
+  process.exit(1)
+}
 console.log(`ms-upload: pushed ${changed} file(s) to ${DATASET}@${BRANCH}`)
