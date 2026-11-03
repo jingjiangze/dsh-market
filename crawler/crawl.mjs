@@ -262,7 +262,12 @@ const KEEP_LABELS = new Set([
 ])
 
 function displayLabels(labels) {
-  return [...new Set((labels ?? []).filter((label) => KEEP_LABELS.has(label)))].slice(0, 3)
+  const kept = [...new Set((labels ?? []).filter((label) => KEEP_LABELS.has(label)))]
+  // Flags first: "no-engines"/"catalog-only" are what the validator and the reader
+  // rely on, so a 3-label budget must never squeeze them out in favour of a source.
+  const flags = kept.filter((label) => label === 'no-engines' || label === 'catalog-only')
+  const rest = kept.filter((label) => !flags.includes(label))
+  return [...flags, ...rest].slice(0, 3)
 }
 
 // --------------------------------------------------------------- localization
