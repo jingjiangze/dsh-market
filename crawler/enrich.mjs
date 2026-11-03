@@ -63,16 +63,23 @@ async function githubStars(slug) {
 }
 
 async function npmDownloads(name) {
-  const res = await fetch(`https://api.npmjs.org/downloads/point/last-week/${name.replace('/', '%2f')}`, {
-    headers: { 'user-agent': 'dsh-market-enrich' },
-    signal: AbortSignal.timeout(15000),
-  })
-  // 404 means "listed in a catalog but never published to npm" — cache that too,
-  // otherwise every run burns a request on the same ~3k names.
-  if (res.status === 404) return { downloads: 0, at: Date.now() }
-  if (!res.ok) return null
-  const body = await res.json()
-  return { downloads: Number(body.downloads) || 0, at: Date.now() }
+  const url = `https://api.npmjs.org/downloads/point/last-week/${name.replace('/', '%2f')}`
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const res = await fetch(url, { headers: { 'user-agent': 'dsh-market-enrich' }, signal: AbortSignal.timeout(15000) })
+    // 404 means "listed in a catalog but never published to npm" — cache that too,
+    // otherwise every run burns a request on the same ~3k names.
+    if (res.status === 404) return { downloads: 0, at: Date.now() }
+    // npm's point API answers 429 when bursts arrive; one short backoff, then give up
+    // for this run (the cache keeps whatever landed).
+    if (res.status === 429) {
+      await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)))
+      continue
+    }
+    if (!res.ok) return null
+    const body = await res.json()
+    return { downloads: Number(body.downloads) || 0, at: Date.now() }
+  }
+  return null
 }
 
 if (OFFLINE) {
@@ -152,7 +159,14 @@ async function downloadWorker() {
     }
   }
 }
-await Promise.all(Array.from({ length: Math.min(CONCURRENCY, downloadQueue.length || 1) }, downloadWorker))
+// npm's point API rate-limits bursts, so this pass runs with its own narrow
+// concurrency and a try/catch: a throttled run keeps whatever already landed.
+const DOWNLOAD_CONCURRENCY = Math.min(3, CONCURRENCY)
+try {
+  await Promise.all(Array.from({ length: Math.min(DOWNLOAD_CONCURRENCY, downloadQueue.length || 1) }, downloadWorker))
+} catch (error) {
+  console.log(`enrich: downloads pass aborted (${error.message})`)
+}
 
 await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index, null, 2) + '\n')
 await writeFile(cachePath, JSON.stringify(cache) + '\n')
