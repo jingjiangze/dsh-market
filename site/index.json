@@ -5,8 +5,8 @@
     "zh": "DSH 插件索引（自动爬取）"
   },
   "description": {
-    "en": "Crawled from the public npm registry: packages that declare a DSH bundle and a satisfied engines.dsh range. Bilingual titles and descriptions come from each package's own locale files where it ships them. Metadata only; the package decides what it installs.",
-    "zh": "从公共 npm 源自动爬取：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。中英双语标题与简介优先取包自带 locale 文件，没有则用人工整理的覆盖表。这里只有元数据，装什么以包为准。"
+    "en": "DeepSeekRuntime plugin index, built with DSH: packages that declare a DSH bundle and a satisfied engines.dsh range. Metadata only; the package decides what it installs.",
+    "zh": "由 DSH 制作的 DeepSeekRuntime 插件索引：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。这里只有元数据，装什么以包为准。"
   },
   "metadata": {
     "categories": {
@@ -56,6 +56,24 @@
         "title": {
           "en": "UI & Themes",
           "zh": "界面与主题"
+        }
+      },
+      "web": {
+        "title": {
+          "en": "Web & Browser",
+          "zh": "网页与浏览器"
+        }
+      },
+      "utilities": {
+        "title": {
+          "en": "Utilities",
+          "zh": "实用工具"
+        }
+      },
+      "ecosystem": {
+        "title": {
+          "en": "Ecosystem & Resources",
+          "zh": "生态与资源"
         }
       },
       "other": {
@@ -159,6 +177,652 @@
     }
   },
   "plugins": [
+    {
+      "name": "dock-base",
+      "title": {
+        "en": "dock-base",
+        "zh": "dock-base"
+      },
+      "description": {
+        "en": "DSH Web workbench base: a VSCode-style layout shell (activity bar, side bar, editor area, panel, status bar) with a registry service (ctx.workbench) that feature plugins use to mount panels, editor views, activity items, status items and commands.",
+        "zh": "DSH Web workbench base: a VSCode-style layout shell (activity bar, side bar, editor area, panel, status bar) with a registry service (ctx.workbench) that feature plugins use to mount panels, editor views, activity items, status items and commands."
+      },
+      "homepage": "https://github.com/AKS1st/dock#readme",
+      "repository": {
+        "url": "https://github.com/AKS1st/dock"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "dsh-plugin",
+          "web-ui",
+          "workbench",
+          "dock",
+          "layout"
+        ],
+        "category": "ui",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.4",
+          "publishTimestamp": 1790740410,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.3-alpha.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-abba-secret-chat",
+      "title": {
+        "en": "dsh-abba-secret-chat",
+        "zh": "dsh-abba-secret-chat"
+      },
+      "description": {
+        "en": "AB-BA 秘密对话：装进 DeepSeek Harness 右侧栏的一次性双人密码聊天，端到端加密（服务器只见密文），支持图片与截屏、我/你标签，结束即彻底清理。 · One-off two-person password chat for DeepSeek Harness: end-to-end encrypted, docked in the right sidebar, images/screenshots, cleared on end.",
+        "zh": "AB-BA 秘密对话：装进 DeepSeek Harness 右侧栏的一次性双人密码聊天，端到端加密（服务器只见密文），支持图片与截屏、我/你标签，结束即彻底清理。 · One-off two-person password chat for DeepSeek Harness: end-to-end encrypted, docked in the right sidebar, images/screenshots, cleared on end."
+      },
+      "author": "wangwei",
+      "homepage": "https://github.com/v93013520/dsh-abba-secret-chat#readme",
+      "repository": {
+        "url": "https://github.com/v93013520/dsh-abba-secret-chat"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "chat",
+          "secret-chat",
+          "privacy",
+          "e2e",
+          "encryption"
+        ],
+        "category": "safety",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.1",
+          "publishTimestamp": 1793333299,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-achievement-helper",
+      "title": {
+        "en": "dsh-achievement-helper",
+        "zh": "dsh-achievement-helper"
+      },
+      "description": {
+        "en": "A personal, themed achievement journal for DeepSeek Harness: real progress, badges and model-configured milestones.",
+        "zh": "A personal, themed achievement journal for DeepSeek Harness: real progress, badges and model-configured milestones."
+      },
+      "author": "ghang",
+      "homepage": "https://github.com/ghang/dsh-achievement-helper#readme",
+      "repository": {
+        "url": "https://github.com/ghang/dsh-achievement-helper"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "achievements",
+          "badges",
+          "themes"
+        ],
+        "category": "ui",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.2",
+          "publishTimestamp": 1793289924,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-adapter-qq",
+      "title": {
+        "en": "dsh-adapter-qq",
+        "zh": "dsh-adapter-qq"
+      },
+      "description": {
+        "en": "DeepSeek Harness QQ Bot Adapter - C2C chat, session sync, rich media, skills/MCP management, text-to-image tools",
+        "zh": "DeepSeek Harness QQ Bot Adapter - C2C chat, session sync, rich media, skills/MCP management, text-to-image tools"
+      },
+      "author": "JiXieShi",
+      "homepage": "https://github.com/jixishi/dsh-adapter-qq#readme",
+      "repository": {
+        "url": "https://github.com/jixishi/dsh-adapter-qq"
+      },
+      "metadata": {
+        "keywords": [
+          "deepseek-harness",
+          "dsh",
+          "dsh-plugin",
+          "qq-bot",
+          "adapter"
+        ],
+        "category": "media",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.3",
+          "publishTimestamp": 1793275500,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-agent-bench",
+      "title": {
+        "en": "dsh-agent-bench",
+        "zh": "dsh-agent-bench"
+      },
+      "description": {
+        "en": "Regression benchmark for DSH agents: replay fixed cases in isolated sandboxes and diff scorecards across model, prompt and DSH versions. DSH Agent 回归基准。",
+        "zh": "Regression benchmark for DSH agents: replay fixed cases in isolated sandboxes and diff scorecards across model, prompt and DSH versions. DSH Agent 回归基准。"
+      },
+      "author": "宋锐",
+      "homepage": "https://github.com/songrui111/dsh-agent-bench#readme",
+      "repository": {
+        "url": "https://github.com/songrui111/dsh-agent-bench"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "benchmark",
+          "regression",
+          "agent-eval",
+          "evaluation"
+        ],
+        "category": "memory",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.1",
+          "publishTimestamp": 1792982147,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-agent-foreman",
+      "title": {
+        "en": "dsh-agent-foreman",
+        "zh": "包工头"
+      },
+      "description": {
+        "en": "父智能体派单，承包商子智能体干活：每个承包商可以单独指定 provider / 模型 / 思考等级，产物回流成一块共享看板，父智能体逐个验收、不合格打回返工。",
+        "zh": "派单给可自选模型的承包商子智能体，产物回流成共享看板，父智能体负责验收与返工。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-agent-foreman@0.4.0/icon.svg",
+      "author": "Dclef",
+      "homepage": "https://github.com/Dclef/dsh-agent-foreman#readme",
+      "repository": {
+        "url": "https://github.com/Dclef/dsh-agent-foreman"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "subagent",
+          "orchestrator",
+          "foreman",
+          "包工头"
+        ],
+        "category": "models",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.4.0",
+          "publishTimestamp": 1793379118,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-agent-team-presets",
+      "title": {
+        "en": "dsh-agent-team-presets",
+        "zh": "智能体团队预设"
+      },
+      "description": {
+        "en": "Reusable Agent Team presets for DeepSeek Harness: a captain plus members with their own prompt, model, reasoning effort, and tools.",
+        "zh": "为 DeepSeek Harness 配置可复用的智能体团队预设：队长 + 队员，每个队员有自己的提示词、模型、思考强度和工具。"
+      },
+      "homepage": "https://github.com/bloodarea/dsh-agent-team-presets#readme",
+      "repository": {
+        "url": "https://github.com/bloodarea/dsh-agent-team-presets"
+      },
+      "metadata": {
+        "keywords": [
+          "agent-presets",
+          "agent-teams",
+          "ai-agents",
+          "deepseek-harness",
+          "dsh",
+          "dsh-plugin",
+          "multi-agent"
+        ],
+        "category": "memory",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-mydsh",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.8",
+          "publishTimestamp": 1793101776,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-ai-gateway-provider",
+      "title": {
+        "en": "dsh-ai-gateway-provider",
+        "zh": "AI 网关"
+      },
+      "description": {
+        "en": "Any OpenAI-compatible gateway for DeepSeek Harness: probe it, save it, manage its models; known backends also report quota.",
+        "zh": "接入任意 OpenAI 兼容网关：检查连接后保存，模型出现在对话的模型选择器里；New API、LiteLLM 等已知后端还会显示额度。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-ai-gateway-provider@0.7.1/icon.svg",
+      "author": "zenVibeCoding",
+      "homepage": "https://github.com/zenVibeCoding/dsh-ai-gateway-provider#readme",
+      "repository": {
+        "url": "https://github.com/zenVibeCoding/dsh-ai-gateway-provider"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "ai-gateway",
+          "openai-compatible",
+          "llm-provider",
+          "new-api",
+          "cliproxy"
+        ],
+        "category": "integrations",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-mydsh",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.7.1",
+          "publishTimestamp": 1793265404,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-ai-studio",
+      "title": {
+        "en": "dsh-ai-studio",
+        "zh": "dsh-ai-studio"
+      },
+      "description": {
+        "en": "Install-and-use AI studio for DeepSeek Harness: owner dashboard, Agent dispatch, token budgets, decision desk, branch/contract conflicts, worktree code execution, host verification, independent AI review, automatic integration gates, docs sync and irrever",
+        "zh": "Install-and-use AI studio for DeepSeek Harness: owner dashboard, Agent dispatch, token budgets, decision desk, branch/contract conflicts, worktree code execution, host verification, independent AI review, automatic integration gates, docs sync and irrever"
+      },
+      "author": "mjw0531",
+      "homepage": "https://github.com/mjw0531/dsh-ai-studio#readme",
+      "repository": {
+        "url": "https://github.com/mjw0531/dsh-ai-studio"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "dsh",
+          "ai-studio",
+          "workbench",
+          "agent",
+          "typescript"
+        ],
+        "category": "integrations",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "2.5.3",
+          "publishTimestamp": 1792689992,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-aiignore",
+      "title": {
+        "en": "dsh-aiignore",
+        "zh": "AIignore"
+      },
+      "description": {
+        "en": "See what a conversation feeds the model, what your rules keep out, and what one click would change.",
+        "zh": "看清一次对话喂给模型的内容、其中多少是噪音、以及点一下会改变什么。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-aiignore@0.37.1/icon.svg",
+      "homepage": "https://github.com/WJDdidi-1/ai-context-doctor#readme",
+      "repository": {
+        "url": "https://github.com/WJDdidi-1/ai-context-doctor"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "dsh-aiignore",
+          "aiignore",
+          "ai-context-doctor",
+          "context-window",
+          "token-budget",
+          "noise",
+          "lockfile"
+        ],
+        "category": "memory",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-npm"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.37.1",
+          "publishTimestamp": 1793412854,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-annotate-browser",
+      "title": {
+        "en": "dsh-annotate-browser",
+        "zh": "dsh-annotate-browser"
+      },
+      "description": {
+        "en": "DSH 插件：在自己掌握的面板里标注浏览器页面元素，注释随对话一起发出",
+        "zh": "DSH 插件：在自己掌握的面板里标注浏览器页面元素，注释随对话一起发出"
+      },
+      "homepage": "https://github.com/zengxiaolou/dsh-annotate-browser",
+      "repository": {
+        "url": "https://github.com/zengxiaolou/dsh-annotate-browser"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness"
+        ],
+        "category": "web",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.8",
+          "publishTimestamp": 1792986925,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-annotation",
+      "title": {
+        "en": "dsh-annotation",
+        "zh": "dsh-annotation"
+      },
+      "description": {
+        "en": "划选回答文字打注释，输入框内以胶囊聚合，多条一起随消息发送。",
+        "zh": "划选回答文字打注释，输入框内以胶囊聚合，多条一起随消息发送。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-annotation@0.1.11/icon.svg",
+      "homepage": "https://github.com/zengxiaolou/dsh-annotation#readme",
+      "repository": {
+        "url": "https://github.com/zengxiaolou/dsh-annotation"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness"
+        ],
+        "category": "other",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-mydsh",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.11",
+          "publishTimestamp": 1792986935,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-answer-timing",
+      "title": {
+        "en": "dsh-answer-timing",
+        "zh": "dsh-answer-timing"
+      },
+      "description": {
+        "en": "Answer-level timing breakdown for DSH: model thinking / first token / decode, per-tool cost, and everything else.",
+        "zh": "Answer-level timing breakdown for DSH: model thinking / first token / decode, per-tool cost, and everything else."
+      },
+      "author": "liuzhihao-min",
+      "homepage": "https://github.com/liuzhihao-min/dsh-answer-timing#readme",
+      "repository": {
+        "url": "https://github.com/liuzhihao-min/dsh-answer-timing"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "dsh",
+          "deepseek-harness",
+          "timing",
+          "profiling",
+          "observability"
+        ],
+        "category": "models",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.0.1",
+          "publishTimestamp": 1792847054,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-anvil",
+      "title": {
+        "en": "dsh-anvil",
+        "zh": "Anvil 铁砧"
+      },
+      "description": {
+        "en": "DeepSeek Harness 输入框增强：一键润色、预测下一句、熔炉滑块式模型与推理等级选择、像素小火龙",
+        "zh": "输入框增强：一键润色、预测下一句、带熔炉滑块的模型与推理等级菜单，还有一只趴在输入框上的像素小火龙。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-anvil@0.3.3/icon.svg",
+      "author": "suj1e",
+      "homepage": "https://github.com/suj1e/dsh-anvil",
+      "repository": {
+        "url": "https://github.com/suj1e/dsh-anvil"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "dsh-plugin",
+          "prompt",
+          "model-picker"
+        ],
+        "category": "memory",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.3.3",
+          "publishTimestamp": 1793058168,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3 <0.3.0"
+          }
+        }
+      ]
+    },
     {
       "name": "@kenz1117/dsh-ui-usage-billing",
       "title": {
@@ -744,7 +1408,7 @@
           "waifu",
           "web-ui"
         ],
-        "category": "other",
+        "category": "web",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -1719,7 +2383,7 @@
           "hud",
           "cpu"
         ],
-        "category": "memory",
+        "category": "web",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -2954,7 +3618,7 @@
           "explorer",
           "dock"
         ],
-        "category": "other",
+        "category": "web",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -3250,7 +3914,7 @@
           "second-model",
           "ai-safety"
         ],
-        "category": "safety",
+        "category": "models",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -4882,7 +5546,7 @@
           "deep-research",
           "research"
         ],
-        "category": "devtools",
+        "category": "web",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -5897,7 +6561,7 @@
           "mask",
           "privacy"
         ],
-        "category": "safety",
+        "category": "memory",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -6358,7 +7022,7 @@
           "deepseek-harness",
           "repository-tools"
         ],
-        "category": "other",
+        "category": "utilities",
         "labels": [
           "auto-crawled",
           "engines-pinned",
@@ -7314,7 +7978,7 @@
           "schema-validation",
           "parameter-mapping"
         ],
-        "category": "models",
+        "category": "utilities",
         "labels": [
           "auto-crawled",
           "engines-pinned",

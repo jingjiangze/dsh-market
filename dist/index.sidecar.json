@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-03T08:53:06.099Z",
+  "generatedAt": "2026-11-03T09:42:24.472Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "catalogue": {
-    "carried": 157,
-    "verifiedThisRun": 43,
-    "published": 157
+    "carried": 171,
+    "verifiedThisRun": 14,
+    "published": 171
   },
   "gates": {
     "minAgeDays": 3,
@@ -20,6 +20,340 @@
     ]
   },
   "plugins": [
+    {
+      "name": "dock-base",
+      "version": "0.2.4",
+      "category": "ui",
+      "distIntegrity": "sha512-mpf8rF7n1xzJkyaETzbzj2tmGIvudHlpJvorapp17YkqvlTn0b/8HSVeKMas8QCToXRszRl/aJMEJ7iF6R55Kg==",
+      "attestations": null,
+      "unpackedSize": 347549,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-abba-secret-chat",
+      "version": "0.2.1",
+      "category": "safety",
+      "distIntegrity": "sha512-BKxzkvnRerBsWvrjGqaq138iVmhZCnKaS2Y/slk9MXzfKNkmP04L/1becSkV8cNM41UYATXAMtMSE+lfvQ2mcg==",
+      "attestations": null,
+      "unpackedSize": 395604,
+      "zhSource": "detected",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-achievement-helper",
+      "version": "0.2.2",
+      "category": "ui",
+      "distIntegrity": "sha512-xjVfRpMJVL9yH2QKl/tOOhgphSUpT3Z4XYVI1h3D7+VIlg9xVUD39XM3bwTfouZB/kBwbbhmCD/EAM+8h6RFnQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-achievement-helper@0.2.2",
+      "unpackedSize": 7809990,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-adapter-qq",
+      "version": "0.2.3",
+      "category": "media",
+      "distIntegrity": "sha512-ACEGAs2DNeIDcaSGHrWurk8QwdSQ/SH5D7pg+m1N+q2KM6lOwsEc58yVupbWRTjEny5rL+ZCFJJC3pP0sptu7g==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-adapter-qq@0.2.3",
+      "unpackedSize": 2087143,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-agent-bench",
+      "version": "0.1.1",
+      "category": "memory",
+      "distIntegrity": "sha512-Pvk02ydgr+7Zp/6DxcSsTXuOMzuuQ2u2F/XmmiOPql3hBFHSzxR08Ey+eRLXKxUD8y3/H6fqc4bE6+MrhL9iAg==",
+      "attestations": null,
+      "unpackedSize": 105114,
+      "zhSource": "detected",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-agent-foreman",
+      "version": "0.4.0",
+      "category": "models",
+      "distIntegrity": "sha512-ZXLunby77W/j88n3FzuR7dIrwutkM4fjiF5nneu2IS55jJYCRddu8AnqER65AHvEjhjnDxthJ4LIpneM2WCPIA==",
+      "attestations": null,
+      "unpackedSize": 416605,
+      "zhSource": "native",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-agent-team-presets",
+      "version": "0.1.8",
+      "category": "memory",
+      "distIntegrity": "sha512-s+BWKvqnNVELk6dNNvaEN6nZMGzQkBTI9bCdnPyGKv46FY5EOhxct0bqBqAEqhuLAkVyE7muVV+JXAbREpy9lA==",
+      "attestations": null,
+      "unpackedSize": 3924037,
+      "zhSource": "native",
+      "origins": [
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-ai-gateway-provider",
+      "version": "0.7.1",
+      "category": "integrations",
+      "distIntegrity": "sha512-GAc4JKN2fi0EkLuAWHBjuDiblRLAel1oA9/HY070RqImNN/HcsNuaOY059ux76SLa5mpJVH2D2U+xABZ9I61nA==",
+      "attestations": null,
+      "unpackedSize": 434727,
+      "zhSource": "native",
+      "origins": [
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-ai-studio",
+      "version": "2.5.3",
+      "category": "integrations",
+      "distIntegrity": "sha512-flH5j3YBATOg1/IVVWbes6jjWppimNfSJdPy/CrGcoxRRtu4rLHOy+diqfERVHI66Bn+umbOmTqJBT0bDmyYTg==",
+      "attestations": null,
+      "unpackedSize": 511233,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-aiignore",
+      "version": "0.37.1",
+      "category": "memory",
+      "distIntegrity": "sha512-FWMtgZUCf2Dtu6OLjY1kXboItDAcvMP8GlvoRMJ5AG6dgddcmHvx/ziBIwGOkOvKfEpu0LstQgxrbl4yuxdCBQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-aiignore@0.37.1",
+      "unpackedSize": 370922,
+      "zhSource": "native",
+      "origins": [
+        "src-npm"
+      ],
+      "trust": [],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-annotate-browser",
+      "version": "0.2.8",
+      "category": "web",
+      "distIntegrity": "sha512-pk2WE0yhUhX2sDQ+5UQKifRK/nHXtjzKh1Ovc9p29CAYyCOvtRb828MmdmO11HvuCrfCgK9Drl3lBZxueEn/Hw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-annotate-browser@0.2.8",
+      "unpackedSize": 177043,
+      "zhSource": "detected",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-annotation",
+      "version": "0.1.11",
+      "category": "other",
+      "distIntegrity": "sha512-wU9bsZSstE7MoR+82IdSMmRdIWiVtVfDcy0AXiuYenheFB7NVCFBy8QsrCvoOZ87SnJqZ6Ro2LQYi+dW73BWyQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-annotation@0.1.11",
+      "unpackedSize": 126821,
+      "zhSource": "detected",
+      "origins": [
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-answer-timing",
+      "version": "1.0.1",
+      "category": "models",
+      "distIntegrity": "sha512-C2fCqD3V7KG7VAoj26y+nohfBiV5kaBo07hsL0pn0D/NTNu3n/OW2/isCYWJ0NPAdEQhnqmUHfDhxgRR6pho0A==",
+      "attestations": null,
+      "unpackedSize": 43447,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-anvil",
+      "version": "0.3.3",
+      "category": "memory",
+      "distIntegrity": "sha512-eim+ewVGC4IDX+JYFwPoPLvAz2bGPMs8oMarpMWgUhBaVen+QguTb/LMd6k8afrnGB3Z3t3J1pM+QT8kizfbQA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-anvil@0.3.3",
+      "unpackedSize": 97627,
+      "zhSource": "native",
+      "origins": [
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
     {
       "name": "@kenz1117/dsh-ui-usage-billing",
       "version": "1.8.1",
@@ -309,7 +643,7 @@
     {
       "name": "@lrplrplrp/dsh-live2d",
       "version": "0.1.4",
-      "category": "other",
+      "category": "web",
       "distIntegrity": "sha512-UaHkYwnNt/9PVv9bv4WijhsFk4yYPh0607Vv/ayMKJrsTP792x9g2E5THoLFZdUvHymqVfrO8QoggPW6qqR1Cw==",
       "attestations": null,
       "unpackedSize": 3586606,
@@ -833,7 +1167,7 @@
     {
       "name": "@ponydev/dsh-system-hud",
       "version": "0.2.2",
-      "category": "memory",
+      "category": "web",
       "distIntegrity": "sha512-8DnjflNUbn7Bg/+OPDU90DezH5CQIROAiyMGbdqWVfxdEHWjyMdYSC2SMx0iU5WOP/hlPFhUof4N7ybpj22b9w==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@ponydev%2fdsh-system-hud@0.2.2",
       "unpackedSize": 284194,
