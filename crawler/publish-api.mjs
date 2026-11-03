@@ -19,6 +19,11 @@ const BRANCH = process.env.PUBLISH_BRANCH || 'main'
 const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || ''
 const DRY = process.argv.includes('--dry-run')
 const PATHS = (process.env.PUBLISH_PATHS || 'dist site data').split(/\s+/).filter(Boolean)
+// Generated artefacts that belong to the dataset, not to git: language documents
+// (~8.7 MB each), browse chunks, mirrored icons, shard part files. Committing them
+// made this step upload ~60 MB per run and bloated the repository.
+const INCLUDE = new RegExp(process.env.PUBLISH_INCLUDE
+  || '^(site/|data/|dist/index\\.json$|dist/stats\\.json$)', '')
 const MESSAGE = process.env.PUBLISH_MESSAGE || 'chore(crawl): refresh plugin index'
 const API = 'https://api.github.com'
 const MAX_BLOB_BYTES = 90 * 1024 * 1024
@@ -67,6 +72,7 @@ function changedFiles() {
     if (!line.trim()) continue
     const status = line.slice(0, 2)
     const path = line.slice(3).trim().replace(/^"|"$/g, '')
+    if (!INCLUDE.test(path)) continue
     files.push({ status, path })
   }
   return files
