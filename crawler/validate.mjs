@@ -15,6 +15,9 @@ const HTML_LIMIT = 1024
 // 12 MB: a merged ~10k-entry index (slim catalog entries + verified ones) lands
 // around 9.6 MB, and DSH handles documents of this size (20k ≈ 7.6 MB bare).
 const MAX_INDEX_BYTES = 12 * 1024 * 1024
+// The registry sweep is bounded: it exists to catch drift in what we verified, not
+// to re-proof a 10k catalogue on every run.
+const MAX_REGISTRY_CHECKS = 500
 
 const failures = []
 const notes = []
@@ -162,11 +165,16 @@ async function checkPlugin(plugin) {
 }
 
 if (!OFFLINE && parsed) {
-  const list = parsed.plugins
-  for (let i = 0; i < list.length; i += 8) {
-    await Promise.all(list.slice(i, i + 8).map(checkPlugin))
+  // Only entries this project verified itself are re-checked against the registry:
+  // catalog-only entries were never claimed to be verified, and at ~11k entries a
+  // full sweep would make the job crawl (and fail on catalogs' own stale data).
+  const verified = parsed.plugins.filter((plugin) => !(plugin.metadata?.labels ?? []).includes('catalog-only'))
+  const sample = verified.slice(0, MAX_REGISTRY_CHECKS)
+  for (let i = 0; i < sample.length; i += 8) {
+    await Promise.all(sample.slice(i, i + 8).map(checkPlugin))
   }
-  note('registry', `${list.length} entries checked against registry.npmjs.org`)
+  const skipped = parsed.plugins.length - sample.length
+  note('registry', `${sample.length} verified entries checked${skipped ? `, ${skipped} catalog-only entries skipped` : ''}`)
 }
 
 // 5. report
