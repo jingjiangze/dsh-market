@@ -288,7 +288,12 @@ async function main() {
   // into a 40-minute job: whatever is verified before the deadline is published,
   // and the rest stays queued for the next run.
   const deadline = started + Number(process.env.CRAWL_BUDGET_MS || 15 * 60 * 1000)
+  // Phase 1 is cheap per item but there are many; phase 2 is what actually emits
+  // plugins. Reserve the second half for phase 2 so a slow registry cannot leave
+  // a run with a shortlist and no output.
+  const phase1Deadline = started + (deadline - started) * 0.45
   const outOfTime = () => Date.now() > deadline
+  const phase1OutOfTime = () => Date.now() > phase1Deadline
   const skipped = { phase1: 0, phase2: 0 }
   const rejections = []
   const counts = new Map()
@@ -329,12 +334,24 @@ async function main() {
     return (hinted ? 2 : 0) + (record?.origins.size ?? 1)
   }
   const ordered = [...names].sort((a, b) => rank(b) - rank(a) || a.localeCompare(b))
-  const candidates = ordered.slice(0, MAX_CANDIDATES)
+  // The pool is far larger than one run can verify, so the run resumes where the
+  // previous one stopped: successive scheduled runs walk the whole pool over time
+  // instead of re-checking the same popular head every time.
+  let cursor = 0
+  try {
+    cursor = Number(JSON.parse(await readFile(join(root, 'data', 'cursor.json'), 'utf8')).offset) || 0
+  } catch {
+    cursor = 0
+  }
+  if (cursor >= ordered.length) cursor = 0
+  const rotated = [...ordered.slice(cursor), ...ordered.slice(0, cursor)]
+  const candidates = rotated.slice(0, MAX_CANDIDATES)
+  const nextCursor = ordered.length ? (cursor + candidates.length) % ordered.length : 0
 
   // 2. phase 1: cheap latest-manifest gate
   const shortlist = []
   for (let i = 0; i < candidates.length; i += CONCURRENCY) {
-    if (outOfTime()) {
+    if (phase1OutOfTime()) {
       skipped.phase1 = candidates.length - i
       break
     }
@@ -493,6 +510,8 @@ async function main() {
     await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
     await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
+    await mkdir(join(root, 'data'), { recursive: true })
+    await writeFile(join(root, 'data', 'cursor.json'), JSON.stringify({ offset: nextCursor, pool: ordered.length, at: new Date().toISOString() }, null, 2) + '\n')
   }
 
   for (const r of rejections) bump(counts, r.why)
@@ -521,6 +540,7 @@ async function main() {
       skippedCandidates: skipped.phase1,
       skippedShortlist: skipped.phase2,
     },
+    cursor: { from: cursor, to: nextCursor, pool: ordered.length },
     bytes: JSON.stringify(index).length,
     ms: Date.now() - started,
   }

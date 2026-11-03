@@ -1,7 +1,7 @@
-name: crawl
+﻿name: crawl
 
 # Crawl on a schedule, validate the result, then land it through a pull request:
-# crawl → tests → PR → squash-merge → deploy. The PR exists so every catalog
+# crawl 鈫?tests 鈫?PR 鈫?squash-merge 鈫?deploy. The PR exists so every catalog
 # change has a reviewable diff and a green test run attached; the merge happens
 # in this workflow because pull requests opened with the repository token do not
 # start `pull_request` workflows (GitHub suppresses that recursion).
@@ -41,7 +41,7 @@ jobs:
           SEARCH_REGISTRY: https://registry.npmjs.org
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_PLUGINS: '1500'
-          MAX_CANDIDATES: '1500'
+          MAX_CANDIDATES: '600'
           CONCURRENCY: '12'
           CRAWL_BUDGET_MS: '900000'
           SOURCES: dshso,awesome,mydsh
@@ -78,7 +78,7 @@ jobs:
           git config user.name "dsh-market-bot"
           git config user.email "dsh-market-bot@users.noreply.github.com"
           git switch -c "$BRANCH"
-          git add dist site
+          git add dist site data
           git commit -m "chore(crawl): refresh plugin index"
           git push -u origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
