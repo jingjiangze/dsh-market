@@ -56,10 +56,30 @@ function stars(plugin) {
 
 // Stars first (that is what a reader wants to see), then the index's own order.
 function byOrder(a, b) {
-  const sb = Number(b.metadata?.sortKeys?.stars ?? 0)
-  const sa = Number(a.metadata?.sortKeys?.stars ?? 0)
+  const key = state.sort
+  if (key === 'name') return a.name.localeCompare(b.name)
+  if (key === 'recent') {
+    const ta = a.versions?.[0]?.publishTimestamp ?? 0
+    const tb = b.versions?.[0]?.publishTimestamp ?? 0
+    if (tb !== ta) return tb - ta
+    return a.name.localeCompare(b.name)
+  }
+  const sb = Number(b.metadata?.sortKeys?.[key] ?? 0)
+  const sa = Number(a.metadata?.sortKeys?.[key] ?? 0)
   if (sb !== sa) return sb - sa
   return a.name.localeCompare(b.name)
+}
+
+const SORTS = [
+  ['stars', '★ 星标'],
+  ['downloads', '↓ 下载'],
+  ['recent', '◷ 最新'],
+  ['name', 'A-Z'],
+]
+
+function sortBar() {
+  const buttons = SORTS.map(([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`).join('')
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span><button class=dice data-random title="随机挑一个">🎲 随机</button>`
 }
 
 function card(plugin) {
@@ -79,14 +99,26 @@ function card(plugin) {
 function render() {
   const data = state.data
   if (!data) return
-  const plugins = data.plugins.filter(matches).sort(byOrder)
+  state.visible = data.plugins.filter(matches).sort(byOrder)
+  const plugins = state.visible
   const counts = new Map()
   for (const plugin of data.plugins) counts.set(plugin.metadata?.category ?? 'other', (counts.get(plugin.metadata?.category ?? 'other') ?? 0) + 1)
   const categories = Object.keys(data.metadata?.categories ?? {})
   const chip = (id, label, count) => `<button class=chip data-cat="${esc(id)}"${state.category === id ? ' aria-pressed=true' : ''}><span>${esc(label)}</span><i>${count}</i></button>`
-  $('cats').innerHTML = [chip('all', IDX_LABEL[state.idx], data.plugins.length)]
-    .concat(categories.map((id) => chip(id, pick(data.metadata?.categories?.[id]?.title, state.lang), counts.get(id) ?? 0)))
-    .join('')
+  // Group the sub-categories under their big category: "DSH 优化" collapses the
+  // enhance-* ids, everything else is one level and needs no header.
+  const parts = [chip('all', IDX_LABEL[state.idx], data.plugins.length)]
+  let group = null
+  for (const id of categories) {
+    const prefix = id.startsWith('enhance-') ? 'enhance' : id
+    if (prefix !== group) {
+      group = prefix
+      if (prefix === 'enhance') parts.push(`<div class=grp>${pick(data.metadata?.categories?.[id]?.title, state.lang) ? 'DSH 优化' : 'DSH 优化'}</div>`)
+    }
+    parts.push(chip(id, pick(data.metadata?.categories?.[id]?.title, state.lang), counts.get(id) ?? 0))
+  }
+  $('cats').innerHTML = parts.join('')
+  sortBar()
   const scope = plugins.length === data.plugins.length ? '' : ` · 筛出 ${plugins.length}`
   const aged = state.stats?.at ? ` · 更新 ${when(state.stats.at)}前` : ''
   $('meta').textContent = `${data.plugins.length} 个插件${aged}${scope}`
@@ -99,20 +131,30 @@ function render() {
 
 function dialogHtml(plugin) {
   const version = plugin.versions?.[0]
-  const pairs = [
+  const pairList = [
     ['类别', pick(state.data.metadata?.categories?.[plugin.metadata?.category]?.title, state.lang)],
     ['版本', version?.version],
     ['作者', plugin.author],
     ['发布', day(version?.publishTimestamp)],
+    ['星标', plugin.metadata?.sortKeys?.stars ? String(plugin.metadata.sortKeys.stars) : ''],
+    ['下载', plugin.metadata?.sortKeys?.downloads ? String(plugin.metadata.sortKeys.downloads) : ''],
     ['来源', badges(plugin).join(' · ')],
     ['包名', plugin.name],
-  ].filter(([, value]) => value)
-  const langs = ['zh', 'en']
-  if (!langs.includes(state.lang)) langs.push(state.lang)
-  const columns = langs.map((lang) => `<div class=col><h4>${lang === 'zh' ? '中文' : lang === 'en' ? 'English' : lang.toUpperCase()}</h4><p class=colTitle>${esc(pick(plugin.title, lang))}</p><p>${esc(pick(plugin.description, lang))}</p></div>`).join('')
+  ]
+  const pairs = pairList.filter(([, value]) => value)
+  // One language per view: the CI translation pass fills ja/ko/ru, and the detail
+  // page follows the language switcher instead of showing two columns at once.
   const install = `${plugin.name}@${version?.version ?? ''}`
   const links = [plugin.homepage, plugin.repository?.url].filter(Boolean)
-  return `<h3>${esc(pick(plugin.title, state.lang)) || esc(plugin.name)}</h3><dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl><div class=dual>${columns}</div><p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p>${links.length ? `<p class=links>${links.map((url) => `<a href="${esc(url)}" target=_blank rel=noreferrer>${esc(url.replace(/^https?:\/\//, ''))}</a>`).join(' ')}</p>` : ''}<form method=dialog><button class=close>关闭</button></form>`
+  const position = (state.visible ?? []).findIndex((entry) => entry.name === plugin.name)
+  const total = (state.visible ?? []).length
+  return `<h3>${esc(pick(plugin.title, state.lang)) || esc(plugin.name)}</h3>`
+    + `<p class=lead>${esc(pick(plugin.description, state.lang))}</p>`
+    + `<dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl>`
+    + `<p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p>`
+    + (links.length ? `<p class=links>${links.map((url) => `<a href="${esc(url)}" target=_blank rel=noreferrer>${esc(url.replace(/^https?:\/\//, ''))}</a>`).join(' ')}</p>` : '')
+    + `<div class=nav><button data-prev${position <= 0 ? ' disabled' : ''}>← 上一个</button><span>${position >= 0 ? position + 1 : '?'} / ${total}</span><button data-next${position < 0 || position + 1 >= total ? ' disabled' : ''}>下一个 →</button></div>`
+    + `<form method=dialog><button class=close>关闭</button></form>`
 }
 
 function openDetail(name) {
@@ -142,6 +184,12 @@ async function load(idx) {
 }
 
 document.addEventListener('click', (event) => {
+  // Clicking the backdrop (the dialog element itself, outside its content) closes
+  // the drawer — the usual marketplace behaviour.
+  if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') {
+    event.target.close()
+    return
+  }
   const idxButton = event.target.closest('[data-idx]')
   if (idxButton) {
     for (const button of document.querySelectorAll('[data-idx]')) button.removeAttribute('aria-pressed')
@@ -149,6 +197,28 @@ document.addEventListener('click', (event) => {
     state.category = 'all'
     state.limit = 60
     load(idxButton.dataset.idx)
+    return
+  }
+  const sortButton = event.target.closest('[data-sort]')
+  if (sortButton) {
+    state.sort = sortButton.dataset.sort
+    state.limit = 60
+    render()
+    return
+  }
+  if (event.target.closest('[data-random]')) {
+    const pool = state.visible ?? []
+    if (!pool.length) return
+    openDetail(pool[Math.floor(Math.random() * pool.length)].name)
+    return
+  }
+  const step = event.target.closest('[data-next],[data-prev]')
+  if (step) {
+    const pool = state.visible ?? []
+    const position = pool.findIndex((entry) => entry.name === state.open)
+    if (position < 0) return
+    const next = pool[event.target.closest('[data-next]') ? position + 1 : position - 1]
+    if (next) openDetail(next.name)
     return
   }
   const chip = event.target.closest('[data-cat]')
