@@ -42,4 +42,10 @@ jobs:
         run: node crawler/validate.mjs
 
       - name: Crawler still runs end to end
+        # A smoke run, not the full crawl: the real crawl runs on its own schedule.
+        env:
+          MAX_CANDIDATES: '60'
+          MAX_PLUGINS: '60'
+          CONCURRENCY: '6'
+          SOURCES: awesome
         run: node crawler/crawl.mjs --dry-run
