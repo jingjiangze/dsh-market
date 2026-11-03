@@ -35,6 +35,9 @@ jobs:
       - name: Syntax-check the browser bundle
         run: node --check site/app.js
 
+      - name: Smoke-test the rendered page against the real index
+        run: node crawler/smoke-app.mjs
+
       - name: Validate the published index
         run: node crawler/validate.mjs
 
