@@ -53,8 +53,15 @@ if (parsed) {
   for (const plugin of parsed.plugins) {
     if (seen.has(plugin.name)) fail('duplicate plugin', plugin.name)
     seen.add(plugin.name)
-    if (plugin.versions[0]?.engines?.dsh === undefined) {
+    // A verified entry must declare compatibility; a catalog-only entry may omit
+    // it, but then it must say so through the label the UI renders.
+    const pluginLabels = plugin.metadata?.labels ?? []
+    const declaresEngines = plugin.versions[0]?.engines?.dsh !== undefined
+    if (!declaresEngines && !pluginLabels.includes('no-engines')) {
       fail('missing engines.dsh', plugin.name)
+    }
+    if (declaresEngines && pluginLabels.includes('no-engines')) {
+      fail('no-engines label on a version that declares engines', plugin.name)
     }
     const category = plugin.metadata.category
     if (!category) fail('missing category', plugin.name)
