@@ -83,7 +83,11 @@ if (!plan.length) {
 // byte comparison here skipped files a previous (rejected) push had already left
 // in the working tree, so nothing was ever committed.
 for (const entry of plan) {
-  const target = join(REPO, entry.to.replace(/\//g, '\\'))
+  // Split on "/" rather than rewriting separators: on Linux a literal backslash is a
+// valid filename character, so `replace(/\//g,'\\')` silently wrote files called
+// `web\browse\0.json` into the repo root, `git add web` found nothing, and the step
+// reported success while publishing nothing.
+const target = join(REPO, ...entry.to.split('/'))
   await mkdir(dirname(target), { recursive: true })
   await writeFile(target, await readFile(entry.from))
 }

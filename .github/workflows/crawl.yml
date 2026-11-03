@@ -127,7 +127,9 @@ jobs:
           cp dist/stats.json site/stats.json
 
       - name: Build the browse chunks
-        # The page reads ~330 KB of chunks instead of the 11.5 MB format-1 document.
+        # The page reads a ~350 KB first chunk instead of the 11.5 MB format-1 document.
+        env:
+          BROWSE_CHUNK: '250'
         run: node crawler/browse.mjs
 
       - name: Publish assets and browse data to ModelScope
