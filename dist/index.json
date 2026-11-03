@@ -233,10 +233,10 @@
           "engines-pinned",
           "zh-override",
           "src-npm",
-          "src-awesome",
           "src-dshso",
-          "trust-readme-verified",
-          "trust-source-index"
+          "src-awesome",
+          "trust-source-index",
+          "trust-readme-verified"
         ]
       },
       "versions": [
@@ -248,6 +248,56 @@
           },
           "engines": {
             "dsh": "^0.2.0-rc.1 || ^0.2.1-rc.1 || ^0.2.2-alpha.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@chengzhao-dev/dsh-quarto-book",
+      "title": {
+        "en": "@chengzhao-dev/dsh-quarto-book",
+        "zh": "Quarto 图书写作与主题"
+      },
+      "description": {
+        "en": "把一份 Quarto Book 写成可读、可查、可发布的中文技术书：九步章节写作、结构/链接/图表检查、统一主题与渲染验收。",
+        "zh": "把一份 Quarto Book 写成可读、可查、可发布的中文技术书：九步章节写作、结构/链接/图表检查、统一主题与渲染验收。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/@chengzhao-dev/dsh-quarto-book@0.6.18/icon.svg",
+      "author": "chengzhao-dev",
+      "homepage": "https://github.com/chengzhao-dev/dsh-quarto-book#readme",
+      "repository": {
+        "url": "https://github.com/chengzhao-dev/dsh-quarto-book"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "dsh-plugin",
+          "cordis",
+          "quarto",
+          "quarto-book",
+          "technical-writing",
+          "theme"
+        ],
+        "category": "ui",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-npm",
+          "src-dshso",
+          "trust-source-index"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.6.18",
+          "publishTimestamp": 1793244900,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -424,10 +474,10 @@
           "auto-crawled",
           "engines-pinned",
           "zh-override",
-          "src-awesome",
           "src-dshso",
-          "trust-readme-verified",
-          "trust-source-index"
+          "src-awesome",
+          "trust-source-index",
+          "trust-readme-verified"
         ]
       },
       "versions": [
@@ -863,10 +913,10 @@
           "auto-crawled",
           "engines-pinned",
           "zh-detected",
-          "src-awesome",
           "src-dshso",
-          "trust-readme-verified",
-          "trust-source-index"
+          "src-awesome",
+          "trust-source-index",
+          "trust-readme-verified"
         ]
       },
       "versions": [
@@ -878,55 +928,6 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "clearai-dsh",
-      "title": {
-        "en": "clearai-dsh",
-        "zh": "ClearAI"
-      },
-      "description": {
-        "en": "ClearAI: an ontology-first DSH agent preset — evidence-checked research that grows into a domain ontology.",
-        "zh": "以本体为纲的智能体预设：经证据核验的研究长成可浏览的领域本体。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/clearai-dsh@0.5.7/brand/icon.svg",
-      "homepage": "https://github.com/Clearailhc/clearai-dsh#readme",
-      "repository": {
-        "url": "https://github.com/Clearailhc/clearai-dsh"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "cordis",
-          "plugin",
-          "clearai",
-          "agent-preset",
-          "ontology"
-        ],
-        "category": "other",
-        "labels": [
-          "auto-crawled",
-          "engines-pinned",
-          "zh-native",
-          "src-npm",
-          "src-mydsh",
-          "trust-unpinned"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.5.7",
-          "publishTimestamp": 1792805256,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2"
           }
         }
       ]
@@ -1307,11 +1308,11 @@
           "engines-pinned",
           "zh-override",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2232,11 +2233,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2583,11 +2584,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2682,11 +2683,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2804,6 +2805,57 @@
       ]
     },
     {
+      "name": "dsh-dania-voice",
+      "title": {
+        "en": "dsh-dania-voice",
+        "zh": "dsh-dania-voice"
+      },
+      "description": {
+        "en": "达妮娅（鸣潮）语音朗读 — 用本地 GPT-SoVITS 把助手回复读出来，带一个可拖动的小挂件开关。 / Local GPT-SoVITS voice for DSH: reads assistant replies aloud with a draggable mascot toggle.",
+        "zh": "达妮娅（鸣潮）语音朗读 — 用本地 GPT-SoVITS 把助手回复读出来，带一个可拖动的小挂件开关。 / Local GPT-SoVITS voice for DSH: reads assistant replies aloud with a draggable mascot toggle."
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-dania-voice@1.0.0/icon.png",
+      "author": "夜游人",
+      "homepage": "https://github.com/xcw520/dsh-dania-voice#readme",
+      "repository": {
+        "url": "https://github.com/xcw520/dsh-dania-voice"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "tts",
+          "voice",
+          "gpt-sovits",
+          "wuthering-waves",
+          "dania"
+        ],
+        "category": "media",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "publishTimestamp": 1792323326,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-data-quality",
       "title": {
         "en": "dsh-data-quality",
@@ -2834,11 +2886,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2851,6 +2903,205 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-deep-research",
+      "title": {
+        "en": "dsh-deep-research",
+        "zh": "DeepResearch"
+      },
+      "description": {
+        "en": "Deep research for DeepSeek Harness: multi-query search, source fetching, evidence extraction and a cited evidence report, through the host ctx.web service. · DSH 深度研究插件：多查询检索、正文取证、交叉印证，产出可引用的证据报告。",
+        "zh": "侧边栏里的深度研究面板：一行问题 → 多查询检索 → 正文取证 → 交叉印证，产出带引用的证据报告并保留历史；同时提供同名 Agent 工具。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-deep-research@0.1.1/icon.svg",
+      "author": "houdinicc",
+      "homepage": "https://github.com/houdinicc/dsh-deep-research#readme",
+      "repository": {
+        "url": "https://github.com/houdinicc/dsh-deep-research"
+      },
+      "metadata": {
+        "keywords": [
+          "deepseek",
+          "harness",
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "cordis",
+          "deep-research",
+          "research"
+        ],
+        "category": "devtools",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.1",
+          "publishTimestamp": 1792596214,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-defend",
+      "title": {
+        "en": "dsh-defend",
+        "zh": "dsh-defend"
+      },
+      "description": {
+        "en": "Prompt-injection, jailbreak, and secret-leak detection with allow/ask/block interception for DeepSeek Harness: an Aho-Corasick pattern engine and heuristics ported from the Prompt-Injection-Payloads, Jailbreak-Detector, and Secret-Key-Leaker-Detect assets",
+        "zh": "Prompt-injection, jailbreak, and secret-leak detection with allow/ask/block interception for DeepSeek Harness: an Aho-Corasick pattern engine and heuristics ported from the Prompt-Injection-Payloads, Jailbreak-Detector, and Secret-Key-Leaker-Detect assets"
+      },
+      "author": "PerryLink",
+      "homepage": "https://github.com/PerryLink/dsh-defend#readme",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-defend"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "cordis",
+          "security",
+          "prompt-injection",
+          "jailbreak"
+        ],
+        "category": "safety",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.3.25",
+          "publishTimestamp": 1792762072,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-desktop-statusbar",
+      "title": {
+        "en": "dsh-desktop-statusbar",
+        "zh": "桌面状态栏"
+      },
+      "description": {
+        "en": "把 DSH 桌面端对话区底部的统计行换成可配置状态栏：9 个可选字段可排序 + 栏首上下文圆环，按官方峰谷口径估算费用，支持自定义模型单价与账户余额。",
+        "zh": "把 DSH 桌面端对话区底部的统计行换成可配置状态栏：9 个可选字段可排序 + 栏首上下文圆环，按官方峰谷口径估算费用，支持自定义模型单价与账户余额。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-desktop-statusbar@3.0.2/icon.svg",
+      "author": "北浮森屿",
+      "homepage": "https://github.com/raphael-y7/dsh-desktop-statusbar#readme",
+      "repository": {
+        "url": "https://github.com/raphael-y7/dsh-desktop-statusbar"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "statusbar",
+          "token-usage",
+          "cost"
+        ],
+        "category": "models",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "3.0.2",
+          "publishTimestamp": 1793364302,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-dingtalk",
+      "title": {
+        "en": "dsh-dingtalk",
+        "zh": "dsh-dingtalk"
+      },
+      "description": {
+        "en": "把 DSH 的任务结果送到钉钉群。 需要自己的群机器人 webhook 欢迎提交 issues 和 PR。",
+        "zh": "把 DSH 的任务结果送到钉钉群。 需要自己的群机器人 webhook 欢迎提交 issues 和 PR。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-dingtalk@0.3.7/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-dingtalk#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-dingtalk"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "dsh",
+          "dingtalk",
+          "dingtalk-robot",
+          "webhook"
+        ],
+        "category": "other",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-detected",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.3.7",
+          "publishTimestamp": 1793362559,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -2886,11 +3137,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -2903,6 +3154,56 @@
           },
           "engines": {
             "dsh": ">=0.1.6-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-draw",
+      "title": {
+        "en": "dsh-draw",
+        "zh": "dsh-draw"
+      },
+      "description": {
+        "en": "Unified static-image generation router for DeepSeek Harness: one image_generate tool with standard parameters, config-driven OpenAI-compatible engine routing (OpenAI Images, Zhipu CogView, and any compatible endpoint) with health-aware fallback, durable w",
+        "zh": "Unified static-image generation router for DeepSeek Harness: one image_generate tool with standard parameters, config-driven OpenAI-compatible engine routing (OpenAI Images, Zhipu CogView, and any compatible endpoint) with health-aware fallback, durable w"
+      },
+      "author": "PerryLink",
+      "homepage": "https://github.com/PerryLink/dsh-draw#readme",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-draw"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "cordis",
+          "image-generation",
+          "openai-images",
+          "cogview"
+        ],
+        "category": "media",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.24",
+          "publishTimestamp": 1792332688,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
           }
         }
       ]
@@ -2960,6 +3261,56 @@
       ]
     },
     {
+      "name": "dsh-fast",
+      "title": {
+        "en": "dsh-fast",
+        "zh": "dsh-fast"
+      },
+      "description": {
+        "en": "Read-only performance diagnostics for DeepSeek Harness: session load (open/restore) timing, spill-hit counts, compaction count and trigger, context-injection volume (AGENTS.md/skills/tool-schema token share), and LLM cache hit rate — surfaced via the /fas",
+        "zh": "Read-only performance diagnostics for DeepSeek Harness: session load (open/restore) timing, spill-hit counts, compaction count and trigger, context-injection volume (AGENTS.md/skills/tool-schema token share), and LLM cache hit rate — surfaced via the /fas"
+      },
+      "author": "dsh-fast contributors",
+      "homepage": "https://github.com/PerryLink/dsh-fast#readme",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-fast"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "cordis",
+          "performance",
+          "diagnostics",
+          "profiling"
+        ],
+        "category": "integrations",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.27",
+          "publishTimestamp": 1792854415,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-ffmpeg",
       "title": {
         "en": "dsh-ffmpeg",
@@ -3006,6 +3357,54 @@
           },
           "engines": {
             "dsh": ">=0.2.1-rc.3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-file-history",
+      "title": {
+        "en": "dsh-file-history",
+        "zh": "dsh-file-history"
+      },
+      "description": {
+        "en": "Per-turn file history for DeepSeek Harness: every conversation turn gets a snapshot, a change card in the chat, and one-click rollback of files, conversation, or both.",
+        "zh": "Per-turn file history for DeepSeek Harness: every conversation turn gets a snapshot, a change card in the chat, and one-click rollback of files, conversation, or both."
+      },
+      "homepage": "https://github.com/EmptyVessel-000/dsh-file-history#readme",
+      "repository": {
+        "url": "https://github.com/EmptyVessel-000/dsh-file-history"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "snapshot",
+          "rollback",
+          "history",
+          "git"
+        ],
+        "category": "devtools",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.4",
+          "publishTimestamp": 1792522365,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.0"
           }
         }
       ]
@@ -3092,11 +3491,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3143,11 +3542,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3346,11 +3745,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3398,11 +3797,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3450,11 +3849,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3503,11 +3902,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3520,6 +3919,57 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-mask",
+      "title": {
+        "en": "dsh-mask",
+        "zh": "dsh-mask"
+      },
+      "description": {
+        "en": "PII masking middleware for DeepSeek Harness: regex-detect and replace phones, emails, ID cards, bank cards, keys, and (opt-in) IPs with placeholders before they reach the model, keep the restore table host-side (memory plus a controlled storage domain, ne",
+        "zh": "PII masking middleware for DeepSeek Harness: regex-detect and replace phones, emails, ID cards, bank cards, keys, and (opt-in) IPs with placeholders before they reach the model, keep the restore table host-side (memory plus a controlled storage domain, ne"
+      },
+      "author": "PerryLink",
+      "homepage": "https://github.com/PerryLink/dsh-mask#readme",
+      "repository": {
+        "url": "https://github.com/PerryLink/dsh-mask"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "cordis",
+          "pii",
+          "mask",
+          "privacy"
+        ],
+        "category": "safety",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-fallback",
+          "src-npm",
+          "src-dshso",
+          "src-mydsh",
+          "trust-source-index",
+          "trust-unpinned"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.2.23",
+          "publishTimestamp": 1792854128,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
           }
         }
       ]
@@ -3555,11 +4005,11 @@
           "engines-pinned",
           "zh-detected",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3608,11 +4058,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3660,11 +4110,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3814,11 +4264,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3865,11 +4315,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -3917,11 +4367,11 @@
           "engines-pinned",
           "zh-detected",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4116,11 +4566,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4168,11 +4618,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-detected",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4221,11 +4671,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4273,11 +4723,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4423,11 +4873,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-native",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4473,11 +4923,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4575,11 +5025,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4627,11 +5077,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4668,11 +5118,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4818,11 +5268,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4869,11 +5319,11 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4921,11 +5371,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -4972,11 +5422,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -5024,11 +5474,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -5128,10 +5578,10 @@
           "engines-pinned",
           "zh-native",
           "src-npm",
-          "src-awesome",
           "src-dshso",
-          "trust-readme-verified",
-          "trust-source-index"
+          "src-awesome",
+          "trust-source-index",
+          "trust-readme-verified"
         ]
       },
       "versions": [
@@ -5176,11 +5626,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -5227,11 +5677,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -5330,11 +5780,11 @@
           "auto-crawled",
           "engines-pinned",
           "zh-fallback",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
@@ -5383,11 +5833,11 @@
           "engines-pinned",
           "zh-fallback",
           "src-npm",
-          "src-awesome",
           "src-dshso",
+          "src-awesome",
           "src-mydsh",
-          "trust-readme-verified",
           "trust-source-index",
+          "trust-readme-verified",
           "trust-unpinned"
         ]
       },
