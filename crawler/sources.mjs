@@ -54,6 +54,7 @@ function fromFormatOne(document, label) {
       origins: new Set([label]),
       trust: new Set(['trust-source-index']),
       hintEngines: newest?.engines?.dsh ?? plugin.metadata?.engines?.dsh,
+      hintCategory: plugin.category ?? plugin.metadata?.category,
       title: { en: textOf(plugin.title), zh: textOf(plugin.title) },
       description: { en: textOf(plugin.description), zh: textOf(plugin.description) },
       repo: plugin.repository?.url,
@@ -76,6 +77,7 @@ function fromRepoTargets(document, label) {
       const record = found.get(parsed.name) ?? { name: parsed.name, origins: new Set(), trust: new Set() }
       record.origins.add(label)
       if (trust) record.trust.add(trust)
+      record.hintCategory ??= entry.category
       record.repo ??= entry.full_name
       record.description ??= { en: String(entry.description ?? ''), zh: String(entry.description ?? '') }
       record.stars ??= entry.stargazers_count
@@ -96,6 +98,7 @@ function fromMydsh(document, label) {
       const record = found.get(parsed.name) ?? { name: parsed.name, origins: new Set(), trust: new Set() }
       record.origins.add(label)
       record.trust.add('trust-unpinned')
+      record.hintCategory ??= entry.category
       record.repo ??= entry.repo
       record.description ??= { en: String(entry.summary ?? ''), zh: String(entry.summary ?? '') }
       found.set(parsed.name, record)

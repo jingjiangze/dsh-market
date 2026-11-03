@@ -181,7 +181,32 @@ const CATEGORIES = {
   integrations: { en: 'Integrations & Sharing', zh: '集成与分享' },
   media: { en: 'Media & Vision', zh: '媒体与视觉' },
   ui: { en: 'UI & Themes', zh: '界面与主题' },
+  web: { en: 'Web & Browser', zh: '网页与浏览器' },
+  utilities: { en: 'Utilities', zh: '实用工具' },
+  ecosystem: { en: 'Ecosystem & Resources', zh: '生态与资源' },
   other: { en: 'Other', zh: '其他' },
+}
+
+// The federated catalogs already carry a category; reuse their judgement instead
+// of re-deriving it from keywords, and translate their ids into ours.
+const SOURCE_CATEGORIES = {
+  'agents-workflows': 'automation',
+  'multi-agents': 'automation',
+  'knowledge-research': 'memory',
+  'developer-tools': 'devtools',
+  'ui-experience': 'ui',
+  'media-vision': 'media',
+  'web-browser': 'web',
+  'integrations-sharing': 'integrations',
+  utilities: 'utilities',
+  'ecosystem-resources': 'ecosystem',
+  // mydsh.xyz labels its categories in Chinese.
+  界面与主题: 'ui',
+  启动动画: 'ui',
+  技能: 'memory',
+  MCP: 'integrations',
+  场景: 'automation',
+  提示词: 'models',
 }
 
 const CATEGORY_RULES = [
@@ -192,13 +217,21 @@ const CATEGORY_RULES = [
   ['memory', /\b(memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|context|skill|skills|prompt|chapter|chapters|archive|dream|custom-mode)\b/],
   ['models', /\b(provider|providers|model|models|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token|tokens)\b/],
   ['automation', /\b(automation|scheduled|schedule|cron|workflow|agent-team|agent-teams|multi-agent|swarm|orchestrator|ralph|kanban|goal|checkpoint|rewind)\b/],
+  ['web', /\b(browser|chrome|playwright|puppeteer|cdp|scrape|scraper|crawl|crawler|web)\b/],
   ['devtools', /\b(worktree|git|terminal|shell|lint|diff|debug|ide|editor|typescript|cli|search|index)\b/],
+  ['utilities', /\b(utility|utilities|tool|tools|toolkit|calculator|converter|formatter|clipboard|notification|notify)\b/],
 ]
 
 function classify(...texts) {
   const haystack = texts.filter(Boolean).join(' ').toLowerCase()
   for (const [id, pattern] of CATEGORY_RULES) if (pattern.test(haystack)) return id
   return 'other'
+}
+
+function categoryFor(record, ...texts) {
+  const hinted = SOURCE_CATEGORIES[record?.hintCategory]
+  if (hinted) return hinted
+  return classify(...texts)
 }
 
 // --------------------------------------------------------------- localization
@@ -421,7 +454,7 @@ async function main() {
           ? { title: record?.title?.zh, description: record?.description?.zh }
           : undefined
         const zh = await authorZh(name, version, enTitle, enDescription, catalogZh)
-        const category = classify(name, enTitle, enDescription, (man.keywords || []).join(' '))
+        const category = categoryFor(record, name, enTitle, enDescription, (man.keywords || []).join(' '))
         plugins.push({
           name,
           title: { en: enTitle, zh: zh.title || enTitle },
@@ -492,8 +525,8 @@ async function main() {
     format: 1,
     title: { en: 'DSH Plugin Index (auto-crawled)', zh: 'DSH 插件索引（自动爬取）' },
     description: {
-      en: 'Crawled from the public npm registry: packages that declare a DSH bundle and a satisfied engines.dsh range. Bilingual titles and descriptions come from each package\'s own locale files where it ships them. Metadata only; the package decides what it installs.',
-      zh: '从公共 npm 源自动爬取：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。中英双语标题与简介优先取包自带 locale 文件，没有则用人工整理的覆盖表。这里只有元数据，装什么以包为准。',
+      en: 'DeepSeekRuntime plugin index, built with DSH: packages that declare a DSH bundle and a satisfied engines.dsh range. Metadata only; the package decides what it installs.',
+      zh: '由 DSH 制作的 DeepSeekRuntime 插件索引：只收录声明了 DSH bundle 且 engines.dsh 满足当前运行时的包。这里只有元数据，装什么以包为准。',
     },
     metadata: {
       categories: Object.fromEntries(Object.entries(CATEGORIES).map(([id, t]) => [id, { title: t }])),
