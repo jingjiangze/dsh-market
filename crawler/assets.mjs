@@ -15,7 +15,11 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const site = join(root, 'site')
 const assetsDir = join(site, 'a')
-const CDN = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site'
+// ModelScope measured 0.16-0.19 s per file with Access-Control-Allow-Origin: * and
+// the right Content-Type per extension; the same bytes on jsDelivr took 7.4 s from
+// this network. The dataset copy is therefore what the shell references.
+const ASSET_BASE = process.env.ASSET_BASE
+  || 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/a'
 
 const hash = (buffer) => createHash('sha1').update(buffer).digest('hex').slice(0, 10)
 
@@ -45,8 +49,8 @@ const relative = html
   .replace(/(<link rel=stylesheet href=)(?:[^ >]*\/)?style\.css/i, '$1/style.css')
   .replace(/(<script type=module src=)(?:[^ >]*\/)?app\.js/i, '$1/app.js')
 const updated = relative
-  .replace(/(<link rel=stylesheet href=)[^ >]+/i, `$1${CDN}/a/${cssHash}/style.css`)
-  .replace(/(<script type=module src=)[^ >]+/i, `$1${CDN}/a/${jsHash}/app.js`)
+  .replace(/(<link rel=stylesheet href=)[^ >]+/i, `$1${ASSET_BASE}/${cssHash}/style.css`)
+  .replace(/(<script type=module src=)[^ >]+/i, `$1${ASSET_BASE}/${jsHash}/app.js`)
 await writeFile(htmlPath, updated)
 
 const bytes = (await stat(htmlPath)).size

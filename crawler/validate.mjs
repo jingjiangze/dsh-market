@@ -131,7 +131,7 @@ for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
 // a path that changes with the bytes is a CDN cache miss, so a redesign reaches
 // readers immediately (a plain @main URL kept serving the old stylesheet for
 // hours, even after a purge). The shell must only reference that hashed copy.
-const ASSET_URL = /https:\/\/cdn\.jsdelivr\.net\/gh\/jingjiangze\/dsh-market@main\/site\/a\/([0-9a-f]{10})\/(style\.css|app\.js)/
+const ASSET_URL = /https:\/\/modelscope\.cn\/datasets\/jingjiangze\/Anime-JPG\/resolve\/master\/web\/a\/([0-9a-f]{10})\/(style\.css|app\.js)/
 const assets = [...html.matchAll(new RegExp(ASSET_URL, 'g'))].map((match) => ({ hash: match[1], file: match[2] }))
 for (const file of ['style.css', 'app.js']) {
   if (!assets.some((asset) => asset.file === file)) fail(`site/index.html ${file}`, 'is not referenced through the hashed mirror path')

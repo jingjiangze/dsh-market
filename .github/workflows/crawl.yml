@@ -126,9 +126,21 @@ jobs:
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
+      - name: Build the browse chunks
+        # The page reads ~330 KB of chunks instead of the 11.5 MB format-1 document.
+        run: node crawler/browse.mjs
+
+      - name: Publish assets and browse data to ModelScope
+        # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
+        # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
+        env:
+          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
+          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
+        run: node crawler/ms-upload.mjs
+
       - name: Publish assets under a content-addressed path
-        # Points the shell at the jsDelivr copy of exactly these bytes, so a redesign
-        # cannot be masked by jsDelivr's long @main cache.
+        # Points the shell at the dataset copy of exactly these bytes, so a redesign
+        # cannot be masked by any CDN's long-lived cache.
         run: node crawler/assets.mjs
 
       - name: Validate before anything lands
