@@ -55,6 +55,11 @@ function fromFormatOne(document, label) {
       trust: new Set(['trust-source-index']),
       hintEngines: newest?.engines?.dsh ?? plugin.metadata?.engines?.dsh,
       hintCategory: plugin.category ?? plugin.metadata?.category,
+      // Carried straight from the catalog so an entry we could not re-verify this
+      // run can still be published with its real version and publish time.
+      hintVersion: newest?.version,
+      hintPublishTimestamp: newest?.publishTimestamp,
+      hintIcon: plugin.icon,
       title: { en: textOf(plugin.title), zh: textOf(plugin.title) },
       description: { en: textOf(plugin.description), zh: textOf(plugin.description) },
       repo: plugin.repository?.url,
@@ -134,6 +139,10 @@ export async function discoverFederated(log = console.log) {
         for (const origin of record.origins) existing.origins.add(origin)
         for (const trust of record.trust) existing.trust.add(trust)
         existing.hintEngines ??= record.hintEngines
+        existing.hintCategory ??= record.hintCategory
+        existing.hintVersion ??= record.hintVersion
+        existing.hintPublishTimestamp ??= record.hintPublishTimestamp
+        existing.hintIcon ??= record.hintIcon
         existing.description ??= record.description
         existing.title ??= record.title
         existing.repo ??= record.repo

@@ -1,10 +1,11 @@
 name: crawl
 
-# Crawl on a schedule, validate the result, then land it through a pull request:
-# crawl 鈫?tests 鈫?PR 鈫?squash-merge 鈫?deploy. The PR exists so every catalog
-# change has a reviewable diff and a green test run attached; the merge happens
-# in this workflow because pull requests opened with the repository token do not
-# start `pull_request` workflows (GitHub suppresses that recursion).
+# Three parallel shards verify different stripes of the candidate pool; one merge
+# job unions their slices into the carried catalogue, publishes the index (verified
+# entries + everything the catalogs list), translates, validates and lands it
+# through a pull request. The PR exists so every catalogue change has a reviewable
+# diff and a green test run attached; the merge happens here because pull requests
+# opened with the repository token do not start `pull_request` workflows.
 on:
   schedule:
     - cron: '17 */3 * * *'   # every three hours, at :17
@@ -20,8 +21,49 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  crawl:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Gate selftest
+        run: node crawler/crawl.mjs --selftest
+
+      - name: Verify this shard's slice
+        env:
+          NPM_REGISTRY: https://registry.npmjs.org
+          SEARCH_REGISTRY: https://registry.npmjs.org
+          FALLBACK_REGISTRY: https://registry.npmmirror.com
+          DSH_RUNTIME_VERSION: 0.2.1-rc.5
+          SHARD: ${{ matrix.shard }}
+          SHARDS: '3'
+          MAX_CANDIDATES: '900'
+          CONCURRENCY: '12'
+          CRAWL_BUDGET_MS: '600000'
+          MERGE_EXTERNAL: '0'
+          SOURCES: dshso,awesome,mydsh
+          PART_OUT: dist/part-${{ matrix.shard }}.json
+        run: node crawler/crawl.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: part-${{ matrix.shard }}
+          path: dist/part-${{ matrix.shard }}.json
+          retention-days: 1
+
+  merge:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -32,27 +74,32 @@ jobs:
       - name: Install the real format-1 validator
         run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
 
-      - name: Gate selftest
-        run: node crawler/crawl.mjs --selftest
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-*
+          path: dist
+          merge-multiple: true
 
-      - name: Crawl
+      - name: Union the shard slices
+        run: node crawler/merge-parts.mjs
+
+      - name: Build the published index
         env:
           NPM_REGISTRY: https://registry.npmjs.org
           SEARCH_REGISTRY: https://registry.npmjs.org
+          FALLBACK_REGISTRY: https://registry.npmmirror.com
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
-          MAX_PLUGINS: '1500'
-          MAX_CANDIDATES: '2000'
-          CONCURRENCY: '12'
-          CRAWL_BUDGET_MS: '900000'
+          MAX_TOTAL: '12000'
+          MERGE_EXTERNAL: '1'
           SOURCES: dshso,awesome,mydsh
-        run: node crawler/crawl.mjs
+        run: node crawler/crawl.mjs --publish-only
 
       - name: Add the other languages
-        # Google Translate, cached by content hash in data/i18n-cache.json; a
-        # failed call leaves the field out instead of publishing a broken string.
         env:
           TRANSLATE_LANGS: ja,ko,ru
-          TRANSLATE_CONCURRENCY: '4'
+          TRANSLATE_CONCURRENCY: '12'
+          TRANSLATE_MAX_STRINGS: '600'
+          TRANSLATE_BUDGET_MS: '360000'
         run: node crawler/translate.mjs
 
       - name: Assemble the site
@@ -101,8 +148,7 @@ jobs:
 
       - name: Publish the merged catalog
         # A merge pushed with the repository token does not start workflows on
-        # itself, so the deploy is dispatched explicitly instead of waiting for
-        # a push event that will never arrive.
+        # itself, so the deploy is dispatched explicitly.
         if: steps.diff.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

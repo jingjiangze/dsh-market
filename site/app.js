@@ -83,8 +83,9 @@ function render() {
   const counts = new Map()
   for (const plugin of data.plugins) counts.set(plugin.metadata?.category ?? 'other', (counts.get(plugin.metadata?.category ?? 'other') ?? 0) + 1)
   const categories = Object.keys(data.metadata?.categories ?? {})
-  $('cats').innerHTML = [`<button class=chip data-cat=all${state.category === 'all' ? ' aria-pressed=true' : ''}>${IDX_LABEL[state.idx]} ${data.plugins.length}</button>`]
-    .concat(categories.map((id) => `<button class=chip data-cat="${esc(id)}"${state.category === id ? ' aria-pressed=true' : ''}>${esc(pick(data.metadata?.categories?.[id]?.title, state.lang))} ${counts.get(id) ?? 0}</button>`))
+  const chip = (id, label, count) => `<button class=chip data-cat="${esc(id)}"${state.category === id ? ' aria-pressed=true' : ''}><span>${esc(label)}</span><i>${count}</i></button>`
+  $('cats').innerHTML = [chip('all', IDX_LABEL[state.idx], data.plugins.length)]
+    .concat(categories.map((id) => chip(id, pick(data.metadata?.categories?.[id]?.title, state.lang), counts.get(id) ?? 0)))
     .join('')
   const scope = plugins.length === data.plugins.length ? '' : ` · 筛出 ${plugins.length}`
   const aged = state.stats?.at ? ` · 更新 ${when(state.stats.at)}前` : ''
