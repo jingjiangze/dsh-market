@@ -247,7 +247,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-dshso"
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -297,7 +297,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-dshso"
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -1360,7 +1360,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-dshso"
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -1408,8 +1408,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -1839,8 +1839,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -2311,7 +2311,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-dshso"
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -2369,54 +2369,6 @@
           },
           "engines": {
             "dsh": ">=0.2.1-alpha.2"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-im-companion",
-      "title": {
-        "en": "dsh-im-companion",
-        "zh": "dsh-im-companion"
-      },
-      "description": {
-        "en": "dsh-im-companion：以助理和家的概念增强 dsh-im——哪个工作区有助理在管、在不在线尽收眼底，搬家拖一下就行。",
-        "zh": "通过助理和家的概念增强 dsh-im，一览各工作区助理状态并支持拖拽搬家。"
-      },
-      "homepage": "https://github.com/FeatherHunter/dsh-im-companion",
-      "repository": {
-        "url": "https://github.com/FeatherHunter/dsh-im-companion"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "im",
-          "feishu",
-          "wechat",
-          "agent",
-          "fleet"
-        ],
-        "category": "connect",
-        "sortKeys": {
-          "stars": 40,
-          "downloads": 2105
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.2.25",
-          "publishTimestamp": 1792779855,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.2-alpha.2 <0.3.0-0"
           }
         }
       ]
@@ -2496,13 +2448,13 @@
         ],
         "category": "enhance-ui",
         "sortKeys": {
-          "stars": 36,
+          "stars": 37,
           "downloads": 2425
         },
         "labels": [
           "src-npm",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -2667,50 +2619,49 @@
       ]
     },
     {
-      "name": "dsh-remotion",
+      "name": "dsh-im-companion",
       "title": {
-        "en": "dsh-remotion",
-        "zh": "dsh-remotion"
+        "en": "dsh-im-companion",
+        "zh": "dsh-im-companion"
       },
       "description": {
-        "en": "在 DSH 里把 React 工程做成视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
-        "zh": "为 DSH 注册 Remotion 官方移植技能，用 React 以编程方式制作视频，含 38 个规则文件，安装即可使用。"
+        "en": "dsh-im-companion：以助理和家的概念增强 dsh-im——哪个工作区有助理在管、在不在线尽收眼底，搬家拖一下就行。",
+        "zh": "dsh-im辅助插件，创造助理/家的概念"
       },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-remotion@0.10.3/assets/plugin-icon.webp",
-      "author": "stardustlc",
-      "homepage": "https://github.com/STARDUSTLC666/dsh-remotion#readme",
+      "homepage": "https://github.com/FeatherHunter/dsh-im-companion",
       "repository": {
-        "url": "https://github.com/STARDUSTLC666/dsh-remotion"
+        "url": "https://github.com/FeatherHunter/dsh-im-companion"
       },
       "metadata": {
         "keywords": [
           "dsh",
+          "dsh-plugin",
           "deepseek-harness",
-          "plugin",
-          "skills",
-          "video",
-          "dsh-plugin"
+          "im",
+          "feishu",
+          "wechat",
+          "agent",
+          "fleet"
         ],
-        "category": "media",
+        "category": "connect",
         "sortKeys": {
           "stars": 31,
-          "downloads": 6644
+          "downloads": 2105
         },
         "labels": [
-          "src-npm",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
         {
-          "version": "0.10.3",
-          "publishTimestamp": 1793362586,
+          "version": "0.2.25",
+          "publishTimestamp": 1792779855,
           "source": {
             "type": "npm"
           },
           "engines": {
-            "dsh": ">=0.2.1-rc.3"
+            "dsh": ">=0.1.2-alpha.2 <0.3.0-0"
           }
         }
       ]
@@ -2862,106 +2813,6 @@
       ]
     },
     {
-      "name": "dsh-email",
-      "title": {
-        "en": "dsh-email",
-        "zh": "dsh-email"
-      },
-      "description": {
-        "en": "在 DSH 里处理邮件，确认后再发出回复。 需要自己的邮箱授权或 AgentMail API Key 欢迎提交 issues 和 PR。",
-        "zh": "DeepSeek Harness 邮件插件，提供邮件收发、读取、搜索、文件夹与附件管理，支持多账号和 Web 设置页配置。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-email@0.21.2/assets/plugin-icon.webp",
-      "author": "stardustlc",
-      "homepage": "https://github.com/STARDUSTLC666/dsh-email#readme",
-      "repository": {
-        "url": "https://github.com/STARDUSTLC666/dsh-email"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh-plugin",
-          "deepseek-harness",
-          "dsh",
-          "email",
-          "imap",
-          "smtp",
-          "agentmail",
-          "pop3"
-        ],
-        "category": "other",
-        "sortKeys": {
-          "stars": 30,
-          "downloads": 4009
-        },
-        "labels": [
-          "src-npm",
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.21.2",
-          "publishTimestamp": 1793362650,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-rc.3"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-plugin-message-edit",
-      "title": {
-        "en": "dsh-plugin-message-edit",
-        "zh": "dsh-plugin-message-edit"
-      },
-      "description": {
-        "en": "ChatGPT-style message editing for DeepSeek Harness: edit a past prompt to rewind and branch the conversation, switch versions with a counter under the bubble, and browse branches in a tree.",
-        "zh": "ChatGPT-style message editing for DeepSeek Harness: edit a past prompt to rewind and branch the conversation, switch versions with a counter under the bubble, and browse branches in a tree."
-      },
-      "homepage": "https://github.com/SpookySandwich/dsh-plugin-message-edit#readme",
-      "repository": {
-        "url": "https://github.com/SpookySandwich/dsh-plugin-message-edit"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "cordis-plugin",
-          "message-edit",
-          "edit",
-          "branch",
-          "version-tree"
-        ],
-        "category": "agent",
-        "sortKeys": {
-          "stars": 30,
-          "downloads": 1227
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh",
-          "zh-fallback"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.5.0",
-          "publishTimestamp": 1793373932,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0-0 || 0.2.1-rc.2 || 0.2.1-rc.5"
-          }
-        }
-      ]
-    },
-    {
       "name": "mattpocock-skills-dsh",
       "title": {
         "en": "mattpocock-skills-dsh",
@@ -3038,8 +2889,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -3051,55 +2902,6 @@
           },
           "engines": {
             "dsh": ">=0.1.7-alpha.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-graph",
-      "title": {
-        "en": "dsh-graph",
-        "zh": "dsh-graph"
-      },
-      "description": {
-        "en": "A DeepSeek Harness plugin for graph-based goal management and kanban visualization.",
-        "zh": "基于图的 DSH 目标管理插件，把工作组织成目标看板并覆盖完整生命周期。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-graph@0.22.0/icon.svg",
-      "homepage": "https://github.com/miuzel/dsh-graph#readme",
-      "repository": {
-        "url": "https://github.com/miuzel/dsh-graph"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "plugin",
-          "goals",
-          "kanban",
-          "graph",
-          "ui"
-        ],
-        "category": "agent",
-        "sortKeys": {
-          "stars": 26,
-          "downloads": 546
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.22.0",
-          "publishTimestamp": 1792470639,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.5-rc.2 <0.2.2-0"
           }
         }
       ]
@@ -3137,8 +2939,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -3150,6 +2952,55 @@
           },
           "engines": {
             "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-graph",
+      "title": {
+        "en": "dsh-graph",
+        "zh": "dsh-graph"
+      },
+      "description": {
+        "en": "A DeepSeek Harness plugin for graph-based goal management and kanban visualization.",
+        "zh": "dsh 目标生命周期管理与可视化看板，目标，判据，执行，评审都在项目内跟踪"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-graph@0.22.0/icon.svg",
+      "homepage": "https://github.com/miuzel/dsh-graph#readme",
+      "repository": {
+        "url": "https://github.com/miuzel/dsh-graph"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "plugin",
+          "goals",
+          "kanban",
+          "graph",
+          "ui"
+        ],
+        "category": "agent",
+        "sortKeys": {
+          "stars": 25,
+          "downloads": 546
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.22.0",
+          "publishTimestamp": 1792470639,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.5-rc.2 <0.2.2-0"
           }
         }
       ]
@@ -3203,46 +3054,49 @@
       ]
     },
     {
-      "name": "dsh-provider-qoder",
+      "name": "dsh-plugin-message-edit",
       "title": {
-        "en": "dsh-provider-qoder",
-        "zh": "dsh-provider-qoder"
+        "en": "dsh-plugin-message-edit",
+        "zh": "dsh-plugin-message-edit"
       },
       "description": {
-        "en": "Global Qoder subscription adapter for the DeepSeek Harness LLM seam",
-        "zh": "DSH提供者插件，将Qoder订阅接入DeepSeek Harness，支持文本、图像、流式输出、推理和工具调用。"
+        "en": "ChatGPT-style message editing for DeepSeek Harness: edit a past prompt to rewind and branch the conversation, switch versions with a counter under the bubble, and browse branches in a tree.",
+        "zh": "编辑已发送的消息即可从该轮次回溯并分叉对话，用气泡下方的计数器切换版本"
       },
-      "homepage": "https://github.com/mo-n/dsh-provider-qoder#readme",
+      "homepage": "https://github.com/SpookySandwich/dsh-plugin-message-edit#readme",
       "repository": {
-        "url": "https://github.com/mo-n/dsh-provider-qoder"
+        "url": "https://github.com/SpookySandwich/dsh-plugin-message-edit"
       },
       "metadata": {
         "keywords": [
-          "deepseek",
-          "deepseek-harness",
           "dsh",
           "dsh-plugin",
-          "qoder"
+          "deepseek-harness",
+          "cordis-plugin",
+          "message-edit",
+          "edit",
+          "branch",
+          "version-tree"
         ],
-        "category": "enhance-models",
+        "category": "agent",
         "sortKeys": {
           "stars": 25,
-          "downloads": 1134
+          "downloads": 1227
         },
         "labels": [
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
         {
-          "version": "0.5.1",
-          "publishTimestamp": 1792994367,
+          "version": "1.5.0",
+          "publishTimestamp": 1793373932,
           "source": {
             "type": "npm"
           },
           "engines": {
-            "dsh": ">=0.1.7-rc.2"
+            "dsh": ">=0.2.0-rc.2 <0.3.0-0 || 0.2.1-rc.2 || 0.2.1-rc.5"
           }
         }
       ]
@@ -3281,7 +3135,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-dshso"
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -3398,6 +3252,55 @@
       ]
     },
     {
+      "name": "dsh-hyperframes",
+      "title": {
+        "en": "dsh-hyperframes",
+        "zh": "dsh-hyperframes"
+      },
+      "description": {
+        "en": "在 DSH 里用 HTML 创作并导出视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
+        "zh": "注册 HyperFrames by HeyGen 移植的五项技能，支持用 HTML 写视频、网址转视频、CLI 与 GSAP，安装即用。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-hyperframes@0.11.3/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-hyperframes#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-hyperframes"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "skills",
+          "video",
+          "dsh-plugin"
+        ],
+        "category": "media",
+        "sortKeys": {
+          "stars": 24,
+          "downloads": 5955
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.11.3",
+          "publishTimestamp": 1793362554,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-jev",
       "title": {
         "en": "dsh-jev",
@@ -3491,6 +3394,55 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-remotion",
+      "title": {
+        "en": "dsh-remotion",
+        "zh": "dsh-remotion"
+      },
+      "description": {
+        "en": "在 DSH 里把 React 工程做成视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
+        "zh": "React 编程式视频（动画/音频/字幕/3D/图表/字体，38 规则文件）"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-remotion@0.10.3/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-remotion#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-remotion"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "skills",
+          "video",
+          "dsh-plugin"
+        ],
+        "category": "media",
+        "sortKeys": {
+          "stars": 24,
+          "downloads": 6644
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.10.3",
+          "publishTimestamp": 1793362586,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -3684,6 +3636,57 @@
           },
           "engines": {
             "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-email",
+      "title": {
+        "en": "dsh-email",
+        "zh": "dsh-email"
+      },
+      "description": {
+        "en": "在 DSH 里处理邮件，确认后再发出回复。 需要自己的邮箱授权或 AgentMail API Key 欢迎提交 issues 和 PR。",
+        "zh": "邮件工具插件，含 email_watch 增量新邮件检查"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-email@0.21.2/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-email#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-email"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "dsh",
+          "email",
+          "imap",
+          "smtp",
+          "agentmail",
+          "pop3"
+        ],
+        "category": "other",
+        "sortKeys": {
+          "stars": 23,
+          "downloads": 4009
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.21.2",
+          "publishTimestamp": 1793362650,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -3914,8 +3917,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -4030,6 +4033,51 @@
       ]
     },
     {
+      "name": "dsh-provider-qoder",
+      "title": {
+        "en": "dsh-provider-qoder",
+        "zh": "dsh-provider-qoder"
+      },
+      "description": {
+        "en": "Global Qoder subscription adapter for the DeepSeek Harness LLM seam",
+        "zh": "将 Qoder 订阅接入 DeepSeek Harness，支持国际版与中国区"
+      },
+      "homepage": "https://github.com/mo-n/dsh-provider-qoder#readme",
+      "repository": {
+        "url": "https://github.com/mo-n/dsh-provider-qoder"
+      },
+      "metadata": {
+        "keywords": [
+          "deepseek",
+          "deepseek-harness",
+          "dsh",
+          "dsh-plugin",
+          "qoder"
+        ],
+        "category": "enhance-models",
+        "sortKeys": {
+          "stars": 21,
+          "downloads": 1134
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.5.1",
+          "publishTimestamp": 1792994367,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-ponytail-skills",
       "title": {
         "en": "dsh-ponytail",
@@ -4084,7 +4132,7 @@
       },
       "description": {
         "en": "Interactive long-session background agents plus persistent multi-agent team rooms for DeepSeek Harness: durable continuable child agents with progress, steering and interruption, and cross-session team rooms with a message bus, shared task board, approval",
-        "zh": "Interactive long-session background agents plus persistent multi-agent team rooms for DeepSeek Harness: durable continuable child agents with progress, steering and interruption, and cross-session team rooms with a message bus, shared task board, approval"
+        "zh": "官方子代理接缝上的持久化后台子代理，任意会话中启动，Web 侧边栏看进度"
       },
       "homepage": "https://github.com/PerryLink/dsh-background-agents#readme",
       "repository": {
@@ -4107,9 +4155,8 @@
           "downloads": 371
         },
         "labels": [
-          "src-dshso",
           "src-mydsh",
-          "zh-fallback"
+          "src-dshso"
         ]
       },
       "versions": [
@@ -4121,105 +4168,6 @@
           },
           "engines": {
             "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0 || >=0.1.7-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-ide-git",
-      "title": {
-        "en": "dsh-ide-git",
-        "zh": "Git 工具窗口"
-      },
-      "description": {
-        "en": "DSH plugin: an IDE-grade Git tool window as a native dsh-better-sidebar tab — branch tree, commit graph, changes, commit details, JetBrains-style actions, in the right sidebar and the bottom panel. | DSH 插件:IDE 级 Git 工具窗口,以 dsh-better-sidebar 原生 Tab 挂载——分",
-        "zh": "IDE 风格的 Git 工具窗口,作为侧边栏原生标签页:分支树、提交图谱、变更与提交详情(暂存/未暂存 diff)、子模块作为独立仓库、破坏性操作守卫与撤回句柄,git 调用全部 argv 化并走同源信任围栏。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-ide-git@0.21.2/icon.svg",
-      "homepage": "https://github.com/KannaKuron/dsh-ide-git",
-      "repository": {
-        "url": "https://github.com/KannaKuron/dsh-ide-git"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "dsh-plugin",
-          "dsh-better-sidebar",
-          "git",
-          "git-gui",
-          "source-control",
-          "sidebar"
-        ],
-        "category": "enhance-ui",
-        "sortKeys": {
-          "stars": 19,
-          "downloads": 2882
-        },
-        "labels": [
-          "src-npm",
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.21.2",
-          "publishTimestamp": 1793260713,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.6-alpha.2"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-speak",
-      "title": {
-        "en": "dsh-speak",
-        "zh": "dsh-speak"
-      },
-      "description": {
-        "en": "Make your AI harness speak — voice announcements for DSH and other AI coding harnesses (Windows SAPI5 + macOS system voices)",
-        "zh": "让 AI harness 生成语音播报，把结果以声音通知形式播出的插件"
-      },
-      "author": "Alan2Z",
-      "homepage": "https://github.com/Alan2Z/dsh-speak#readme",
-      "repository": {
-        "url": "https://github.com/Alan2Z/dsh-speak"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "tts",
-          "text-to-speech",
-          "voice",
-          "speech",
-          "voice-announcement"
-        ],
-        "category": "media",
-        "sortKeys": {
-          "stars": 19,
-          "downloads": 2013
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.8.4",
-          "publishTimestamp": 1793115102,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.7-rc.2"
           }
         }
       ]
@@ -4273,6 +4221,55 @@
       ]
     },
     {
+      "name": "dsh-speak",
+      "title": {
+        "en": "dsh-speak",
+        "zh": "dsh-speak"
+      },
+      "description": {
+        "en": "Make your AI harness speak — voice announcements for DSH and other AI coding harnesses (Windows SAPI5 + macOS system voices)",
+        "zh": "零外部依赖、事件驱动、无需额外模型、不消耗任何 token的语音播报插件"
+      },
+      "author": "Alan2Z",
+      "homepage": "https://github.com/Alan2Z/dsh-speak#readme",
+      "repository": {
+        "url": "https://github.com/Alan2Z/dsh-speak"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "tts",
+          "text-to-speech",
+          "voice",
+          "speech",
+          "voice-announcement"
+        ],
+        "category": "media",
+        "sortKeys": {
+          "stars": 18,
+          "downloads": 2013
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.8.4",
+          "publishTimestamp": 1793115102,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-talk",
       "title": {
         "en": "dsh-talk",
@@ -4317,55 +4314,6 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-hyperframes",
-      "title": {
-        "en": "dsh-hyperframes",
-        "zh": "dsh-hyperframes"
-      },
-      "description": {
-        "en": "在 DSH 里用 HTML 创作并导出视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
-        "zh": "同步 HyperFrames by HeyGen 官方上游的二十技能"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-hyperframes@0.11.3/assets/plugin-icon.webp",
-      "author": "stardustlc",
-      "homepage": "https://github.com/STARDUSTLC666/dsh-hyperframes#readme",
-      "repository": {
-        "url": "https://github.com/STARDUSTLC666/dsh-hyperframes"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "plugin",
-          "skills",
-          "video",
-          "dsh-plugin"
-        ],
-        "category": "media",
-        "sortKeys": {
-          "stars": 17,
-          "downloads": 5955
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.11.3",
-          "publishTimestamp": 1793362554,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -5337,6 +5285,56 @@
       ]
     },
     {
+      "name": "dsh-ide-git",
+      "title": {
+        "en": "dsh-ide-git",
+        "zh": "Git 工具窗口"
+      },
+      "description": {
+        "en": "DSH plugin: an IDE-grade Git tool window as a native dsh-better-sidebar tab — branch tree, commit graph, changes, commit details, JetBrains-style actions, in the right sidebar and the bottom panel. | DSH 插件:IDE 级 Git 工具窗口,以 dsh-better-sidebar 原生 Tab 挂载——分",
+        "zh": "IDE 风格的 Git 工具窗口,作为侧边栏原生标签页:分支树、提交图谱、变更与提交详情(暂存/未暂存 diff)、子模块作为独立仓库、破坏性操作守卫与撤回句柄,git 调用全部 argv 化并走同源信任围栏。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-ide-git@0.21.2/icon.svg",
+      "homepage": "https://github.com/KannaKuron/dsh-ide-git",
+      "repository": {
+        "url": "https://github.com/KannaKuron/dsh-ide-git"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "dsh-plugin",
+          "dsh-better-sidebar",
+          "git",
+          "git-gui",
+          "source-control",
+          "sidebar"
+        ],
+        "category": "enhance-ui",
+        "sortKeys": {
+          "stars": 12,
+          "downloads": 2882
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.21.2",
+          "publishTimestamp": 1793260713,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.6-alpha.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-llm-retry-settings",
       "title": {
         "en": "dsh-llm-retry-settings",
@@ -5441,7 +5439,7 @@
       },
       "description": {
         "en": "DeepSeek Harness plugin: paragraph-batched streaming reveals with 8 designed animations, smooth scroll-follow and a settings panel.",
-        "zh": "为 DeepSeek Harness 添加更流畅的流式文字动画效果，改善输出显示。"
+        "zh": "给 DeepSeek Harness 加入更好的流式文字动画。"
       },
       "homepage": "https://github.com/SpookySandwich/dsh-plugin-smooth-stream#readme",
       "repository": {
@@ -5460,8 +5458,8 @@
           "downloads": 746
         },
         "labels": [
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -6094,56 +6092,6 @@
       ]
     },
     {
-      "name": "dsh-ffmpeg",
-      "title": {
-        "en": "dsh-ffmpeg",
-        "zh": "dsh-ffmpeg"
-      },
-      "description": {
-        "en": "把已有音视频处理成需要的成品。 需要本机 FFmpeg / ffprobe 欢迎提交 issues 和 PR。",
-        "zh": "DeepSeek Harness 视频处理插件，提供 ffmpeg_probe、cut、concat、encode、subtitle、extract、gif 七个工具，通过官方 subprocess 服务以 argv 数组调用，无 shell 注入，零运行时依赖，纯 Node 跨平台。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-ffmpeg@0.7.4/assets/plugin-icon.webp",
-      "author": "stardustlc",
-      "homepage": "https://github.com/STARDUSTLC666/dsh-ffmpeg#readme",
-      "repository": {
-        "url": "https://github.com/STARDUSTLC666/dsh-ffmpeg"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "plugin",
-          "ffmpeg",
-          "video",
-          "media",
-          "dsh-plugin"
-        ],
-        "category": "media",
-        "sortKeys": {
-          "stars": 10,
-          "downloads": 5875
-        },
-        "labels": [
-          "src-npm",
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.7.4",
-          "publishTimestamp": 1793362479,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-rc.3"
-          }
-        }
-      ]
-    },
-    {
       "name": "dsh-mobile-plugin",
       "title": {
         "en": "@WNLUO/dsh-mobile-plugin",
@@ -6515,6 +6463,56 @@
           },
           "engines": {
             "dsh": ">=0.2.1-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-ffmpeg",
+      "title": {
+        "en": "dsh-ffmpeg",
+        "zh": "dsh-ffmpeg"
+      },
+      "description": {
+        "en": "把已有音视频处理成需要的成品。 需要本机 FFmpeg / ffprobe 欢迎提交 issues 和 PR。",
+        "zh": "视频处理十工具（探测/剪辑/拼接/转码/字幕烧录/抽帧/批量抽帧/GIF/调整…"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-ffmpeg@0.7.4/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-ffmpeg#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-ffmpeg"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "ffmpeg",
+          "video",
+          "media",
+          "dsh-plugin"
+        ],
+        "category": "media",
+        "sortKeys": {
+          "stars": 9,
+          "downloads": 5875
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.7.4",
+          "publishTimestamp": 1793362479,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -7061,7 +7059,7 @@
       },
       "description": {
         "en": "DeepSeek Harness plugin: the Models+ settings page — a fully plugin-owned model/provider UI with per-model extension fields (reasoning efforts, input modalities, compat flags) and models.dev metadata prefill",
-        "zh": "为DSH自定义模型提供商新增设置页面，用于配置推理强度和多模态输入"
+        "zh": "模型+ 设置页，按模型声明推理挡位"
       },
       "homepage": "https://github.com/lovezi0/dsh-model-extension#readme",
       "repository": {
@@ -7075,8 +7073,8 @@
           "downloads": 419
         },
         "labels": [
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -8008,46 +8006,6 @@
       ]
     },
     {
-      "name": "dsh-odoo-sdd",
-      "title": {
-        "en": "dsh-odoo-sdd",
-        "zh": "dsh-odoo-sdd"
-      },
-      "description": {
-        "en": "Spec-Driven Development pipeline for Odoo as a DeepSeek Harness plugin: connects to an existing Odoo instance (JSON-RPC), orchestrates the 5-phase SDD workflow, and enforces fail-closed safety gates.",
-        "zh": "规范驱动开发插件，可将一个想法变成经过测试的 Odoo 模块，支持人工或自动完成。"
-      },
-      "author": "Franyer Hidalgo",
-      "homepage": "https://github.com/fhidalgodev/dsh-odoo-sdd#readme",
-      "repository": {
-        "url": "https://github.com/fhidalgodev/dsh-odoo-sdd"
-      },
-      "metadata": {
-        "keywords": [],
-        "category": "agent",
-        "sortKeys": {
-          "stars": 6,
-          "downloads": 670
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.18.0",
-          "publishTimestamp": 1793206039,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.1"
-          }
-        }
-      ]
-    },
-    {
       "name": "dsh-openrouter-providers",
       "title": {
         "en": "dsh-openrouter-providers",
@@ -8091,53 +8049,6 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.1 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-session-flow",
-      "title": {
-        "en": "dsh-session-flow",
-        "zh": "dsh-session-flow"
-      },
-      "description": {
-        "en": "DSH 会话回顾与归档插件：可折叠信息流 + 会话级汇总——总览工作台、折叠时间线、血缘树、双模式摘要、全文检索、ZIP 导出、实时跟踪、会话重命名（官方数据源对齐）、健康监控",
-        "zh": "重设计 DSH 会话信息流：跨会话档案柜，含折叠时间线、血缘树、检索、双模式摘要、ZIP 导出与实时跟踪。"
-      },
-      "homepage": "https://github.com/YeqingTang/dsh-session-flow#readme",
-      "repository": {
-        "url": "https://github.com/YeqingTang/dsh-session-flow"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "agent-harness",
-          "plugin",
-          "web",
-          "ui",
-          "session",
-          "trajectory"
-        ],
-        "category": "other",
-        "sortKeys": {
-          "stars": 6,
-          "downloads": 496
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.5.0",
-          "publishTimestamp": 1792313176,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.2-rc.1 <0.3.0"
           }
         }
       ]
@@ -8485,7 +8396,7 @@
       },
       "description": {
         "en": "File explorer for the DSH dock: browse the active conversation's working directory and open files in the registered file viewers.",
-        "zh": "DSH dock 文件浏览插件：浏览会话工作目录中的文件并打开查看。"
+        "zh": "dock 系列文件浏览插件，侧边栏目录树浏览会话工作区"
       },
       "homepage": "https://github.com/AKS1st/dock-files#readme",
       "repository": {
@@ -8508,8 +8419,8 @@
           "downloads": 482
         },
         "labels": [
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -8533,7 +8444,7 @@
       },
       "description": {
         "en": "把零散 DOI 和 BibTeX 整理成可用的文献库。 联网补全需要访问 Crossref 欢迎提交 issues 和 PR。",
-        "zh": "从 Crossref 获取文献元数据，并按多种引用格式生成引文。"
+        "zh": "参考文献工具，DOI 精确查询与 Crossref 题录检索"
       },
       "icon": "https://cdn.jsdelivr.net/npm/dsh-cite@0.7.7/assets/plugin-icon.webp",
       "author": "stardustlc",
@@ -8559,8 +8470,8 @@
         },
         "labels": [
           "src-npm",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -8667,55 +8578,6 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0-0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-font-enhancer",
-      "title": {
-        "en": "dsh-font-enhancer",
-        "zh": "字体增强"
-      },
-      "description": {
-        "en": "「字」悬浮球 + 字体DIY面板：每区域独立调字体/颜色/字号/粗细/斜体/行高，全局统一、方案管理、8 款可爱字体一键安装、130 款皮肤三球同步。",
-        "zh": "「字」悬浮球 + 字体DIY面板：每区域独立调字体/颜色/字号/粗细/斜体/行高，全局统一、方案管理、8 款可爱字体一键安装、130 款皮肤三球同步。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-font-enhancer@1.5.5/icon.svg",
-      "homepage": "https://github.com/loyalchiiina/dsh-font-enhancer#readme",
-      "repository": {
-        "url": "https://github.com/loyalchiiina/dsh-font-enhancer"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh-plugin",
-          "deepseek-harness",
-          "font",
-          "字体",
-          "typography",
-          "排版",
-          "DIY",
-          "theme"
-        ],
-        "category": "enhance-ui",
-        "sortKeys": {
-          "stars": 5,
-          "downloads": 1114
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.5.5",
-          "publishTimestamp": 1793342548,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.7-rc.1"
           }
         }
       ]
@@ -8899,6 +8761,46 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-odoo-sdd",
+      "title": {
+        "en": "dsh-odoo-sdd",
+        "zh": "dsh-odoo-sdd"
+      },
+      "description": {
+        "en": "Spec-Driven Development pipeline for Odoo as a DeepSeek Harness plugin: connects to an existing Odoo instance (JSON-RPC), orchestrates the 5-phase SDD workflow, and enforces fail-closed safety gates.",
+        "zh": "面向 Odoo 的规范驱动开发流水线：15 个工具把需求从不可变规范推进到结构"
+      },
+      "author": "Franyer Hidalgo",
+      "homepage": "https://github.com/fhidalgodev/dsh-odoo-sdd#readme",
+      "repository": {
+        "url": "https://github.com/fhidalgodev/dsh-odoo-sdd"
+      },
+      "metadata": {
+        "keywords": [],
+        "category": "agent",
+        "sortKeys": {
+          "stars": 5,
+          "downloads": 670
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.18.0",
+          "publishTimestamp": 1793206039,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1"
           }
         }
       ]
@@ -9137,6 +9039,53 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-session-flow",
+      "title": {
+        "en": "dsh-session-flow",
+        "zh": "dsh-session-flow"
+      },
+      "description": {
+        "en": "DSH 会话回顾与归档插件：可折叠信息流 + 会话级汇总——总览工作台、折叠时间线、血缘树、双模式摘要、全文检索、ZIP 导出、实时跟踪、会话重命名（官方数据源对齐）、健康监控",
+        "zh": "跨会话档案柜，总览工作台，折叠时间线，子代理血缘，全文检索，双模式摘要"
+      },
+      "homepage": "https://github.com/YeqingTang/dsh-session-flow#readme",
+      "repository": {
+        "url": "https://github.com/YeqingTang/dsh-session-flow"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "agent-harness",
+          "plugin",
+          "web",
+          "ui",
+          "session",
+          "trajectory"
+        ],
+        "category": "other",
+        "sortKeys": {
+          "stars": 5,
+          "downloads": 496
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.5.0",
+          "publishTimestamp": 1792313176,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1 <0.3.0"
           }
         }
       ]
@@ -9709,7 +9658,7 @@
       },
       "description": {
         "en": "The DSH plugin checker that can actually repair what it finds. Scans every installed plugin, rehearses each rejected one in a throwaway home to prove it boots, and only then writes a reversible exemption — or tells you honestly that it cannot be saved. Al",
-        "zh": "检查 DSH 插件升级，测试多主机兼容性，校验 format-1 市场索引，并在 GitHub PR 上自动评论兼容性矩阵。"
+        "zh": "零依赖的 dsh 插件体检 CLI。"
       },
       "author": "EasonMWS",
       "homepage": "https://easonmws.github.io/dsh-plugin-health/",
@@ -9734,8 +9683,8 @@
         },
         "labels": [
           "src-npm",
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -10349,6 +10298,103 @@
       ]
     },
     {
+      "name": "dsh-font-enhancer",
+      "title": {
+        "en": "dsh-font-enhancer",
+        "zh": "字体增强"
+      },
+      "description": {
+        "en": "「字」悬浮球 + 字体DIY面板：每区域独立调字体/颜色/字号/粗细/斜体/行高，全局统一、方案管理、8 款可爱字体一键安装、130 款皮肤三球同步。",
+        "zh": "「字」悬浮球 + 字体DIY面板：每区域独立调字体/颜色/字号/粗细/斜体/行高，全局统一、方案管理、8 款可爱字体一键安装、130 款皮肤三球同步。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-font-enhancer@1.5.5/icon.svg",
+      "homepage": "https://github.com/loyalchiiina/dsh-font-enhancer#readme",
+      "repository": {
+        "url": "https://github.com/loyalchiiina/dsh-font-enhancer"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "font",
+          "字体",
+          "typography",
+          "排版",
+          "DIY",
+          "theme"
+        ],
+        "category": "enhance-ui",
+        "sortKeys": {
+          "stars": 3,
+          "downloads": 1114
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.5.5",
+          "publishTimestamp": 1793342548,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-git-sidebar",
+      "title": {
+        "en": "dsh-git-sidebar",
+        "zh": "dsh-git-sidebar"
+      },
+      "description": {
+        "en": "A draggable right-side Git sidebar for DeepSeek Harness Web: follow the active workspace, list changed files, generate commit messages with the current model, and commit/push/pull",
+        "zh": "界面里嵌Git工作台，能看代码差异、未提交改动和对话侧改动。"
+      },
+      "homepage": "https://github.com/adamaik/dsh-git-sidebar#readme",
+      "repository": {
+        "url": "https://github.com/adamaik/dsh-git-sidebar"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "git",
+          "version-control",
+          "git-status",
+          "commit-message",
+          "web-ui"
+        ],
+        "category": "enhance-models",
+        "sortKeys": {
+          "stars": 3,
+          "downloads": 44
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.5",
+          "publishTimestamp": 1787829487,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.0.1"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-ide-workbench",
       "title": {
         "en": "dsh-ide-workbench",
@@ -10920,7 +10966,7 @@
       },
       "description": {
         "en": "Skills & commands manager settings page for DeepSeek Harness: view, enable/disable, edit, delete and add skills, plus save reusable prompts as /commands — all from the browser.",
-        "zh": "在 DSH 设置中新增「技能与命令」页面，可查看、启停、编辑、删除和添加技能，并将常用提示词保存为 / 命令快速调用。"
+        "zh": "设置里新增技能与命令页，可增删改启停技能，常用提示词存成命令用/调用。"
       },
       "author": "appthin",
       "homepage": "https://github.com/appthin/dsh-skills-manager-plus#readme",
@@ -10942,8 +10988,8 @@
           "downloads": 437
         },
         "labels": [
-          "src-dshso",
-          "src-mydsh"
+          "src-mydsh",
+          "src-dshso"
         ]
       },
       "versions": [
@@ -11369,57 +11415,6 @@
           },
           "engines": {
             "dsh": ">=0.1.7-rc.2"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-client-ui-quote",
-      "title": {
-        "en": "@BangBang-03/dsh-client-ui-quote",
-        "zh": "选中引用 (dsh-client-ui-quote)"
-      },
-      "description": {
-        "en": "Turn any DSH selection into a reviewable quote — comment / add to chat / side chat, source highlights and jump-back, a searchable review list, side threads, revisions, and per-quote reply badges.",
-        "zh": "在聊天、文件预览或终端里选中任意一句话即可引用并评论。Kimi Code 是最初的交互参照，但这一版把引用当成可管理、可审阅、可回流的对象：浮层提供「评论」「添加到对话」与「侧边对话」，前两者以 DSH 原生 reference-chip 插入输入框，第三项把引用写进右侧栏那条独立侧边线程的输入框（一条主会话一条线程，不替你发送；默认是宿主半创建的内置隐藏线程（主会话最近几轮原话作为一条隐性上下文注入，不铺开历史），宿主半不可用时退回本插件的原生页签，也可以在设置 sideChatBackend 为 better 后改用 dsh-better-sidebar 的隐藏线程）。桌面端 Alt+Q / Alt+C / Alt+B 是同样的三个动作，悬停发送后的胶囊可「跳回原文」，右侧栏的「引用清单」页还能搜索本会话全部引用、跳回原文并导出 Markdown（桌面 Alt+L 打开），页面底部可把侧边线程的结论一键带回主会话输入框或导出成文件；悬停卡片里的「改这条引用」能把旧评论放回评论框改好再发（旧胶囊随即标「已修订」）。引用落进草稿后，原句在来源消息里留下高亮与序号，输入框上方出现「引用 ×N」聚合条（可逐条移除）；发送块的坐标行前面还带一段可读的「引自第 N 轮 · 助手」。diff / 每轮改动面板也能划选为带路径行号的代码引用；引用清单可勾选多条，一次插入输入框；它也是审阅工作台——每条引用可标「待处理 / 已解决」、打 #标签、按状态或标签筛选，勾选后可批量标记解决或批量送回输入框。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-client-ui-quote@0.14.1/icon.svg",
-      "author": "BangBang-03",
-      "homepage": "https://github.com/BangBang-03/dsh-client-ui-quote#readme",
-      "repository": {
-        "url": "https://github.com/BangBang-03/dsh-client-ui-quote"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "quote",
-          "selection",
-          "comment",
-          "annotation",
-          "review"
-        ],
-        "category": "other",
-        "sortKeys": {
-          "stars": 2,
-          "downloads": 7577
-        },
-        "labels": [
-          "src-npm",
-          "src-dshso",
-          "src-mydsh"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.14.1",
-          "publishTimestamp": 1793416228,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2"
           }
         }
       ]
@@ -12126,6 +12121,51 @@
       ]
     },
     {
+      "name": "dsh-minimax-usage",
+      "title": {
+        "en": "dsh-minimax-usage",
+        "zh": "dsh-minimax-usage"
+      },
+      "description": {
+        "en": "Show MiniMax Token Plan subscription usage in the DSH Web UI",
+        "zh": "在 DSH 设置页「用量」section 展示 MiniMax Token…"
+      },
+      "homepage": "https://github.com/pan17/dsh-minimax-usage#readme",
+      "repository": {
+        "url": "https://github.com/pan17/dsh-minimax-usage"
+      },
+      "metadata": {
+        "keywords": [
+          "minimax",
+          "token-plan",
+          "dsh",
+          "deepseek-harness",
+          "cordis"
+        ],
+        "category": "enhance-models",
+        "sortKeys": {
+          "stars": 2,
+          "downloads": 300
+        },
+        "labels": [
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.8",
+          "publishTimestamp": 1788597574,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-rc.1"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-mobile-upgrade",
       "title": {
         "en": "dsh-mobile-upgrade",
@@ -12397,6 +12437,55 @@
       ]
     },
     {
+      "name": "dsh-pet-plugin",
+      "title": {
+        "en": "@zuoyunlai/dsh-pet-plugin",
+        "zh": "桌面伴侣"
+      },
+      "description": {
+        "en": "DSH 桌面伴侣插件：五只超写实立绘（表情 + 动作序列）、主动说话与神经音色、小输入框单聊（一次性模型调用，不进会话）。",
+        "zh": "一只超写实立绘的桌面伴侣：偶尔冒出来说话、跳舞，旁边挂个小输入框可以单聊。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-pet-plugin@1.27.1/icon.svg",
+      "author": "zuoyunlai",
+      "homepage": "https://github.com/zuoyunlai/dsh-pet-plugin#readme",
+      "repository": {
+        "url": "https://github.com/zuoyunlai/dsh-pet-plugin"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "desktop-pet",
+          "pet",
+          "tts",
+          "companion"
+        ],
+        "category": "enhance-ui",
+        "sortKeys": {
+          "stars": 2,
+          "downloads": 5698
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.27.1",
+          "publishTimestamp": 1793434552,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-alpha.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-plugin-upgrade",
       "title": {
         "en": "dsh-plugin-upgrade",
@@ -12433,8 +12522,8 @@
       },
       "versions": [
         {
-          "version": "2.1.1",
-          "publishTimestamp": 1792316406,
+          "version": "2.1.2",
+          "publishTimestamp": 1793466214,
           "source": {
             "type": "npm"
           },
@@ -14805,6 +14894,57 @@
       ]
     },
     {
+      "name": "dsh-client-ui-quote",
+      "title": {
+        "en": "@BangBang-03/dsh-client-ui-quote",
+        "zh": "选中引用 (dsh-client-ui-quote)"
+      },
+      "description": {
+        "en": "Turn any DSH selection into a reviewable quote — comment / add to chat / side chat, source highlights and jump-back, a searchable review list, side threads, revisions, and per-quote reply badges.",
+        "zh": "在聊天、文件预览或终端里选中任意一句话即可引用并评论。Kimi Code 是最初的交互参照，但这一版把引用当成可管理、可审阅、可回流的对象：浮层提供「评论」「添加到对话」与「侧边对话」，前两者以 DSH 原生 reference-chip 插入输入框，第三项把引用写进右侧栏那条独立侧边线程的输入框（一条主会话一条线程，不替你发送；默认是宿主半创建的内置隐藏线程（主会话最近几轮原话作为一条隐性上下文注入，不铺开历史），宿主半不可用时退回本插件的原生页签，也可以在设置 sideChatBackend 为 better 后改用 dsh-better-sidebar 的隐藏线程）。桌面端 Alt+Q / Alt+C / Alt+B 是同样的三个动作，悬停发送后的胶囊可「跳回原文」，右侧栏的「引用清单」页还能搜索本会话全部引用、跳回原文并导出 Markdown（桌面 Alt+L 打开），页面底部可把侧边线程的结论一键带回主会话输入框或导出成文件；悬停卡片里的「改这条引用」能把旧评论放回评论框改好再发（旧胶囊随即标「已修订」）。引用落进草稿后，原句在来源消息里留下高亮与序号，输入框上方出现「引用 ×N」聚合条（可逐条移除）；发送块的坐标行前面还带一段可读的「引自第 N 轮 · 助手」。diff / 每轮改动面板也能划选为带路径行号的代码引用；引用清单可勾选多条，一次插入输入框；它也是审阅工作台——每条引用可标「待处理 / 已解决」、打 #标签、按状态或标签筛选，勾选后可批量标记解决或批量送回输入框。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-client-ui-quote@0.14.1/icon.svg",
+      "author": "BangBang-03",
+      "homepage": "https://github.com/BangBang-03/dsh-client-ui-quote#readme",
+      "repository": {
+        "url": "https://github.com/BangBang-03/dsh-client-ui-quote"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "quote",
+          "selection",
+          "comment",
+          "annotation",
+          "review"
+        ],
+        "category": "other",
+        "sortKeys": {
+          "stars": 1,
+          "downloads": 7577
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.14.1",
+          "publishTimestamp": 1793416228,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-code-security",
       "title": {
         "en": "dsh-code-security",
@@ -14812,7 +14952,7 @@
       },
       "description": {
         "en": "看清改动中的安全问题，再核对修复结果。 Betterleaks、Semgrep CE 与 OSV 是可选增强 欢迎提交 issues 和 PR。",
-        "zh": "看清改动中的安全问题，再核对修复结果。 Betterleaks、Semgrep CE 与 OSV 是可选增强 欢迎提交 issues 和 PR。"
+        "zh": "为 DSH 带来零配置的代码安全审计：13 个技能加 5 个扫描工具"
       },
       "icon": "https://cdn.jsdelivr.net/npm/dsh-code-security@0.7.8/assets/plugin-icon.webp",
       "author": "stardustlc",
@@ -14832,14 +14972,15 @@
           "owasp"
         ],
         "category": "ops",
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ],
         "sortKeys": {
           "stars": 1,
           "downloads": 2637
-        }
+        },
+        "labels": [
+          "src-npm",
+          "src-mydsh",
+          "src-dshso"
+        ]
       },
       "versions": [
         {
@@ -15652,55 +15793,6 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0-0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-git-sidebar",
-      "title": {
-        "en": "dsh-git-sidebar",
-        "zh": "dsh-git-sidebar"
-      },
-      "description": {
-        "en": "A draggable right-side Git sidebar for DeepSeek Harness Web: follow the active workspace, list changed files, generate commit messages with the current model, and commit/push/pull",
-        "zh": "A draggable right-side Git sidebar for DeepSeek Harness Web: follow the active workspace, list changed files, generate commit messages with the current model, and commit/push/pull"
-      },
-      "homepage": "https://github.com/adamaik/dsh-git-sidebar#readme",
-      "repository": {
-        "url": "https://github.com/adamaik/dsh-git-sidebar"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "plugin",
-          "git",
-          "version-control",
-          "git-status",
-          "commit-message",
-          "web-ui"
-        ],
-        "category": "enhance-models",
-        "sortKeys": {
-          "stars": 1,
-          "downloads": 44
-        },
-        "labels": [
-          "src-dshso",
-          "src-mydsh",
-          "zh-fallback"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.5",
-          "publishTimestamp": 1787829487,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.0.1"
           }
         }
       ]
@@ -16990,55 +17082,6 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0-0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-pet-plugin",
-      "title": {
-        "en": "@zuoyunlai/dsh-pet-plugin",
-        "zh": "桌面伴侣"
-      },
-      "description": {
-        "en": "DSH 桌面伴侣插件：五只超写实立绘（表情 + 动作序列）、主动说话与神经音色、小输入框单聊（一次性模型调用，不进会话）。",
-        "zh": "一只超写实立绘的桌面伴侣：偶尔冒出来说话、跳舞，旁边挂个小输入框可以单聊。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-pet-plugin@1.27.1/icon.svg",
-      "author": "zuoyunlai",
-      "homepage": "https://github.com/zuoyunlai/dsh-pet-plugin#readme",
-      "repository": {
-        "url": "https://github.com/zuoyunlai/dsh-pet-plugin"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "desktop-pet",
-          "pet",
-          "tts",
-          "companion"
-        ],
-        "category": "enhance-ui",
-        "sortKeys": {
-          "stars": 1,
-          "downloads": 5698
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.27.1",
-          "publishTimestamp": 1793434552,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-alpha.2"
           }
         }
       ]
@@ -23977,50 +24020,6 @@
       ]
     },
     {
-      "name": "dsh-minimax-usage",
-      "title": {
-        "en": "dsh-minimax-usage",
-        "zh": "dsh-minimax-usage"
-      },
-      "description": {
-        "en": "Show MiniMax Token Plan subscription usage in the DSH Web UI",
-        "zh": "在 DSH Web UI 中以可拖动的悬浮气泡显示 MiniMax Token Plan 的用量"
-      },
-      "homepage": "https://github.com/pan17/dsh-minimax-usage#readme",
-      "repository": {
-        "url": "https://github.com/pan17/dsh-minimax-usage"
-      },
-      "metadata": {
-        "keywords": [
-          "minimax",
-          "token-plan",
-          "dsh",
-          "deepseek-harness",
-          "cordis"
-        ],
-        "category": "enhance-models",
-        "labels": [
-          "src-dshso",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "downloads": 300
-        }
-      },
-      "versions": [
-        {
-          "version": "0.1.8",
-          "publishTimestamp": 1788597574,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.2-rc.1"
-          }
-        }
-      ]
-    },
-    {
       "name": "dsh-mnemo",
       "title": {
         "en": "@cwqXXX/dsh-mnemo",
@@ -27639,6 +27638,41 @@
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0 >=0.1.2-rc.1 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-guizang-design",
+      "title": {
+        "en": "@op7418/dsh-guizang-design",
+        "zh": "@op7418/dsh-guizang-design"
+      },
+      "description": {
+        "en": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案",
+        "zh": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案"
+      },
+      "repository": {
+        "url": "https://github.com/op7418/dsh-guizang-design"
+      },
+      "metadata": {
+        "category": "work",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-dshso"
+        ],
+        "sortKeys": {
+          "stars": 224,
+          "downloads": 309
+        }
+      },
+      "versions": [
+        {
+          "version": "0.1.3",
+          "publishTimestamp": 1793422921,
+          "source": {
+            "type": "npm"
           }
         }
       ]
