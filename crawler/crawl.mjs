@@ -563,11 +563,28 @@ async function main() {
     plugins: kept.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
+  // Two extra sources, split by where the entry was tested/curated: the domestic
+  // catalogs (dsh.so, mydsh.xyz, Chinese-authored text) versus the international
+  // ones (awesome-dsh-plugin and the raw npm search). Each is a complete format-1
+  // document, so a reader can add only the source that matches their network.
+  const labelsOf = (plugin) => plugin.metadata?.labels ?? []
+  const isCn = (plugin) => labelsOf(plugin).some((label) => ['src-dshso', 'src-mydsh', 'zh-native', 'zh-override', 'zh-catalog'].includes(label))
+  const isIntl = (plugin) => labelsOf(plugin).some((label) => ['src-awesome', 'src-npm'].includes(label))
+  const splitIndex = (predicate, titleEn, titleZh) => ({
+    ...index,
+    title: { en: titleEn, zh: titleZh },
+    plugins: index.plugins.filter(predicate),
+  })
+  const cnIndex = splitIndex(isCn, 'DSH Plugin Index · domestic sources', 'DSH 插件索引 · 国内源')
+  const intlIndex = splitIndex(isIntl, 'DSH Plugin Index · international sources', 'DSH 插件索引 · 国际源')
+
   await mkdir(OUT, { recursive: true })
   const DRY = process.argv.includes('--dry-run')
   if (DRY) {
-    console.log(`dry-run: would write ${kept.length} plugins (${JSON.stringify(index).length} bytes)`)
+    console.log(`dry-run: would write ${kept.length} plugins (${JSON.stringify(index).length} bytes), cn ${cnIndex.plugins.length}, intl ${intlIndex.plugins.length}`)
   } else {
+    await writeFile(join(OUT, 'index.cn.json'), JSON.stringify(cnIndex, null, 2) + '\n')
+    await writeFile(join(OUT, 'index.intl.json'), JSON.stringify(intlIndex, null, 2) + '\n')
     await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
     await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
