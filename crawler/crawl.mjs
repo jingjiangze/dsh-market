@@ -29,6 +29,20 @@ const MIN_AGE_DAYS = Number(process.env.MIN_AGE_DAYS || 3)
 const MAX_PLUGINS = Number(process.env.MAX_PLUGINS || 1500)
 const MAX_CANDIDATES = Number(process.env.MAX_CANDIDATES || 4000)
 const CONCURRENCY = Number(process.env.CONCURRENCY || 8)
+// Parallel verification: CI runs N shards of the candidate list at once, each
+// writing a part file, and one merge job unions them with the carried catalogue.
+const SHARD = Number(process.env.SHARD ?? -1)
+const SHARDS = Math.max(1, Number(process.env.SHARDS || 1))
+const PART_OUT = process.env.PART_OUT || null
+// Entries the shards could not verify this run are still published from the
+// catalog they came from (slim: name/version/engines/display text), so the index
+// is complete on day one instead of after dozens of crawl rounds.
+const MERGE_EXTERNAL = process.env.MERGE_EXTERNAL !== '0'
+const MAX_TOTAL = Number(process.env.MAX_TOTAL || 12000)
+// Publish-only: skip network verification and rebuild the index from the carried
+// catalogue plus the catalogs' own entries. The merge job of the sharded CI run
+// uses this after the shards have uploaded their verified slices.
+const PUBLISH_ONLY = process.argv.includes('--publish-only')
 const QUERIES = (process.env.SEARCH_QUERIES || [
   'keywords:dsh-plugin',
   'keywords:deepseek-harness',
@@ -242,6 +256,9 @@ const KEEP_LABELS = new Set([
   'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh',
   'trust-readme-verified', 'trust-repo-fallback',
   'zh-fallback',
+  // Published from a catalog we could not re-verify this run: the reader should
+  // know the compatibility claim is the catalog's, not ours.
+  'no-engines', 'catalog-only',
 ])
 
 function displayLabels(labels) {
@@ -387,6 +404,9 @@ async function main() {
     return (hinted ? 2 : 0) + (record?.origins.size ?? 1)
   }
   const ordered = [...names].sort((a, b) => rank(b) - rank(a) || a.localeCompare(b))
+  // Each parallel shard takes a striped slice of the same ordered pool, so N jobs
+  // never verify the same package and together cover the whole list.
+  const pool = SHARDS > 1 && SHARD >= 0 ? ordered.filter((_, index) => index % SHARDS === SHARD) : ordered
   // The pool is far larger than one run can verify, so the run resumes where the
   // previous one stopped: successive scheduled runs walk the whole pool over time
   // instead of re-checking the same popular head every time.
@@ -396,14 +416,14 @@ async function main() {
   } catch {
     cursor = 0
   }
-  if (cursor >= ordered.length) cursor = 0
-  const rotated = [...ordered.slice(cursor), ...ordered.slice(0, cursor)]
+  if (cursor >= pool.length) cursor = 0
+  const rotated = [...pool.slice(cursor), ...pool.slice(0, cursor)]
   const candidates = rotated.slice(0, MAX_CANDIDATES)
-  const nextCursor = ordered.length ? (cursor + candidates.length) % ordered.length : 0
+  const nextCursor = pool.length ? (cursor + candidates.length) % pool.length : 0
 
   // 2. phase 1: cheap latest-manifest gate
   const shortlist = []
-  for (let i = 0; i < candidates.length; i += CONCURRENCY) {
+  for (let i = 0; !PUBLISH_ONLY && i < candidates.length; i += CONCURRENCY) {
     if (phase1OutOfTime()) {
       skipped.phase1 = candidates.length - i
       break
@@ -427,7 +447,7 @@ async function main() {
 
   // 3. phase 2: pick the newest compatible version from the full packument
   const plugins = []
-  for (let i = 0; i < shortlist.length; i += CONCURRENCY) {
+  for (let i = 0; !PUBLISH_ONLY && i < shortlist.length; i += CONCURRENCY) {
     if (outOfTime()) {
       skipped.phase2 = shortlist.length - i
       break
@@ -527,6 +547,16 @@ async function main() {
     }))
   }
 
+  // 3b. shard mode: hand the verified slice to the merge job and stop. The merge
+  //     job unions every shard's part file with the carried catalogue and emits
+  //     the published index, so a shard never writes the index itself.
+  if (PART_OUT) {
+    await mkdir(dirname(PART_OUT), { recursive: true })
+    await writeFile(PART_OUT, JSON.stringify({ shard: SHARD, plugins }, null, 0) + '\n')
+    console.log(`shard ${SHARD}/${SHARDS}: ${plugins.length} verified -> ${PART_OUT}`)
+    return
+  }
+
   // 4. merge this run into the carried catalogue, then shape the document.
   //    Verification is incremental (a cursor walks the pool), so the published
   //    index must be cumulative — otherwise every run would only publish the
@@ -576,13 +606,58 @@ async function main() {
     return sb - sa || a.name.localeCompare(b.name)
   })
 
+  // 4b. completeness: every catalog entry we could not re-verify this run is
+  //     still published, slim, exactly as the catalog describes it. That is why
+  //     the index has ~10k entries on day one instead of after dozens of rounds.
+  const slimEntries = []
+  if (MERGE_EXTERNAL) {
+    for (const record of federated.values()) {
+      if (cache.entries[record.name]) continue
+      if (!record.hintVersion) continue
+      const titleEn = record.title?.en || record.name
+      const descEn = String(record.description?.en ?? '').slice(0, 160)
+      const descZh = String(record.description?.zh ?? record.description?.en ?? '').slice(0, 160)
+      const labels = displayLabels([
+        ...(record.origins ?? []),
+        ...(record.trust ?? []),
+        ...(record.hintEngines ? [] : ['no-engines']),
+        'catalog-only',
+      ])
+      slimEntries.push({
+        name: record.name,
+        title: { en: titleEn, zh: record.title?.zh || titleEn },
+        description: { en: descEn, zh: descZh || descEn },
+        ...(record.hintIcon ? { icon: record.hintIcon } : {}),
+        metadata: {
+          category: categoryFor(record, record.name, titleEn, descEn),
+          labels,
+          ...(record.stars ? { sortKeys: { stars: record.stars } } : {}),
+        },
+        versions: [{
+          version: record.hintVersion,
+          publishTimestamp: record.hintPublishTimestamp ?? 0,
+          source: { type: 'npm' },
+          ...(record.hintEngines ? { engines: { dsh: record.hintEngines } } : {}),
+        }],
+      })
+    }
+    slimEntries.sort((a, b) => (b.metadata?.sortKeys?.stars ?? 0) - (a.metadata?.sortKeys?.stars ?? 0) || a.name.localeCompare(b.name))
+  }
+  const published = [...kept, ...slimEntries].slice(0, MAX_TOTAL)
+  console.log(`published: ${published.length} (verified ${kept.length} + catalog-only ${Math.min(slimEntries.length, Math.max(0, MAX_TOTAL - kept.length))})`)
+
   const sidecar = {
     generatedAt: new Date().toISOString(),
     registry: REGISTRY,
     dshRuntime: DSH_RUNTIME,
-    catalogue: { carried: carried.length, verifiedThisRun: plugins.length, published: kept.length },
-    gates: { minAgeDays: MIN_AGE_DAYS, maxPlugins: MAX_PLUGINS, requires: ['dsh.bundle.patch', 'engines.dsh satisfied', 'no install script', 'clear license', 'declared category', 'bilingual text'] },
-    plugins: kept.map((p) => ({ name: p.name, version: p.versions[0].version, category: p.metadata.category, ...p._sidecar })),
+    catalogue: {
+      carried: carried.length,
+      verifiedThisRun: plugins.length,
+      catalogOnly: Math.min(slimEntries.length, Math.max(0, MAX_TOTAL - kept.length)),
+      published: published.length,
+    },
+    gates: { minAgeDays: MIN_AGE_DAYS, maxPlugins: MAX_PLUGINS, maxTotal: MAX_TOTAL, requires: ['dsh.bundle.patch', 'engines.dsh satisfied', 'no install script', 'clear license', 'declared category', 'bilingual text'] },
+    plugins: published.map((p) => ({ name: p.name, version: p.versions[0].version, category: p.metadata.category, ...(p._sidecar ?? {}) })),
   }
   const index = {
     format: 1,
@@ -604,6 +679,8 @@ async function main() {
         'trust-readme-verified': { title: { en: 'README checked', zh: 'README 核对' } },
         'trust-repo-fallback': { title: { en: 'repo pinned', zh: '仓库固定' } },
         'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
+        'catalog-only': { title: { en: 'from catalog', zh: '仅目录收录' } },
+        'no-engines': { title: { en: 'no engines.dsh', zh: '未声明版本' } },
       },
       // Star counts are carried from the catalogs that publish them, so "sort by
       // stars" in DSH works on this index instead of only on dsh.so's own.
@@ -611,25 +688,22 @@ async function main() {
         stars: { title: { en: 'Stars', zh: '星标' }, order: 'desc' },
       },
     },
-    plugins: kept.map(({ _sidecar, ...rest }) => ({ ...rest })),
+    plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
-  // Two extra sources, split by where the entry was tested or curated: the
-  // domestic catalogs (dsh.so, mydsh.xyz, Chinese-authored text) versus the
-  // international ones (awesome-dsh-plugin, raw npm search). Each is a complete
-  // format-1 document, so a reader can add only the source that fits their network.
-  // The split is decided from the crawl bookkeeping (origins + where the Chinese
-  // text came from), not from the display labels, which are deliberately trimmed.
-  const isCnEntry = (entry) =>
-    (entry._sidecar?.origins ?? []).some((origin) => origin === 'src-dshso' || origin === 'src-mydsh') ||
-    ['native', 'override', 'catalog', 'detected'].includes(entry._sidecar?.zhSource)
-  const isIntlEntry = (entry) =>
-    (entry._sidecar?.origins ?? []).some((origin) => origin === 'src-awesome' || origin === 'src-npm')
+  // Two extra sources, split by which catalog listed the entry: the domestic ones
+  // (dsh.so, mydsh.xyz) versus the international ones (awesome-dsh-plugin, npm
+  // search). Each is a complete format-1 document, so a reader can add only the
+  // source that fits their network. Labels carry the origin for both the entries
+  // verified this run and the slim ones published straight from a catalog.
+  const hasLabel = (plugin, ids) => (plugin.metadata?.labels ?? []).some((label) => ids.includes(label))
+  const isCnEntry = (plugin) => hasLabel(plugin, ['src-dshso', 'src-mydsh'])
+  const isIntlEntry = (plugin) => hasLabel(plugin, ['src-awesome', 'src-npm'])
   const strip = ({ _sidecar, ...rest }) => rest
   const splitIndex = (predicate, titleEn, titleZh) => ({
     ...index,
     title: { en: titleEn, zh: titleZh },
-    plugins: kept.filter(predicate).map(strip),
+    plugins: published.filter(predicate).map(strip),
   })
   const cnIndex = splitIndex(isCnEntry, 'DSH Plugin Index · domestic sources', 'DSH 插件索引 · 国内源')
   const intlIndex = splitIndex(isIntlEntry, 'DSH Plugin Index · international sources', 'DSH 插件索引 · 国际源')
@@ -637,18 +711,21 @@ async function main() {
   await mkdir(OUT, { recursive: true })
   const DRY = process.argv.includes('--dry-run')
   if (DRY) {
-    console.log(`dry-run: would write ${kept.length} plugins (${JSON.stringify(index).length} bytes), cn ${cnIndex.plugins.length}, intl ${intlIndex.plugins.length}`)
+    console.log(`dry-run: would write ${published.length} plugins (${JSON.stringify(index).length} bytes), cn ${cnIndex.plugins.length}, intl ${intlIndex.plugins.length}`)
   } else {
     await writeFile(join(OUT, 'index.cn.json'), JSON.stringify(cnIndex, null, 2) + '\n')
     await writeFile(join(OUT, 'index.intl.json'), JSON.stringify(intlIndex, null, 2) + '\n')
     await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
     await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
-    await mkdir(join(root, 'data'), { recursive: true })
-    await writeFile(join(root, 'data', 'cursor.json'), JSON.stringify({ offset: nextCursor, pool: ordered.length, at: new Date().toISOString() }, null, 2) + '\n')
-    // Keep the carried catalogue bounded so the repository does not grow forever.
-    const trimmed = { entries: Object.fromEntries(carried.slice(0, 4000).map((entry) => [entry.plugin.name, entry])) }
-    await writeFile(cachePath, JSON.stringify(trimmed) + '\n')
+    // The merge job owns the catalogue and the cursor: a publish-only pass reads
+    // both and must not move them, or shard progress would be lost.
+    if (!PUBLISH_ONLY) {
+      await mkdir(join(root, 'data'), { recursive: true })
+      await writeFile(join(root, 'data', 'cursor.json'), JSON.stringify({ offset: nextCursor, pool: pool.length, at: new Date().toISOString() }, null, 2) + '\n')
+      const trimmed = { entries: Object.fromEntries(carried.slice(0, 6000).map((entry) => [entry.plugin.name, entry])) }
+      await writeFile(cachePath, JSON.stringify(trimmed) + '\n')
+    }
   }
 
   for (const r of rejections) bump(counts, r.why)
