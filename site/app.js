@@ -40,15 +40,6 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-// The shell is injected here: index.html ships only a placeholder node plus the
-// three-tier loader, so the frame stays ~0.5 KB and every byte of markup lives in
-// the mirrored bundle instead.
-const SHELL = '<header><span class=badge>由 DSH 制作</span><h1>索引</h1><input id=q><select id=lang></select></header>'
-  + '<section class=hero><div class=seg><button data-idx=index>全部</button><button data-idx=index.cn>国内</button><button data-idx=index.intl>国际</button></div>'
-  + '<div class=src><code id=src></code><button id=copy>复制</button></div>'
-  + '<div class=row><button class=ghost data-guide>接入教程</button><span id=meta>加载中…</span><div id=sort></div></div></section>'
-  + '<div class=wrap><nav id=cats></nav><main id=list></main></div>'
-  + '<footer>交流 QQ：1689170897</footer><dialog id=dlg></dialog>'
 const state = { lang: 'zh', copyTarget: 'index', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: -1, open: null, visible: [], guide: false }
 
 const $ = (id) => document.getElementById(id)
@@ -316,9 +307,6 @@ function chrome() {
 const saved = localStorage.getItem('dsh-market-lang')
 if (LANGS.includes(saved)) state.lang = saved
 else if (!String(navigator.language ?? '').toLowerCase().startsWith('zh')) state.lang = 'en'
-$('a').innerHTML = SHELL
 chrome()
 loadIndex()
-// Tells the loader in index.html that this tier worked, so it stops escalating.
-window.__r?.()
 setTimeout(ensureStyles, TIMEOUT)

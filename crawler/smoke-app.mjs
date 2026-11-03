@@ -80,7 +80,6 @@ const sortHtml = element('sort').innerHTML
 const cards = (list.match(/class=card/g) ?? []).length
 
 if (!api.state.meta) problems.push('meta.json was never fetched')
-if (!element('a').innerHTML.includes('<header')) problems.push('the bundle did not inject the shell into #a')
 if (cards === 0) problems.push('no plugin card rendered')
 if (!meta.includes(String(META.total))) problems.push(`header does not show the total: ${JSON.stringify(meta)}`)
 if (!list.includes('data-open=')) problems.push('cards are not clickable')
