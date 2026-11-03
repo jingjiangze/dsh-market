@@ -55,6 +55,14 @@ jobs:
         with:
           node-version: 22
       - run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+      - name: Purge the jsDelivr copies of the site assets
+        # The page loads its CSS and JS from jsDelivr @main, which caches for up
+        # to 12 hours. Without a purge a redesign would not reach readers.
+        run: |
+          for asset in site/style.css site/app.js; do
+            curl -sS --max-time 25 "https://purge.jsdelivr.net/gh/${GITHUB_REPOSITORY}@main/$asset" || true
+          done
+          sleep 5
       - name: Deployed copies must match the repository
         run: |
           for attempt in 1 2 3 4 5; do

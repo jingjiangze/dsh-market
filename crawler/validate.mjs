@@ -112,14 +112,25 @@ for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
 }
 
 if (!OFFLINE) {
-  for (const [label, url, type] of [['stylesheet mirror', MIRROR_CSS, 'text/css'], ['script mirror', MIRROR_JS, 'javascript']]) {
-    const res = await fetch(url, { signal: AbortSignal.timeout(20000) })
-      .catch((err) => ({ ok: false, status: err.message, headers: new Headers() }))
-    if (!res.ok) fail(`${label} reachability`, `${url} -> ${res.status}`)
-    else {
-      const actual = res.headers.get('content-type') ?? ''
-      if (!actual.includes(type)) fail(`${label} type`, `${url} -> ${actual}`)
-      else note(label, `200 ${actual}`)
+  for (const [label, url, type, localPath] of [
+    ['stylesheet mirror', MIRROR_CSS, 'text/css', 'site/style.css'],
+    ['script mirror', MIRROR_JS, 'javascript', 'site/app.js'],
+  ]) {
+    const res = await fetch(url, { signal: AbortSignal.timeout(20000), cache: 'no-cache' })
+      .catch((err) => ({ ok: false, status: err.message, headers: new Headers(), arrayBuffer: null }))
+    if (!res.ok) {
+      fail(`${label} reachability`, `${url} -> ${res.status}`)
+      continue
+    }
+    const actual = res.headers.get('content-type') ?? ''
+    if (!actual.includes(type)) fail(`${label} type`, `${url} -> ${actual}`)
+    else note(label, `200 ${actual}`)
+    // A stale CDN copy is indistinguishable from a correct one by headers alone,
+    // so compare the bytes against the file that was just published.
+    const served = Buffer.from(await res.arrayBuffer())
+    const expected = await readFile(join(root, localPath))
+    if (served.length !== expected.length) {
+      fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B — purge the CDN copy`)
     }
   }
 }
