@@ -90,6 +90,12 @@
           "zh": "中文由本仓库整理"
         }
       },
+      "zh-detected": {
+        "title": {
+          "en": "Chinese text written by the author",
+          "zh": "中文为作者原文"
+        }
+      },
       "zh-fallback": {
         "title": {
           "en": "Chinese text pending",
@@ -125,7 +131,7 @@
         "labels": [
           "auto-crawled",
           "engines-pinned",
-          "zh-fallback"
+          "zh-detected"
         ]
       },
       "versions": [
@@ -1762,6 +1768,52 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-context",
+      "title": {
+        "en": "dsh-context",
+        "zh": "上下文 (dsh-context)"
+      },
+      "description": {
+        "en": "A DeepSeek Harness plugin for context insight and management, with context dashboard and context command, for understanding how the context is made of, and how it evolves.",
+        "zh": "上下文洞察与管理插件：提供跨会话的上下文仪表盘、上下文浏览器、上下文动态、/context 命令，看清上下文的构成与演变。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-context@0.78.2/icon.svg",
+      "author": "bowenliang123",
+      "homepage": "https://github.com/bowenliang123/dsh-context",
+      "repository": {
+        "url": "https://github.com/bowenliang123/dsh-context"
+      },
+      "metadata": {
+        "keywords": [
+          "deepseek-harness",
+          "dsh",
+          "cordis",
+          "plugin",
+          "context",
+          "token",
+          "ui"
+        ],
+        "category": "memory",
+        "labels": [
+          "auto-crawled",
+          "engines-pinned",
+          "zh-native"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.78.2",
+          "publishTimestamp": 1793324039,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 || >=0.2.1-rc.2"
           }
         }
       ]

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T02:23:38.816Z",
+  "generatedAt": "2026-11-03T02:29:45.996Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -22,7 +22,7 @@
       "distIntegrity": "sha512-Mp0Gzd8ALn/UIfNbRL+zzSDqbahu9SdjEfnX/Qivq44jIF8BYeFsfF3eejcy8/zprTsGFIM1m/cRM1V1q1cbNw==",
       "attestations": null,
       "unpackedSize": 2301828,
-      "zhSource": "fallback",
+      "zhSource": "detected",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -670,6 +670,24 @@
       "distIntegrity": "sha512-nlqiVGJu+xrRms+59Pahxnhy9ZYKZRN9Lrxi0ioO/wpPYLjMBT5Xs9qQVl6DMPL7LUDbuQeUQjYrig0vH3a3nA==",
       "attestations": null,
       "unpackedSize": 1619519,
+      "zhSource": "native",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-context",
+      "version": "0.78.2",
+      "category": "memory",
+      "distIntegrity": "sha512-aqvtRTvvUWe41jdlZlfiPE0VSnr8I5KVLFXNLusHfnk3tXGOYuN5qoexiOMzaO+RbczKFsThUH7zeXXC+3q6WA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-context@0.78.2",
+      "unpackedSize": 764434,
       "zhSource": "native",
       "gates": [
         "bundle",
