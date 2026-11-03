@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-02T18:11:31.730Z",
+  "generatedAt": "2026-11-03T02:17:49.804Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -15,6 +15,24 @@
     ]
   },
   "plugins": [
+    {
+      "name": "@ace-zone/dsh-market",
+      "version": "0.1.67",
+      "category": "other",
+      "distIntegrity": "sha512-Mp0Gzd8ALn/UIfNbRL+zzSDqbahu9SdjEfnX/Qivq44jIF8BYeFsfF3eejcy8/zprTsGFIM1m/cRM1V1q1cbNw==",
+      "attestations": null,
+      "unpackedSize": 2301828,
+      "zhSource": "fallback",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
     {
       "name": "@ash-qw/dsh-theme-prts",
       "version": "2.6.0",
@@ -52,6 +70,24 @@
       ]
     },
     {
+      "name": "@chengzhao-dev/dsh-cpp-workflow",
+      "version": "0.6.11",
+      "category": "memory",
+      "distIntegrity": "sha512-iFRpNinKXoQdlHxdhugymOZdyDsmA97X5vKcpKihR0QhAeMwEqcdfDx6/i4EywtmNdXNR5GvZqWUCKA3dSNg8w==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@chengzhao-dev%2fdsh-cpp-workflow@0.6.11",
+      "unpackedSize": 431023,
+      "zhSource": "native",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "@dan-ai-studio/dshopencodego",
       "version": "0.1.88",
       "category": "integrations",
@@ -59,6 +95,24 @@
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@dan-ai-studio%2fdshopencodego@0.1.88",
       "unpackedSize": 3753822,
       "zhSource": "native",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "@dsh-agentic-roleplay/core",
+      "version": "0.8.2",
+      "category": "other",
+      "distIntegrity": "sha512-YgT6g8xJjDJ/ayqPzhcWVP6kG+TSEnLw+AgyV20VtthKbVl/OIuzWAGeZIiv0K0cZf4YTU5y5MM79/lBZw0QwQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@dsh-agentic-roleplay%2fcore@0.8.2",
+      "unpackedSize": 4502538,
+      "zhSource": "fallback",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -107,29 +161,11 @@
     },
     {
       "name": "@goodandready/dsh-russian-lang",
-      "version": "0.4.7",
+      "version": "0.4.17",
       "category": "other",
-      "distIntegrity": "sha512-Ng8ERdb3J8DvS8IGl1dAElCQijWPtk5KJ8cSijEDFZH0JTrCz3FxDSR/dKElVXBpv38yo+7kxkbgcj1JIPMM4w==",
+      "distIntegrity": "sha512-zGaRNcK6dwJnPxgyawCOESEGcnpPU6NlVEExsVNwbjGm6muaBt+bqAxtJ+CR/flb4a53Xdd5V3a7qh4N+0OqSA==",
       "attestations": null,
-      "unpackedSize": 2811896,
-      "zhSource": "override",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "@hytime/dsh-thinking-effort",
-      "version": "0.3.11",
-      "category": "models",
-      "distIntegrity": "sha512-JeMEAZ6cwOVwsF7ZtOPixDLYivcYy2S78OTdo0F4z5Q+mWQNG2Q717ukwlB1xxk1I8geUB1wm+UIASdE0EHYKA==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@hytime%2fdsh-thinking-effort@0.3.11",
-      "unpackedSize": 2547823,
+      "unpackedSize": 2559911,
       "zhSource": "override",
       "gates": [
         "bundle",
@@ -160,6 +196,24 @@
       ]
     },
     {
+      "name": "@kyoukisu/dsh-rich-ui",
+      "version": "0.5.2",
+      "category": "media",
+      "distIntegrity": "sha512-DaDaiEIIiSBfeGYfanMwwqiQBTa+n/u1QF8MRmThHNmFqIYjGcpOQf9AxJ0n8+4jQ2qBvS4RgrD4EkN9mRRcJQ==",
+      "attestations": null,
+      "unpackedSize": 285325,
+      "zhSource": "fallback",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "@lemoncat7/dsh-knowledge",
       "version": "2.17.0",
       "category": "integrations",
@@ -167,6 +221,24 @@
       "attestations": null,
       "unpackedSize": 4599190,
       "zhSource": "override",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "@lemoncat7/dsh-ssh",
+      "version": "1.14.0",
+      "category": "devtools",
+      "distIntegrity": "sha512-B1yY/xQ4kbNUo10Et37n+cCztC9SFxy0wF2LPgjWWSN+mSX1Vo/yOmpr1TLqtR/3YgPuOXQvVN+DNaNbKb+G/A==",
+      "attestations": null,
+      "unpackedSize": 10260017,
+      "zhSource": "fallback",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -238,24 +310,6 @@
       "distIntegrity": "sha512-bHwspWeTnOd8BW2Q+7+rIL8rytQP5eeLgnPRW3jugi228LtvxepYXk+wsh51zzqU5mU7nvJnyqxGpLfV1Z3Zrw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-skills-manager@1.2.23",
       "unpackedSize": 1554724,
-      "zhSource": "native",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "@morehao/dsh-github-trending",
-      "version": "0.1.4",
-      "category": "other",
-      "distIntegrity": "sha512-9a4siACPdJtl8xUJEbYmuio8PW0ExfC1agG8lpqZx4z1whgLhV1L2Z142jTHR/TPLFXqIDP/6TlKXbr859E7Yg==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@morehao%2fdsh-github-trending@0.1.4",
-      "unpackedSize": 281626,
       "zhSource": "native",
       "gates": [
         "bundle",
@@ -413,11 +467,11 @@
     },
     {
       "name": "dsh-aiignore",
-      "version": "0.37.0",
+      "version": "0.37.1",
       "category": "ui",
-      "distIntegrity": "sha512-QLnxjsV62BMvkZ9jF649vr7ciLCaEAXSWVmjOyQvhEKuLrlUyqKe5E1+YyPlvjwvedTBMhTfvitshE/aq4hK8g==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-aiignore@0.37.0",
-      "unpackedSize": 367528,
+      "distIntegrity": "sha512-FWMtgZUCf2Dtu6OLjY1kXboItDAcvMP8GlvoRMJ5AG6dgddcmHvx/ziBIwGOkOvKfEpu0LstQgxrbl4yuxdCBQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-aiignore@0.37.1",
+      "unpackedSize": 370922,
       "zhSource": "native",
       "gates": [
         "bundle",
@@ -437,6 +491,24 @@
       "attestations": null,
       "unpackedSize": 1518532,
       "zhSource": "override",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-arrowkey-nav",
+      "version": "0.5.7",
+      "category": "other",
+      "distIntegrity": "sha512-SY3Qa+fGMTkMcIDRS2+qOiNwrSLj9oOWYnCj1ZOhrBTxqkf1EhyOsGpqKkAKdt5bhzzvYcx0eJFW/o0k4J7mhA==",
+      "attestations": null,
+      "unpackedSize": 218575,
+      "zhSource": "fallback",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -484,6 +556,24 @@
       ]
     },
     {
+      "name": "dsh-bash-terminal-ts",
+      "version": "0.8.5",
+      "category": "ui",
+      "distIntegrity": "sha512-3rsYuiHRq1lr+9OL5IY0fkyrq4WfxiPVzW1nyUPqOUoddmQHrIu8R54FXGkm5u78lu7l0zMx0F4VlVi+Kub9sw==",
+      "attestations": null,
+      "unpackedSize": 2455651,
+      "zhSource": "fallback",
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-better-workspace",
       "version": "0.36.14",
       "category": "ui",
@@ -520,13 +610,13 @@
       ]
     },
     {
-      "name": "dsh-cad",
-      "version": "0.17.0",
-      "category": "media",
-      "distIntegrity": "sha512-O79l4JmK3G7ERK5z9xCEbe5dPo3r2khYnPOhIjj6N70HiZ98q0CmNWTpGjfqCUjoERZEhOUL2+bsZs7+dC9eRQ==",
+      "name": "dsh-brief-sidebar",
+      "version": "0.9.17",
+      "category": "ui",
+      "distIntegrity": "sha512-saJ21sRJw3ZEm0ydiH+T9URXjZXZGByvafVUGm3CRl7mc84jTr3lgGyFr+Hnoi1KHjulsZ2dLCn0I3xlN7kN/w==",
       "attestations": null,
-      "unpackedSize": 4690716,
-      "zhSource": "override",
+      "unpackedSize": 1958481,
+      "zhSource": "native",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -557,29 +647,11 @@
     },
     {
       "name": "dsh-chat-link-actions",
-      "version": "0.6.13",
+      "version": "0.6.14",
       "category": "integrations",
-      "distIntegrity": "sha512-SFHLQBh9VoGMJjKmAGQqkJsTOQ7NQCpOA7XG1YSGp3VE9OkPdtVKueoRdJu2zz8P2yIfbA6h0EaYei0bgvIeNg==",
+      "distIntegrity": "sha512-ZcrXiQRz9tXlGfYXjhRYnhKRXzZ0yUwxXVb55qDbzzG0THhp/PGpDZj5/cyypdja7Zau10iiOkxE8nHXSBox5w==",
       "attestations": null,
-      "unpackedSize": 185774,
-      "zhSource": "override",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-checkpoint-rewind",
-      "version": "0.6.34",
-      "category": "automation",
-      "distIntegrity": "sha512-dtabgIWan5I0BNdBVH40CZh0VBzh10fX0HJgJbtuPoZhkhQX6Ans+EnJTxhKvc+zDA1lK6CRZT83iOLkl8hzQg==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-checkpoint-rewind@0.6.34",
-      "unpackedSize": 679076,
+      "unpackedSize": 189077,
       "zhSource": "override",
       "gates": [
         "bundle",
@@ -617,78 +689,6 @@
       "attestations": null,
       "unpackedSize": 1619519,
       "zhSource": "native",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-comfyui",
-      "version": "0.5.5",
-      "category": "media",
-      "distIntegrity": "sha512-+tjtYtiSMhqJQra3oSfec2KSRMeP35nGW1XYTKRzsrO11lmbjlBqwmYguQA/+ga3QNRzQxREPW01qP/v4iTJHw==",
-      "attestations": null,
-      "unpackedSize": 4074951,
-      "zhSource": "override",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-context",
-      "version": "0.78.2",
-      "category": "memory",
-      "distIntegrity": "sha512-aqvtRTvvUWe41jdlZlfiPE0VSnr8I5KVLFXNLusHfnk3tXGOYuN5qoexiOMzaO+RbczKFsThUH7zeXXC+3q6WA==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-context@0.78.2",
-      "unpackedSize": 764434,
-      "zhSource": "native",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-cost-meter",
-      "version": "1.9.46",
-      "category": "models",
-      "distIntegrity": "sha512-W45X1eS1QadhTf+JY0BkBor/5XXVaUrEs5+9Z41kgRQqzThIzzRZVG9F2JCUtE9kKsf5cgUrK8co5QnhC9uh9Q==",
-      "attestations": null,
-      "unpackedSize": 3605887,
-      "zhSource": "native",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-custom-mode",
-      "version": "2.3.0",
-      "category": "memory",
-      "distIntegrity": "sha512-gB/kWfnnOx/+i9b1yqwDGt0qxURGCMBXjLNlm/PfDsgsUmZYhw3BnLiPqR5kedBSVXSY7rzS2wInVjT9njFQkg==",
-      "attestations": null,
-      "unpackedSize": 552358,
-      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
