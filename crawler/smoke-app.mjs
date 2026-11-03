@@ -38,7 +38,23 @@ function element(id) {
   }
   return elements.get(id)
 }
-const document = { activeElement: null, getElementById: (id) => element(id), querySelectorAll: () => [], addEventListener() {} }
+const segElement = {
+  children: [],
+  querySelector(selector) {
+    return this.children.find((child) => `[data-idx=${child.dataset.idx}]` === selector) ?? null
+  },
+  append(child) { this.children.push(child) },
+}
+const document = {
+  activeElement: null,
+  getElementById: (id) => element(id),
+  querySelectorAll: () => [],
+  querySelector: (selector) => (selector === '.seg' ? segElement : null),
+  createElement: (tag) => ({ tag, dataset: {}, textContent: '', append() {}, setAttribute() {} }),
+  addEventListener() {},
+  head: { appendChild() {} },
+  styleSheets: [],
+}
 const localStorage = { getItem: () => null, setItem() {} }
 const navigator = { language: 'zh-CN', clipboard: { writeText: async () => {} } }
 const location = { origin: 'https://example.test', pathname: '/dsh-market/' }
@@ -90,6 +106,12 @@ if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) pr
 api.openGuide()
 if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
 if (!/index(\.cn|\.intl)?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
+
+// The dataset link must be offered as its own source and copy the ModelScope URL.
+if (!segElement.children.some((child) => child.dataset.idx === 'data')) problems.push('dataset index link is not offered in the source switch')
+api.state.copyTarget = 'data'
+api.render()
+if (!String(element('src').textContent).includes('modelscope.cn')) problems.push('dataset source does not copy the ModelScope index URL')
 
 // A second instance whose tier-1 source is down must fall through to tier 2.
 const brokenFetch = async (url) => {

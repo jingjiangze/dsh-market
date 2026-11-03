@@ -23,7 +23,11 @@ const REPO = join(WORK, 'repo')
 const REMOTE = `https://www.modelscope.cn/datasets/${DATASET}.git`
 
 const git = (args, options = {}) => execFileSync('git', args, { cwd: options.cwd ?? REPO, encoding: 'utf8', stdio: options.stdio ?? 'pipe' })
-const firstLine = (error) => String(`${error.message ?? error}`).split('\n').find((line) => line.trim()) ?? 'unknown error'
+const firstLine = (error) => {
+  const text = `${error.stderr ?? ''}${error.stdout ?? ''}${error.message ?? ''}`
+  const line = text.split('\n').map((entry) => entry.trim()).find((entry) => entry && !entry.startsWith('at '))
+  return line ?? 'unknown error'
+}
 
 // The dataset carries gigabytes of unrelated assets, so clone blobless + shallow
 // and only check out the directory this project owns.
@@ -35,12 +39,13 @@ if (!existsSync(join(REPO, '.git'))) {
   git(['sparse-checkout', 'set', 'web'])
   git(['checkout', BRANCH])
 }
-// A shallow clone often cannot rebase; the platform also appends its own commits to
-// dataset_infos.json, so a failed pull is tolerated and the push follows.
+// Sync to the remote tip before writing anything: a shallow clone cannot rebase,
+// and a stale HEAD makes the push non-fast-forward (which is what broke CI).
 try {
-  git(['pull', '--rebase', 'origin', BRANCH])
+  git(['fetch', '--depth', '1', 'origin', BRANCH])
+  git(['reset', '--mixed', 'FETCH_HEAD'])
 } catch (error) {
-  console.log(`ms-upload: pull skipped (${String(error.message).split('\n')[0]})`)
+  console.log(`ms-upload: sync skipped (${firstLine(error)})`)
 }
 
 // Local files that must appear under web/ in the dataset.
@@ -61,27 +66,30 @@ if (existsSync(browseRoot)) {
     plan.push({ from: join(browseRoot, file), to: `web/browse/${file}` })
   }
 }
+// The full format-1 documents live here too, so the dataset can be used as an
+// index source on its own (and so the page can show that link).
+if (process.env.MODELSCOPE_SKIP_DOCS !== '1') {
+  for (const file of ['index.json', 'index.cn.json', 'index.intl.json']) {
+    const from = join(root, 'site', file)
+    if (existsSync(from)) plan.push({ from, to: `web/${file}` })
+  }
+}
 if (!plan.length) {
   console.log('ms-upload: nothing to publish')
   process.exit(0)
 }
 
-let changed = 0
+// Copy every planned file unconditionally, then let git decide what changed: a
+// byte comparison here skipped files a previous (rejected) push had already left
+// in the working tree, so nothing was ever committed.
 for (const entry of plan) {
-  const target = join(REPO, entry.to.replace(/\//g, '\\').replace(/^web\\/, 'web\\'))
-  const current = existsSync(target) ? await readFile(target) : null
-  const next = await readFile(entry.from)
-  if (current && current.equals(next)) continue
+  const target = join(REPO, entry.to.replace(/\//g, '\\'))
   await mkdir(dirname(target), { recursive: true })
-  await writeFile(target, next)
-  changed++
+  await writeFile(target, await readFile(entry.from))
 }
-console.log(`ms-upload: ${plan.length} file(s) planned, ${changed} to write`)
-if (!changed) process.exit(0)
+console.log(`ms-upload: ${plan.length} file(s) staged`)
 if (DRY) process.exit(0)
 
-// Identity and sparse checkout are configured explicitly: on a fresh runner the
-// dataset clone has no user config, and a failed commit there is otherwise opaque.
 try {
   git(['config', 'user.name', 'dsh-market-bot'])
   git(['config', 'user.email', 'dsh-market-bot@users.noreply.github.com'])
@@ -91,11 +99,15 @@ try {
   console.log(`ms-upload: staging failed (${firstLine(error)})`)
   process.exit(1)
 }
-if (DRY) process.exit(0)
+
+if (!git(['status', '--porcelain', 'web']).trim()) {
+  console.log('ms-upload: dataset already up to date')
+  process.exit(0)
+}
 
 let committed = false
 try {
-  const out = git(['commit', '-m', `publish site assets (${changed} file(s))`])
+  const out = git(['commit', '-m', `publish site assets (${plan.length} file(s))`])
   committed = !/nothing to commit/i.test(out)
 } catch (error) {
   const text = `${error.stdout ?? ''}${error.stderr ?? ''}`
@@ -117,4 +129,4 @@ try {
   console.log(`ms-upload: push failed (${firstLine(error)})`)
   process.exit(1)
 }
-console.log(`ms-upload: pushed ${changed} file(s) to ${DATASET}@${BRANCH}`)
+console.log(`ms-upload: pushed ${plan.length} file(s) to ${DATASET}@${BRANCH}`)

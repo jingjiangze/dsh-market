@@ -13,14 +13,15 @@ const PLACEHOLDER = {
   ko: '플러그인 · 작성자 · 키워드 검색',
   ru: 'Поиск плагинов, авторов, ключевых слов',
 }
-// The three index documents a reader can subscribe to. Picking one only changes
+// The four index documents a reader can subscribe to. Picking one only changes
 // which link is shown/copied — the list below always shows the whole catalogue.
 const INDEX_URL = {
   index: 'https://jingjiangze.github.io/dsh-market/index.json',
   'index.cn': 'https://jingjiangze.github.io/dsh-market/index.cn.json',
   'index.intl': 'https://jingjiangze.github.io/dsh-market/index.intl.json',
+  data: 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/index.json',
 }
-const IDX_LABEL = { index: '全部', 'index.cn': '国内', 'index.intl': '国际' }
+const IDX_LABEL = { index: '全部', 'index.cn': '国内', 'index.intl': '国际', data: '数据集' }
 const TIERS = [
   'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/browse',
   'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
@@ -294,6 +295,15 @@ function chrome() {
   $('lang').innerHTML = LANGS.map((lang) => `<option value=${lang}>${LANG_LABEL[lang]}</option>`).join('')
   $('lang').value = state.lang
   $('q').placeholder = PLACEHOLDER[state.lang] ?? PLACEHOLDER.en
+  // The dataset link is appended here rather than in the HTML: the shell is under
+  // 1 KiB and this button costs no bytes that way.
+  const seg = document.querySelector?.('.seg')
+  if (seg && !seg.querySelector('[data-idx=data]')) {
+    const button = document.createElement('button')
+    button.dataset.idx = 'data'
+    button.textContent = IDX_LABEL.data
+    seg.append(button)
+  }
 }
 
 const saved = localStorage.getItem('dsh-market-lang')
