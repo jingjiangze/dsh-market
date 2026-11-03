@@ -17,6 +17,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OFFLINE = process.argv.includes('--offline')
 const CONCURRENCY = Number(process.env.ICON_CONCURRENCY || 12)
 const BUDGET_MS = Number(process.env.ICON_BUDGET_MS || 12 * 60 * 1000)
+// GitHub throttles a burst of ~7k avatar requests from one runner IP, so a run
+// only fetches a slice; the cache carries the rest to the next run instead of the
+// step failing or lying about coverage.
+const MAX_PER_RUN = Number(process.env.ICON_MAX_PER_RUN || 1500)
 const AVATAR_SIZE = Number(process.env.ICON_AVATAR_SIZE || 48)
 const OUT = join(root, 'dist', 'icons')
 const CACHE_PATH = join(root, 'data', 'icons-cache.json')
@@ -53,7 +57,23 @@ let downloaded = 0
 let bytes = 0
 let failed = 0
 let cursor = 0
-const outOfTime = () => Date.now() - started > BUDGET_MS
+const startedMs = Date.now()
+const outOfTime = () => Date.now() - startedMs > BUDGET_MS || downloaded >= MAX_PER_RUN
+
+async function fetchWithRetry(url) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(url, { headers: { 'user-agent': 'dsh-market-icons' }, signal: AbortSignal.timeout(15000) })
+    if (res.ok) return Buffer.from(await res.arrayBuffer())
+    // 429/5xx: back off briefly; 404 is permanent, no point retrying.
+    if (res.status === 404) return null
+    if (res.status === 429 || res.status >= 500) {
+      await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)))
+      continue
+    }
+    return null
+  }
+  return null
+}
 
 async function worker() {
   while (cursor < urls.length && !outOfTime()) {
@@ -65,10 +85,8 @@ async function worker() {
       if (exists) continue
     }
     try {
-      const res = await fetch(url, { headers: { 'user-agent': 'dsh-market-icons' }, signal: AbortSignal.timeout(15000) })
-      if (!res.ok) { failed++; continue }
-      const buffer = Buffer.from(await res.arrayBuffer())
-      if (buffer.length < 64) { failed++; continue }
+      const buffer = await fetchWithRetry(url)
+      if (!buffer || buffer.length < 64) { failed++; continue }
       await writeFile(join(OUT, name), buffer)
       cache.files[url] = { name, bytes: buffer.length, at: Date.now() }
       downloaded++
