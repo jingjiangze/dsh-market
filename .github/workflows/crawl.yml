@@ -47,9 +47,19 @@ jobs:
           SOURCES: dshso,awesome,mydsh
         run: node crawler/crawl.mjs
 
+      - name: Add the other languages
+        # Google Translate, cached by content hash in data/i18n-cache.json; a
+        # failed call leaves the field out instead of publishing a broken string.
+        env:
+          TRANSLATE_LANGS: ja,ko,ru
+          TRANSLATE_CONCURRENCY: '4'
+        run: node crawler/translate.mjs
+
       - name: Assemble the site
         run: |
           cp dist/index.json site/index.json
+          cp dist/index.cn.json site/index.cn.json
+          cp dist/index.intl.json site/index.intl.json
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
