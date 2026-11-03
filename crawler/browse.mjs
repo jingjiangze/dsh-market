@@ -19,10 +19,14 @@ const OUT = join(root, 'dist', 'browse')
 const pick = (value, lang) => (typeof value === 'string' ? value : (value?.[lang] ?? ''))
 const trim = (text) => String(text ?? '').replace(/\s+/g, ' ').trim().slice(0, DESC_LIMIT)
 
-// developer icon = the GitHub account that owns the repository
-function avatarFor(repoUrl) {
-  const match = String(repoUrl ?? '').match(/github\.com[/:]([^/]+)\//i)
-  return match ? `https://github.com/${match[1]}.png?size=80` : null
+// Icon chain the reader asked for:
+//   1. the icon the package itself ships (`i`)
+//   2. the GitHub project's own artwork (`p2`, opengraph card of the repo)
+//   3. the developer's avatar (`g`, the account that owns the repository)
+//   4. the CSS dot, when none of the above exists
+function repoParts(repoUrl) {
+  const match = String(repoUrl ?? '').match(/github\.com[/:]([^/]+)\/([^/#?]+)/i)
+  return match ? { owner: match[1], repo: match[2].replace(/\.git$/i, '') } : null
 }
 
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
@@ -53,11 +57,14 @@ const plugins = rawPlugins.map((plugin) => {
   if (plugin.author) entry.a = String(plugin.author).slice(0, 40)
   if (plugin.repository?.url) entry.r = plugin.repository.url
   if (plugin.homepage) entry.h = plugin.homepage
-  // Icon chain: the package's own icon, else the repository owner's avatar.
+  // Icon chain: package icon, else the project's GitHub artwork, else the developer.
   if (plugin.icon) entry.i = plugin.icon
   else {
-    const avatar = avatarFor(plugin.repository?.url)
-    if (avatar) entry.g = avatar
+    const parts = repoParts(plugin.repository?.url)
+    if (parts) {
+      entry.p2 = `https://opengraph.githubassets.com/1/${parts.owner}/${parts.repo}`
+      entry.g = `https://github.com/${parts.owner}.png?size=80`
+    }
   }
   const extra = ['ja', 'ko', 'ru']
     .map((lang) => [lang, pick(plugin.title, lang), trim(pick(plugin.description, lang))])

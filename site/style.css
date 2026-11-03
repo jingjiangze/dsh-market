@@ -301,3 +301,6 @@ body > footer {
   #q { height: 34px; }
   #sort { margin-left: 0; }
 }
+.dh { display: flex; align-items: center; gap: 12px; padding: 18px 22px 8px; }
+.dh h3 { padding: 0; }
+.hicon { width: 44px; height: 44px; border-radius: 12px; object-fit: contain; background: var(--bg); border: 1px solid var(--line); }

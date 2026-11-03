@@ -98,7 +98,10 @@ function render() {
   const counts = new Map()
   for (const entry of state.plugins) counts.set(entry.c, (counts.get(entry.c) ?? 0) + 1)
   const chip = (id, label, count) => `<button class=chip data-cat="${esc(id)}"${state.category === id ? ' aria-pressed=true' : ''}><span>${esc(label)}</span><i>${count}</i></button>`
-  const parts = [chip('all', IDX_LABEL[state.copyTarget], state.plugins.length)]
+  // The header reports the catalogue total, not what happens to be in memory:
+  // chunks load progressively, and "1,500" looked like the whole catalogue.
+  const total = state.meta.total ?? state.plugins.length
+  const parts = [chip('all', IDX_LABEL[state.copyTarget], total)]
   let group = null
   for (const id of Object.keys(state.meta.categories ?? {})) {
     const prefix = id.startsWith('enhance-') ? 'enhance' : id
@@ -110,13 +113,22 @@ function render() {
   const buttons = SORTS.map(([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`).join('')
   $('sort').innerHTML = `<span class=sorts>${buttons}</span><button class=dice data-random>🎲 随机</button>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
+  const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
-  $('meta').textContent = `${state.plugins.length} 个插件${scope}${partial}`
+  $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
   $('src').textContent = INDEX_URL[state.copyTarget]
   const visible = pool.slice(0, state.limit)
   $('list').innerHTML = pool.length
     ? visible.map(card).join('') + (pool.length > visible.length ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
     : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
+}
+
+// The detail view shows a larger icon and walks the full chain the reader asked
+// for: package icon → the project's GitHub artwork → the developer's avatar.
+function heroIcon(entry) {
+  const chain = [entry.i, entry.p2, entry.g].filter(Boolean)
+  if (!chain.length) return ''
+  return `<img class=hicon src="${esc(chain[0])}" data-chain="${esc(chain.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.remove();return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
 }
 
 function detailHtml(entry) {
@@ -134,7 +146,7 @@ function detailHtml(entry) {
   const links = [entry.h, entry.r].filter(Boolean)
   const position = state.visible.findIndex((item) => item.n === entry.n)
   const total = state.visible.length
-  return `<h3>${esc(titleOf(entry)) || esc(entry.n)}</h3>`
+  return `<div class=dh>${heroIcon(entry)}<h3>${esc(titleOf(entry)) || esc(entry.n)}</h3></div>`
     + `<p class=lead>${esc(descOf(entry))}</p>`
     + `<dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl>`
     + `<p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p>`
