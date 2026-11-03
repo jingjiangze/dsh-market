@@ -10,6 +10,7 @@
 // a missing entry, because DSH checks compatibility twice (market from this
 // index, install from the real package manifest).
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
+import { discoverFederated } from './sources.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -22,9 +23,9 @@ const REGISTRY = (process.env.NPM_REGISTRY || 'https://registry.npmjs.org').repl
 const SEARCH_REGISTRY = (process.env.SEARCH_REGISTRY || 'https://registry.npmjs.org').replace(/\/+$/, '')
 const DSH_RUNTIME = process.env.DSH_RUNTIME_VERSION || '0.2.1-rc.5'
 const MIN_AGE_DAYS = Number(process.env.MIN_AGE_DAYS || 3)
-const MAX_PLUGINS = Number(process.env.MAX_PLUGINS || 200)
-const MAX_CANDIDATES = Number(process.env.MAX_CANDIDATES || 160)
-const CONCURRENCY = Number(process.env.CONCURRENCY || 8)
+const MAX_PLUGINS = Number(process.env.MAX_PLUGINS || 1500)
+const MAX_CANDIDATES = Number(process.env.MAX_CANDIDATES || 4000)
+const CONCURRENCY = Number(process.env.CONCURRENCY || 16)
 const QUERIES = (process.env.SEARCH_QUERIES || [
   'keywords:dsh-plugin',
   'keywords:deepseek-harness',
@@ -129,7 +130,9 @@ function satisfiesComparator(version, comparator) {
 function satisfies(version, range) {
   if (!range) return null // undeclared: unknown, never claim compatibility
   const text = String(range).trim()
-  if (!text || text === '*' || text === 'latest') return null
+  if (!text) return null
+  // An explicit wildcard means "any version" — that is a claim, not a gap.
+  if (text === '*' || text === 'x' || text === 'X' || text === 'latest') return true
   let sawUnknown = false
   for (const alternative of text.split('||')) {
     const comparators = alternative.trim().split(/\s+/).filter(Boolean)
@@ -196,7 +199,7 @@ try {
   ZH_OVERRIDES = {}
 }
 
-async function authorZh(name, version, enTitle, enDescription) {
+async function authorZh(name, version, enTitle, enDescription, catalogZh) {
   for (const file of ['locale/zh.json', 'locale/zh-CN.json', 'locale/zh_CN.json']) {
     try {
       const { body } = await getJSON(`https://cdn.jsdelivr.net/npm/${name}@${version}/${file}`)
@@ -210,6 +213,16 @@ async function authorZh(name, version, enTitle, enDescription) {
       }
     } catch {
       // a missing locale file is the common case, not an error
+    }
+  }
+  // A federated catalog often carries a Chinese title the package itself never
+  // shipped. It is someone else's wording, so it ranks below the author's own.
+  const hasCjk = (value) => /[\u4e00-\u9fff]/.test(String(value ?? ''))
+  if (hasCjk(catalogZh?.title) || hasCjk(catalogZh?.description)) {
+    return {
+      title: hasCjk(catalogZh?.title) ? String(catalogZh.title) : undefined,
+      description: hasCjk(catalogZh?.description) ? String(catalogZh.description) : undefined,
+      source: 'catalog',
     }
   }
   const override = ZH_OVERRIDES[name]
@@ -260,17 +273,43 @@ async function main() {
   const rejections = []
   const counts = new Map()
 
-  // 1. candidate discovery
+  // 1. candidate discovery: our own keyword crawl, then the federated catalogs.
+  //    Federation only contributes names and display text; every version is
+  //    re-resolved from the npm registry and re-gated below.
+  const provenance = new Map()
   const names = new Set()
   for (const q of QUERIES) {
     try {
-      for (const n of await search(q)) names.add(n)
+      for (const n of await search(q)) {
+        names.add(n)
+        const entry = provenance.get(n) ?? { origins: new Set(), trust: new Set() }
+        entry.origins.add('src-npm')
+        provenance.set(n, entry)
+      }
     } catch (err) {
       reason(rejections, `<query ${q}>`, 'search-failed', String(err.message || err))
     }
   }
-  const candidates = [...names].sort().slice(0, MAX_CANDIDATES)
-  console.log(`candidates: ${names.size} (capped to ${candidates.length})`)
+  const federated = await discoverFederated()
+  for (const record of federated.values()) {
+    names.add(record.name)
+    const entry = provenance.get(record.name) ?? { origins: new Set(), trust: new Set() }
+    for (const origin of record.origins) entry.origins.add(origin)
+    for (const trust of record.trust) entry.trust.add(trust)
+    provenance.set(record.name, entry)
+  }
+  console.log(`candidates: ${names.size} total, ${federated.size} from federated catalogs`)
+
+  // Federated names go first: they are already curated somewhere else, so they
+  // deserve the limited verification budget more than arbitrary search hits.
+  // A source's engines claim only orders the queue — the npm manifest decides.
+  const rank = (name) => {
+    const record = provenance.get(name)
+    const hinted = record?.hintEngines ? satisfies(DSH_RUNTIME, record.hintEngines) === true : false
+    return (hinted ? 2 : 0) + (record?.origins.size ?? 1)
+  }
+  const ordered = [...names].sort((a, b) => rank(b) - rank(a) || a.localeCompare(b))
+  const candidates = ordered.slice(0, MAX_CANDIDATES)
 
   // 2. phase 1: cheap latest-manifest gate
   const shortlist = []
@@ -327,9 +366,16 @@ async function main() {
         }
         const iconPath = detectIcon(man)
         const meta = man.metadata || {}
-        const enTitle = meta.title ? String(meta.title) : name
-        const enDescription = man.description ? String(man.description).slice(0, 280) : enTitle
-        const zh = await authorZh(name, version, enTitle, enDescription)
+        const record = provenance.get(name)
+        // The package's own strings win; a catalog's copy fills the gaps.
+        const enTitle = meta.title ? String(meta.title) : record?.title?.en || name
+        const enDescription = man.description
+          ? String(man.description).slice(0, 280)
+          : String(record?.description?.en || enTitle).slice(0, 280)
+        const catalogZh = record?.title?.zh || record?.description?.zh
+          ? { title: record?.title?.zh, description: record?.description?.zh }
+          : undefined
+        const zh = await authorZh(name, version, enTitle, enDescription, catalogZh)
         const category = classify(name, enTitle, enDescription, (man.keywords || []).join(' '))
         plugins.push({
           name,
@@ -341,7 +387,11 @@ async function main() {
             : man.author?.name ? { author: String(man.author.name) } : {}),
           ...(man.homepage ? { homepage: man.homepage } : {}),
           ...(man.repository?.url ? { repository: { url: String(man.repository.url).replace(/^git\+/, '').replace(/\.git$/, '') } } : {}),
-          metadata: { keywords: (man.keywords || []).slice(0, 8), category },
+          metadata: {
+            keywords: (man.keywords || []).slice(0, 8),
+            category,
+            labels: ['auto-crawled', 'engines-pinned', `zh-${zh.source}`, ...(provenance.get(name)?.origins ?? ['src-npm']), ...(provenance.get(name)?.trust ?? [])],
+          },
           versions: [{
             version,
             publishTimestamp: Math.floor(Date.parse(pack.time[version]) / 1000),
@@ -353,6 +403,8 @@ async function main() {
             attestations: man.dist?.attestations?.url ?? null,
             unpackedSize: man.dist?.unpackedSize ?? null,
             zhSource: zh.source,
+            origins: [...(provenance.get(name)?.origins ?? ['src-npm'])],
+            trust: [...(provenance.get(name)?.trust ?? [])],
             ...(zh.pinnedFor ? { zhPinnedFor: zh.pinnedFor } : {}),
             gates: ['bundle', 'engines.dsh', 'min-age', 'no-install-script', 'license', 'category', 'zh'],
           },
@@ -391,15 +443,18 @@ async function main() {
         'zh-override': { title: { en: 'Chinese text curated here', zh: '中文由本仓库整理' } },
         'zh-detected': { title: { en: 'Chinese text written by the author', zh: '中文为作者原文' } },
         'zh-fallback': { title: { en: 'Chinese text pending', zh: '中文待补（暂用英文）' } },
+        'zh-catalog': { title: { en: 'Chinese text from a federated catalog', zh: '中文取自联邦目录' } },
+        'src-npm': { title: { en: 'Found on npm search', zh: 'npm 检索收录' } },
+        'src-dshso': { title: { en: 'Listed by dsh.so', zh: 'dsh.so 目录收录' } },
+        'src-awesome': { title: { en: 'Listed by awesome-dsh-plugin', zh: 'awesome-dsh-plugin 收录' } },
+        'src-mydsh': { title: { en: 'Listed by mydsh.xyz', zh: 'mydsh.xyz 收录' } },
+        'trust-readme-verified': { title: { en: 'Source checked it against its README', zh: '来源按其 README 核对过' } },
+        'trust-repo-fallback': { title: { en: 'Source pinned it by repository commit', zh: '来源按仓库提交固定' } },
+        'trust-unpinned': { title: { en: 'Source gave no pinned target', zh: '来源未给固定安装目标' } },
+        'trust-source-index': { title: { en: 'Listed in another market index', zh: '收录于其他市场索引' } },
       },
     },
-    plugins: kept.map(({ _sidecar, ...rest }) => ({
-      ...rest,
-      metadata: {
-        ...rest.metadata,
-        labels: ['auto-crawled', 'engines-pinned', `zh-${_sidecar.zhSource}`],
-      },
-    })),
+    plugins: kept.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
   await mkdir(OUT, { recursive: true })
@@ -428,6 +483,10 @@ async function main() {
       acc[source] = (acc[source] || 0) + 1
       return acc
     }, {}),
+    origins: kept.reduce((acc, plugin) => {
+      for (const origin of plugin._sidecar.origins ?? []) acc[origin] = (acc[origin] || 0) + 1
+      return acc
+    }, {}),
     bytes: JSON.stringify(index).length,
     ms: Date.now() - started,
   }
@@ -448,10 +507,12 @@ function selftest() {
     ['0.2.1-rc.5', '~0.2.0', true],
     ['0.2.1-rc.5', '>=0.2.0 <0.3.0', true],
     ['0.2.1-rc.5', '0.2.x', true],
-    ['0.2.1-rc.5', '*', null],
+    ['0.2.1-rc.5', '*', true],
     ['0.2.1-rc.5', undefined, null],
     ['0.2.1-rc.5', 'workspace:*', null],
     ['0.2.1-rc.5', 'npm:other@1.0.0', null],
+    ['0.2.1-rc.5', '>=0.1.0-rc.6', true],
+    ['0.2.1-rc.5', '^0.2.0-rc.2', true],
   ]
   let pass = 0
   for (const [version, range, expected] of cases) {

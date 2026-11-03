@@ -2,7 +2,7 @@
 // everything below comes from /index.json (the document DSH itself reads) and
 // /stats.json (crawl bookkeeping), so the HTML shell can stay under 1 KB.
 const CATEGORY_FALLBACK = { other: { en: 'Other', zh: '其他' } }
-const state = { lang: localStorage.getItem('dsh-market-lang') === 'en' ? 'en' : 'zh', category: 'all', query: '', sort: 'name' }
+const state = { lang: localStorage.getItem('dsh-market-lang') === 'en' ? 'en' : 'zh', category: 'all', query: '', sort: 'name', limit: 80 }
 const $ = (id) => document.getElementById(id)
 const text = (value, lang) => (typeof value === 'string' ? value : value?.[lang] ?? value?.en ?? '')
 
@@ -65,12 +65,19 @@ function render() {
 
   const total = index.plugins.length
   const updated = when(stats?.at)
+  const shown = Math.min(state.limit, plugins.length)
+  const scope = plugins.length === total ? '' : (state.lang === 'zh' ? ` · 筛选出 ${plugins.length}` : ` · ${plugins.length} matched`)
   $('meta').textContent = state.lang === 'zh'
-    ? `${total} 个插件 · ${categories.filter((id) => counts.get(id)).length} 个分类 · 索引更新于 ${updated}`
-    : `${total} plugins · ${categories.filter((id) => counts.get(id)).length} categories · index updated ${updated}`
+    ? `${total} 个插件 · ${categories.filter((id) => counts.get(id)).length} 个分类 · 索引更新于 ${updated}${scope}`
+    : `${total} plugins · ${categories.filter((id) => counts.get(id)).length} categories · index updated ${updated}${scope}`
 
+  // A four-figure catalog cannot be one DOM dump: render a page and offer more.
+  const visible = plugins.slice(0, state.limit)
   $('list').innerHTML = plugins.length
-    ? plugins.map(card).join('')
+    ? visible.map(card).join('') +
+      (plugins.length > visible.length
+        ? `<button class=more data-more>${state.lang === 'zh' ? `再显示 ${Math.min(120, plugins.length - shown)} 个（共 ${plugins.length}）` : `Show ${Math.min(120, plugins.length - shown)} more of ${plugins.length}`}</button>`
+        : '')
     : `<p class=empty>${state.lang === 'zh' ? '没有匹配的插件' : 'No matching plugins'}</p>`
   $('lang').textContent = state.lang === 'zh' ? 'EN' : '中文'
 }
@@ -90,6 +97,13 @@ document.addEventListener('click', (event) => {
   const chip = event.target.closest('[data-cat]')
   if (chip) {
     state.category = chip.dataset.cat
+    state.limit = 80
+    render()
+    return
+  }
+  const more = event.target.closest('[data-more]')
+  if (more) {
+    state.limit += 120
     render()
     return
   }
@@ -116,6 +130,7 @@ document.addEventListener('click', (event) => {
 
 $('q').addEventListener('input', (event) => {
   state.query = event.target.value
+  state.limit = 80
   render()
 })
 

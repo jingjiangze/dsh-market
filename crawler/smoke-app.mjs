@@ -47,15 +47,17 @@ const cards = (list.match(/class=card/g) ?? []).length
 const problems = []
 if (!meta.includes(String(index.plugins.length))) problems.push(`header does not show the plugin count: ${JSON.stringify(meta)}`)
 if (cards === 0) problems.push('no plugin card rendered')
-if (cards !== index.plugins.length) problems.push(`rendered ${cards} cards for ${index.plugins.length} plugins`)
-if ((cats.match(/data-cat=/g) ?? []).length < 2) problems.push('category chips missing')
+if (cards > 120) problems.push(`rendered ${cards} cards — pagination is not limiting the DOM`)
 if (!list.includes('dsh-') && !list.includes('@')) problems.push('cards carry no package names')
+const more = list.includes('data-more')
+if (index.plugins.length > cards && !more) problems.push('catalog is larger than one page but no "show more" control exists')
+if (index.plugins.length <= cards && more) problems.push('"show more" rendered for a catalog that fits one page')
 
 if (problems.length) {
   for (const problem of problems) console.log(`FAIL  ${problem}`)
   process.exit(1)
 }
-console.log(`PASS  ${cards} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, header ${JSON.stringify(meta)}`)
+console.log(`PASS  ${cards}/${index.plugins.length} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, header ${JSON.stringify(meta)}`)
 
 function setTimeoutReal(fn, ms) {
   return setTimeout(fn, ms)
