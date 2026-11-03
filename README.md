@@ -55,11 +55,21 @@ node crawler/crawl.mjs                # 爬取并生成 dist/
 
 ## 站点（`site/`）
 
-- `index.html` **590 字节**：单行、无 `<html>/<head>/<body>` 包装、属性不加引号、无 meta description；CI 挡 1 KB。
-- **样式表走镜像**：`https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css`（2.6 KB，`text/css`）。不要换 raw.githubusercontent——它按 `text/plain` 返回，浏览器会拒绝加载 CSS。
-- 页面自身不带图片、字体、JS；索引里的图标全部是 jsDelivr 的 npm 直链。
-- 配色按 DSH 语义 token 命名（`--dsw-alias-*`），字体栈首选 DSH 品牌字体 Montserrat，缺字体回落系统字体。
-- `_headers` 只影响本站 JSON（`index.json` 300 s），不影响镜像资源。
+- 首页第一屏是**索引源卡片**（渐变描边 + 外发光，纯 CSS）：「由 DSH 制作」徽章、**全部 / 国内 / 国际**三个索引源切换、源地址 + 一键复制。
+- `index.html` 690 B；`style.css` / `app.js` 为**同源**资源（Pages 直接提供，部署即生效）。第三方图标仍走 jsDelivr 的 npm 直链（npm 版本不可变，不存在缓存问题）。
+- 页脚：交流 QQ 1689170897。
+- **多语言**：右上角切换 中文 / English / 日本語 / 한국어 / Русский；ja/ko/ru 由 CI 里的 Google Translate 生成（`crawler/translate.mjs`，按内容哈希缓存，失败即跳过不发布）。
+- 卡片**点击打开详情**：中英对照 + 类别/版本/作者/发布/来源/包名 + 安装命令一键复制；卡片本身不再放「主页」按钮（链接在详情里）。
+
+## 多索引源（按国内外来源分）
+
+| 索引源 | 收录范围 |
+|---|---|
+| `index.json` | 全部（三个联邦目录 + npm 检索） |
+| `index.cn.json` | 国内目录收录（dsh.so / mydsh.xyz）或中文文案由作者/本仓库提供 |
+| `index.intl.json` | 国际目录（awesome-dsh-plugin）收录或 npm 检索直接命中 |
+
+三个都是完整的 format 1 文档，加任意一个即可用；URL 把文件名换掉即可。
 
 ## 双语与分类
 
