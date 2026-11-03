@@ -247,7 +247,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ]
       },
       "versions": [
@@ -297,7 +297,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ]
       },
       "versions": [
@@ -1391,8 +1391,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -1580,7 +1580,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ]
       },
       "versions": [
@@ -2146,8 +2146,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -2486,7 +2486,7 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ]
       },
       "versions": [
@@ -2581,8 +2581,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -2649,6 +2649,54 @@
       ]
     },
     {
+      "name": "dsh-better-workspace",
+      "title": {
+        "en": "dsh-better-workspace",
+        "zh": "更好的工作区"
+      },
+      "description": {
+        "en": "侧边栏工作区树:按官方磁盘目录嵌套(官方 workspace-tree 语义),可选按名称中的 / 分组(默认关闭,设置里开启);新会话页的工作区选择器同树(同一份视图选项即时同步);添加工作区走官方目录流。Workspace tree for the DSH sidebar: disk-path nesting (official workspace-tree semantics), with optional \"/\"-name grouping (off by default), and the sa",
+        "zh": "把侧边栏工作区列表升级为两层层级树(磁盘层按官方 owningParentFolder 语义嵌套,名称层按标题里的 / 可选分组),支持显式空分组、带实时预览的外观自定义,添加工作区全程走官方目录流。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-better-workspace@0.36.14/icon.svg",
+      "homepage": "https://github.com/KannaKuron/dsh-better-workspace",
+      "repository": {
+        "url": "https://github.com/KannaKuron/dsh-better-workspace"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "dsh-plugin",
+          "sidebar",
+          "workspace",
+          "dsh-better"
+        ],
+        "category": "enhance-ui",
+        "sortKeys": {
+          "stars": 31,
+          "downloads": 2926
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.36.14",
+          "publishTimestamp": 1793293928,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.6-alpha.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-checkpoint-rewind",
       "title": {
         "en": "dsh-checkpoint-rewind",
@@ -2698,6 +2746,55 @@
       ]
     },
     {
+      "name": "dsh-soul-md",
+      "title": {
+        "en": "dsh-soul-md",
+        "zh": "人设与记忆"
+      },
+      "description": {
+        "en": "DeepSeek Harness 的 soul.md 风格人设 + 长期记忆插件：设置页输入人设卡名称和内容即可，文件由插件自动管理；可按工作区指定人设、聊天框可给会话单独切人设；AI 可自行演化人设与记忆（soul_read/soul_update/memory_*）。",
+        "zh": "管理 Markdown 人设卡、会话和工作区的人设选择，以及插件托管的长期记忆。"
+      },
+      "homepage": "https://github.com/Scorp1o117/dsh-soul-md",
+      "repository": {
+        "url": "https://github.com/Scorp1o117/dsh-soul-md"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "persona",
+          "soul",
+          "memory",
+          "roleplay",
+          "system-prompt"
+        ],
+        "category": "enhance-memory",
+        "sortKeys": {
+          "stars": 28,
+          "downloads": 21025
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.10.4",
+          "publishTimestamp": 1793413030,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-tinyfish-search",
       "title": {
         "en": "dsh-tinyfish-search",
@@ -2728,8 +2825,8 @@
         },
         "labels": [
           "src-awesome",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
@@ -2805,7 +2902,7 @@
         "en": "Cross-session memory for DeepSeek Harness — plain markdown files, no database, no worker.",
         "zh": "Cross-session memory for DeepSeek Harness — plain markdown files, no database, no worker."
       },
-      "icon": "https://cdn.jsdelivr.net/npm/sage-mem@2.1.15/icon.png",
+      "icon": "https://cdn.jsdelivr.net/npm/sage-mem@2.1.19/icon.png",
       "homepage": "https://github.com/gezi-wen/sage-mem#readme",
       "repository": {
         "url": "https://github.com/gezi-wen/sage-mem"
@@ -2829,13 +2926,13 @@
         "labels": [
           "src-npm",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ]
       },
       "versions": [
         {
-          "version": "2.1.15",
-          "publishTimestamp": 1793458000,
+          "version": "2.1.19",
+          "publishTimestamp": 1793458968,
           "source": {
             "type": "npm"
           },
@@ -2891,6 +2988,55 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-hyperframes",
+      "title": {
+        "en": "dsh-hyperframes",
+        "zh": "dsh-hyperframes"
+      },
+      "description": {
+        "en": "在 DSH 里用 HTML 创作并导出视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
+        "zh": "注册 HyperFrames by HeyGen 移植的五项技能，支持用 HTML 写视频、网址转视频、CLI 与 GSAP，安装即用。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-hyperframes@0.11.3/assets/plugin-icon.webp",
+      "author": "stardustlc",
+      "homepage": "https://github.com/STARDUSTLC666/dsh-hyperframes#readme",
+      "repository": {
+        "url": "https://github.com/STARDUSTLC666/dsh-hyperframes"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "plugin",
+          "skills",
+          "video",
+          "dsh-plugin"
+        ],
+        "category": "media",
+        "sortKeys": {
+          "stars": 24,
+          "downloads": 5955
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.11.3",
+          "publishTimestamp": 1793362554,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3"
           }
         }
       ]
@@ -3386,44 +3532,46 @@
       ]
     },
     {
-      "name": "dsh-better-workspace",
+      "name": "dsh-ide-git",
       "title": {
-        "en": "dsh-better-workspace",
-        "zh": "更好的工作区"
+        "en": "dsh-ide-git",
+        "zh": "Git 工具窗口"
       },
       "description": {
-        "en": "侧边栏工作区树:按官方磁盘目录嵌套(官方 workspace-tree 语义),可选按名称中的 / 分组(默认关闭,设置里开启);新会话页的工作区选择器同树(同一份视图选项即时同步);添加工作区走官方目录流。Workspace tree for the DSH sidebar: disk-path nesting (official workspace-tree semantics), with optional \"/\"-name grouping (off by default), and the sa",
-        "zh": "把侧边栏工作区列表升级为两层层级树(磁盘层按官方 owningParentFolder 语义嵌套,名称层按标题里的 / 可选分组),支持显式空分组、带实时预览的外观自定义,添加工作区全程走官方目录流。"
+        "en": "DSH plugin: an IDE-grade Git tool window as a native dsh-better-sidebar tab — branch tree, commit graph, changes, commit details, JetBrains-style actions, in the right sidebar and the bottom panel. | DSH 插件:IDE 级 Git 工具窗口,以 dsh-better-sidebar 原生 Tab 挂载——分",
+        "zh": "IDE 风格的 Git 工具窗口,作为侧边栏原生标签页:分支树、提交图谱、变更与提交详情(暂存/未暂存 diff)、子模块作为独立仓库、破坏性操作守卫与撤回句柄,git 调用全部 argv 化并走同源信任围栏。"
       },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-better-workspace@0.36.14/icon.svg",
-      "homepage": "https://github.com/KannaKuron/dsh-better-workspace",
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-ide-git@0.21.2/icon.svg",
+      "homepage": "https://github.com/KannaKuron/dsh-ide-git",
       "repository": {
-        "url": "https://github.com/KannaKuron/dsh-better-workspace"
+        "url": "https://github.com/KannaKuron/dsh-ide-git"
       },
       "metadata": {
         "keywords": [
           "dsh",
           "deepseek-harness",
           "dsh-plugin",
-          "sidebar",
-          "workspace",
-          "dsh-better"
+          "dsh-better-sidebar",
+          "git",
+          "git-gui",
+          "source-control",
+          "sidebar"
         ],
         "category": "enhance-ui",
         "sortKeys": {
-          "stars": 20,
-          "downloads": 2926
+          "stars": 19,
+          "downloads": 2882
         },
         "labels": [
           "src-npm",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
         {
-          "version": "0.36.14",
-          "publishTimestamp": 1793293928,
+          "version": "0.21.2",
+          "publishTimestamp": 1793260713,
           "source": {
             "type": "npm"
           },
@@ -3485,99 +3633,48 @@
       ]
     },
     {
-      "name": "dsh-hyperframes",
+      "name": "dsh-prime-memory",
       "title": {
-        "en": "dsh-hyperframes",
-        "zh": "dsh-hyperframes"
+        "en": "@drscrewdriver/dsh-prime-memory",
+        "zh": "@drscrewdriver/dsh-prime-memory"
       },
       "description": {
-        "en": "在 DSH 里用 HTML 创作并导出视频。 首次使用需准备官方渲染环境 欢迎提交 issues 和 PR。",
-        "zh": "同步 HyperFrames by HeyGen 官方上游的二十技能"
+        "en": "L0~L3 分层蒸馏记忆插件 for DeepSeek Harness：自动捕获对话（L0）、抽取原子记忆（L1）、整合场景块（L2）、蒸馏核心画像/团队方法论（L3），并在模型步骤前自动召回注入。移植自 MemoryCore (TencentDB Agent Memory) 的管线设计。",
+        "zh": "DeepSeek Harness 的分层蒸馏记忆插件：后台把对话从 L0 捕获蒸馏至 L3 画像，并在模型每一步前自动召回注入相关记忆。"
       },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-hyperframes@0.11.3/assets/plugin-icon.webp",
-      "author": "stardustlc",
-      "homepage": "https://github.com/STARDUSTLC666/dsh-hyperframes#readme",
+      "author": "drscrewdriver",
+      "homepage": "https://github.com/drscrewdriver/dsh-prime-memory#readme",
       "repository": {
-        "url": "https://github.com/STARDUSTLC666/dsh-hyperframes"
+        "url": "https://github.com/drscrewdriver/dsh-prime-memory"
       },
       "metadata": {
         "keywords": [
           "dsh",
           "deepseek-harness",
-          "plugin",
-          "skills",
-          "video",
-          "dsh-plugin"
-        ],
-        "category": "media",
-        "sortKeys": {
-          "stars": 17,
-          "downloads": 5955
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.11.3",
-          "publishTimestamp": 1793362554,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-rc.3"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-soul-md",
-      "title": {
-        "en": "dsh-soul-md",
-        "zh": "人设与记忆"
-      },
-      "description": {
-        "en": "DeepSeek Harness 的 soul.md 风格人设 + 长期记忆插件：设置页输入人设卡名称和内容即可，文件由插件自动管理；可按工作区指定人设、聊天框可给会话单独切人设；AI 可自行演化人设与记忆（soul_read/soul_update/memory_*）。",
-        "zh": "管理 Markdown 人设卡、会话和工作区的人设选择，以及插件托管的长期记忆。"
-      },
-      "homepage": "https://github.com/Scorp1o117/dsh-soul-md",
-      "repository": {
-        "url": "https://github.com/Scorp1o117/dsh-soul-md"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "persona",
-          "soul",
           "memory",
-          "roleplay",
-          "system-prompt"
+          "agent-memory",
+          "cordis-plugin"
         ],
         "category": "enhance-memory",
         "sortKeys": {
-          "stars": 16,
-          "downloads": 21025
+          "stars": 19,
+          "downloads": 12798
         },
         "labels": [
           "src-npm",
-          "src-mydsh",
-          "src-dshso"
+          "src-dshso",
+          "src-mydsh"
         ]
       },
       "versions": [
         {
-          "version": "0.10.4",
-          "publishTimestamp": 1793413030,
+          "version": "0.26.16",
+          "publishTimestamp": 1793388240,
           "source": {
             "type": "npm"
           },
           "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5"
+            "dsh": "0.1.0-rc.2 || 0.1.0-rc.3 || 0.1.0-rc.6 || 0.1.0-rc.7 || 0.1.0-rc.8 || 0.1.1-rc.1 || 0.1.1-rc.2 || 0.1.2-rc.1 || 0.1.5-rc.1 || 0.1.5-rc.2 || 0.1.5-rc.3 || 0.1.7-rc.1 || 0.1.7-rc.2 || 0.2.0-rc.1 || 0.2.0-rc.2 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5"
           }
         }
       ]
@@ -3627,53 +3724,6 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-prime-memory",
-      "title": {
-        "en": "@drscrewdriver/dsh-prime-memory",
-        "zh": "@drscrewdriver/dsh-prime-memory"
-      },
-      "description": {
-        "en": "L0~L3 分层蒸馏记忆插件 for DeepSeek Harness：自动捕获对话（L0）、抽取原子记忆（L1）、整合场景块（L2）、蒸馏核心画像/团队方法论（L3），并在模型步骤前自动召回注入。移植自 MemoryCore (TencentDB Agent Memory) 的管线设计。",
-        "zh": "分层记忆插件，面向 Agent 暴露 10 个工具"
-      },
-      "author": "drscrewdriver",
-      "homepage": "https://github.com/drscrewdriver/dsh-prime-memory#readme",
-      "repository": {
-        "url": "https://github.com/drscrewdriver/dsh-prime-memory"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "memory",
-          "agent-memory",
-          "cordis-plugin"
-        ],
-        "category": "enhance-memory",
-        "sortKeys": {
-          "stars": 15,
-          "downloads": 12798
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.26.16",
-          "publishTimestamp": 1793388240,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": "0.1.0-rc.2 || 0.1.0-rc.3 || 0.1.0-rc.6 || 0.1.0-rc.7 || 0.1.0-rc.8 || 0.1.1-rc.1 || 0.1.1-rc.2 || 0.1.2-rc.1 || 0.1.5-rc.1 || 0.1.5-rc.2 || 0.1.5-rc.3 || 0.1.7-rc.1 || 0.1.7-rc.2 || 0.2.0-rc.1 || 0.2.0-rc.2 || 0.2.1-rc.1 || 0.2.1-rc.2 || 0.2.1-rc.3 || 0.2.1-rc.4 || 0.2.1-rc.5"
           }
         }
       ]
@@ -3772,56 +3822,6 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.2 <0.2.0-0 || >=0.1.6-alpha.1 <0.2.0-0 || >=0.1.7-alpha.1 <0.2.0-0 || >=0.2.0-0 <0.3.0-0 || >=0.2.1-alpha.1 <0.3.0-0 || >=0.2.2-alpha.2 <0.3.0-0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-ide-git",
-      "title": {
-        "en": "dsh-ide-git",
-        "zh": "Git 工具窗口"
-      },
-      "description": {
-        "en": "DSH plugin: an IDE-grade Git tool window as a native dsh-better-sidebar tab — branch tree, commit graph, changes, commit details, JetBrains-style actions, in the right sidebar and the bottom panel. | DSH 插件:IDE 级 Git 工具窗口,以 dsh-better-sidebar 原生 Tab 挂载——分",
-        "zh": "IDE 风格的 Git 工具窗口,作为侧边栏原生标签页:分支树、提交图谱、变更与提交详情(暂存/未暂存 diff)、子模块作为独立仓库、破坏性操作守卫与撤回句柄,git 调用全部 argv 化并走同源信任围栏。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-ide-git@0.21.2/icon.svg",
-      "homepage": "https://github.com/KannaKuron/dsh-ide-git",
-      "repository": {
-        "url": "https://github.com/KannaKuron/dsh-ide-git"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "deepseek-harness",
-          "dsh-plugin",
-          "dsh-better-sidebar",
-          "git",
-          "git-gui",
-          "source-control",
-          "sidebar"
-        ],
-        "category": "enhance-ui",
-        "sortKeys": {
-          "stars": 12,
-          "downloads": 2882
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.21.2",
-          "publishTimestamp": 1793260713,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.6-alpha.2"
           }
         }
       ]
@@ -4558,6 +4558,106 @@
       ]
     },
     {
+      "name": "dsh-client-ui-quote",
+      "title": {
+        "en": "@BangBang-03/dsh-client-ui-quote",
+        "zh": "选中引用 (dsh-client-ui-quote)"
+      },
+      "description": {
+        "en": "Turn any DSH selection into a reviewable quote — comment / add to chat / side chat, source highlights and jump-back, a searchable review list, side threads, revisions, and per-quote reply badges.",
+        "zh": "在聊天、文件预览或终端里选中任意一句话即可引用并评论。Kimi Code 是最初的交互参照，但这一版把引用当成可管理、可审阅、可回流的对象：浮层提供「评论」「添加到对话」与「侧边对话」，前两者以 DSH 原生 reference-chip 插入输入框，第三项把引用写进右侧栏那条独立侧边线程的输入框（一条主会话一条线程，不替你发送；默认是宿主半创建的内置隐藏线程（主会话最近几轮原话作为一条隐性上下文注入，不铺开历史），宿主半不可用时退回本插件的原生页签，也可以在设置 sideChatBackend 为 better 后改用 dsh-better-sidebar 的隐藏线程）。桌面端 Alt+Q / Alt+C / Alt+B 是同样的三个动作，悬停发送后的胶囊可「跳回原文」，右侧栏的「引用清单」页还能搜索本会话全部引用、跳回原文并导出 Markdown（桌面 Alt+L 打开），页面底部可把侧边线程的结论一键带回主会话输入框或导出成文件；悬停卡片里的「改这条引用」能把旧评论放回评论框改好再发（旧胶囊随即标「已修订」）。引用落进草稿后，原句在来源消息里留下高亮与序号，输入框上方出现「引用 ×N」聚合条（可逐条移除）；发送块的坐标行前面还带一段可读的「引自第 N 轮 · 助手」。diff / 每轮改动面板也能划选为带路径行号的代码引用；引用清单可勾选多条，一次插入输入框；它也是审阅工作台——每条引用可标「待处理 / 已解决」、打 #标签、按状态或标签筛选，勾选后可批量标记解决或批量送回输入框。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-client-ui-quote@0.14.1/icon.svg",
+      "author": "BangBang-03",
+      "homepage": "https://github.com/BangBang-03/dsh-client-ui-quote#readme",
+      "repository": {
+        "url": "https://github.com/BangBang-03/dsh-client-ui-quote"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "quote",
+          "selection",
+          "comment",
+          "annotation",
+          "review"
+        ],
+        "category": "other",
+        "sortKeys": {
+          "stars": 2,
+          "downloads": 7577
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.14.1",
+          "publishTimestamp": 1793416228,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-pet-plugin",
+      "title": {
+        "en": "@zuoyunlai/dsh-pet-plugin",
+        "zh": "桌面伴侣"
+      },
+      "description": {
+        "en": "DSH 桌面伴侣插件：五只超写实立绘（表情 + 动作序列）、主动说话与神经音色、小输入框单聊（一次性模型调用，不进会话）。",
+        "zh": "一只超写实立绘的桌面伴侣：偶尔冒出来说话、跳舞，旁边挂个小输入框可以单聊。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-pet-plugin@1.27.1/icon.svg",
+      "author": "zuoyunlai",
+      "homepage": "https://github.com/zuoyunlai/dsh-pet-plugin#readme",
+      "repository": {
+        "url": "https://github.com/zuoyunlai/dsh-pet-plugin"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "desktop-pet",
+          "pet",
+          "tts",
+          "companion"
+        ],
+        "category": "enhance-ui",
+        "sortKeys": {
+          "stars": 2,
+          "downloads": 5698
+        },
+        "labels": [
+          "src-npm",
+          "src-dshso",
+          "src-mydsh"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.27.1",
+          "publishTimestamp": 1793434552,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-alpha.2"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-trust-check",
       "title": {
         "en": "dsh-trust-check",
@@ -4650,106 +4750,6 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-client-ui-quote",
-      "title": {
-        "en": "@BangBang-03/dsh-client-ui-quote",
-        "zh": "选中引用 (dsh-client-ui-quote)"
-      },
-      "description": {
-        "en": "Turn any DSH selection into a reviewable quote — comment / add to chat / side chat, source highlights and jump-back, a searchable review list, side threads, revisions, and per-quote reply badges.",
-        "zh": "在聊天、文件预览或终端里选中任意一句话即可引用并评论。Kimi Code 是最初的交互参照，但这一版把引用当成可管理、可审阅、可回流的对象：浮层提供「评论」「添加到对话」与「侧边对话」，前两者以 DSH 原生 reference-chip 插入输入框，第三项把引用写进右侧栏那条独立侧边线程的输入框（一条主会话一条线程，不替你发送；默认是宿主半创建的内置隐藏线程（主会话最近几轮原话作为一条隐性上下文注入，不铺开历史），宿主半不可用时退回本插件的原生页签，也可以在设置 sideChatBackend 为 better 后改用 dsh-better-sidebar 的隐藏线程）。桌面端 Alt+Q / Alt+C / Alt+B 是同样的三个动作，悬停发送后的胶囊可「跳回原文」，右侧栏的「引用清单」页还能搜索本会话全部引用、跳回原文并导出 Markdown（桌面 Alt+L 打开），页面底部可把侧边线程的结论一键带回主会话输入框或导出成文件；悬停卡片里的「改这条引用」能把旧评论放回评论框改好再发（旧胶囊随即标「已修订」）。引用落进草稿后，原句在来源消息里留下高亮与序号，输入框上方出现「引用 ×N」聚合条（可逐条移除）；发送块的坐标行前面还带一段可读的「引自第 N 轮 · 助手」。diff / 每轮改动面板也能划选为带路径行号的代码引用；引用清单可勾选多条，一次插入输入框；它也是审阅工作台——每条引用可标「待处理 / 已解决」、打 #标签、按状态或标签筛选，勾选后可批量标记解决或批量送回输入框。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-client-ui-quote@0.14.1/icon.svg",
-      "author": "BangBang-03",
-      "homepage": "https://github.com/BangBang-03/dsh-client-ui-quote#readme",
-      "repository": {
-        "url": "https://github.com/BangBang-03/dsh-client-ui-quote"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "quote",
-          "selection",
-          "comment",
-          "annotation",
-          "review"
-        ],
-        "category": "other",
-        "sortKeys": {
-          "stars": 1,
-          "downloads": 7577
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.14.1",
-          "publishTimestamp": 1793416228,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-pet-plugin",
-      "title": {
-        "en": "@zuoyunlai/dsh-pet-plugin",
-        "zh": "桌面伴侣"
-      },
-      "description": {
-        "en": "DSH 桌面伴侣插件：五只超写实立绘（表情 + 动作序列）、主动说话与神经音色、小输入框单聊（一次性模型调用，不进会话）。",
-        "zh": "一只超写实立绘的桌面伴侣：偶尔冒出来说话、跳舞，旁边挂个小输入框可以单聊。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/dsh-pet-plugin@1.27.1/icon.svg",
-      "author": "zuoyunlai",
-      "homepage": "https://github.com/zuoyunlai/dsh-pet-plugin#readme",
-      "repository": {
-        "url": "https://github.com/zuoyunlai/dsh-pet-plugin"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "desktop-pet",
-          "pet",
-          "tts",
-          "companion"
-        ],
-        "category": "enhance-ui",
-        "sortKeys": {
-          "stars": 1,
-          "downloads": 5698
-        },
-        "labels": [
-          "src-npm",
-          "src-mydsh",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.27.1",
-          "publishTimestamp": 1793434552,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-alpha.2"
           }
         }
       ]
@@ -5038,7 +5038,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 5347,
@@ -5076,7 +5076,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 4832,
@@ -5219,7 +5219,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 1318,
@@ -5327,7 +5327,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 1026,
@@ -5476,7 +5476,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 657,
@@ -5586,7 +5586,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 488,
@@ -5624,7 +5624,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 442,
@@ -5770,7 +5770,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 301,
@@ -5808,7 +5808,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 291,
@@ -5846,7 +5846,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 276,
@@ -5992,7 +5992,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 233,
@@ -6205,7 +6205,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 192,
@@ -6278,7 +6278,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 187,
@@ -6526,7 +6526,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 121,
@@ -6564,7 +6564,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 120,
@@ -6849,7 +6849,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 92,
@@ -6887,7 +6887,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 87,
@@ -6925,7 +6925,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 87,
@@ -7139,7 +7139,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 67,
@@ -7212,7 +7212,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 66,
@@ -7250,7 +7250,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 65,
@@ -7288,7 +7288,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 65
@@ -7360,7 +7360,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 59
@@ -7537,7 +7537,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 55,
@@ -7575,7 +7575,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 54,
@@ -7755,7 +7755,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 51,
@@ -7828,7 +7828,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 47
@@ -8040,7 +8040,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 44,
@@ -8078,7 +8078,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 42,
@@ -8256,7 +8256,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 38,
@@ -8294,7 +8294,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 36
@@ -8400,7 +8400,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 33,
@@ -8581,7 +8581,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 28,
@@ -8619,7 +8619,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 27,
@@ -8726,7 +8726,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 26,
@@ -8799,7 +8799,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 23,
@@ -9046,7 +9046,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 18,
@@ -9119,7 +9119,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 17,
@@ -9157,7 +9157,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 17,
@@ -9195,7 +9195,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 15,
@@ -9233,7 +9233,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 15,
@@ -9455,7 +9455,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 13,
@@ -9531,7 +9531,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 12,
@@ -9604,7 +9604,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 11,
@@ -9680,7 +9680,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 10,
@@ -9790,7 +9790,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 9,
@@ -9935,7 +9935,7 @@
         "labels": [
           "catalog-only",
           "src-awesome",
-          "src-mydsh"
+          "src-dshso"
         ],
         "sortKeys": {
           "stars": 7,
