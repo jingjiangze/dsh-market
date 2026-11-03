@@ -67,6 +67,9 @@ async function npmDownloads(name) {
     headers: { 'user-agent': 'dsh-market-enrich' },
     signal: AbortSignal.timeout(15000),
   })
+  // 404 means "listed in a catalog but never published to npm" — cache that too,
+  // otherwise every run burns a request on the same ~3k names.
+  if (res.status === 404) return { downloads: 0, at: Date.now() }
   if (!res.ok) return null
   const body = await res.json()
   return { downloads: Number(body.downloads) || 0, at: Date.now() }
@@ -156,5 +159,8 @@ await writeFile(cachePath, JSON.stringify(cache) + '\n')
 
 const starsNow = plugins.filter((p) => p.metadata?.sortKeys?.stars > 0).length
 const downloadsNow = plugins.filter((p) => p.metadata?.sortKeys?.downloads > 0).length
+const zeroStarRepos = Object.values(cache.repos).filter((entry) => entry.stars === 0).length
+const missingOnNpm = Object.values(cache.downloads).filter((entry) => entry.downloads === 0).length
 console.log(`enrich: ${starsAdded} stars added (${starLookups} lookups, ${slugs.length} candidates${rateLimited ? ', rate limited' : ''}) -> ${starsNow}/${plugins.length}`)
 console.log(`enrich: ${downloadsAdded} downloads added (${downloadLookups} lookups) -> ${downloadsNow}/${plugins.length}`)
+console.log(`enrich: ${zeroStarRepos} cached repos have zero stars, ${missingOnNpm} cached packages are not on npm`)
