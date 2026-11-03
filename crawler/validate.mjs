@@ -82,7 +82,7 @@ else note('site/index.json', 'byte-identical to dist/index.json')
 // The two per-source splits must also be valid format-1 documents: a reader may
 // subscribe to them alone.
 for (const name of ['index.cn.json', 'index.intl.json']) {
-  const text = await read(name).catch(() => null)
+  const text = await read(join('dist', name)).catch(() => null)
   if (text === null) {
     fail(name, 'missing')
     continue
