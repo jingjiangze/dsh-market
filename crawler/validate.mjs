@@ -97,54 +97,19 @@ const html = await read('site/index.html')
 for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
-// the page must not ship its own assets: CSS and JS come from a mirror
-const MIRROR_CSS = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css'
-const MIRROR_JS = 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/app.js'
-if (!html.includes(MIRROR_CSS)) fail('stylesheet mirror', 'index.html does not link the jsDelivr mirror')
-if (!html.includes(MIRROR_JS)) fail('script mirror', 'index.html does not load the jsDelivr app.js')
-if (/href=["']?\/style\.css/.test(html)) fail('stylesheet origin', 'index.html still links the local /style.css')
-if (/src=["']?\/app\.js/.test(html)) fail('script origin', 'index.html still loads the local /app.js')
+// Site assets are served from our own origin. jsDelivr caches @main for hours and
+// a purge did not land in time during a redesign, which left readers on the old
+// stylesheet; third-party icons stay on jsDelivr, where npm versions are immutable.
+if (!/href=["']?\/style\.css/.test(html)) fail('stylesheet', 'index.html does not link /style.css')
+if (!/src=["']?\/app\.js/.test(html)) fail('script', 'index.html does not load /app.js')
+if (/cdn\.jsdelivr\.net\/gh\/jingjiangze/.test(html)) {
+  fail('own asset on CDN', 'index.html still points at the jsDelivr copy of our own assets')
+}
 // no inline logic: the shell stays declarative so it can stay tiny
 if (/<script(?![^>]*\bsrc=)/.test(html)) fail('site/index.html inline script', 'shell must not inline JavaScript')
-// assets should come from mirrors, not from the site itself
+// no local raster/font/video assets: visuals are CSS or mirrored icons
 for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
   if (html.includes(forbidden)) fail('site/index.html asset', `inlines ${forbidden}`)
-}
-
-if (!OFFLINE) {
-  for (const [label, url, type, localPath] of [
-    ['stylesheet mirror', MIRROR_CSS, 'text/css', 'site/style.css'],
-    ['script mirror', MIRROR_JS, 'javascript', 'site/app.js'],
-  ]) {
-    const res = await fetch(url, { signal: AbortSignal.timeout(20000), cache: 'no-cache' })
-      .catch((err) => ({ ok: false, status: err.message, headers: new Headers(), arrayBuffer: null }))
-    if (!res.ok) {
-      fail(`${label} reachability`, `${url} -> ${res.status}`)
-      continue
-    }
-    const actual = res.headers.get('content-type') ?? ''
-    if (!actual.includes(type)) fail(`${label} type`, `${url} -> ${actual}`)
-    else note(label, `200 ${actual}`)
-    // A stale CDN copy is indistinguishable from a correct one by headers alone,
-    // so compare the bytes against the file that was just published. jsDelivr
-    // caches @main for hours, so purge once and re-check before failing.
-    const expected = await readFile(join(root, localPath))
-    let served = Buffer.from(await res.arrayBuffer())
-    if (served.length !== expected.length) {
-      const purgeUrl = `https://purge.jsdelivr.net/gh/jingjiangze/dsh-market@main/${localPath}`
-      const purged = await fetch(purgeUrl, { signal: AbortSignal.timeout(20000) }).then((r) => r.ok).catch(() => false)
-      if (purged) {
-        await new Promise((resolve) => setTimeout(resolve, 4000))
-        const again = await fetch(url, { signal: AbortSignal.timeout(20000), cache: 'no-cache' }).catch(() => null)
-        if (again?.ok) served = Buffer.from(await again.arrayBuffer())
-      }
-      if (served.length !== expected.length) {
-        fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B - purge the CDN copy`)
-      } else {
-        note(`${label} (purged)`, `200, ${served.length} B after cache purge`)
-      }
-    }
-  }
 }
 
 // 4. every published entry must be installable: the version exists, is a bundle,
