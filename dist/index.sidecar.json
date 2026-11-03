@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T02:17:49.804Z",
+  "generatedAt": "2026-11-03T02:23:38.816Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -221,24 +221,6 @@
       "attestations": null,
       "unpackedSize": 4599190,
       "zhSource": "override",
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "@lemoncat7/dsh-ssh",
-      "version": "1.14.0",
-      "category": "devtools",
-      "distIntegrity": "sha512-B1yY/xQ4kbNUo10Et37n+cCztC9SFxy0wF2LPgjWWSN+mSX1Vo/yOmpr1TLqtR/3YgPuOXQvVN+DNaNbKb+G/A==",
-      "attestations": null,
-      "unpackedSize": 10260017,
-      "zhSource": "fallback",
       "gates": [
         "bundle",
         "engines.dsh",

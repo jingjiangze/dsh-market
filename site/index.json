@@ -632,51 +632,6 @@
       ]
     },
     {
-      "name": "@lemoncat7/dsh-ssh",
-      "title": {
-        "en": "@lemoncat7/dsh-ssh",
-        "zh": "@lemoncat7/dsh-ssh"
-      },
-      "description": {
-        "en": "Secure SSH, FTP/FTPS/SFTP file transfer, browser terminals, proxies, port forwarding, and session-scoped AI access for DeepSeek Harness",
-        "zh": "Secure SSH, FTP/FTPS/SFTP file transfer, browser terminals, proxies, port forwarding, and session-scoped AI access for DeepSeek Harness"
-      },
-      "homepage": "https://github.com/lemoncat7/dsh-ssh#readme",
-      "repository": {
-        "url": "https://github.com/lemoncat7/dsh-ssh"
-      },
-      "metadata": {
-        "keywords": [
-          "deepseek-harness",
-          "dsh",
-          "dsh-plugin",
-          "ssh",
-          "ftp",
-          "ftps",
-          "sftp",
-          "file-transfer"
-        ],
-        "category": "devtools",
-        "labels": [
-          "auto-crawled",
-          "engines-pinned",
-          "zh-fallback"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.14.0",
-          "publishTimestamp": 1793326013,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": "^0.2.1-rc.2"
-          }
-        }
-      ]
-    },
-    {
       "name": "@mars-sea/dsh-commandcode-provider",
       "title": {
         "en": "@mars-sea/dsh-commandcode-provider",
