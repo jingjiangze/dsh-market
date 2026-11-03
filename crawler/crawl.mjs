@@ -213,8 +213,16 @@ async function authorZh(name, version) {
     }
   }
   const override = ZH_OVERRIDES[name]
-  if (override && (override.version === undefined || override.version === version)) {
-    return { title: override.title, description: override.description, source: 'override' }
+  if (override?.title || override?.description) {
+    // A curated entry stays usable after the package publishes a new version:
+    // titles and one-line descriptions rarely change, and the sidecar records
+    // which release it was written against for a later read-through.
+    return {
+      title: override.title,
+      description: override.description,
+      source: 'override',
+      pinnedFor: override.version,
+    }
   }
   return { source: 'fallback' }
 }
@@ -338,6 +346,7 @@ async function main() {
             attestations: man.dist?.attestations?.url ?? null,
             unpackedSize: man.dist?.unpackedSize ?? null,
             zhSource: zh.source,
+            ...(zh.pinnedFor ? { zhPinnedFor: zh.pinnedFor } : {}),
             gates: ['bundle', 'engines.dsh', 'min-age', 'no-install-script', 'license', 'category', 'zh'],
           },
         })
