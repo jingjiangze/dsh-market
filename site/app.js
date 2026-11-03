@@ -123,7 +123,7 @@ document.addEventListener('click', (event) => {
   if (event.target.id === 'copy') {
     navigator.clipboard?.writeText($('src').textContent.trim()).then(() => {
       event.target.textContent = state.lang === 'zh' ? '已复制' : 'Copied'
-      setTimeout(() => { event.target.textContent = state.lang === 'zh' ? '复制' : 'Copy' }, 1200)
+      setTimeout(() => { event.target.textContent = state.lang === 'zh' ? '复制索引源' : 'Copy source' }, 1200)
     })
   }
 })
