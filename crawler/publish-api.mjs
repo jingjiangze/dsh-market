@@ -1,0 +1,125 @@
+// Publishes the crawl output by writing a commit through the GitHub Git Data API
+// instead of `git push`.
+//
+// Why: the CI runner could not push over the git transport (`failed to push some
+// refs`, the same failure this workstation hits), which silently froze the whole
+// catalogue at an old snapshot. The REST API has been reliable, and it needs only
+// the repository token.
+//
+//   GITHUB_TOKEN=... node crawler/publish-api.mjs
+//   GITHUB_TOKEN=... node crawler/publish-api.mjs --dry-run   # report, change nothing
+import { execFileSync } from 'node:child_process'
+import { readFile, stat } from 'node:fs/promises'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+const REPO = process.env.GITHUB_REPOSITORY || 'jingjiangze/dsh-market'
+const BRANCH = process.env.PUBLISH_BRANCH || 'main'
+const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || ''
+const DRY = process.argv.includes('--dry-run')
+const PATHS = (process.env.PUBLISH_PATHS || 'dist site data').split(/\s+/).filter(Boolean)
+const MESSAGE = process.env.PUBLISH_MESSAGE || 'chore(crawl): refresh plugin index'
+const API = 'https://api.github.com'
+const MAX_BLOB_BYTES = 90 * 1024 * 1024
+
+if (!TOKEN && !DRY) {
+  console.error('publish-api: GITHUB_TOKEN is required')
+  process.exit(1)
+}
+
+async function api(path, options = {}) {
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const res = await fetch(`${API}/repos/${REPO}${path}`, {
+        ...options,
+        headers: {
+          accept: 'application/vnd.github+json',
+          'user-agent': 'dsh-market-publish',
+          authorization: `Bearer ${TOKEN}`,
+          ...(options.body ? { 'content-type': 'application/json' } : {}),
+          ...(options.headers ?? {}),
+        },
+        signal: AbortSignal.timeout(60000),
+      })
+      const text = await res.text()
+      if (!res.ok) {
+        const error = new Error(`${options.method ?? 'GET'} ${path} -> ${res.status} ${text.slice(0, 200)}`)
+        error.status = res.status
+        throw error
+      }
+      return text ? JSON.parse(text) : null
+    } catch (error) {
+      if (attempt === 4) throw error
+      await new Promise((resolve) => setTimeout(resolve, 800 * attempt))
+    }
+  }
+}
+
+// What changed? The CI checkout is a real repository, so let git answer.
+function changedFiles() {
+  const out = execFileSync('git', ['status', '--porcelain', '--untracked-files=all', '--', ...PATHS], {
+    cwd: root,
+    encoding: 'utf8',
+  })
+  const files = []
+  for (const line of out.split('\n')) {
+    if (!line.trim()) continue
+    const status = line.slice(0, 2)
+    const path = line.slice(3).trim().replace(/^"|"$/g, '')
+    files.push({ status, path })
+  }
+  return files
+}
+
+const changed = changedFiles()
+if (changed.length === 0) {
+  console.log('publish-api: nothing changed')
+  process.exit(0)
+}
+
+const added = changed.filter((entry) => !entry.status.includes('D'))
+const deleted = changed.filter((entry) => entry.status.includes('D'))
+console.log(`publish-api: ${added.length} file(s) to write, ${deleted.length} to delete`)
+
+if (DRY) {
+  for (const entry of changed.slice(0, 40)) console.log(`  ${entry.status.trim() || '??'} ${entry.path}`)
+  process.exit(0)
+}
+
+// Upload blobs, then build one tree on top of the current branch tip.
+const entries = []
+for (const entry of added) {
+  const full = join(root, entry.path)
+  const info = await stat(full).catch(() => null)
+  if (!info?.isFile()) continue
+  if (info.size > MAX_BLOB_BYTES) {
+    console.log(`publish-api: skipping oversized ${entry.path} (${info.size} B)`)
+    continue
+  }
+  const content = (await readFile(full)).toString('base64')
+  const blob = await api('/git/blobs', { method: 'POST', body: JSON.stringify({ content, encoding: 'base64' }) })
+  entries.push({ path: entry.path, mode: '100644', type: 'blob', sha: blob.sha })
+}
+for (const entry of deleted) {
+  entries.push({ path: entry.path, mode: '100644', type: 'blob', sha: null })
+}
+if (entries.length === 0) {
+  console.log('publish-api: nothing to commit')
+  process.exit(0)
+}
+
+const ref = await api(`/git/ref/heads/${BRANCH}`)
+const baseCommit = ref.object.sha
+const base = await api(`/git/commits/${baseCommit}`)
+const tree = await api('/git/trees', {
+  method: 'POST',
+  body: JSON.stringify({ base_tree: base.tree.sha, tree: entries }),
+})
+const commit = await api('/git/commits', {
+  method: 'POST',
+  body: JSON.stringify({ message: MESSAGE, tree: tree.sha, parents: [baseCommit] }),
+})
+await api(`/git/refs/heads/${BRANCH}`, { method: 'PATCH', body: JSON.stringify({ sha: commit.sha, force: false }) })
+
+console.log(`publish-api: ${entries.length} tree entr(ies) -> commit ${commit.sha} on ${BRANCH}`)
