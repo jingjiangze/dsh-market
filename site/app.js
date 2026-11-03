@@ -191,16 +191,33 @@ async function fetchTiered(path) {
   throw lastError ?? new Error('no source')
 }
 
+const EAGER_CHUNKS = 6
+
+// The whole catalogue is ~6.5 MB of chunks; the first six (~2 MB) are loaded up
+// front and the rest is pulled only when the reader asks for more, so the page is
+// usable immediately instead of waiting on the tail.
+async function loadChunks(count) {
+  const chunks = state.meta?.chunks ?? []
+  const target = Math.min(chunks.length, state.loaded + count)
+  while (state.loaded < target) {
+    const slice = await fetchTiered(chunks[state.loaded]).catch(() => null)
+    if (!slice) {
+      state.failed = true
+      break
+    }
+    state.plugins.push(...slice)
+    state.loaded++
+    render()
+  }
+  render()
+}
+
 async function loadIndex() {
   try {
     state.meta = await fetchTiered('meta.json')
     state.plugins = []
-    for (const chunk of state.meta.chunks ?? []) {
-      const slice = await fetchTiered(chunk)
-      state.plugins.push(...slice)
-      render()
-    }
-    render()
+    state.loaded = 0
+    await loadChunks(EAGER_CHUNKS)
   } catch (error) {
     $('list').innerHTML = `<p class=empty>索引加载失败：${esc(error.message)}</p>`
   }
@@ -252,7 +269,13 @@ document.addEventListener('click', (event) => {
   const chip = event.target.closest('[data-cat]')
   if (chip) { state.category = chip.dataset.cat; state.limit = 60; render(); return }
   const more = event.target.closest('[data-more]')
-  if (more) { state.limit += 120; render(); return }
+  if (more) {
+    state.limit += 120
+    render()
+    // Ran out of loaded entries? pull the next few chunks in the background.
+    if (state.visible.length <= state.limit && (state.meta?.chunks?.length ?? 0) > state.loaded) loadChunks(4)
+    return
+  }
   const copy = event.target.closest('[data-copy]')
   if (copy) {
     navigator.clipboard?.writeText(copy.dataset.copy).then(() => flash(copy, '已复制'))
