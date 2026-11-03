@@ -368,6 +368,12 @@ async function main() {
     const entry = provenance.get(record.name) ?? { origins: new Set(), trust: new Set() }
     for (const origin of record.origins) entry.origins.add(origin)
     for (const trust of record.trust) entry.trust.add(trust)
+    // Carry everything the gates and the published index need: dropping these
+    // here is why star counts and engine hints silently disappeared before.
+    if (entry.stars === undefined) entry.stars = record.stars
+    if (entry.hintEngines === undefined) entry.hintEngines = record.hintEngines
+    if (entry.title === undefined) entry.title = record.title
+    if (entry.description === undefined) entry.description = record.description
     provenance.set(record.name, entry)
   }
   console.log(`candidates: ${names.size} total, ${federated.size} from federated catalogs`)
