@@ -455,6 +455,14 @@ async function main() {
           : undefined
         const zh = await authorZh(name, version, enTitle, enDescription, catalogZh)
         const category = categoryFor(record, name, enTitle, enDescription, (man.keywords || []).join(' '))
+        // format 1 only allows http(s) URLs without credentials; an ssh or
+        // git-protocol repository is dropped rather than breaking the document.
+        const httpUrl = (value) => {
+          const url = String(value ?? '').replace(/^git\+/, '').replace(/^git:/, 'https:').replace(/\.git$/, '')
+          return /^https?:\/\//i.test(url) && !url.includes(' ') ? url : null
+        }
+        const repoUrl = httpUrl(man.repository?.url)
+        const homeUrl = /^https?:\/\//i.test(String(man.homepage ?? '')) ? String(man.homepage) : null
         plugins.push({
           name,
           title: { en: enTitle, zh: zh.title || enTitle },
@@ -463,8 +471,8 @@ async function main() {
           ...(typeof man.author === 'string'
             ? { author: man.author.replace(/\s*<[^>]*>/, '') }
             : man.author?.name ? { author: String(man.author.name) } : {}),
-          ...(man.homepage ? { homepage: man.homepage } : {}),
-          ...(man.repository?.url ? { repository: { url: String(man.repository.url).replace(/^git\+/, '').replace(/\.git$/, '') } } : {}),
+          ...(homeUrl ? { homepage: homeUrl } : {}),
+          ...(repoUrl ? { repository: { url: repoUrl } } : {}),
           metadata: {
             keywords: (man.keywords || []).slice(0, 8),
             category,
