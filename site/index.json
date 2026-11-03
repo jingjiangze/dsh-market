@@ -329,11 +329,11 @@
       "name": "@dsh-agentic-roleplay/core",
       "title": {
         "en": "@dsh-agentic-roleplay/core",
-        "zh": "@dsh-agentic-roleplay/core"
+        "zh": "角色扮演核心"
       },
       "description": {
         "en": "Core plugin of the agentic roleplay bundle for DeepSeek Harness: roleplay UI, orchestration and storage.",
-        "zh": "Core plugin of the agentic roleplay bundle for DeepSeek Harness: roleplay UI, orchestration and storage."
+        "zh": "agentic 角色扮演套件的核心插件：角色扮演界面、编排与存储。"
       },
       "author": "Firefox2100",
       "homepage": "https://firefox2100.github.io/dsh-agentic-roleplay/docs/developers/architecture",
@@ -352,7 +352,7 @@
         "labels": [
           "auto-crawled",
           "engines-pinned",
-          "zh-fallback"
+          "zh-override"
         ]
       },
       "versions": [
@@ -551,11 +551,11 @@
       "name": "@kyoukisu/dsh-rich-ui",
       "title": {
         "en": "@kyoukisu/dsh-rich-ui",
-        "zh": "@kyoukisu/dsh-rich-ui"
+        "zh": "富文本回答卡片"
       },
       "description": {
         "en": "ChatGPT-style rich answers inside DeepSeek Harness: entity panels, KPI cards, charts, tables, layers and local controls.",
-        "zh": "ChatGPT-style rich answers inside DeepSeek Harness: entity panels, KPI cards, charts, tables, layers and local controls."
+        "zh": "在 DSH 里渲染 ChatGPT 风格的富回答：实体面板、KPI 卡片、图表、表格、分层与本地控件。"
       },
       "homepage": "https://github.com/kyoukisu/dsh-rich-ui#readme",
       "repository": {
@@ -576,7 +576,7 @@
         "labels": [
           "auto-crawled",
           "engines-pinned",
-          "zh-fallback"
+          "zh-override"
         ]
       },
       "versions": [
@@ -1278,11 +1278,11 @@
       "name": "dsh-arrowkey-nav",
       "title": {
         "en": "dsh-arrowkey-nav",
-        "zh": "dsh-arrowkey-nav"
+        "zh": "方向键导航"
       },
       "description": {
         "en": "Arrow-key navigation for the DSH Web GUI: Up/Down switch sessions inside the current workspace, Left/Right switch workspaces.",
-        "zh": "Arrow-key navigation for the DSH Web GUI: Up/Down switch sessions inside the current workspace, Left/Right switch workspaces."
+        "zh": "给 DSH Web 界面加方向键导航：上下切当前会话、左右切工作区。"
       },
       "homepage": "https://github.com/drscrewdriver/dsh-arrowkey-nav#readme",
       "repository": {
@@ -1301,7 +1301,7 @@
         "labels": [
           "auto-crawled",
           "engines-pinned",
-          "zh-fallback"
+          "zh-override"
         ]
       },
       "versions": [
@@ -1412,11 +1412,11 @@
       "name": "dsh-bash-terminal-ts",
       "title": {
         "en": "dsh-bash-terminal-ts",
-        "zh": "dsh-bash-terminal-ts"
+        "zh": "多壳终端"
       },
       "description": {
         "en": "DSH plugin: one shell tool that runs commands through PowerShell, Git Bash, MSYS2, or WSL on Windows, plus an embedded terminal for the bottom dock (dsh-better-sidebar's terminal tab) with per-shell activation switches and a default-shell fallback chain.",
-        "zh": "DSH plugin: one shell tool that runs commands through PowerShell, Git Bash, MSYS2, or WSL on Windows, plus an embedded terminal for the bottom dock (dsh-better-sidebar's terminal tab) with per-shell activation switches and a default-shell fallback chain."
+        "zh": "一个 shell 工具走遍 PowerShell、Git Bash、MSYS2 与 WSL，并在底部停靠栏内置终端。"
       },
       "author": "drscrewdriver",
       "homepage": "https://github.com/drscrewdriver/dsh-bash-terminal-ts#readme",
@@ -1438,7 +1438,7 @@
         "labels": [
           "auto-crawled",
           "engines-pinned",
-          "zh-fallback"
+          "zh-override"
         ]
       },
       "versions": [

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T02:29:45.996Z",
+  "generatedAt": "2026-11-03T02:35:03.537Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "gates": {
@@ -112,7 +112,7 @@
       "distIntegrity": "sha512-YgT6g8xJjDJ/ayqPzhcWVP6kG+TSEnLw+AgyV20VtthKbVl/OIuzWAGeZIiv0K0cZf4YTU5y5MM79/lBZw0QwQ==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@dsh-agentic-roleplay%2fcore@0.8.2",
       "unpackedSize": 4502538,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -202,7 +202,7 @@
       "distIntegrity": "sha512-DaDaiEIIiSBfeGYfanMwwqiQBTa+n/u1QF8MRmThHNmFqIYjGcpOQf9AxJ0n8+4jQ2qBvS4RgrD4EkN9mRRcJQ==",
       "attestations": null,
       "unpackedSize": 285325,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -490,7 +490,7 @@
       "distIntegrity": "sha512-SY3Qa+fGMTkMcIDRS2+qOiNwrSLj9oOWYnCj1ZOhrBTxqkf1EhyOsGpqKkAKdt5bhzzvYcx0eJFW/o0k4J7mhA==",
       "attestations": null,
       "unpackedSize": 218575,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
@@ -544,7 +544,7 @@
       "distIntegrity": "sha512-3rsYuiHRq1lr+9OL5IY0fkyrq4WfxiPVzW1nyUPqOUoddmQHrIu8R54FXGkm5u78lu7l0zMx0F4VlVi+Kub9sw==",
       "attestations": null,
       "unpackedSize": 2455651,
-      "zhSource": "fallback",
+      "zhSource": "override",
       "gates": [
         "bundle",
         "engines.dsh",
