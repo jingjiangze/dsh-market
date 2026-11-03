@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T14:35:42.759Z",
+  "generatedAt": "2026-11-03T14:51:01.452Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "catalogue": {
@@ -23,23 +23,21 @@
   },
   "plugins": [
     {
-      "name": "dsh-plugin-wallpaper-engine",
-      "version": "1.4.0",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-9vZN7nTdVu3pQlUd3F9vitKonkrxqyiePe0fpme8xyRWJhZTdio3SBMyB1dqOkbKhus3Rc/8hIw1urhLg2UysQ==",
+      "name": "dsh-ops",
+      "version": "0.4.4",
+      "category": "enhance-tools",
+      "distIntegrity": "sha512-HY8SCzrvVBInw5qdsapOz25wdrL/bzZyWUlQR9r+3ImiC+vBbj4/JdmeohmG/nxKU/3M4k83UhxCi15byiAslg==",
       "attestations": null,
-      "unpackedSize": 7267063,
-      "zhSource": "catalog",
-      "stars": 4665,
+      "unpackedSize": 22448415,
+      "zhSource": "native",
+      "stars": 5060,
       "origins": [
         "src-npm",
         "src-awesome",
-        "src-dshso",
         "src-mydsh"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
         "trust-unpinned"
       ],
       "gates": [
@@ -53,22 +51,24 @@
       ]
     },
     {
-      "name": "dsh-ops",
-      "version": "0.4.4",
-      "category": "enhance-tools",
-      "distIntegrity": "sha512-HY8SCzrvVBInw5qdsapOz25wdrL/bzZyWUlQR9r+3ImiC+vBbj4/JdmeohmG/nxKU/3M4k83UhxCi15byiAslg==",
+      "name": "dsh-plugin-wallpaper-engine",
+      "version": "1.4.0",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-9vZN7nTdVu3pQlUd3F9vitKonkrxqyiePe0fpme8xyRWJhZTdio3SBMyB1dqOkbKhus3Rc/8hIw1urhLg2UysQ==",
       "attestations": null,
-      "unpackedSize": 22448415,
-      "zhSource": "native",
-      "stars": 4063,
+      "unpackedSize": 7267063,
+      "zhSource": "catalog",
+      "stars": 4665,
       "origins": [
         "src-npm",
+        "src-awesome",
         "src-mydsh",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -92,13 +92,13 @@
       "origins": [
         "src-npm",
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -147,13 +147,13 @@
       "origins": [
         "src-npm",
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -330,6 +330,64 @@
       ]
     },
     {
+      "name": "dsh-xdpool",
+      "version": "2.5.0",
+      "category": "models",
+      "distIntegrity": "sha512-tsZXcCRuVFVOOzkTH8fk9JJNSNp9PmNVclEMSVsbpgJoXl7eOql+Q6rNLHbKXigL30G6UAzDeuG++4eNys9ZEQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-xdpool@2.5.0",
+      "unpackedSize": 6442670,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso",
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-mattpocock-skills-deck",
+      "version": "1.7.51",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-JwDu+a+qVkNuK4e1+mV5ecI5bch4YHNIlqnklV7Rb+IjB6PpbeQD80Ag0ZC31usFJp+ZwwDz8O7LXlVqTuMZlw==",
+      "attestations": null,
+      "unpackedSize": 4530598,
+      "zhSource": "catalog",
+      "stars": 280,
+      "origins": [
+        "src-npm",
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "@michengai/dsh-archive-manager",
       "version": "1.1.22",
       "category": "memory",
@@ -404,34 +462,6 @@
       ]
     },
     {
-      "name": "dsh-xdpool",
-      "version": "2.5.0",
-      "category": "models",
-      "distIntegrity": "sha512-tsZXcCRuVFVOOzkTH8fk9JJNSNp9PmNVclEMSVsbpgJoXl7eOql+Q6rNLHbKXigL30G6UAzDeuG++4eNys9ZEQ==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-xdpool@2.5.0",
-      "unpackedSize": 6442670,
-      "zhSource": "fallback",
-      "origins": [
-        "src-dshso",
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-relay",
       "version": "0.3.0",
       "category": "connect",
@@ -442,13 +472,13 @@
       "stars": 248,
       "origins": [
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -467,18 +497,18 @@
       "distIntegrity": "sha512-j6lokDt0QLP1BN7xYVEbEK/4OLPFXQaDsV9VC0v/mCIVUaeJs7g+934fjYttzcTGK3z8ouDTjtIOTgkthGFESg==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-auto-review@0.15.0",
       "unpackedSize": 2572395,
-      "zhSource": "catalog",
-      "stars": 234,
+      "zhSource": "override",
+      "stars": 244,
       "origins": [
         "src-npm",
+        "src-awesome",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -603,24 +633,24 @@
       ]
     },
     {
-      "name": "dsh-mattpocock-skills-deck",
-      "version": "1.7.51",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-JwDu+a+qVkNuK4e1+mV5ecI5bch4YHNIlqnklV7Rb+IjB6PpbeQD80Ag0ZC31usFJp+ZwwDz8O7LXlVqTuMZlw==",
+      "name": "dsh-undo-savepoint",
+      "version": "0.5.0",
+      "category": "enhance-tools",
+      "distIntegrity": "sha512-ixEPp2XMEbPnGarY/gMtPVhrVeJRDCFiqwuorTL2w9laNo00XLoeWixtnmXMSXiOxDh/VAlb1cDxbFaXo0I6PQ==",
       "attestations": null,
-      "unpackedSize": 4530598,
-      "zhSource": "catalog",
-      "stars": 201,
+      "unpackedSize": 1054386,
+      "zhSource": "fallback",
+      "stars": 197,
       "origins": [
         "src-npm",
+        "src-awesome",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -633,23 +663,22 @@
       ]
     },
     {
-      "name": "dsh-undo-savepoint",
-      "version": "0.5.0",
-      "category": "enhance-tools",
-      "distIntegrity": "sha512-ixEPp2XMEbPnGarY/gMtPVhrVeJRDCFiqwuorTL2w9laNo00XLoeWixtnmXMSXiOxDh/VAlb1cDxbFaXo0I6PQ==",
-      "attestations": null,
-      "unpackedSize": 1054386,
+      "name": "dsh-find-plugins",
+      "version": "0.3.0",
+      "category": "data",
+      "distIntegrity": "sha512-u/g44SjJ/w3VWCNkx5cZX8u4MBlKUaBH54f+uAHe7S76IlmQqPIYziNN52xAMNUsKpR8kN59bRu1MvVTwAqR2w==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-find-plugins@0.3.0",
+      "unpackedSize": 117529,
       "zhSource": "catalog",
-      "stars": 188,
+      "stars": 179,
       "origins": [
+        "src-npm",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -678,6 +707,32 @@
       "trust": [
         "trust-readme-verified",
         "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-comfyui",
+      "version": "0.5.5",
+      "category": "media",
+      "distIntegrity": "sha512-+tjtYtiSMhqJQra3oSfec2KSRMeP35nGW1XYTKRzsrO11lmbjlBqwmYguQA/+ga3QNRzQxREPW01qP/v4iTJHw==",
+      "attestations": null,
+      "unpackedSize": 4074951,
+      "zhSource": "override",
+      "origins": [
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned"
       ],
       "gates": [
         "bundle",
@@ -720,17 +775,17 @@
       "distIntegrity": "sha512-n/RLPS6piOGN2pTh/rMur1tRBujrRtbb7/haIFl94h/g1tE1ecYDDpc52FPbcKoQZDAMSaQ2r7miXp3m2Xfqzw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-memento@0.5.28",
       "unpackedSize": 725392,
-      "zhSource": "catalog",
-      "stars": 141,
+      "zhSource": "fallback",
+      "stars": 142,
       "origins": [
+        "src-awesome",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -743,14 +798,15 @@
       ]
     },
     {
-      "name": "dsh-comfyui",
-      "version": "0.5.5",
-      "category": "media",
-      "distIntegrity": "sha512-+tjtYtiSMhqJQra3oSfec2KSRMeP35nGW1XYTKRzsrO11lmbjlBqwmYguQA/+ga3QNRzQxREPW01qP/v4iTJHw==",
+      "name": "memory-eternal",
+      "version": "0.18.2",
+      "category": "memory",
+      "distIntegrity": "sha512-bwQelVzzXTG2ZGG6T0yC/Xx5/kdThwQ/ZQRxvE6HFzf7kw8ufyn6pW5qwJVhYERTr8HM8UO7nAaUIQHXYyzdsQ==",
       "attestations": null,
-      "unpackedSize": 4074951,
-      "zhSource": "override",
+      "unpackedSize": 2119699,
+      "zhSource": "detected",
       "origins": [
+        "src-npm",
         "src-awesome",
         "src-mydsh"
       ],
@@ -793,6 +849,36 @@
       ]
     },
     {
+      "name": "dsh-opencode-palette",
+      "version": "2.1.10",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-+vw4AFRFb56JzlrXOrEydk3tSGqEUj1p/EP7uUWVVY6Dfnfdz6Ztyz76eIq9McOzm8xzJOz4EHQcH0BnI8jEYQ==",
+      "attestations": null,
+      "unpackedSize": 1648925,
+      "zhSource": "catalog",
+      "stars": 95,
+      "origins": [
+        "src-npm",
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-mcp-panel",
       "version": "0.6.29",
       "category": "enhance-ui",
@@ -804,72 +890,13 @@
       "origins": [
         "src-npm",
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-opencode-palette",
-      "version": "2.1.10",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-+vw4AFRFb56JzlrXOrEydk3tSGqEUj1p/EP7uUWVVY6Dfnfdz6Ztyz76eIq9McOzm8xzJOz4EHQcH0BnI8jEYQ==",
-      "attestations": null,
-      "unpackedSize": 1648925,
-      "zhSource": "catalog",
-      "stars": 74,
-      "origins": [
-        "src-npm",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
-      ],
-      "trust": [
-        "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-think-translate",
-      "version": "1.2.16",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-En7qjVAN4gX5jn8rD79vuKrLpXduwi82sPa8E8D980lbLhHyCsXlhKv15teSQ4J2TClEwPKZtVyAB0AuDu83vA==",
-      "attestations": null,
-      "unpackedSize": 397271,
-      "zhSource": "fallback",
-      "stars": 72,
-      "origins": [
-        "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -909,6 +936,63 @@
       ]
     },
     {
+      "name": "dsh-think-translate",
+      "version": "1.2.16",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-En7qjVAN4gX5jn8rD79vuKrLpXduwi82sPa8E8D980lbLhHyCsXlhKv15teSQ4J2TClEwPKZtVyAB0AuDu83vA==",
+      "attestations": null,
+      "unpackedSize": 397271,
+      "zhSource": "fallback",
+      "stars": 72,
+      "origins": [
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "prts-terrarchive",
+      "version": "0.2.4",
+      "category": "ui",
+      "distIntegrity": "sha512-TEh6+YN3Z7aaehyhvc90UHZ/uVk8JrPTwhtG4Bo4Rto8z4AXHeIT7AbNoEYHif5lYT9Ebpep6eWp9GPG1DFBbQ==",
+      "attestations": null,
+      "unpackedSize": 46104230,
+      "zhSource": "fallback",
+      "origins": [
+        "src-dshso",
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-source-index",
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-fund-research",
       "version": "0.5.1",
       "category": "other",
@@ -919,13 +1003,13 @@
       "stars": 65,
       "origins": [
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -978,13 +1062,13 @@
       "stars": 62,
       "origins": [
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1007,41 +1091,13 @@
       "stars": 62,
       "origins": [
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "prts-terrarchive",
-      "version": "0.2.4",
-      "category": "ui",
-      "distIntegrity": "sha512-TEh6+YN3Z7aaehyhvc90UHZ/uVk8JrPTwhtG4Bo4Rto8z4AXHeIT7AbNoEYHif5lYT9Ebpep6eWp9GPG1DFBbQ==",
-      "attestations": null,
-      "unpackedSize": 46104230,
-      "zhSource": "fallback",
-      "origins": [
-        "src-dshso",
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-readme-verified",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1091,6 +1147,35 @@
       ],
       "trust": [
         "trust-readme-verified"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-plugin-rea",
+      "version": "2.0.13",
+      "category": "connect",
+      "distIntegrity": "sha512-aRG5m0qYW/qgbK10r0bYJQVO/P7zo1kIpmB3pR31rPVoaA5maFl5QFi7aIhiCaBNlXT8fExb1ccZv5x1m3zz8A==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-plugin-rea@2.0.13",
+      "unpackedSize": 733707,
+      "zhSource": "catalog",
+      "stars": 59,
+      "origins": [
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1163,17 +1248,17 @@
       "distIntegrity": "sha512-hekBzupqdjgQaRxhN8DwjaEAqo3QlLQmmPZepyIqVdI5znG9qwiwB3HnOexKqQgiupNFHQulpCPFGw0DQn/fUA==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-data-quality@0.3.24",
       "unpackedSize": 927706,
-      "zhSource": "catalog",
-      "stars": 54,
+      "zhSource": "fallback",
+      "stars": 53,
       "origins": [
+        "src-awesome",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1201,34 +1286,6 @@
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-ssh-ops",
-      "version": "0.4.3",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-21JYiR65UnoopeHvHB37WdkEHOc8eLIaoyL5ejSJ1bnRvwmGwQgpkpcdbbgW3KIkz8BeeG1W8bQYpg4Y4L9k2A==",
-      "attestations": null,
-      "unpackedSize": 4726965,
-      "zhSource": "native",
-      "stars": 48,
-      "origins": [
-        "src-npm",
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
         "trust-unpinned"
       ],
       "gates": [
@@ -1310,6 +1367,34 @@
         "src-dshso"
       ],
       "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-ssh-ops",
+      "version": "0.4.3",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-21JYiR65UnoopeHvHB37WdkEHOc8eLIaoyL5ejSJ1bnRvwmGwQgpkpcdbbgW3KIkz8BeeG1W8bQYpg4Y4L9k2A==",
+      "attestations": null,
+      "unpackedSize": 4726965,
+      "zhSource": "native",
+      "stars": 44,
+      "origins": [
+        "src-npm",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
         "trust-source-index"
       ],
       "gates": [
@@ -1440,13 +1525,13 @@
       "origins": [
         "src-npm",
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1472,33 +1557,6 @@
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-im-companion",
-      "version": "0.2.25",
-      "category": "connect",
-      "distIntegrity": "sha512-8vNseUWaUZGkWoSkjNt1BLssvh8PqK8A14bnP7GS2wyxkNe4BX4gXtAlitsdD2+h8HuytvyKriwnAiJOe48Ckw==",
-      "attestations": null,
-      "unpackedSize": 3668588,
-      "zhSource": "catalog",
-      "stars": 40,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
         "trust-unpinned"
       ],
       "gates": [
@@ -1569,17 +1627,17 @@
       "distIntegrity": "sha512-W8THcQE5K8ZJf7w6kr4BI87dHI/FCl/fFQFQHqrSZYisnaGFRb+1HP1U24/2pCHVbKjZaL7kCHOmDNteyKFvjQ==",
       "attestations": null,
       "unpackedSize": 1106308,
-      "zhSource": "catalog",
-      "stars": 34,
+      "zhSource": "fallback",
+      "stars": 36,
       "origins": [
+        "src-awesome",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
+        "trust-readme-verified",
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1592,21 +1650,24 @@
       ]
     },
     {
-      "name": "dsh-cad",
-      "version": "0.17.0",
-      "category": "enhance-tools",
-      "distIntegrity": "sha512-O79l4JmK3G7ERK5z9xCEbe5dPo3r2khYnPOhIjj6N70HiZ98q0CmNWTpGjfqCUjoERZEhOUL2+bsZs7+dC9eRQ==",
+      "name": "dsh-plugin-tool-management",
+      "version": "0.21.9",
+      "category": "connect",
+      "distIntegrity": "sha512-oShEaEdh0HYr5w/G7boYnl+HMmtQlB2HMYy6NnmYDWYHfxNfxJ2jszIkfYxd7sSDpPWlJd315I7x5lMOkGNtoA==",
       "attestations": null,
-      "unpackedSize": 4690716,
-      "zhSource": "catalog",
-      "stars": 32,
+      "unpackedSize": 6393919,
+      "zhSource": "native",
+      "stars": 36,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-npm",
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1619,22 +1680,21 @@
       ]
     },
     {
-      "name": "dsh-remotion",
-      "version": "0.10.3",
-      "category": "media",
-      "distIntegrity": "sha512-DTTuG8cnx4+ZZc3n139dq5S8KQ3Wk3W7pMPlWbEV/IpeJ3S9aopaSM2TJ6I1XZBoPvXU7SBOw5ORSf/ANKCTdA==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-remotion@0.10.3",
-      "unpackedSize": 2949083,
+      "name": "dsh-im-companion",
+      "version": "0.2.25",
+      "category": "connect",
+      "distIntegrity": "sha512-8vNseUWaUZGkWoSkjNt1BLssvh8PqK8A14bnP7GS2wyxkNe4BX4gXtAlitsdD2+h8HuytvyKriwnAiJOe48Ckw==",
+      "attestations": null,
+      "unpackedSize": 3668588,
       "zhSource": "catalog",
       "stars": 31,
       "origins": [
-        "src-npm",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1660,33 +1720,6 @@
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-claude-move",
-      "version": "0.4.18",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-vffvIJv6gKFgp5RS2UTJ2Icdsc/1D+M+tTsv+2l4fmzQgLa5607i43JwjypQ16D3kxvcxh8UgEHjUnZCz+rIIQ==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-claude-move@0.4.18",
-      "unpackedSize": 691444,
-      "zhSource": "catalog",
-      "stars": 30,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
         "trust-unpinned"
       ],
       "gates": [
@@ -1726,50 +1759,21 @@
       ]
     },
     {
-      "name": "memory-eternal",
-      "version": "0.18.2",
-      "category": "memory",
-      "distIntegrity": "sha512-bwQelVzzXTG2ZGG6T0yC/Xx5/kdThwQ/ZQRxvE6HFzf7kw8ufyn6pW5qwJVhYERTr8HM8UO7nAaUIQHXYyzdsQ==",
-      "attestations": null,
-      "unpackedSize": 2119699,
-      "zhSource": "detected",
-      "origins": [
-        "src-npm",
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-plugin-rea",
-      "version": "2.0.13",
-      "category": "connect",
-      "distIntegrity": "sha512-aRG5m0qYW/qgbK10r0bYJQVO/P7zo1kIpmB3pR31rPVoaA5maFl5QFi7aIhiCaBNlXT8fExb1ccZv5x1m3zz8A==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-plugin-rea@2.0.13",
-      "unpackedSize": 733707,
+      "name": "dsh-claude-move",
+      "version": "0.4.18",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-vffvIJv6gKFgp5RS2UTJ2Icdsc/1D+M+tTsv+2l4fmzQgLa5607i43JwjypQ16D3kxvcxh8UgEHjUnZCz+rIIQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-claude-move@0.4.18",
+      "unpackedSize": 691444,
       "zhSource": "catalog",
-      "stars": 28,
+      "stars": 29,
       "origins": [
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1782,48 +1786,23 @@
       ]
     },
     {
-      "name": "mattpocock-skills-dsh",
-      "version": "0.1.8",
-      "category": "agent",
-      "distIntegrity": "sha512-hDpI0WKFqzJfCtExyoStdj2CYJS25Wi8jFF5QDhsTthsSn24+xJoFoqFYTfUWc5FLV11snUzugvpGfUP4vpO2A==",
-      "attestations": null,
-      "unpackedSize": 238619,
-      "zhSource": "catalog",
-      "stars": 28,
+      "name": "dsh-tinyfish-search",
+      "version": "0.18.1",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-mcSlPjuQIR1XsPomjiFIPzn0/YyD/DcbazH1yFkkDeuM+JKxkfTnt7npnhzoLduvoafSRC7ULahJpn3kFy72Rw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-tinyfish-search@0.18.1",
+      "unpackedSize": 240915,
+      "zhSource": "native",
+      "stars": 27,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-graph",
-      "version": "0.22.0",
-      "category": "agent",
-      "distIntegrity": "sha512-fdOiiUTX7puZjHQKyGLHiRXEuivva/iEUnIP3rPh8eKutMS1i2dnSH4nPisUySIUSaS4hRIg+YBAFwz9kU9mxA==",
-      "attestations": null,
-      "unpackedSize": 4632418,
-      "zhSource": "catalog",
-      "stars": 26,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1866,23 +1845,21 @@
       ]
     },
     {
-      "name": "dsh-tinyfish-search",
-      "version": "0.18.1",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-mcSlPjuQIR1XsPomjiFIPzn0/YyD/DcbazH1yFkkDeuM+JKxkfTnt7npnhzoLduvoafSRC7ULahJpn3kFy72Rw==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-tinyfish-search@0.18.1",
-      "unpackedSize": 240915,
-      "zhSource": "native",
-      "stars": 26,
+      "name": "dsh-graph",
+      "version": "0.22.0",
+      "category": "agent",
+      "distIntegrity": "sha512-fdOiiUTX7puZjHQKyGLHiRXEuivva/iEUnIP3rPh8eKutMS1i2dnSH4nPisUySIUSaS4hRIg+YBAFwz9kU9mxA==",
+      "attestations": null,
+      "unpackedSize": 4632418,
+      "zhSource": "catalog",
+      "stars": 25,
       "origins": [
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1947,22 +1924,51 @@
       ]
     },
     {
-      "name": "dsh-vscode-mode",
-      "version": "0.23.5",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-V65pYAWYAqBSFTb+ikYCExyATswGgwmovY5P/DTowc0x9DP6qCkmU0nC8pGtpjn0Defi2qaOJ2pKEAEVb74cHA==",
+      "name": "sage-mem",
+      "version": "2.1.15",
+      "category": "work",
+      "distIntegrity": "sha512-YgtALe2yNoMbmHZybrpvvnhmvHyBWIR8pUXlF8thKSjKl8TAhMc5syIh1uYWqBEOUwyvhnZ7xKma7agM+ck5Og==",
       "attestations": null,
-      "unpackedSize": 82640539,
-      "zhSource": "native",
+      "unpackedSize": 1324946,
+      "zhSource": "fallback",
       "stars": 25,
       "origins": [
         "src-npm",
-        "src-dshso",
-        "src-awesome"
+        "src-awesome",
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-readme-verified",
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-cad",
+      "version": "0.17.0",
+      "category": "enhance-tools",
+      "distIntegrity": "sha512-O79l4JmK3G7ERK5z9xCEbe5dPo3r2khYnPOhIjj6N70HiZ98q0CmNWTpGjfqCUjoERZEhOUL2+bsZs7+dC9eRQ==",
+      "attestations": null,
+      "unpackedSize": 4690716,
+      "zhSource": "catalog",
+      "stars": 24,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -1992,34 +1998,6 @@
         "trust-readme-verified",
         "trust-unpinned",
         "trust-source-index"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-hyperframes",
-      "version": "0.11.3",
-      "category": "media",
-      "distIntegrity": "sha512-XyhXG2HRGKsvI+uxzulqAeAzYJE592IKeVfwkJzvXc1iOTYeBBnQ7dfqHTCcLvgt4i4tOOpHN2Bkr37yD5hbzA==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-hyperframes@0.11.3",
-      "unpackedSize": 4829687,
-      "zhSource": "catalog",
-      "stars": 24,
-      "origins": [
-        "src-npm",
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
       ],
       "gates": [
         "bundle",
@@ -2067,13 +2045,69 @@
       "stars": 24,
       "origins": [
         "src-awesome",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
         "trust-readme-verified",
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-remotion",
+      "version": "0.10.3",
+      "category": "media",
+      "distIntegrity": "sha512-DTTuG8cnx4+ZZc3n139dq5S8KQ3Wk3W7pMPlWbEV/IpeJ3S9aopaSM2TJ6I1XZBoPvXU7SBOw5ORSf/ANKCTdA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-remotion@0.10.3",
+      "unpackedSize": 2949083,
+      "zhSource": "catalog",
+      "stars": 24,
+      "origins": [
+        "src-npm",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-vscode-mode",
+      "version": "0.23.5",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-V65pYAWYAqBSFTb+ikYCExyATswGgwmovY5P/DTowc0x9DP6qCkmU0nC8pGtpjn0Defi2qaOJ2pKEAEVb74cHA==",
+      "attestations": null,
+      "unpackedSize": 82640539,
+      "zhSource": "native",
+      "stars": 24,
+      "origins": [
+        "src-npm",
+        "src-awesome",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -2207,6 +2241,33 @@
       ],
       "trust": [
         "trust-readme-verified"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "mattpocock-skills-dsh",
+      "version": "0.1.8",
+      "category": "agent",
+      "distIntegrity": "sha512-hDpI0WKFqzJfCtExyoStdj2CYJS25Wi8jFF5QDhsTthsSn24+xJoFoqFYTfUWc5FLV11snUzugvpGfUP4vpO2A==",
+      "attestations": null,
+      "unpackedSize": 238619,
+      "zhSource": "catalog",
+      "stars": 23,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -2381,36 +2442,6 @@
       ]
     },
     {
-      "name": "dsh-plugin-tool-management",
-      "version": "0.21.9",
-      "category": "connect",
-      "distIntegrity": "sha512-oShEaEdh0HYr5w/G7boYnl+HMmtQlB2HMYy6NnmYDWYHfxNfxJ2jszIkfYxd7sSDpPWlJd315I7x5lMOkGNtoA==",
-      "attestations": null,
-      "unpackedSize": 6393919,
-      "zhSource": "native",
-      "stars": 21,
-      "origins": [
-        "src-npm",
-        "src-mydsh",
-        "src-dshso",
-        "src-awesome"
-      ],
-      "trust": [
-        "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-provider-qoder",
       "version": "0.5.1",
       "category": "enhance-models",
@@ -2497,43 +2528,15 @@
       "distIntegrity": "sha512-ZQ0sPecJzntNxZD3wstuiNKkkSA07Vp6K6G1FvXz7Zph78NNkj6Y2Ljuoi+IaF5ODW5SsDzBbZF5A8HuVwH5+A==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-background-agents@0.10.2",
       "unpackedSize": 1182776,
-      "zhSource": "fallback",
-      "stars": 19,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-find-plugins",
-      "version": "0.3.0",
-      "category": "data",
-      "distIntegrity": "sha512-u/g44SjJ/w3VWCNkx5cZX8u4MBlKUaBH54f+uAHe7S76IlmQqPIYziNN52xAMNUsKpR8kN59bRu1MvVTwAqR2w==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-find-plugins@0.3.0",
-      "unpackedSize": 117529,
       "zhSource": "catalog",
       "stars": 19,
       "origins": [
-        "src-npm",
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -2628,21 +2631,22 @@
       ]
     },
     {
-      "name": "dsh-talk",
-      "version": "0.3.26",
+      "name": "dsh-hyperframes",
+      "version": "0.11.3",
       "category": "media",
-      "distIntegrity": "sha512-MLk9PXW0P8AV71t9RBSBwm5b0lRpECRsCz/BMluUDfDNNt7OKRmgUEKneP0fNSH4IiM9mcXHDgiElnpwgkLiPg==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-talk@0.3.26",
-      "unpackedSize": 1236668,
+      "distIntegrity": "sha512-XyhXG2HRGKsvI+uxzulqAeAzYJE592IKeVfwkJzvXc1iOTYeBBnQ7dfqHTCcLvgt4i4tOOpHN2Bkr37yD5hbzA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-hyperframes@0.11.3",
+      "unpackedSize": 4829687,
       "zhSource": "catalog",
-      "stars": 18,
+      "stars": 17,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-npm",
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -2682,24 +2686,22 @@
       ]
     },
     {
-      "name": "sage-mem",
-      "version": "2.1.10",
-      "category": "work",
-      "distIntegrity": "sha512-gpgeNFYMzDW/Vm2Yi4VRhbEhAMVyD9VWb96oD61zwK8cImBV3W4PNRIh36LH0Nle1xB2aVe2iDo/oIRGTS03/Q==",
+      "name": "dsh-soul-md",
+      "version": "0.10.4",
+      "category": "enhance-memory",
+      "distIntegrity": "sha512-5UVj3QyRWNrUaSsx8HcoF/ldwS9PYoH5xXaoLo8DiiBIAdPWsLN7MFTzHStI25q5CwpBVZExmBUfJtHuLS4twA==",
       "attestations": null,
-      "unpackedSize": 1303710,
-      "zhSource": "catalog",
-      "stars": 17,
+      "unpackedSize": 109911,
+      "zhSource": "native",
+      "stars": 16,
       "origins": [
         "src-npm",
         "src-mydsh",
-        "src-dshso",
-        "src-awesome"
+        "src-dshso"
       ],
       "trust": [
         "trust-unpinned",
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -2712,16 +2714,15 @@
       ]
     },
     {
-      "name": "dsh-soul-md",
-      "version": "0.10.4",
-      "category": "enhance-memory",
-      "distIntegrity": "sha512-5UVj3QyRWNrUaSsx8HcoF/ldwS9PYoH5xXaoLo8DiiBIAdPWsLN7MFTzHStI25q5CwpBVZExmBUfJtHuLS4twA==",
-      "attestations": null,
-      "unpackedSize": 109911,
-      "zhSource": "native",
+      "name": "dsh-talk",
+      "version": "0.3.26",
+      "category": "media",
+      "distIntegrity": "sha512-MLk9PXW0P8AV71t9RBSBwm5b0lRpECRsCz/BMluUDfDNNt7OKRmgUEKneP0fNSH4IiM9mcXHDgiElnpwgkLiPg==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-talk@0.3.26",
+      "unpackedSize": 1236668,
+      "zhSource": "catalog",
       "stars": 16,
       "origins": [
-        "src-npm",
         "src-mydsh",
         "src-dshso"
       ],
@@ -2824,15 +2825,15 @@
       "distIntegrity": "sha512-wWy86LNLlsLuUdtT5c2SRUc9riZuR/QQlHdVQBkd3SP0cAqLCuJZeCVrrJBm4Pc7CaJ8V5+qcqa9JHAuo1Gfaw==",
       "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-mask@0.2.23",
       "unpackedSize": 266494,
-      "zhSource": "fallback",
+      "zhSource": "catalog",
       "stars": 15,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -3085,33 +3086,6 @@
       ]
     },
     {
-      "name": "dsh-workspace-mover",
-      "version": "2.4.2",
-      "category": "enhance-tools",
-      "distIntegrity": "sha512-ZeQ1uka6VVlF9FkcRz9zTXXDHHfdYObnHCpIfkYcPoMmEnrxrjnbRtH4xAmq7JpMfwHpRTTteHLHBE2rJwN34Q==",
-      "attestations": null,
-      "unpackedSize": 1030827,
-      "zhSource": "catalog",
-      "stars": 13,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "@machine-126/dsh-alert-sound",
       "version": "0.3.17",
       "category": "media",
@@ -3243,33 +3217,6 @@
       ]
     },
     {
-      "name": "dsh-llm-retry-settings",
-      "version": "0.1.19",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-bHBCiCpSZw8qDfGYU4nwuUH1PaH2IBquvKsrXCl+CEJl+w3eL25y+t42L5FX1t80Z7xAQyA0Du+l3P4KP2RcLg==",
-      "attestations": null,
-      "unpackedSize": 173823,
-      "zhSource": "catalog",
-      "stars": 12,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-model-master",
       "version": "1.1.2",
       "category": "enhance-models",
@@ -3384,6 +3331,85 @@
         "src-dshso"
       ],
       "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-bash-native",
+      "version": "0.3.1",
+      "category": "safety",
+      "distIntegrity": "sha512-a+tx0jd8B1wcj478EsSJfk3egsFOv3pIxYKzkWiuwSVzHN7D04gJhU9iUL4h3oa2dbcv0cv10of/qn0JThOZoQ==",
+      "attestations": null,
+      "unpackedSize": 48121360,
+      "zhSource": "fallback",
+      "origins": [
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-codebuddy-cli",
+      "version": "0.4.6",
+      "category": "models",
+      "distIntegrity": "sha512-/Nsamr/j6oeCMFPbTUgxOj2X05SxEXPjfEWygA+5v7yGoLEbEqM5DnQuy7SweCVeE3DzZ6yj2Nfzs0gXgh5LBQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-codebuddy-cli@0.4.6",
+      "unpackedSize": 409170,
+      "zhSource": "detected",
+      "origins": [
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-llm-retry-settings",
+      "version": "0.1.19",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-bHBCiCpSZw8qDfGYU4nwuUH1PaH2IBquvKsrXCl+CEJl+w3eL25y+t42L5FX1t80Z7xAQyA0Du+l3P4KP2RcLg==",
+      "attestations": null,
+      "unpackedSize": 173823,
+      "zhSource": "catalog",
+      "stars": 11,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
         "trust-source-index"
       ],
       "gates": [
@@ -3547,11 +3573,11 @@
     },
     {
       "name": "dsh-budget",
-      "version": "0.4.20",
+      "version": "0.4.21",
       "category": "enhance-models",
-      "distIntegrity": "sha512-9sOWcrf23adF+H0FoAw1f7tyaxdLAvFr/n+GLwPfDyxXwj/Yvi0zn9zHJjZxe41hXc1BC1CgEdpIbc1NBTGBFA==",
-      "attestations": null,
-      "unpackedSize": 1302652,
+      "distIntegrity": "sha512-HY5A7dlcJllYms0mIRmN3JCoVOtwh9LT+nCLRUSeohM2SyooeAPXZND29G9f+4aC960EkC947fhcIgAeS9ko9g==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-budget@0.4.21",
+      "unpackedSize": 1307925,
       "zhSource": "catalog",
       "stars": 10,
       "origins": [
@@ -3626,6 +3652,33 @@
       ]
     },
     {
+      "name": "dsh-trellis",
+      "version": "0.1.17",
+      "category": "agent",
+      "distIntegrity": "sha512-+KaTSfQTis+NfmS8uCVUXwX2fTwiAsVyfHkgnUltwSh3r80ExGkHJ0OeYR8GcN2uEaWP90LX6ZGG7nXdKjjKrA==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-trellis@0.1.17",
+      "unpackedSize": 122277,
+      "zhSource": "catalog",
+      "stars": 10,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-ui-harmonizer",
       "version": "0.9.2",
       "category": "enhance-ui",
@@ -3653,21 +3706,21 @@
       ]
     },
     {
-      "name": "dsh-workspace-acl-allow",
-      "version": "0.1.1",
-      "category": "other",
-      "distIntegrity": "sha512-LqnaegAUFrKYZrUu6guzZ9iOeMatN7EOAXjwUrNND/5PPMJOoEDKqNPqW6d9XmPWOYKLzLmnLew+1EBRceIRDw==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-workspace-acl-allow@0.1.1",
-      "unpackedSize": 52355,
+      "name": "dsh-workspace-mover",
+      "version": "2.4.2",
+      "category": "enhance-tools",
+      "distIntegrity": "sha512-ZeQ1uka6VVlF9FkcRz9zTXXDHHfdYObnHCpIfkYcPoMmEnrxrjnbRtH4xAmq7JpMfwHpRTTteHLHBE2rJwN34Q==",
+      "attestations": null,
+      "unpackedSize": 1030827,
       "zhSource": "catalog",
       "stars": 10,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -3860,6 +3913,33 @@
       ]
     },
     {
+      "name": "dsh-workspace-acl-allow",
+      "version": "0.1.1",
+      "category": "other",
+      "distIntegrity": "sha512-LqnaegAUFrKYZrUu6guzZ9iOeMatN7EOAXjwUrNND/5PPMJOoEDKqNPqW6d9XmPWOYKLzLmnLew+1EBRceIRDw==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-workspace-acl-allow@0.1.1",
+      "unpackedSize": 52355,
+      "zhSource": "catalog",
+      "stars": 9,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "@duke-dsh-plugins/dsh-memory-manager",
       "version": "1.4.3",
       "category": "work",
@@ -3985,47 +4065,21 @@
       ]
     },
     {
-      "name": "dsh-codebuddy-cli",
-      "version": "0.4.6",
-      "category": "models",
-      "distIntegrity": "sha512-/Nsamr/j6oeCMFPbTUgxOj2X05SxEXPjfEWygA+5v7yGoLEbEqM5DnQuy7SweCVeE3DzZ6yj2Nfzs0gXgh5LBQ==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-codebuddy-cli@0.4.6",
-      "unpackedSize": 409170,
-      "zhSource": "detected",
-      "origins": [
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-session-bridge",
-      "version": "0.7.0",
-      "category": "connect",
-      "distIntegrity": "sha512-nWG/xdOlhN/Ewy7YFw/XTycLxCc3YYbjrzNM5O1xKNAODL8la9hdd2JSTAy/H6g2xlvPk83FZ765XqLslH8QTg==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-session-bridge@0.7.0",
-      "unpackedSize": 1086589,
+      "name": "dsh-prompt-easymanager",
+      "version": "0.3.9",
+      "category": "agent",
+      "distIntegrity": "sha512-SoseHJCsQY4iKGO5Sg1ptclUdgq9FcQ5MULt8W1LRswQdj54mKnCKqXAuTuEsJhkFCpoPzYGrWOjTm1ejTM4WA==",
+      "attestations": null,
+      "unpackedSize": 542482,
       "zhSource": "catalog",
       "stars": 8,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -4205,39 +4259,12 @@
       "zhSource": "native",
       "stars": 7,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-prompt-easymanager",
-      "version": "0.3.9",
-      "category": "agent",
-      "distIntegrity": "sha512-SoseHJCsQY4iKGO5Sg1ptclUdgq9FcQ5MULt8W1LRswQdj54mKnCKqXAuTuEsJhkFCpoPzYGrWOjTm1ejTM4WA==",
-      "attestations": null,
-      "unpackedSize": 542482,
-      "zhSource": "catalog",
-      "stars": 7,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -4259,12 +4286,12 @@
       "zhSource": "fallback",
       "stars": 7,
       "origins": [
-        "src-dshso",
-        "src-awesome"
+        "src-awesome",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-readme-verified"
+        "trust-readme-verified",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -4439,32 +4466,6 @@
         "src-mydsh"
       ],
       "trust": [
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-bash-native",
-      "version": "0.3.1",
-      "category": "safety",
-      "distIntegrity": "sha512-a+tx0jd8B1wcj478EsSJfk3egsFOv3pIxYKzkWiuwSVzHN7D04gJhU9iUL4h3oa2dbcv0cv10of/qn0JThOZoQ==",
-      "attestations": null,
-      "unpackedSize": 48121360,
-      "zhSource": "fallback",
-      "origins": [
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-readme-verified",
         "trust-unpinned"
       ],
       "gates": [
@@ -4742,12 +4743,12 @@
       "zhSource": "catalog",
       "stars": 6,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -4761,11 +4762,11 @@
     },
     {
       "name": "@duke-dsh-plugins/dsh-deveco",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "category": "connect",
-      "distIntegrity": "sha512-a52QxhUKbwEodiKonszC4xhVvmL7lmJOriYlA+ZT4uemM5+bwI2dmF3hQkkoWjAfa7hQt2oTHUoBHgYybADi5w==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@duke-dsh-plugins%2fdsh-deveco@0.3.1",
-      "unpackedSize": 430706,
+      "distIntegrity": "sha512-uggnZwgMWxVUkbLuKFl9QW3zL9F/agkygv4ia2CfcUC8xbuqLxLYly1Hk/VZBhHfeM5VKGmX/dlzPwaVyHT/ag==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@duke-dsh-plugins%2fdsh-deveco@0.3.2",
+      "unpackedSize": 432458,
       "zhSource": "catalog",
       "stars": 5,
       "origins": [
@@ -4917,12 +4918,12 @@
       "zhSource": "catalog",
       "stars": 5,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -4976,33 +4977,6 @@
       ],
       "trust": [
         "trust-source-index"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-font-enhancer",
-      "version": "1.5.5",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-9HejpUlWuSih/b9ON1LKoWtdu5Pc6+hZjyXMq3+lOi10mzWfNhqsdKaIqcjL0DK6z7aVlXOVIjlOihow7yjn7A==",
-      "attestations": null,
-      "unpackedSize": 792953,
-      "zhSource": "native",
-      "stars": 5,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
       ],
       "gates": [
         "bundle",
@@ -5176,12 +5150,12 @@
       "zhSource": "catalog",
       "stars": 5,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -5260,6 +5234,33 @@
         "src-dshso"
       ],
       "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-session-bridge",
+      "version": "0.7.0",
+      "category": "connect",
+      "distIntegrity": "sha512-nWG/xdOlhN/Ewy7YFw/XTycLxCc3YYbjrzNM5O1xKNAODL8la9hdd2JSTAy/H6g2xlvPk83FZ765XqLslH8QTg==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-session-bridge@0.7.0",
+      "unpackedSize": 1086589,
+      "zhSource": "catalog",
+      "stars": 5,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
         "trust-source-index"
       ],
       "gates": [
@@ -5955,6 +5956,60 @@
       ]
     },
     {
+      "name": "dsh-font-enhancer",
+      "version": "1.5.5",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-9HejpUlWuSih/b9ON1LKoWtdu5Pc6+hZjyXMq3+lOi10mzWfNhqsdKaIqcjL0DK6z7aVlXOVIjlOihow7yjn7A==",
+      "attestations": null,
+      "unpackedSize": 792953,
+      "zhSource": "native",
+      "stars": 3,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-git-sidebar",
+      "version": "0.1.5",
+      "category": "enhance-models",
+      "distIntegrity": "sha512-LdINNdirCzzSYqOdJ0/242OLQJlyNCAy6xBeATHQsU9hvklmSUpyD4//G00kZKwyn+pc0ANdJaPP7ibZVYYy+g==",
+      "attestations": null,
+      "unpackedSize": 49787,
+      "zhSource": "catalog",
+      "stars": 3,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-ide-workbench",
       "version": "0.4.1",
       "category": "enhance-tools",
@@ -6064,12 +6119,12 @@
       "zhSource": "catalog",
       "stars": 3,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -6309,33 +6364,6 @@
       ]
     },
     {
-      "name": "dsh-trellis",
-      "version": "0.1.17",
-      "category": "agent",
-      "distIntegrity": "sha512-+KaTSfQTis+NfmS8uCVUXwX2fTwiAsVyfHkgnUltwSh3r80ExGkHJ0OeYR8GcN2uEaWP90LX6ZGG7nXdKjjKrA==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-trellis@0.1.17",
-      "unpackedSize": 122277,
-      "zhSource": "fallback",
-      "stars": 3,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-ui-outline",
       "version": "0.2.0",
       "category": "enhance-ui",
@@ -6345,12 +6373,12 @@
       "zhSource": "catalog",
       "stars": 3,
       "origins": [
-        "src-dshso",
-        "src-mydsh"
+        "src-mydsh",
+        "src-dshso"
       ],
       "trust": [
-        "trust-source-index",
-        "trust-unpinned"
+        "trust-unpinned",
+        "trust-source-index"
       ],
       "gates": [
         "bundle",
@@ -7064,34 +7092,6 @@
       ]
     },
     {
-      "name": "dsh-pet-plugin",
-      "version": "1.27.1",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-lWHE8vWE40epaykrl7/Urj2Tmqq45eWMiiPTvR0dcQwUGHZ+GIO67chMZUlCALxs/kKoStIcNzRsOzi7bCHCpQ==",
-      "attestations": null,
-      "unpackedSize": 17826661,
-      "zhSource": "native",
-      "stars": 2,
-      "origins": [
-        "src-npm",
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-plugin-upgrade",
       "version": "2.1.1",
       "category": "enhance-perf",
@@ -7404,6 +7404,33 @@
         "src-dshso"
       ],
       "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-terminal-panel",
+      "version": "1.3.0",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-fBdGF8ujH0rvN8IBN1OgLFz2UF0i/5+LrpQGnU0j2/l7xlvOgL90kUm8oFMqcBCNlxuCNGAt5ENv14mCmALYsA==",
+      "attestations": null,
+      "unpackedSize": 217956,
+      "zhSource": "catalog",
+      "stars": 2,
+      "origins": [
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
         "trust-source-index"
       ],
       "gates": [
@@ -8897,33 +8924,6 @@
       ]
     },
     {
-      "name": "dsh-git-sidebar",
-      "version": "0.1.5",
-      "category": "enhance-models",
-      "distIntegrity": "sha512-LdINNdirCzzSYqOdJ0/242OLQJlyNCAy6xBeATHQsU9hvklmSUpyD4//G00kZKwyn+pc0ANdJaPP7ibZVYYy+g==",
-      "attestations": null,
-      "unpackedSize": 49787,
-      "zhSource": "fallback",
-      "stars": 1,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-gongwen-word-check",
       "version": "0.2.11",
       "category": "other",
@@ -9613,6 +9613,34 @@
         "src-dshso"
       ],
       "trust": [
+        "trust-source-index"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
+      "name": "dsh-pet-plugin",
+      "version": "1.27.1",
+      "category": "enhance-ui",
+      "distIntegrity": "sha512-lWHE8vWE40epaykrl7/Urj2Tmqq45eWMiiPTvR0dcQwUGHZ+GIO67chMZUlCALxs/kKoStIcNzRsOzi7bCHCpQ==",
+      "attestations": null,
+      "unpackedSize": 17826661,
+      "zhSource": "native",
+      "stars": 1,
+      "origins": [
+        "src-npm",
+        "src-mydsh",
+        "src-dshso"
+      ],
+      "trust": [
+        "trust-unpinned",
         "trust-source-index"
       ],
       "gates": [
@@ -14325,33 +14353,6 @@
       ]
     },
     {
-      "name": "dsh-terminal-panel",
-      "version": "1.3.0",
-      "category": "enhance-ui",
-      "distIntegrity": "sha512-fBdGF8ujH0rvN8IBN1OgLFz2UF0i/5+LrpQGnU0j2/l7xlvOgL90kUm8oFMqcBCNlxuCNGAt5ENv14mCmALYsA==",
-      "attestations": null,
-      "unpackedSize": 217956,
-      "zhSource": "catalog",
-      "stars": 0,
-      "origins": [
-        "src-dshso",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-source-index",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
       "name": "dsh-tool-notion",
       "version": "1.0.0",
       "category": "work",
@@ -14399,6 +14400,11 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-pet",
+      "version": "0.4.1",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-better-sidebar",
       "version": "0.28.2",
       "category": "enhance-ui"
@@ -14406,7 +14412,7 @@
     {
       "name": "@liustack/modlens",
       "version": "3.27.2",
-      "category": "media"
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-anchored-standard",
@@ -14414,24 +14420,19 @@
       "category": "other"
     },
     {
-      "name": "dsh-pet",
-      "version": "0.4.1",
-      "category": "enhance-ui"
-    },
-    {
       "name": "@xmanrui/dsh-im",
       "version": "5.9.1",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-pocket",
+      "version": "2.12.0",
       "category": "connect"
     },
     {
       "name": "billion-context",
       "version": "0.1.212",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-pocket",
-      "version": "2.12.0",
-      "category": "other"
     },
     {
       "name": "dsh-wallpaper-engine",
@@ -14459,9 +14460,14 @@
       "category": "enhance-memory"
     },
     {
+      "name": "ds-harness-remote",
+      "version": "0.6.0",
+      "category": "connect"
+    },
+    {
       "name": "@yunmiao/studymate",
       "version": "2.0.3",
-      "category": "enhance-memory"
+      "category": "agent"
     },
     {
       "name": "dsh-tavern",
@@ -14469,14 +14475,24 @@
       "category": "other"
     },
     {
+      "name": "dsh-image-gen",
+      "version": "0.10.2",
+      "category": "media"
+    },
+    {
       "name": "dsh-blender-plugin",
       "version": "3.0.4",
       "category": "media"
     },
     {
+      "name": "dsh-connect-workbuddy",
+      "version": "5.17.0",
+      "category": "connect"
+    },
+    {
       "name": "@liustack/modsearch",
       "version": "5.10.11",
-      "category": "data"
+      "category": "connect"
     },
     {
       "name": "dsh-browser",
@@ -14496,16 +14512,21 @@
     {
       "name": "@nagi-ovo/dsh-ads",
       "version": "0.1.3",
-      "category": "data"
+      "category": "enhance-ui"
     },
     {
       "name": "@anysearch/anysearch-dsh",
       "version": "0.1.8",
-      "category": "data"
+      "category": "connect"
     },
     {
-      "name": "dsh-image-gen",
-      "version": "0.10.2",
+      "name": "dsh-univer-office",
+      "version": "0.4.0",
+      "category": "media"
+    },
+    {
+      "name": "dsh-synapse",
+      "version": "0.5.6",
       "category": "media"
     },
     {
@@ -14514,19 +14535,9 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-univer-office",
-      "version": "0.4.0",
-      "category": "work"
-    },
-    {
       "name": "dsh-free-search",
       "version": "0.9.27",
       "category": "data"
-    },
-    {
-      "name": "dsh-synapse",
-      "version": "0.5.6",
-      "category": "other"
     },
     {
       "name": "misakanet",
@@ -14544,6 +14555,11 @@
       "category": "connect"
     },
     {
+      "name": "dsh-meme",
+      "version": "0.1.76",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-dafeiyu",
       "version": "0.1.23",
       "category": "other"
@@ -14554,29 +14570,19 @@
       "category": "enhance-memory"
     },
     {
+      "name": "dsh-claude-style",
+      "version": "0.19.6",
+      "category": "enhance-ui"
+    },
+    {
       "name": "fujiang-armor",
       "version": "0.4.3",
       "category": "enhance-tools"
     },
     {
-      "name": "ds-harness-remote",
-      "version": "0.6.0",
-      "category": "connect"
-    },
-    {
       "name": "dsh-memory-evolve",
       "version": "0.1.0",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-connect-workbuddy",
-      "version": "5.17.0",
-      "category": "other"
-    },
-    {
-      "name": "open-sea-skin",
-      "version": "1.2.7",
-      "category": "enhance-ui"
     },
     {
       "name": "eac-design-world",
@@ -14586,6 +14592,11 @@
     {
       "name": "dsh-startup-screen",
       "version": "1.3.0",
+      "category": "enhance-ui"
+    },
+    {
+      "name": "open-sea-skin",
+      "version": "1.2.7",
       "category": "enhance-ui"
     },
     {
@@ -14599,14 +14610,14 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-client-liang-intensity-skin",
-      "version": "0.1.6",
+      "name": "@zseven-w/dsh-ios",
+      "version": "0.1.0-rc.10",
       "category": "enhance-ui"
     },
     {
-      "name": "@zseven-w/dsh-ios",
-      "version": "0.1.0-rc.10",
-      "category": "media"
+      "name": "dsh-client-liang-intensity-skin",
+      "version": "0.1.6",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-video-storyboard",
@@ -14621,7 +14632,7 @@
     {
       "name": "@nagi-ovo/dsh-visualize",
       "version": "0.1.7",
-      "category": "enhance-ui"
+      "category": "media"
     },
     {
       "name": "opencode2dsh",
@@ -14629,9 +14640,14 @@
       "category": "other"
     },
     {
-      "name": "dsh-meme",
-      "version": "0.1.76",
+      "name": "dsh-dream-skin",
+      "version": "11.2.0",
       "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-config-manager",
+      "version": "0.3.0",
+      "category": "connect"
     },
     {
       "name": "dsh-skills-manager",
@@ -14649,14 +14665,9 @@
       "category": "enhance-memory"
     },
     {
-      "name": "dsh-claude-style",
-      "version": "0.19.6",
-      "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-dream-skin",
-      "version": "11.2.0",
-      "category": "enhance-ui"
+      "name": "dsh-chat-import",
+      "version": "0.26.3",
+      "category": "connect"
     },
     {
       "name": "dsh-jev-decision-model",
@@ -14666,17 +14677,12 @@
     {
       "name": "@fylar/dsh-fylar-office-editor",
       "version": "0.1.6",
-      "category": "work"
+      "category": "agent"
     },
     {
       "name": "dsh-model-router",
       "version": "0.9.5",
       "category": "enhance-models"
-    },
-    {
-      "name": "dsh-chat-import",
-      "version": "0.26.3",
-      "category": "other"
     },
     {
       "name": "dsh-skin-market",
@@ -14694,9 +14700,19 @@
       "category": "connect"
     },
     {
-      "name": "dsh-config-manager",
-      "version": "0.3.0",
-      "category": "other"
+      "name": "dsh-codex-effort-slider",
+      "version": "1.1.4",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-remote",
+      "version": "0.8.67",
+      "category": "connect"
+    },
+    {
+      "name": "@rain-kl/dsh-preset-plus",
+      "version": "0.2.0",
+      "category": "agent"
     },
     {
       "name": "dsh-guizang-design",
@@ -14704,14 +14720,14 @@
       "category": "work"
     },
     {
-      "name": "@rain-kl/dsh-preset-plus",
-      "version": "0.2.0",
-      "category": "enhance-memory"
+      "name": "dsh-status-rotator",
+      "version": "0.38.0",
+      "category": "enhance-ui"
     },
     {
       "name": "@zseven-w/dsh-android",
       "version": "0.1.0-rc.12",
-      "category": "enhance-tools"
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-bridge",
@@ -14724,24 +14740,19 @@
       "category": "agent"
     },
     {
+      "name": "@zseven-w/dsh-openpencil",
+      "version": "0.1.0-rc.14",
+      "category": "media"
+    },
+    {
       "name": "gal-view",
       "version": "0.3.3",
       "category": "enhance-ui"
     },
     {
-      "name": "@zseven-w/dsh-openpencil",
-      "version": "0.1.0-rc.14",
-      "category": "work"
-    },
-    {
       "name": "dsh-tokenledger",
       "version": "0.1.0",
       "category": "enhance-tools"
-    },
-    {
-      "name": "dsh-status-rotator",
-      "version": "0.38.0",
-      "category": "enhance-ui"
     },
     {
       "name": "dsh-plugins-marketplace",
@@ -14761,17 +14772,22 @@
     {
       "name": "@zseven-w/dsh-crew",
       "version": "0.1.0-rc.14",
-      "category": "agent"
+      "category": "media"
     },
     {
-      "name": "dsh-codex-effort-slider",
-      "version": "1.1.4",
-      "category": "enhance-models"
+      "name": "dsh-crew",
+      "version": "0.13.0",
+      "category": "media"
     },
     {
       "name": "@ychris12138/dsh-usage-stats",
       "version": "0.3.7",
-      "category": "data"
+      "category": "eco"
+    },
+    {
+      "name": "dsh-connect-trae",
+      "version": "4.6.12",
+      "category": "connect"
     },
     {
       "name": "dsh-qqbot",
@@ -14789,19 +14805,14 @@
       "category": "data"
     },
     {
+      "name": "dsh-web-mobile",
+      "version": "3.2.1",
+      "category": "enhance-ui"
+    },
+    {
       "name": "@a9i5k4/dsh-auto-memory",
       "version": "3.3.17",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-crew",
-      "version": "0.13.0",
-      "category": "enhance-models"
-    },
-    {
-      "name": "dsh-remote",
-      "version": "0.8.67",
-      "category": "connect"
     },
     {
       "name": "dsh-rewind",
@@ -14811,7 +14822,7 @@
     {
       "name": "@dickpy/dsh-imagegen",
       "version": "1.11.0",
-      "category": "enhance-memory"
+      "category": "media"
     },
     {
       "name": "dsh-auto-continue",
@@ -14826,16 +14837,6 @@
     {
       "name": "@changfenhuang/dsh-annotation",
       "version": "1.4.11",
-      "category": "data"
-    },
-    {
-      "name": "dsh-connect-trae",
-      "version": "4.6.12",
-      "category": "other"
-    },
-    {
-      "name": "dsh-web-mobile",
-      "version": "3.2.1",
       "category": "enhance-ui"
     },
     {
@@ -14847,11 +14848,6 @@
       "name": "dsh-theme-endfield",
       "version": "1.2.3",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-auto-memory",
-      "version": "1.3.0",
-      "category": "enhance-memory"
     },
     {
       "name": "@momasiku/dsh-pilot",
@@ -14871,7 +14867,7 @@
     {
       "name": "scientific-figure-library",
       "version": "0.8.1",
-      "category": "work"
+      "category": "eco"
     },
     {
       "name": "dsh-usage",
@@ -14881,7 +14877,7 @@
     {
       "name": "dsh-easyrewrite",
       "version": "2.6.0",
-      "category": "enhance-memory"
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-bili-humanism",
@@ -14894,9 +14890,19 @@
       "category": "enhance-memory"
     },
     {
+      "name": "dsh-tabbit",
+      "version": "0.4.0",
+      "category": "eco"
+    },
+    {
       "name": "@noob-stupid/dsh-plugin-console",
       "version": "0.5.99",
       "category": "dev"
+    },
+    {
+      "name": "dsh-auto-memory",
+      "version": "1.3.0",
+      "category": "enhance-memory"
     },
     {
       "name": "dsh-watcher",
@@ -14914,11 +14920,6 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-tabbit",
-      "version": "0.4.0",
-      "category": "other"
-    },
-    {
       "name": "@openmaic/dsh-openmaic",
       "version": "0.4.0",
       "category": "work"
@@ -14927,6 +14928,11 @@
       "name": "dsh-personal-center",
       "version": "1.2.0",
       "category": "enhance-models"
+    },
+    {
+      "name": "dsh-approval-gate",
+      "version": "0.5.2",
+      "category": "agent"
     },
     {
       "name": "dsh-generative-ui-3",
@@ -14942,11 +14948,6 @@
       "name": "dsh-vscode-layout",
       "version": "0.1.0",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-network-settings",
-      "version": "0.3.3",
-      "category": "other"
     },
     {
       "name": "dsh-prompt-enhancer",
@@ -14974,19 +14975,29 @@
       "category": "eco"
     },
     {
-      "name": "dsh-approval-gate",
-      "version": "0.5.2",
-      "category": "other"
-    },
-    {
       "name": "dsh-novel-writer",
       "version": "7.0.0",
       "category": "other"
     },
     {
+      "name": "dsh-whale-catch",
+      "version": "0.3.2",
+      "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-network-settings",
+      "version": "0.3.3",
+      "category": "agent"
+    },
+    {
+      "name": "gongwen-skill",
+      "version": "2.15.0",
+      "category": "agent"
+    },
+    {
       "name": "dsh-strata",
       "version": "0.12.1",
-      "category": "enhance-ui"
+      "category": "connect"
     },
     {
       "name": "dsh-fish-3",
@@ -15006,12 +15017,22 @@
     {
       "name": "@daweifu/capability-menu",
       "version": "0.1.8",
-      "category": "data"
+      "category": "agent"
+    },
+    {
+      "name": "dsh-prompt",
+      "version": "0.4.40",
+      "category": "eco"
     },
     {
       "name": "local-shell-mcp",
       "version": "5.1.4",
       "category": "connect"
+    },
+    {
+      "name": "dsh-smooth-stream",
+      "version": "0.7.0",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-vision",
@@ -15036,7 +15057,7 @@
     {
       "name": "dsh-maze",
       "version": "2.4.0",
-      "category": "agent"
+      "category": "dev"
     },
     {
       "name": "dsh-mobile-remote",
@@ -15044,19 +15065,14 @@
       "category": "connect"
     },
     {
-      "name": "dsh-smooth-stream",
-      "version": "0.7.0",
-      "category": "other"
+      "name": "dsh-notify-me",
+      "version": "1.17.0",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-stock-watch",
       "version": "0.1.0",
-      "category": "other"
-    },
-    {
-      "name": "gongwen-skill",
-      "version": "2.15.0",
-      "category": "enhance-memory"
+      "category": "connect"
     },
     {
       "name": "dsh-knowledge",
@@ -15074,6 +15090,11 @@
       "category": "connect"
     },
     {
+      "name": "dsh-taskboard",
+      "version": "0.9.9",
+      "category": "agent"
+    },
+    {
       "name": "dsh-claude-ux",
       "version": "1.0.0",
       "category": "other"
@@ -15086,12 +15107,7 @@
     {
       "name": "dsh-omi-voice",
       "version": "0.1.2",
-      "category": "media"
-    },
-    {
-      "name": "dsh-whale-catch",
-      "version": "0.3.2",
-      "category": "enhance-ui"
+      "category": "agent"
     },
     {
       "name": "qiaomu-ui-learn-dsh",
@@ -15099,19 +15115,19 @@
       "category": "work"
     },
     {
+      "name": "dsh-remote-plugin",
+      "version": "0.7.4",
+      "category": "connect"
+    },
+    {
       "name": "dsh-mcp-connector",
       "version": "0.2.93",
       "category": "connect"
     },
     {
-      "name": "dsh-taskboard",
-      "version": "0.9.9",
-      "category": "agent"
-    },
-    {
       "name": "dsh-blender",
       "version": "0.2.4",
-      "category": "enhance-tools"
+      "category": "agent"
     },
     {
       "name": "dsh-model-fusion",
@@ -15119,13 +15135,38 @@
       "category": "enhance-models"
     },
     {
+      "name": "dsh-agy",
+      "version": "0.4.6",
+      "category": "connect"
+    },
+    {
       "name": "dsh-computer-use",
       "version": "0.3.1",
       "category": "other"
     },
     {
+      "name": "dsh-pet-live2d",
+      "version": "3.4.1",
+      "category": "enhance-ui"
+    },
+    {
       "name": "meow-smooth",
       "version": "0.8.1",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-deepread",
+      "version": "1.0.1",
+      "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-better-reasoning-effort",
+      "version": "0.5.4",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-web-startup-auth",
+      "version": "0.1.13",
       "category": "connect"
     },
     {
@@ -15134,9 +15175,9 @@
       "category": "agent"
     },
     {
-      "name": "dsh-better-reasoning-effort",
-      "version": "0.5.4",
-      "category": "other"
+      "name": "dsh-plugin-save-token",
+      "version": "2.4.1",
+      "category": "agent"
     },
     {
       "name": "vram-switcher",
@@ -15144,19 +15185,9 @@
       "category": "enhance-models"
     },
     {
-      "name": "dsh-deepread",
-      "version": "1.0.1",
-      "category": "enhance-memory"
-    },
-    {
       "name": "@dhicoc/dsh-chinese-traditional-wisdom-skill",
       "version": "1.3.0",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-web-startup-auth",
-      "version": "0.1.13",
-      "category": "enhance-ui"
     },
     {
       "name": "@keleus/deepseek-pet",
@@ -15164,9 +15195,9 @@
       "category": "connect"
     },
     {
-      "name": "dsh-agy",
-      "version": "0.4.6",
-      "category": "other"
+      "name": "dsh-im-gateway",
+      "version": "0.1.0",
+      "category": "connect"
     },
     {
       "name": "dsh-qa-skills",
@@ -15179,9 +15210,9 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-notify-me",
-      "version": "1.17.0",
-      "category": "other"
+      "name": "dsh-token-pet",
+      "version": "0.4.2",
+      "category": "enhance-ui"
     },
     {
       "name": "search-boost",
@@ -15189,19 +15220,24 @@
       "category": "connect"
     },
     {
+      "name": "dsh-bottom-info-bar",
+      "version": "1.21.10",
+      "category": "eco"
+    },
+    {
       "name": "dsh-pet-remielle",
       "version": "0.4.7",
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-prompt",
-      "version": "0.4.40",
-      "category": "enhance-models"
+      "name": "dsh-preset-enhance",
+      "version": "0.3.6-rc.1",
+      "category": "agent"
     },
     {
-      "name": "dsh-token-pet",
-      "version": "0.4.2",
-      "category": "enhance-models"
+      "name": "dsh-web-search-free",
+      "version": "1.9.1",
+      "category": "connect"
     },
     {
       "name": "@dsh-external/dsh-client-ui-skin-denia",
@@ -15209,14 +15245,9 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-im-gateway",
-      "version": "0.1.0",
-      "category": "connect"
-    },
-    {
-      "name": "dsh-pet-live2d",
-      "version": "3.4.1",
-      "category": "enhance-ui"
+      "name": "dsh-drawai",
+      "version": "0.3.4",
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-thinking-effort",
@@ -15224,9 +15255,19 @@
       "category": "other"
     },
     {
+      "name": "dsh-timeline",
+      "version": "0.1.5",
+      "category": "agent"
+    },
+    {
+      "name": "@angelky7/dsh-browser-control",
+      "version": "1.2.0",
+      "category": "connect"
+    },
+    {
       "name": "dsh-message-edit",
       "version": "0.2.3",
-      "category": "other"
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-persona-dafeiyu",
@@ -15237,11 +15278,6 @@
       "name": "dsh-tts-bridge",
       "version": "1.3.3",
       "category": "media"
-    },
-    {
-      "name": "@angelky7/dsh-browser-control",
-      "version": "1.2.0",
-      "category": "data"
     },
     {
       "name": "dsh-desktop-pet",
@@ -15266,7 +15302,7 @@
     {
       "name": "@huanlin/dsh-plugin-mineru",
       "version": "0.4.1",
-      "category": "work"
+      "category": "media"
     },
     {
       "name": "dsh-purge-5",
@@ -15274,19 +15310,14 @@
       "category": "dev"
     },
     {
+      "name": "dsh-recall-plugin",
+      "version": "2.6.2",
+      "category": "agent"
+    },
+    {
       "name": "dsh-splash-animation",
       "version": "0.4.2",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-timeline",
-      "version": "0.1.5",
-      "category": "enhance-models"
-    },
-    {
-      "name": "dsh-bottom-info-bar",
-      "version": "1.21.10",
-      "category": "other"
     },
     {
       "name": "dsh-browser-crossplatform",
@@ -15294,18 +15325,8 @@
       "category": "connect"
     },
     {
-      "name": "dsh-session-workbench",
-      "version": "1.0.3",
-      "category": "other"
-    },
-    {
       "name": "dsh-feiyu-mood",
       "version": "0.8.5",
-      "category": "other"
-    },
-    {
-      "name": "dsh-preset-enhance",
-      "version": "0.3.6-rc.1",
       "category": "other"
     },
     {
@@ -15317,6 +15338,11 @@
       "name": "meow-cachebilling",
       "version": "0.8.0",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-knit",
+      "version": "0.25.0",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-krouter",
@@ -15334,11 +15360,6 @@
       "category": "work"
     },
     {
-      "name": "dsh-knit",
-      "version": "0.25.0",
-      "category": "work"
-    },
-    {
       "name": "dsh-plugin-writing-guard",
       "version": "2.0.1",
       "category": "ops"
@@ -15351,7 +15372,7 @@
     {
       "name": "dsh-sticky-note",
       "version": "0.6.0",
-      "category": "enhance-ui"
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-theme",
@@ -15361,7 +15382,22 @@
     {
       "name": "@dely0/dsh-personal-workbench",
       "version": "1.17.2",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-filesnap",
+      "version": "0.4.2",
+      "category": "dev"
+    },
+    {
+      "name": "dsh-session-workbench",
+      "version": "1.0.3",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-bloom-theme",
+      "version": "0.20.1",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-models-config-plugin",
@@ -15371,12 +15407,12 @@
     {
       "name": "@jiyr0119/dsh-workspace-explorer",
       "version": "0.10.0",
-      "category": "enhance-tools"
+      "category": "enhance-ui"
     },
     {
-      "name": "dsh-filesnap",
-      "version": "0.4.2",
-      "category": "enhance-tools"
+      "name": "dsh-lark-link",
+      "version": "0.6.2",
+      "category": "connect"
     },
     {
       "name": "@dsh-external/dsh-ui-whale",
@@ -15394,11 +15430,6 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-lark-link",
-      "version": "0.6.2",
-      "category": "connect"
-    },
-    {
       "name": "dsh-pilot",
       "version": "0.1.1",
       "category": "agent"
@@ -15414,19 +15445,9 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-web-search-free",
-      "version": "1.9.1",
-      "category": "data"
-    },
-    {
       "name": "dsh-workspace-explorer",
       "version": "0.1.0",
       "category": "other"
-    },
-    {
-      "name": "dsh-bloom-theme",
-      "version": "0.20.1",
-      "category": "enhance-ui"
     },
     {
       "name": "dsh-browser-control",
@@ -15437,6 +15458,16 @@
       "name": "dsh-plugin-guard",
       "version": "0.1.1",
       "category": "ops"
+    },
+    {
+      "name": "dsh-share",
+      "version": "0.5.0",
+      "category": "connect"
+    },
+    {
+      "name": "dsh-toolbox-ui",
+      "version": "1.9.0",
+      "category": "eco"
     },
     {
       "name": "dsh-video-skin",
@@ -15454,16 +15485,6 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-drawai",
-      "version": "0.3.4",
-      "category": "other"
-    },
-    {
-      "name": "dsh-recall-plugin",
-      "version": "2.6.2",
-      "category": "enhance-memory"
-    },
-    {
       "name": "dsh-skillhub",
       "version": "0.2.1",
       "category": "enhance-memory"
@@ -15471,7 +15492,7 @@
     {
       "name": "dsh-web-lan-access",
       "version": "1.3.2",
-      "category": "data"
+      "category": "connect"
     },
     {
       "name": "dsh-better-edit",
@@ -15489,14 +15510,14 @@
       "category": "agent"
     },
     {
-      "name": "dsh-share",
-      "version": "0.5.0",
-      "category": "work"
-    },
-    {
       "name": "@feiyang666/dsh-usage-plugin",
       "version": "2.0.0",
-      "category": "enhance-tools"
+      "category": "dev"
+    },
+    {
+      "name": "dsh-ai4scholar",
+      "version": "0.3.8",
+      "category": "enhance-memory"
     },
     {
       "name": "dsh-whale-galgame",
@@ -15524,9 +15545,9 @@
       "category": "data"
     },
     {
-      "name": "dsh-ai4scholar",
-      "version": "0.3.8",
-      "category": "other"
+      "name": "dsh-chat-manager",
+      "version": "0.2.0",
+      "category": "connect"
     },
     {
       "name": "dsh-effort-slider",
@@ -15574,19 +15595,24 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-flow",
+      "version": "0.3.0",
+      "category": "agent"
+    },
+    {
       "name": "dsh-motion-ui",
       "version": "0.8.9",
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-origin-plugin",
+      "version": "2.7.3",
+      "category": "media"
+    },
+    {
       "name": "dsh-phone",
       "version": "0.1.0",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-toolbox-ui",
-      "version": "1.9.0",
-      "category": "connect"
     },
     {
       "name": "@bihangchi9/lark-agent-bridge",
@@ -15602,11 +15628,6 @@
       "name": "dsh-chat-wallpaper",
       "version": "0.1.0",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-flow",
-      "version": "0.3.0",
-      "category": "other"
     },
     {
       "name": "dsh-theme-firefly",
@@ -15642,6 +15663,11 @@
       "name": "dsh-plugin-marketplace-3",
       "version": "0.3.0",
       "category": "dev"
+    },
+    {
+      "name": "dsh-prompt-enhance",
+      "version": "0.3.2",
+      "category": "connect"
     },
     {
       "name": "dsh-session-delete",
@@ -15719,6 +15745,11 @@
       "category": "enhance-tools"
     },
     {
+      "name": "dsh-mcp-studio",
+      "version": "1.0.6",
+      "category": "connect"
+    },
+    {
       "name": "dsh-opencode-zen",
       "version": "0.1.0",
       "category": "other"
@@ -15736,7 +15767,7 @@
     {
       "name": "novel-writer",
       "version": "1.0.2",
-      "category": "enhance-ui"
+      "category": "agent"
     },
     {
       "name": "tizhuang-agent-skills",
@@ -15746,11 +15777,6 @@
     {
       "name": "whale-purse",
       "version": "1.1.0",
-      "category": "other"
-    },
-    {
-      "name": "dsh-chat-manager",
-      "version": "0.2.0",
       "category": "other"
     },
     {
@@ -15764,11 +15790,6 @@
       "category": "ops"
     },
     {
-      "name": "dsh-mcp-studio",
-      "version": "1.0.6",
-      "category": "enhance-models"
-    },
-    {
       "name": "dsh-plugin",
       "version": "2.2.7",
       "category": "other"
@@ -15777,11 +15798,6 @@
       "name": "dsh-plugin-miliastra-toolbox",
       "version": "0.1.0",
       "category": "other"
-    },
-    {
-      "name": "dsh-plugin-save-token",
-      "version": "2.4.1",
-      "category": "enhance-models"
     },
     {
       "name": "project-karen",
@@ -15824,6 +15840,11 @@
       "category": "enhance-models"
     },
     {
+      "name": "dsh-prompt-setting",
+      "version": "0.2.5",
+      "category": "connect"
+    },
+    {
       "name": "dsh-theme-plugin",
       "version": "0.3.3",
       "category": "enhance-ui"
@@ -15834,14 +15855,14 @@
       "category": "work"
     },
     {
-      "name": "dsh-embedded-workbench",
-      "version": "0.9.7",
+      "name": "deepseek-harness-zh-cn",
+      "version": "0.1.5",
       "category": "dev"
     },
     {
-      "name": "dsh-office",
-      "version": "0.4.6",
-      "category": "work"
+      "name": "dsh-embedded-workbench",
+      "version": "0.9.7",
+      "category": "dev"
     },
     {
       "name": "dsh-ponytail",
@@ -15871,12 +15892,12 @@
     {
       "name": "dsh-file-upload",
       "version": "2.1.0",
-      "category": "enhance-ui"
+      "category": "connect"
     },
     {
       "name": "dsh-memgas",
       "version": "0.2.1",
-      "category": "other"
+      "category": "enhance-memory"
     },
     {
       "name": "dsh-novel-forge",
@@ -15884,8 +15905,8 @@
       "category": "agent"
     },
     {
-      "name": "dsh-origin-plugin",
-      "version": "2.7.3",
+      "name": "dsh-reference-anything",
+      "version": "0.5.2",
       "category": "connect"
     },
     {
@@ -15901,12 +15922,7 @@
     {
       "name": "@zseven-w/dsh-harbor",
       "version": "0.1.0-rc.4",
-      "category": "media"
-    },
-    {
-      "name": "deepseek-harness-zh-cn",
-      "version": "0.1.5",
-      "category": "other"
+      "category": "dev"
     },
     {
       "name": "dsh-computer-use-codex-style",
@@ -15934,19 +15950,24 @@
       "category": "other"
     },
     {
-      "name": "dsh-prompt-setting",
-      "version": "0.2.5",
-      "category": "enhance-models"
-    },
-    {
       "name": "@dsh-external/dsh-client-ui-skin-hakurei-shrine",
       "version": "0.1.0",
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-plugin-lookatstudy",
+      "version": "0.28.0",
+      "category": "eco"
+    },
+    {
       "name": "dsh-streamfold",
       "version": "0.7.12",
       "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-super-code",
+      "version": "0.3.9",
+      "category": "dev"
     },
     {
       "name": "dsh-ui-appearance",
@@ -15974,14 +15995,19 @@
       "category": "other"
     },
     {
+      "name": "@txc2768651338/dsh-effort-slider",
+      "version": "0.5.2",
+      "category": "connect"
+    },
+    {
       "name": "@zoria-lind/dsh-token-optimizer",
       "version": "3.0.0",
       "category": "enhance-memory"
     },
     {
-      "name": "dsh-plugin-lookatstudy",
-      "version": "0.28.0",
-      "category": "work"
+      "name": "dsh-mcp-manage",
+      "version": "1.1.0",
+      "category": "connect"
     },
     {
       "name": "dsh-plugin-mesh",
@@ -16099,11 +16125,6 @@
       "category": "enhance-memory"
     },
     {
-      "name": "dsh-prompt-enhance",
-      "version": "0.3.2",
-      "category": "enhance-models"
-    },
-    {
       "name": "dsh-qwen-paint",
       "version": "0.1.2",
       "category": "other"
@@ -16112,6 +16133,11 @@
       "name": "dsh-session-context-menu",
       "version": "0.1.0",
       "category": "enhance-memory"
+    },
+    {
+      "name": "@alpacachen/dsh-kanban",
+      "version": "1.10.1",
+      "category": "connect"
     },
     {
       "name": "@baihejiangnan/dsh-session-context-menu",
@@ -16129,14 +16155,14 @@
       "category": "enhance-tools"
     },
     {
-      "name": "@txc2768651338/dsh-effort-slider",
-      "version": "0.5.2",
-      "category": "enhance-ui"
-    },
-    {
       "name": "cyber-particle",
       "version": "0.2.3",
       "category": "data"
+    },
+    {
+      "name": "dsh-api-dashboard",
+      "version": "1.7.0",
+      "category": "connect"
     },
     {
       "name": "dsh-artifact",
@@ -16169,11 +16195,6 @@
       "category": "other"
     },
     {
-      "name": "dsh-mcp-manage",
-      "version": "1.1.0",
-      "category": "connect"
-    },
-    {
       "name": "dsh-media-skills",
       "version": "0.6.4",
       "category": "enhance-memory"
@@ -16189,9 +16210,9 @@
       "category": "other"
     },
     {
-      "name": "dsh-reference-anything",
-      "version": "0.5.2",
-      "category": "other"
+      "name": "dsh-search-boost",
+      "version": "0.1.3",
+      "category": "connect"
     },
     {
       "name": "dsh-theme-mineradio",
@@ -16207,11 +16228,6 @@
       "name": "ruic-dsh-purge",
       "version": "1.0.2",
       "category": "enhance-tools"
-    },
-    {
-      "name": "@alpacachen/dsh-kanban",
-      "version": "1.10.1",
-      "category": "work"
     },
     {
       "name": "@huliux/dsh-asr-plugin",
@@ -16244,11 +16260,6 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-search-boost",
-      "version": "0.1.3",
-      "category": "data"
-    },
-    {
       "name": "dsh-see-now",
       "version": "0.0.6",
       "category": "media"
@@ -16256,11 +16267,6 @@
     {
       "name": "dsh-update-checker",
       "version": "1.7.3",
-      "category": "other"
-    },
-    {
-      "name": "dsh-api-dashboard",
-      "version": "1.7.0",
       "category": "other"
     },
     {
@@ -16314,6 +16320,11 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-tool-antigravity",
+      "version": "0.5.2",
+      "category": "media"
+    },
+    {
       "name": "dsh-ui-ux-pro-max",
       "version": "1.4.1",
       "category": "enhance-ui"
@@ -16324,9 +16335,19 @@
       "category": "enhance-models"
     },
     {
+      "name": "canvas-workbench",
+      "version": "1.9.62",
+      "category": "media"
+    },
+    {
       "name": "dsh-composer-assist",
       "version": "0.1.1",
       "category": "other"
+    },
+    {
+      "name": "dsh-fs-encoding",
+      "version": "1.5.2",
+      "category": "dev"
     },
     {
       "name": "dsh-gui-customization",
@@ -16459,11 +16480,6 @@
       "category": "enhance-models"
     },
     {
-      "name": "dsh-super-code",
-      "version": "0.3.9",
-      "category": "agent"
-    },
-    {
       "name": "dsh-tavern-comfy",
       "version": "3.0.2",
       "category": "work"
@@ -16509,9 +16525,24 @@
       "category": "other"
     },
     {
+      "name": "dsh-continual-harness",
+      "version": "0.3.3",
+      "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-cursor-subscription",
+      "version": "0.6.12",
+      "category": "connect"
+    },
+    {
       "name": "dsh-delete-session",
       "version": "0.2.4",
       "category": "other"
+    },
+    {
+      "name": "dsh-diff-approval",
+      "version": "0.37.1",
+      "category": "dev"
     },
     {
       "name": "dsh-global-rules",
@@ -16591,7 +16622,7 @@
     {
       "name": "@aiwayds/dsh-dcp",
       "version": "0.13.1",
-      "category": "enhance-memory"
+      "category": "enhance-tools"
     },
     {
       "name": "@huanlin/dsh-plugin-ya-workspace-sidebar",
@@ -16602,11 +16633,6 @@
       "name": "@sakura12/oh-my-deepseekharness",
       "version": "0.7.2",
       "category": "agent"
-    },
-    {
-      "name": "better-model-provider",
-      "version": "0.0.8",
-      "category": "enhance-ui"
     },
     {
       "name": "deepseek-manners",
@@ -16627,21 +16653,6 @@
       "name": "dsh-client-ui-skins",
       "version": "0.1.16",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-continual-harness",
-      "version": "0.3.3",
-      "category": "other"
-    },
-    {
-      "name": "dsh-cursor-subscription",
-      "version": "0.6.12",
-      "category": "enhance-models"
-    },
-    {
-      "name": "dsh-diff-approval",
-      "version": "0.37.1",
-      "category": "enhance-tools"
     },
     {
       "name": "dsh-liquid-glass",
@@ -16711,12 +16722,17 @@
     {
       "name": "@wsz987/dsh-channels",
       "version": "0.5.1",
-      "category": "work"
+      "category": "connect"
     },
     {
       "name": "@y9931666/dsh-plugin-roundtable",
       "version": "1.0.0-rc.3",
       "category": "other"
+    },
+    {
+      "name": "better-model-provider",
+      "version": "0.0.8",
+      "category": "media"
     },
     {
       "name": "dsh-agent-web-search",
@@ -16737,11 +16753,6 @@
       "name": "dsh-docker",
       "version": "0.1.0",
       "category": "agent"
-    },
-    {
-      "name": "dsh-fs-encoding",
-      "version": "1.5.2",
-      "category": "other"
     },
     {
       "name": "dsh-gemini-eyes-bundle",
@@ -16836,7 +16847,7 @@
     {
       "name": "@cocofhu/skillhub",
       "version": "0.2.16",
-      "category": "enhance-tools"
+      "category": "eco"
     },
     {
       "name": "@dsh-external/dsh-plugin-local-ai-tts",
@@ -16867,11 +16878,6 @@
       "name": "api-balance",
       "version": "0.2.1",
       "category": "dev"
-    },
-    {
-      "name": "canvas-workbench",
-      "version": "1.9.62",
-      "category": "enhance-ui"
     },
     {
       "name": "dafy-whale-theme",
@@ -16969,14 +16975,14 @@
       "category": "eco"
     },
     {
-      "name": "dsh-task-dag",
-      "version": "1.4.0",
+      "name": "dsh-subagent-default-model",
+      "version": "2.1.12",
       "category": "agent"
     },
     {
-      "name": "dsh-tool-antigravity",
-      "version": "0.5.2",
-      "category": "enhance-tools"
+      "name": "dsh-task-dag",
+      "version": "1.4.0",
+      "category": "agent"
     },
     {
       "name": "dsh-usage-panel",
@@ -17064,6 +17070,11 @@
       "category": "other"
     },
     {
+      "name": "dsh-duet",
+      "version": "0.1.10",
+      "category": "enhance-tools"
+    },
+    {
       "name": "dsh-excel-chat",
       "version": "0.43.0",
       "category": "other"
@@ -17126,7 +17137,7 @@
     {
       "name": "dsh-oomol",
       "version": "1.1.0",
-      "category": "other"
+      "category": "connect"
     },
     {
       "name": "dsh-opencode-go-usage",
@@ -17172,11 +17183,6 @@
       "name": "dsh-scrape-webpage",
       "version": "1.0.0",
       "category": "data"
-    },
-    {
-      "name": "dsh-subagent-default-model",
-      "version": "2.1.12",
-      "category": "agent"
     },
     {
       "name": "dsh-taskfold",
@@ -17374,6 +17380,11 @@
       "category": "connect"
     },
     {
+      "name": "dsh-swarm-orchestrator",
+      "version": "0.6.32",
+      "category": "agent"
+    },
+    {
       "name": "dsh-task-control",
       "version": "0.4.7",
       "category": "other"
@@ -17491,7 +17502,7 @@
     {
       "name": "@zoria-lind/dsh-behavior-enhancer",
       "version": "1.3.1",
-      "category": "dev"
+      "category": "eco"
     },
     {
       "name": "agent-useful-skills",
@@ -17537,11 +17548,6 @@
       "name": "dsh-djy-xttsc",
       "version": "1.1.1",
       "category": "enhance-models"
-    },
-    {
-      "name": "dsh-duet",
-      "version": "0.1.10",
-      "category": "other"
     },
     {
       "name": "dsh-ecc",
@@ -17637,11 +17643,6 @@
       "name": "dsh-skin-market-2",
       "version": "0.1.1",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-swarm-orchestrator",
-      "version": "0.6.32",
-      "category": "agent"
     },
     {
       "name": "dsh-tylina",
@@ -17749,11 +17750,6 @@
       "category": "enhance-memory"
     },
     {
-      "name": "dsh-agent-messaging",
-      "version": "0.11.0",
-      "category": "other"
-    },
-    {
       "name": "dsh-approval-llm",
       "version": "0.1.10",
       "category": "enhance-models"
@@ -17787,6 +17783,11 @@
       "name": "dsh-delete-turn",
       "version": "0.1.15",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-devices",
+      "version": "0.1.2",
+      "category": "agent"
     },
     {
       "name": "dsh-devquest",
@@ -18019,6 +18020,11 @@
       "category": "enhance-tools"
     },
     {
+      "name": "dsh-wallpaper",
+      "version": "0.1.0",
+      "category": "enhance-tools"
+    },
+    {
       "name": "dsh-wb400-guard",
       "version": "0.1.7",
       "category": "ops"
@@ -18121,7 +18127,7 @@
     {
       "name": "@studyzy/dsh-suggest-prompt",
       "version": "1.2.3",
-      "category": "enhance-memory"
+      "category": "enhance-tools"
     },
     {
       "name": "chicheng-cron",
@@ -18144,6 +18150,11 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-agent-messaging",
+      "version": "0.11.0",
+      "category": "agent"
+    },
+    {
       "name": "dsh-angelina-themes",
       "version": "0.1.0",
       "category": "enhance-ui"
@@ -18161,7 +18172,7 @@
     {
       "name": "dsh-balance-float",
       "version": "1.0.3",
-      "category": "other"
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-bill",
@@ -18242,11 +18253,6 @@
       "name": "dsh-developer",
       "version": "0.1.4",
       "category": "other"
-    },
-    {
-      "name": "dsh-devices",
-      "version": "0.1.2",
-      "category": "enhance-ui"
     },
     {
       "name": "dsh-diff-stat",
@@ -18342,6 +18348,11 @@
       "name": "dsh-music-analyze",
       "version": "0.2.0",
       "category": "media"
+    },
+    {
+      "name": "dsh-office",
+      "version": "0.4.6",
+      "category": "agent"
     },
     {
       "name": "dsh-pdf-translator",
@@ -18466,11 +18477,6 @@
     {
       "name": "dsh-ui-progress",
       "version": "0.1.2",
-      "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-wallpaper",
-      "version": "0.1.0",
       "category": "enhance-ui"
     },
     {
@@ -18936,7 +18942,7 @@
     {
       "name": "dsh-plugin-balance",
       "version": "1.4.4",
-      "category": "enhance-models"
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-plugin-codex-bridge",
@@ -19091,7 +19097,7 @@
     {
       "name": "dsh-wallpaper-rotator",
       "version": "1.0.0",
-      "category": "enhance-ui"
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-weather-panel",
@@ -19461,7 +19467,7 @@
     {
       "name": "dsh-community-plugins",
       "version": "0.1.5",
-      "category": "enhance-memory"
+      "category": "eco"
     },
     {
       "name": "dsh-compact-suite",
@@ -19801,7 +19807,7 @@
     {
       "name": "dsh-plugin-appshot",
       "version": "0.4.2",
-      "category": "enhance-models"
+      "category": "eco"
     },
     {
       "name": "dsh-plugin-bilibili",
@@ -26017,11 +26023,6 @@
       "name": "dsh-remote-panel-ssh",
       "version": "0.1.1",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-remote-plugin",
-      "version": "0.7.4",
-      "category": "enhance-tools"
     },
     {
       "name": "dsh-remote-shell",
