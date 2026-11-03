@@ -21,11 +21,14 @@ const REGISTRY = (process.env.NPM_REGISTRY || 'https://registry.npmjs.org').repl
 // Keyword search only works on the npm registry proper: npmmirror ignores the
 // `keywords:` prefix and answers 0, so discovery stays on npmjs by default.
 const SEARCH_REGISTRY = (process.env.SEARCH_REGISTRY || 'https://registry.npmjs.org').replace(/\/+$/, '')
+// Retried requests fall back here; a mirror tolerates the crawl's burst better
+// than npmjs does, and a manifest read from either registry is the same document.
+const FALLBACK_REGISTRY = (process.env.FALLBACK_REGISTRY ?? 'https://registry.npmmirror.com').replace(/\/+$/, '')
 const DSH_RUNTIME = process.env.DSH_RUNTIME_VERSION || '0.2.1-rc.5'
 const MIN_AGE_DAYS = Number(process.env.MIN_AGE_DAYS || 3)
 const MAX_PLUGINS = Number(process.env.MAX_PLUGINS || 1500)
 const MAX_CANDIDATES = Number(process.env.MAX_CANDIDATES || 4000)
-const CONCURRENCY = Number(process.env.CONCURRENCY || 16)
+const CONCURRENCY = Number(process.env.CONCURRENCY || 8)
 const QUERIES = (process.env.SEARCH_QUERIES || [
   'keywords:dsh-plugin',
   'keywords:deepseek-harness',
@@ -37,20 +40,31 @@ const UA = 'dsh-market-crawler/1.0 (+https://github.com/jingjiangze/dsh-market)'
 // ---------------------------------------------------------------- utilities
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-async function getJSON(url, { accept = 'application/json', tries = 3 } = {}) {
+async function getJSON(url, { accept = 'application/json', tries = 4 } = {}) {
+  // A four-figure candidate set hammers the registry; retry with backoff and fall
+  // back to the mirror instead of counting the miss as a rejected plugin.
+  const fallbacks = []
+  if (FALLBACK_REGISTRY && url.startsWith(REGISTRY)) fallbacks.push(FALLBACK_REGISTRY + url.slice(REGISTRY.length))
   let last
   for (let i = 0; i < tries; i++) {
+    const target = i > 0 && fallbacks.length ? fallbacks[(i - 1) % fallbacks.length] : url
     try {
-      const res = await fetch(url, {
+      const res = await fetch(target, {
         headers: { accept, 'user-agent': UA },
-        signal: AbortSignal.timeout(20000),
+        signal: AbortSignal.timeout(30000),
       })
       if (res.status === 404) return { notFound: true }
+      if (res.status === 429 || res.status >= 500) {
+        const retryAfter = Number(res.headers.get('retry-after') || 0)
+        await sleep(retryAfter ? retryAfter * 1000 : 1200 * (i + 1) ** 2)
+        last = new Error(`HTTP ${res.status}`)
+        continue
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       return { body: await res.json() }
     } catch (err) {
       last = err
-      if (i < tries - 1) await sleep(500 * (i + 1))
+      if (i < tries - 1) await sleep(800 * (i + 1) ** 2)
     }
   }
   throw last
