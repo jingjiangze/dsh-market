@@ -1,10 +1,10 @@
-// Publishes the stylesheet and the bundle under a content-addressed path and
-// points the shell at the jsDelivr copy of exactly that path.
+// Publishes the stylesheet and the bundle under ONE content-addressed directory and
+// rewrites the shell's three mirror tiers to point at it.
 //
-// Why: jsDelivr caches `@main` for hours, so a plain `@main/site/style.css` URL
-// kept serving an old stylesheet after a redesign (measured). A path that changes
-// whenever the bytes change is a cache miss on the CDN, so the reader always gets
-// the file that shipped with this commit — no purge, no TTL wait.
+// Why a combined hash: the shell carries a single `<script>` loader over three tiers,
+// so both files must share a directory name — one hash over (css + js) gives that.
+// Why a hashed path at all: every CDN caches `@main` for hours, and a path that
+// changes with the bytes is a guaranteed cache miss, so a redesign is immediate.
 //
 //   node crawler/assets.mjs
 import { readFile, writeFile, mkdir, readdir, rm, stat } from 'node:fs/promises'
@@ -15,48 +15,37 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const site = join(root, 'site')
 const assetsDir = join(site, 'a')
-// ModelScope measured 0.16-0.19 s per file with Access-Control-Allow-Origin: * and
-// the right Content-Type per extension; the same bytes on jsDelivr took 7.4 s from
-// this network. The dataset copy is therefore what the shell references.
-const ASSET_BASE = process.env.ASSET_BASE
-  || 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/a'
-
-const hash = (buffer) => createHash('sha1').update(buffer).digest('hex').slice(0, 10)
+// Tier 1 is the ModelScope dataset (0.16-0.19 s measured, CORS *, right MIME),
+// tier 2 the jsDelivr mirror, tier 3 this site's own copy.
+const TIERS = [
+  (process.env.ASSET_TIER1 || 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/a'),
+  (process.env.ASSET_TIER2 || 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/a'),
+  (process.env.ASSET_TIER3 || '/a'),
+]
 
 const css = await readFile(join(site, 'style.css'))
 const js = await readFile(join(site, 'app.js'))
-const cssHash = hash(css)
-const jsHash = hash(js)
+const version = createHash('sha1').update(css).update(js).digest('hex').slice(0, 10)
 
-await mkdir(assetsDir, { recursive: true })
-for (const [hashValue, name, buffer] of [[cssHash, 'style.css', css], [jsHash, 'app.js', js]]) {
-  await mkdir(join(assetsDir, hashValue), { recursive: true })
-  await writeFile(join(assetsDir, hashValue, name), buffer)
-}
+await mkdir(join(assetsDir, version), { recursive: true })
+await writeFile(join(assetsDir, version, 'style.css'), css)
+await writeFile(join(assetsDir, version, 'app.js'), js)
 
 // Drop every other hashed directory: the repo should not accumulate dead copies.
 for (const entry of await readdir(assetsDir, { withFileTypes: true })) {
-  if (entry.isDirectory() && entry.name !== cssHash && entry.name !== jsHash) {
+  if (entry.isDirectory() && entry.name !== version) {
     await rm(join(assetsDir, entry.name), { recursive: true, force: true })
   }
 }
 
 const htmlPath = join(site, 'index.html')
-const html = await readFile(htmlPath, 'utf8')
-// Normalise first, so running this twice on an already-published file is a no-op
-// instead of nesting URLs.
-const relative = html
-  .replace(/(<link rel=stylesheet href=)(?:[^ >]*\/)?style\.css/i, '$1/style.css')
-  // drop any attributes a previous run appended, so this stays idempotent
-  .replace(/(<script type=module src=)(?:[^ >]*\/)?app\.js[^>]*/i, '$1/app.js')
-const updated = relative
-  .replace(/(<link rel=stylesheet href=)[^ >]+/i, `$1${ASSET_BASE}/${cssHash}/style.css`)
-  // If the dataset copy of the bundle is unreachable, fall back to the same-origin
-  // copy published with this site (the stylesheet walks all three tiers inside
-  // app.js, because the 1 KiB shell cannot hold three absolute URLs).
-  .replace(/(<script type=module src=)[^ >]+/i, `$1${ASSET_BASE}/${jsHash}/app.js onerror="this.src='/app.js'"`)
+const authored = (await readFile(htmlPath, 'utf8'))
+  // normalise the tier list back to tokens so this stays idempotent
+  .replace(/var T=\[[^\]]*\]/, 'var T=["T1","T2","T3"]')
+const tiers = JSON.stringify(TIERS.map((base) => `${base}/${version}`))
+const updated = authored.replace('var T=["T1","T2","T3"]', `var T=${tiers}`)
 await writeFile(htmlPath, updated)
 
 const bytes = (await stat(htmlPath)).size
-console.log(`assets: css ${cssHash} (${css.length} B), js ${jsHash} (${js.length} B), shell ${bytes} B`)
+console.log(`assets: version ${version} (css ${css.length} B, js ${js.length} B), shell ${bytes} B`)
 if (bytes > 1024) console.log(`assets: WARNING shell ${bytes} B exceeds the 1 KiB budget`)

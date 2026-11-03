@@ -127,30 +127,33 @@ const html = await read('site/index.html')
 for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
-// Assets are published under a content-addressed path and served from jsDelivr:
-// a path that changes with the bytes is a CDN cache miss, so a redesign reaches
-// readers immediately (a plain @main URL kept serving the old stylesheet for
-// hours, even after a purge). The shell must only reference that hashed copy.
-const ASSET_URL = /https:\/\/modelscope\.cn\/datasets\/jingjiangze\/Anime-JPG\/resolve\/master\/web\/a\/([0-9a-f]{10})\/(style\.css|app\.js)/
-const assets = [...html.matchAll(new RegExp(ASSET_URL, 'g'))].map((match) => ({ hash: match[1], file: match[2] }))
-for (const file of ['style.css', 'app.js']) {
-  if (!assets.some((asset) => asset.file === file)) fail(`site/index.html ${file}`, 'is not referenced through the hashed mirror path')
-}
-for (const asset of assets) {
-  const path = `site/a/${asset.hash}/${asset.file}`
-  let bytes = null
+// The shell is only a frame: one placeholder node plus a loader that walks three
+// mirrors (dataset → jsDelivr → this site) with an 8 s timeout per tier. Both files
+// live in ONE content-addressed directory, so the loader can hold a single version.
+const versionMatch = html.match(/site\/a\/([0-9a-f]{10})"/) ?? html.match(/web\/a\/([0-9a-f]{10})"/)
+const version = versionMatch?.[1]
+if (!version) fail('site/index.html', 'no content-addressed asset version in the loader')
+if (!/modelscope\.cn/.test(html)) fail('site/index.html', 'the dataset tier is not referenced')
+if (!/cdn\.jsdelivr\.net/.test(html)) fail('site/index.html', 'the mirror tier is not referenced')
+if (version) {
+  const dir = join(root, 'site', 'a', version)
+  let css = null
+  let js = null
   try {
-    bytes = await readFile(join(root, path))
+    css = await readFile(join(dir, 'style.css'))
+    js = await readFile(join(dir, 'app.js'))
   } catch {
-    fail(`${asset.file} asset`, `${path} is missing`)
-    continue
+    fail('site/a assets', `site/a/${version} is missing its files`)
   }
-  const digest = createHash('sha1').update(bytes).digest('hex').slice(0, 10)
-  if (digest !== asset.hash) fail(`${asset.file} asset`, `${path} does not match its content hash (${digest})`)
-  else note(`${asset.file} asset`, `${path} matches its hash`)
+  if (css && js) {
+    const digest = createHash('sha1').update(css).update(js).digest('hex').slice(0, 10)
+    if (digest !== version) fail('site/a assets', `${version} does not match the combined hash (${digest})`)
+    else note('site/a assets', `${version}/style.css ${css.length} B + app.js ${js.length} B match`)
+  }
 }
-// no inline logic: the shell stays declarative so it can stay tiny
-if (/<script(?![^>]*\bsrc=)/.test(html)) fail('site/index.html inline script', 'shell must not inline JavaScript')
+// the loader itself is allowed to be inline: it is the frame, ~0.5 KB, and the only
+// way to walk three mirrors before any bundle has loaded
+if (!/var T=\[/.test(html)) fail('site/index.html loader', 'the three-tier loader is missing')
 // no local raster/font/video assets: visuals are CSS or mirrored icons
 for (const forbidden of ['.png', '.jpg', '.woff2', '.mp4']) {
   if (html.includes(forbidden)) fail('site/index.html asset', `inlines ${forbidden}`)
