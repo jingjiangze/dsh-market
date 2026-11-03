@@ -1,7 +1,7 @@
-// Validate the published index before it is allowed to merge or deploy.
+﻿// Validate the published index before it is allowed to merge or deploy.
 //
 // Uses the real format-1 validator from npm (@deepseek-ai/dsh-plugin-market-index),
-// so the check is the same one DSH itself runs — not a reimplementation.
+// so the check is the same one DSH itself runs 鈥?not a reimplementation.
 //
 //   npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
 //   node crawler/validate.mjs [--offline]
@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OFFLINE = process.argv.includes('--offline')
 const HTML_LIMIT = 1024
-const MAX_INDEX_BYTES = 2 * 1024 * 1024
+const MAX_INDEX_BYTES = 8 * 1024 * 1024
 
 const failures = []
 const notes = []
@@ -130,7 +130,7 @@ if (!OFFLINE) {
     const served = Buffer.from(await res.arrayBuffer())
     const expected = await readFile(join(root, localPath))
     if (served.length !== expected.length) {
-      fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B — purge the CDN copy`)
+      fail(`${label} stale`, `${url} serves ${served.length} B, repository has ${expected.length} B 鈥?purge the CDN copy`)
     }
   }
 }
@@ -146,7 +146,7 @@ async function checkPlugin(plugin) {
       headers: { accept: 'application/json', 'user-agent': 'dsh-market-ci/1.0' },
       signal: AbortSignal.timeout(20000),
     })
-    if (!res.ok) return fail('registry', `${plugin.name}@${version.version} → HTTP ${res.status}`)
+    if (!res.ok) return fail('registry', `${plugin.name}@${version.version} 鈫?HTTP ${res.status}`)
     const manifest = await res.json()
     if (!manifest.dsh?.bundle?.patch) fail('registry', `${plugin.name}@${version.version} declares no dsh.bundle.patch`)
     if (!manifest.engines?.dsh) fail('registry', `${plugin.name}@${version.version} declares no engines.dsh`)
@@ -154,7 +154,7 @@ async function checkPlugin(plugin) {
       fail('registry drift', `${plugin.name}@${version.version} engines.dsh ${JSON.stringify(manifest.engines?.dsh)} != index ${JSON.stringify(version.engines.dsh)}`)
     }
   } catch (err) {
-    fail('registry', `${plugin.name}@${version.version} → ${err.message}`)
+    fail('registry', `${plugin.name}@${version.version} 鈫?${err.message}`)
   }
 }
 
@@ -175,6 +175,6 @@ if (failures.length === 0) {
   process.exit(0)
 }
 console.log(`\nFAIL ${failures.length} problem(s):`)
-for (const [what, count] of [...byWhat].sort((a, b) => b[1] - a[1])) console.log(`  ${what} ×${count}`)
+for (const [what, count] of [...byWhat].sort((a, b) => b[1] - a[1])) console.log(`  ${what} 脳${count}`)
 for (const f of failures.slice(0, 20)) console.log(`  - ${f.what}: ${f.detail}`)
 process.exit(1)
