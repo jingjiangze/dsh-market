@@ -126,6 +126,11 @@ jobs:
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
+      - name: Publish assets under a content-addressed path
+        # Points the shell at the jsDelivr copy of exactly these bytes, so a redesign
+        # cannot be masked by jsDelivr's long @main cache.
+        run: node crawler/assets.mjs
+
       - name: Validate before anything lands
         # Content checks only: the CDN copy of the site assets cannot be fresh
         # before this branch merges, so mirror freshness is verified by `ci` and

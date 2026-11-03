@@ -6,6 +6,7 @@
 //   npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
 //   node crawler/validate.mjs [--offline]
 import { readFile, stat } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -126,13 +127,27 @@ const html = await read('site/index.html')
 for (const bad of ['127.0.0.1', 'localhost', 'file://']) {
   if (html.includes(bad)) fail('site/index.html reference', `contains ${bad}`)
 }
-// Site assets are served from our own origin. jsDelivr caches @main for hours and
-// a purge did not land in time during a redesign, which left readers on the old
-// stylesheet; third-party icons stay on jsDelivr, where npm versions are immutable.
-if (!/href=["']?\/style\.css/.test(html)) fail('stylesheet', 'index.html does not link /style.css')
-if (!/src=["']?\/app\.js/.test(html)) fail('script', 'index.html does not load /app.js')
-if (/cdn\.jsdelivr\.net\/gh\/jingjiangze/.test(html)) {
-  fail('own asset on CDN', 'index.html still points at the jsDelivr copy of our own assets')
+// Assets are published under a content-addressed path and served from jsDelivr:
+// a path that changes with the bytes is a CDN cache miss, so a redesign reaches
+// readers immediately (a plain @main URL kept serving the old stylesheet for
+// hours, even after a purge). The shell must only reference that hashed copy.
+const ASSET_URL = /https:\/\/cdn\.jsdelivr\.net\/gh\/jingjiangze\/dsh-market@main\/site\/a\/([0-9a-f]{10})\/(style\.css|app\.js)/
+const assets = [...html.matchAll(new RegExp(ASSET_URL, 'g'))].map((match) => ({ hash: match[1], file: match[2] }))
+for (const file of ['style.css', 'app.js']) {
+  if (!assets.some((asset) => asset.file === file)) fail(`site/index.html ${file}`, 'is not referenced through the hashed mirror path')
+}
+for (const asset of assets) {
+  const path = `site/a/${asset.hash}/${asset.file}`
+  let bytes = null
+  try {
+    bytes = await readFile(join(root, path))
+  } catch {
+    fail(`${asset.file} asset`, `${path} is missing`)
+    continue
+  }
+  const digest = createHash('sha1').update(bytes).digest('hex').slice(0, 10)
+  if (digest !== asset.hash) fail(`${asset.file} asset`, `${path} does not match its content hash (${digest})`)
+  else note(`${asset.file} asset`, `${path} matches its hash`)
 }
 // no inline logic: the shell stays declarative so it can stay tiny
 if (/<script(?![^>]*\bsrc=)/.test(html)) fail('site/index.html inline script', 'shell must not inline JavaScript')

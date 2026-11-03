@@ -271,6 +271,7 @@ $('q').addEventListener('input', (event) => {
 $('lang').addEventListener('change', (event) => {
   state.lang = event.target.value
   localStorage.setItem('dsh-market-lang', state.lang)
+  chrome()
   render()
   if (state.open && $('dlg').open) openDetail(state.open)
 })
@@ -285,5 +286,22 @@ document.addEventListener('keydown', (event) => {
 const saved = localStorage.getItem('dsh-market-lang')
 if (LANGS.includes(saved)) state.lang = saved
 else if (!String(navigator.language ?? '').toLowerCase().startsWith('zh')) state.lang = 'en'
-$('lang').value = state.lang
+
+// The shell is kept under 1 KiB, so the language list and the placeholder live
+// here instead of in the HTML.
+const LANG_LABEL = { zh: '中文', en: 'EN', ja: '日本語', ko: '한국어', ru: 'Русский' }
+const PLACEHOLDER = {
+  zh: '搜索插件 / 作者 / 关键词',
+  en: 'Search plugins, authors, keywords',
+  ja: 'プラグイン・作者・キーワードを検索',
+  ko: '플러그인 · 작성자 · 키워드 검색',
+  ru: 'Поиск плагинов, авторов, ключевых слов',
+}
+function chrome() {
+  $('lang').innerHTML = LANGS.map((lang) => `<option value=${lang}>${LANG_LABEL[lang]}</option>`).join('')
+  $('lang').value = state.lang
+  $('q').placeholder = PLACEHOLDER[state.lang] ?? PLACEHOLDER.en
+}
+
+chrome()
 load('index')
