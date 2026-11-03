@@ -41,8 +41,9 @@ jobs:
           SEARCH_REGISTRY: https://registry.npmjs.org
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_PLUGINS: '1500'
-          MAX_CANDIDATES: '4000'
+          MAX_CANDIDATES: '1500'
           CONCURRENCY: '12'
+          CRAWL_BUDGET_MS: '900000'
           SOURCES: dshso,awesome,mydsh
         run: node crawler/crawl.mjs
 

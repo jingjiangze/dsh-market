@@ -284,6 +284,12 @@ async function search(query) {
 
 async function main() {
   const started = Date.now()
+  // A wall-clock budget keeps one slow registry from turning a scheduled crawl
+  // into a 40-minute job: whatever is verified before the deadline is published,
+  // and the rest stays queued for the next run.
+  const deadline = started + Number(process.env.CRAWL_BUDGET_MS || 15 * 60 * 1000)
+  const outOfTime = () => Date.now() > deadline
+  const skipped = { phase1: 0, phase2: 0 }
   const rejections = []
   const counts = new Map()
 
@@ -328,6 +334,10 @@ async function main() {
   // 2. phase 1: cheap latest-manifest gate
   const shortlist = []
   for (let i = 0; i < candidates.length; i += CONCURRENCY) {
+    if (outOfTime()) {
+      skipped.phase1 = candidates.length - i
+      break
+    }
     const batch = candidates.slice(i, i + CONCURRENCY)
     await Promise.all(batch.map(async (name) => {
       try {
@@ -348,6 +358,10 @@ async function main() {
   // 3. phase 2: pick the newest compatible version from the full packument
   const plugins = []
   for (let i = 0; i < shortlist.length; i += CONCURRENCY) {
+    if (outOfTime()) {
+      skipped.phase2 = shortlist.length - i
+      break
+    }
     const batch = shortlist.slice(i, i + CONCURRENCY)
     await Promise.all(batch.map(async ({ name }) => {
       try {
@@ -501,6 +515,12 @@ async function main() {
       for (const origin of plugin._sidecar.origins ?? []) acc[origin] = (acc[origin] || 0) + 1
       return acc
     }, {}),
+    budget: {
+      ms: Date.now() - started,
+      exhausted: skipped.phase1 > 0 || skipped.phase2 > 0,
+      skippedCandidates: skipped.phase1,
+      skippedShortlist: skipped.phase2,
+    },
     bytes: JSON.stringify(index).length,
     ms: Date.now() - started,
   }
