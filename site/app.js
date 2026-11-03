@@ -13,15 +13,19 @@ const PLACEHOLDER = {
   ko: '플러그인 · 작성자 · 키워드 검색',
   ru: 'Поиск плагинов, авторов, ключевых слов',
 }
-// The four index documents a reader can subscribe to. Picking one only changes
-// which link is shown/copied — the list below always shows the whole catalogue.
+// Index sources are per language: the dataset carries one format-1 document per
+// language, so a Chinese reader can subscribe to the Chinese catalogue and a
+// Japanese reader to the Japanese one.
+const DATASET = 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web'
 const INDEX_URL = {
-  index: 'https://jingjiangze.github.io/dsh-market/index.json',
-  'index.cn': 'https://jingjiangze.github.io/dsh-market/index.cn.json',
-  'index.intl': 'https://jingjiangze.github.io/dsh-market/index.intl.json',
-  data: 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/index.json',
+  all: 'https://jingjiangze.github.io/dsh-market/index.json',
+  zh: `${DATASET}/index.zh.json`,
+  en: `${DATASET}/index.en.json`,
+  ja: `${DATASET}/index.ja.json`,
+  ko: `${DATASET}/index.ko.json`,
+  ru: `${DATASET}/index.ru.json`,
 }
-const IDX_LABEL = { index: '全部', 'index.cn': '国内', 'index.intl': '国际', data: '数据集' }
+const IDX_LABEL = { all: '全部', zh: '中文', en: 'English', ja: '日本語', ko: '한국어', ru: 'Русский' }
 const TIERS = [
   'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/browse',
   'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
@@ -79,10 +83,16 @@ function byOrder(a, b) {
 
 // Icon chain: the package icon, then the repository owner's avatar (developer),
 // then the CSS dot. `onerror` swaps down the chain without extra requests.
+// One helper for both views: the first URL that loads wins, and the chain walks
+// dataset copy → origin mirror → project artwork → developer avatar → nothing.
+function imgChain(chain, attributes) {
+  const urls = chain.filter(Boolean)
+  if (!urls.length) return ''
+  return `<img ${attributes} src="${esc(urls[0])}" data-chain="${esc(urls.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.remove();return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
+}
+
 function icon(entry) {
-  if (entry.i) return `<img loading=lazy src="${esc(entry.i)}"${entry.g ? ` onerror="this.onerror=null;this.src='${esc(entry.g)}'"` : ' onerror="this.remove()"'}>`
-  if (entry.g) return `<img loading=lazy src="${esc(entry.g)}" onerror="this.remove()">`
-  return '<i class=dot></i>'
+  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'loading=lazy') || '<i class=dot></i>'
 }
 
 function card(entry) {
@@ -126,9 +136,7 @@ function render() {
 // The detail view shows a larger icon and walks the full chain the reader asked
 // for: package icon → the project's GitHub artwork → the developer's avatar.
 function heroIcon(entry) {
-  const chain = [entry.i, entry.p2, entry.g].filter(Boolean)
-  if (!chain.length) return ''
-  return `<img class=hicon src="${esc(chain[0])}" data-chain="${esc(chain.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.remove();return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
+  return imgChain([entry.i, entry.ib, entry.p2, entry.g, entry.gb], 'class=hicon')
 }
 
 function detailHtml(entry) {
@@ -259,6 +267,14 @@ document.addEventListener('click', (event) => {
     for (const button of document.querySelectorAll('[data-idx]')) button.removeAttribute('aria-pressed')
     idxButton.setAttribute('aria-pressed', 'true')
     state.copyTarget = idxButton.dataset.idx
+    // Picking a language source also switches the interface language: that is what
+    // a reader who clicked "日本語" expects, and it keeps the copied link in sync
+    // with what they are looking at.
+    if (LANGS.includes(state.copyTarget)) {
+      state.lang = state.copyTarget
+      localStorage.setItem('dsh-market-lang', state.lang)
+      chrome()
+    }
     render()
     return
   }
@@ -328,14 +344,12 @@ function chrome() {
   $('lang').innerHTML = LANGS.map((lang) => `<option value=${lang}>${LANG_LABEL[lang]}</option>`).join('')
   $('lang').value = state.lang
   $('q').placeholder = PLACEHOLDER[state.lang] ?? PLACEHOLDER.en
-  // The dataset link is appended here rather than in the HTML: the shell is under
-  // 1 KiB and this button costs no bytes that way.
+  // Source buttons are built here (not in the shell): one per language plus "all".
   const seg = document.querySelector?.('.seg')
-  if (seg && !seg.querySelector('[data-idx=data]')) {
-    const button = document.createElement('button')
-    button.dataset.idx = 'data'
-    button.textContent = IDX_LABEL.data
-    seg.append(button)
+  if (seg) {
+    seg.innerHTML = Object.entries(IDX_LABEL)
+      .map(([id, label]) => `<button data-idx="${id}"${state.copyTarget === id ? ' aria-pressed=true' : ''}>${label}</button>`)
+      .join('')
   }
 }
 

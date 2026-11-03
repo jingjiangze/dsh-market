@@ -108,15 +108,18 @@ jobs:
         run: node crawler/enrich.mjs
 
       - name: Add the other languages
-        # The detail drawer shows one language at a time, so every entry needs its
-        # ja/ko/ru text: a bigger per-run budget fills a 10k catalogue in a few runs
-        # while the content-hash cache keeps later runs cheap.
+        # One document per language is published, so every entry needs its ja/ko/ru
+        # text. The budget is set to fill the ~57k backlog in one run, and the
+        # content-hash cache makes later runs nearly free.
         env:
           TRANSLATE_LANGS: ja,ko,ru
-          TRANSLATE_CONCURRENCY: '16'
-          TRANSLATE_MAX_STRINGS: '1500'
-          TRANSLATE_BUDGET_MS: '480000'
+          TRANSLATE_CONCURRENCY: '12'
+          TRANSLATE_MAX_STRINGS: '60000'
+          TRANSLATE_BUDGET_MS: '2400000'
         run: node crawler/translate.mjs
+
+      - name: Build one index per language
+        run: node crawler/lang-index.mjs
 
       - name: Assemble the site
         run: |
@@ -126,24 +129,34 @@ jobs:
           cp dist/index.sidecar.json site/sidecar.json
           cp dist/stats.json site/stats.json
 
+      - name: Mirror the icons
+        # Avatars and package icons are copied into the dataset (7112 URLs at the
+        # last audit) so the page does not depend on github.com; the origin URL
+        # stays in the entry as the browser-side fallback.
+        env:
+          ICON_CONCURRENCY: '12'
+          ICON_BUDGET_MS: '720000'
+        run: node crawler/icons.mjs
+
       - name: Build the browse chunks
         # The page reads a ~350 KB first chunk instead of the 11.5 MB format-1 document.
         env:
           BROWSE_CHUNK: '250'
         run: node crawler/browse.mjs
 
-      - name: Publish assets and browse data to ModelScope
+      - name: Hash the assets the shell references
+        # Must run BEFORE the dataset upload: the shell names a content-addressed
+        # directory, and if the upload happens first that directory does not exist
+        # yet (that is what left tier 1 answering 404).
+        run: node crawler/assets.mjs
+
+      - name: Publish assets, browse data and icons to ModelScope
         # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
         # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
         env:
           MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
           MODELSCOPE_DATASET: jingjiangze/Anime-JPG
         run: node crawler/ms-upload.mjs
-
-      - name: Publish assets under a content-addressed path
-        # Points the shell at the dataset copy of exactly these bytes, so a redesign
-        # cannot be masked by any CDN's long-lived cache.
-        run: node crawler/assets.mjs
 
       - name: Validate before anything lands
         # Content checks only: the CDN copy of the site assets cannot be fresh

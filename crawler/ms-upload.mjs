@@ -60,18 +60,30 @@ if (existsSync(assetsRoot)) {
   }
 }
 const browseRoot = join(root, 'dist', 'browse')
-if (existsSync(browseRoot)) {
+if (process.env.MODELSCOPE_SKIP_BROWSE !== '1' && existsSync(browseRoot)) {
   const { readdir } = await import('node:fs/promises')
   for (const file of await readdir(browseRoot)) {
     plan.push({ from: join(browseRoot, file), to: `web/browse/${file}` })
   }
 }
+// Mirrored icons/avatars, so the dataset also serves the artwork.
+const iconsRoot = join(root, 'dist', 'icons')
+if (existsSync(iconsRoot)) {
+  const { readdir } = await import('node:fs/promises')
+  for (const file of await readdir(iconsRoot)) {
+    plan.push({ from: join(iconsRoot, file), to: `web/icons/${file}` })
+  }
+}
 // The full format-1 documents live here too, so the dataset can be used as an
-// index source on its own (and so the page can show that link).
+// index source on its own (and so the page can show those links).
 if (process.env.MODELSCOPE_SKIP_DOCS !== '1') {
   for (const file of ['index.json', 'index.cn.json', 'index.intl.json']) {
     const from = join(root, 'site', file)
     if (existsSync(from)) plan.push({ from, to: `web/${file}` })
+  }
+  for (const lang of ['zh', 'en', 'ja', 'ko', 'ru']) {
+    const from = join(root, 'dist', `index.${lang}.json`)
+    if (existsSync(from)) plan.push({ from, to: `web/index.${lang}.json` })
   }
 }
 if (!plan.length) {

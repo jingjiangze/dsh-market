@@ -110,23 +110,24 @@ if (!/data-next/.test(dialog.innerHTML) || !/class=nav/.test(dialog.innerHTML)) 
 if (/class=dual/.test(dialog.innerHTML)) problems.push('dialog still renders the old bilingual columns')
 if (/class=close|关闭/.test(dialog.innerHTML)) problems.push('dialog still renders the removed close button')
 
-// Segments only change which index link is shown/copied — the list must not change.
+// Source buttons are per language: picking one copies that language's index and
+// must not filter the list.
 const before = (element('list').innerHTML.match(/class=card/g) ?? []).length
-api.state.copyTarget = 'index.cn'
+api.chrome()
+if (!/data-idx="ja"/.test(segElement.innerHTML) || !/日本語/.test(segElement.innerHTML)) problems.push('per-language source buttons are missing')
+api.state.copyTarget = 'zh'
 api.render()
-if (element('src').textContent !== 'https://jingjiangze.github.io/dsh-market/index.cn.json') problems.push('domestic segment did not switch the copied link')
-if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) problems.push('segment switch must not filter the list')
-
-// The dataset source must be offered and must copy the ModelScope URL.
-if (!segElement.children.some((child) => child.dataset.idx === 'data')) problems.push('dataset index link is not offered in the source switch')
-api.state.copyTarget = 'data'
+if (!/index\.zh\.json/.test(String(element('src').textContent))) problems.push('the Chinese source does not copy index.zh.json')
+if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) problems.push('source switch must not filter the list')
+api.state.copyTarget = 'ja'
 api.render()
-if (!String(element('src').textContent).includes('modelscope.cn')) problems.push('dataset source does not copy the ModelScope index URL')
+if (!/modelscope\.cn/.test(String(element('src').textContent))) problems.push('a language source does not point at the dataset')
+if (api.state.lang !== 'zh') problems.push('render() alone should not change the interface language')
 
 // Integration guide modal.
 api.openGuide()
 if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
-if (!/index(\.cn|\.intl)?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
+if (!/index(\.(zh|en|ja|ko|ru))?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
 
 // A second instance whose tier-1 source is down must fall through to tier 2.
 const brokenFetch = async (url) => {

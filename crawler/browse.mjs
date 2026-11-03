@@ -29,6 +29,15 @@ function repoParts(repoUrl) {
   return match ? { owner: match[1], repo: match[2].replace(/\.git$/i, '') } : null
 }
 
+const ICON_BASE = process.env.ICON_BASE
+  || 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web/icons'
+// Icons are mirrored into the dataset by crawler/icons.mjs; when a URL has a
+// mirrored copy the entry points at the dataset and keeps the origin as fallback.
+const iconCache = await readFile(join(root, 'data', 'icons-cache.json'), 'utf8')
+  .then((text) => JSON.parse(text).files ?? {})
+  .catch(() => ({}))
+const mirrored = (url) => (url && iconCache[url]?.name ? `${ICON_BASE}/${iconCache[url].name}` : null)
+
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const rawPlugins = index.plugins ?? []
 if (rawPlugins.length < MIN_PLUGINS && !FORCE) {
@@ -57,13 +66,18 @@ const plugins = rawPlugins.map((plugin) => {
   if (plugin.author) entry.a = String(plugin.author).slice(0, 40)
   if (plugin.repository?.url) entry.r = plugin.repository.url
   if (plugin.homepage) entry.h = plugin.homepage
-  // Icon chain: package icon, else the project's GitHub artwork, else the developer.
-  if (plugin.icon) entry.i = plugin.icon
-  else {
+  // Icon chain: dataset copy first, the origin as the fallback the browser uses if
+  // that file is missing.
+  if (plugin.icon) {
+    entry.i = mirrored(plugin.icon) ?? plugin.icon
+    if (entry.i !== plugin.icon) entry.ib = plugin.icon
+  } else {
     const parts = repoParts(plugin.repository?.url)
     if (parts) {
+      const avatar = `https://github.com/${parts.owner}.png?size=48`
+      entry.g = mirrored(avatar) ?? avatar
+      if (entry.g !== avatar) entry.gb = avatar
       entry.p2 = `https://opengraph.githubassets.com/1/${parts.owner}/${parts.repo}`
-      entry.g = `https://github.com/${parts.owner}.png?size=80`
     }
   }
   const extra = ['ja', 'ko', 'ru']
