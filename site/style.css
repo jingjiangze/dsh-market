@@ -134,4 +134,18 @@ body > footer button { padding: 3px 9px; font-size: 11.5px; color: var(--label-p
   .dual { grid-template-columns: 1fr; }
   .top h1 { font-size: 15px; }
 }
+
+/* sort switch, random pick, grouping header, detail navigation */
+#sort { display: inline-flex; gap: 6px; align-items: center; }
+.sorts { display: inline-flex; gap: 2px; padding: 3px; background: rgba(15, 21, 36, .9); border: 1px solid var(--border-l1); border-radius: 999px; }
+.sorts button { border: 0; background: transparent; color: var(--label-secondary); padding: 4px 9px; font-size: 11.5px; border-radius: 999px; }
+.sorts button:hover { color: var(--label-primary); }
+.sorts button[aria-pressed] { color: #fff; background: rgba(77, 107, 254, .24); }
+.dice { padding: 5px 10px; font-size: 12px; color: var(--label-primary); background: var(--bg-layer-1); border: 1px solid var(--border-l2); border-radius: 9px; }
+.dice:hover { border-color: var(--brand); }
+.grp { margin: 9px 0 2px; padding: 0 10px; font-size: 10.5px; letter-spacing: .08em; color: #6f7d97; text-transform: uppercase; }
+.lead { margin: 0; padding: 0 20px 10px; font-size: 12.5px; color: var(--label-secondary); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 20px 12px; font-size: 11.5px; color: var(--label-secondary); }
+.nav button { padding: 5px 12px; font-size: 12px; color: var(--label-primary); background: var(--bg-layer-1); border: 1px solid var(--border-l2); border-radius: 8px; }
+.nav button[disabled] { opacity: .45; cursor: default; }
 .chip i { font-style: normal; color: #6f7d97; font-size: 11px; }

@@ -63,19 +63,31 @@ else {
   if (!clickHandler) problems.push('detail view is not implemented')
   // Re-run the module's own open path through the exported HTML builder.
   const builder = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console',
-    `${source}\nreturn { openDetail, dialogHtml, state }`)
+    `${source}\nreturn { openDetail, dialogHtml, state, render }`)
   const api = builder(document, localStorage, navigator, location, fetchStub, setTimeoutStub, console)
   api.state.data = index
+  api.render()
   api.openDetail(openCard)
   if (!dialog.open) problems.push('clicking a card did not open the dialog')
-  if (!/中文/.test(dialog.innerHTML) || !/English/.test(dialog.innerHTML)) {
-    problems.push('dialog is not bilingual (zh/en columns missing)')
-  }
-  if (!/复制安装/.test(dialog.innerHTML)) problems.push('dialog has no install command')
+  // The detail drawer shows one language (the switcher's), not two columns.
+  if (!/class=lead/.test(dialog.innerHTML)) problems.push('dialog has no description')
+  if (/class=dual/.test(dialog.innerHTML)) problems.push('dialog is still the old bilingual two-column layout')
+  if (!/data-copy=/.test(dialog.innerHTML)) problems.push('dialog has no install command')
+  if (!/data-next/.test(dialog.innerHTML)) problems.push('dialog has no "next" control')
+  if (!/class=nav/.test(dialog.innerHTML)) problems.push('dialog has no position indicator')
 }
+
+// Sorting, random pick and the grouped filter rail are the new interaction surface.
+const sortHtml = element('sort').innerHTML
+for (const key of ['stars', 'downloads', 'recent']) {
+  if (!sortHtml.includes(`data-sort="${key}"`)) problems.push(`sort switch missing (${key})`)
+}
+if (!/data-random/.test(sortHtml)) problems.push('random pick button missing')
+const declaresEnhance = Object.keys(index.metadata?.categories ?? {}).some((id) => id.startsWith('enhance-'))
+if (declaresEnhance && !/class=grp/.test(cats)) problems.push('category rail is not grouped into big categories')
 
 if (problems.length) {
   for (const problem of problems) console.log(`FAIL  ${problem}`)
   process.exit(1)
 }
-console.log(`PASS  ${cards}/${index.plugins.length} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, detail view bilingual`)
+console.log(`PASS  ${cards}/${index.plugins.length} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, sortable single-language detail`)

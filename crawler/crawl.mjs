@@ -187,65 +187,110 @@ function localized(text) {
 // plus a bilingual title on the index), kept deliberately small so a reader can
 // actually scan them.
 const CATEGORIES = {
-  safety: { en: 'Safety & Auditing', zh: '安全与审计' },
-  memory: { en: 'Memory & Knowledge', zh: '记忆与知识' },
-  models: { en: 'Models & Providers', zh: '模型与供应商' },
-  automation: { en: 'Automation & Teams', zh: '自动化与协作' },
-  devtools: { en: 'Developer Tools', zh: '开发者工具' },
-  integrations: { en: 'Integrations & Sharing', zh: '集成与分享' },
-  media: { en: 'Media & Vision', zh: '媒体与视觉' },
-  ui: { en: 'UI & Themes', zh: '界面与主题' },
-  web: { en: 'Web & Browser', zh: '网页与浏览器' },
-  utilities: { en: 'Utilities', zh: '实用工具' },
-  ecosystem: { en: 'Ecosystem & Resources', zh: '生态与资源' },
+  // 一级：为 DSH 本体做加强的「优化项」优先，其次按作用域分大类。id 支持任意
+  // 字符串（校验器只要求先声明后引用），所以二级分类直接写成 `大类-细分`，
+  // 页面按前缀折叠成大类，DSH 里则显示每条细分的中文名。
+  'enhance-models': { en: 'Model providers', zh: '模型与供应商' },
+  'enhance-memory': { en: 'Memory & context', zh: '记忆与上下文' },
+  'enhance-ui': { en: 'Interface & themes', zh: '界面与主题' },
+  'enhance-tools': { en: 'Toolchain & CLI', zh: '工具链与 CLI' },
+  'enhance-perf': { en: 'Performance & caching', zh: '性能与缓存' },
+  agent: { en: 'Agents & orchestration', zh: '智能体与编排' },
+  data: { en: 'Knowledge & data', zh: '知识与数据' },
+  connect: { en: 'Integrations & connections', zh: '集成与连接' },
+  media: { en: 'Media & vision', zh: '媒体与视觉' },
+  work: { en: 'Office & content', zh: '办公与创作' },
+  ops: { en: 'Security & operations', zh: '安全与运维' },
+  dev: { en: 'Development workflow', zh: '开发工作流' },
+  eco: { en: 'Ecosystem & resources', zh: '生态与资源' },
   other: { en: 'Other', zh: '其他' },
 }
 
+// Big groups the page folds the sub-categories into. `enhance-*` is the group the
+// user asked for: anything that strengthens DSH itself is an "优化项" first.
+const CATEGORY_GROUPS = {
+  enhance: ['enhance-models', 'enhance-memory', 'enhance-ui', 'enhance-tools', 'enhance-perf'],
+  agent: ['agent'],
+  data: ['data'],
+  connect: ['connect'],
+  media: ['media'],
+  work: ['work'],
+  ops: ['ops'],
+  dev: ['dev'],
+  eco: ['eco'],
+  other: ['other'],
+}
+
 // The federated catalogs already carry a category; reuse their judgement instead
-// of re-deriving it from keywords, and translate their ids into ours.
+// of re-deriving it from keywords. These map to a *domain*, and a domain that
+// strengthens DSH itself is promoted to an `enhance-*` category below.
 const SOURCE_CATEGORIES = {
-  'agents-workflows': 'automation',
-  'multi-agents': 'automation',
+  // dsh.so's own ten ids
+  agents: 'agent',
+  creator: 'work',
+  dev: 'dev',
+  memory: 'memory',
+  notify: 'connect',
+  office: 'work',
+  search: 'data',
+  skin: 'ui',
+  tools: 'tools',
+  vision: 'media',
+  // awesome-dsh-plugin
+  'agents-workflows': 'agent',
+  'multi-agents': 'agent',
   'knowledge-research': 'memory',
-  'developer-tools': 'devtools',
+  'developer-tools': 'dev',
   'ui-experience': 'ui',
   'media-vision': 'media',
-  'web-browser': 'web',
-  'integrations-sharing': 'integrations',
-  utilities: 'utilities',
-  'ecosystem-resources': 'ecosystem',
+  'web-browser': 'connect',
+  'integrations-sharing': 'connect',
+  utilities: 'tools',
+  'ecosystem-resources': 'eco',
   // mydsh.xyz labels its categories in Chinese.
   界面与主题: 'ui',
   启动动画: 'ui',
   技能: 'memory',
-  MCP: 'integrations',
-  场景: 'automation',
+  MCP: 'connect',
+  场景: 'agent',
   提示词: 'models',
 }
 
+// A domain here means "this strengthens DSH itself", so it is an enhancement.
+const ENHANCE_DOMAINS = {
+  models: 'enhance-models',
+  memory: 'enhance-memory',
+  context: 'enhance-memory',
+  ui: 'enhance-ui',
+  tools: 'enhance-tools',
+  perf: 'enhance-perf',
+}
+
 const CATEGORY_RULES = [
-  ['safety', /\b(audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm)\b/],
-  ['ui', /\b(theme|themes|skin|appearance|wallpaper|background|layout|sidebar|panel|badge|font|pet|meme|catppuccin|prts)\b|界面|主题|壁纸/],
-  ['media', /\b(image|images|video|tts|voice|audio|screenshot|vision|chart|charts|canvas|blender|music|pdf|office|docx|xlsx|cad|poster|genui)\b/],
-  ['integrations', /\b(feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|mcp|bridge)\b/],
-  ['memory', /\b(memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|context|skill|skills|prompt|chapter|chapters|archive|dream|custom-mode)\b/],
+  ['ops', /\b(audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm|monitor|observ|log|metric)\b/],
   ['models', /\b(provider|providers|model|models|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token|tokens)\b/],
-  ['automation', /\b(automation|scheduled|schedule|cron|workflow|agent-team|agent-teams|multi-agent|swarm|orchestrator|ralph|kanban|goal|checkpoint|rewind)\b/],
-  ['web', /\b(browser|chrome|playwright|puppeteer|cdp|scrape|scraper|crawl|crawler|web)\b/],
-  ['devtools', /\b(worktree|git|terminal|shell|lint|diff|debug|ide|editor|typescript|cli|search|index)\b/],
-  ['utilities', /\b(utility|utilities|tool|tools|toolkit|calculator|converter|formatter|clipboard|notification|notify)\b/],
+  ['ui', /\b(theme|themes|skin|appearance|wallpaper|background|layout|sidebar|panel|badge|font|pet|meme|catppuccin|prts)\b|界面|主题|壁纸/],
+  ['media', /\b(image|images|video|tts|voice|audio|screenshot|vision|chart|charts|canvas|blender|music|poster|genui)\b/],
+  ['work', /\b(pdf|office|docx|xlsx|ppt|slides|markdown|notion|blog|poster|copyright|translate)\b|办公|文档/],
+  ['connect', /\b(feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|mcp|bridge|browser|chrome|playwright|puppeteer|cdp)\b/],
+  ['memory', /\b(memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|archive|dream|chapter|chapters)\b/],
+  ['context', /\b(context|compress|compact|summary|summarize|window|token-budget|prune)\b/],
+  ['perf', /\b(cache|caching|fast|faster|speed|latency|bench|benchmark|index|optimiz)\b/],
+  ['agent', /\b(agent-team|agent-teams|multi-agent|swarm|orchestrator|ralph|kanban|goal|checkpoint|rewind|workflow|scheduled|schedule|cron|automation|subagent|skill|skills|prompt)\b/],
+  ['data', /\b(search|index|sqlite|database|dataset|scrape|scraper|crawl|crawler|feed|rss)\b/],
+  ['tools', /\b(tool|tools|toolkit|cli|terminal|shell|worktree|git|lint|diff|debug|ide|editor|typescript|utility|utilities|calculator|converter|formatter|clipboard)\b/],
+  ['eco', /\b(catalog|index-of|awesome|gallery|market|marketplace|template|starter|boilerplate)\b/],
 ]
 
-function classify(...texts) {
+function classifyDomain(...texts) {
   const haystack = texts.filter(Boolean).join(' ').toLowerCase()
   for (const [id, pattern] of CATEGORY_RULES) if (pattern.test(haystack)) return id
   return 'other'
 }
 
 function categoryFor(record, ...texts) {
-  const hinted = SOURCE_CATEGORIES[record?.hintCategory]
-  if (hinted) return hinted
-  return classify(...texts)
+  const domain = SOURCE_CATEGORIES[record?.hintCategory] ?? classifyDomain(...texts)
+  return ENHANCE_DOMAINS[domain] ?? domain
 }
 
 // Only labels that change a reader's decision are published: which catalog listed
@@ -393,6 +438,7 @@ async function main() {
     // Carry everything the gates and the published index need: dropping these
     // here is why star counts and engine hints silently disappeared before.
     if (entry.stars === undefined) entry.stars = record.stars
+    if (entry.downloads === undefined) entry.downloads = record.downloads
     if (entry.hintEngines === undefined) entry.hintEngines = record.hintEngines
     if (entry.title === undefined) entry.title = record.title
     if (entry.description === undefined) entry.description = record.description
@@ -585,22 +631,23 @@ async function main() {
   const textOf = (value) => (typeof value === 'string' ? value : (value?.en ?? ''))
   const kept = carried.slice(0, MAX_PLUGINS).map((entry) => {
     const plugin = entry.plugin
-    const category = classify(
-      plugin.name,
-      textOf(plugin.title),
-      textOf(plugin.description),
-      (plugin.metadata?.keywords ?? []).join(' '),
-    )
-    // Stars come from the catalog that listed the plugin; the federated discovery
-    // covers the whole pool every run, so cached entries get them too.
+    // Keep a category that this taxonomy still declares (it came from a catalog
+    // hint); anything else is re-derived so an old id can never leak out.
+    const storedCategory = plugin.metadata?.category
+    const category = CATEGORIES[storedCategory]
+      ? storedCategory
+      : categoryFor(provenance.get(plugin.name), plugin.name, textOf(plugin.title), textOf(plugin.description), (plugin.metadata?.keywords ?? []).join(' '))
+    // Stars and weekly downloads come from the catalogs that publish them; the
+    // federated discovery covers the whole pool every run, so cached entries get
+    // them too.
     const stars = plugin.metadata?.sortKeys?.stars ?? entry.sidecar?.stars ?? provenance.get(plugin.name)?.stars ?? undefined
-    const metadata = {
-      ...plugin.metadata,
-      category,
-      labels: displayLabels(plugin.metadata?.labels),
-      ...(Number.isFinite(stars) && stars > 0 ? { sortKeys: { ...(plugin.metadata?.sortKeys ?? {}), stars } } : {}),
-    }
-    if (!metadata.sortKeys || Object.keys(metadata.sortKeys).length === 0) delete metadata.sortKeys
+    const downloads = plugin.metadata?.sortKeys?.downloads ?? entry.sidecar?.downloads ?? provenance.get(plugin.name)?.downloads ?? undefined
+    const sortKeys = { ...(plugin.metadata?.sortKeys ?? {}) }
+    if (!Number.isFinite(sortKeys.stars) && Number.isFinite(stars) && stars > 0) sortKeys.stars = stars
+    if (!Number.isFinite(sortKeys.downloads) && Number.isFinite(downloads) && downloads > 0) sortKeys.downloads = downloads
+    const metadata = { ...plugin.metadata, category, labels: displayLabels(plugin.metadata?.labels) }
+    if (Object.keys(sortKeys).length) metadata.sortKeys = sortKeys
+    else delete metadata.sortKeys
     return { ...plugin, metadata, _sidecar: entry.sidecar }
   })
   // The index order is what a reader sees first (and what DSH's "default order"
@@ -636,7 +683,9 @@ async function main() {
         metadata: {
           category: categoryFor(record, record.name, titleEn, descEn),
           labels,
-          ...(record.stars ? { sortKeys: { stars: record.stars } } : {}),
+          ...(record.stars || record.downloads
+            ? { sortKeys: { ...(record.stars ? { stars: record.stars } : {}), ...(record.downloads ? { downloads: record.downloads } : {}) } }
+            : {}),
         },
         versions: [{
           version: record.hintVersion,
@@ -691,6 +740,7 @@ async function main() {
       // stars" in DSH works on this index instead of only on dsh.so's own.
       sortKeys: {
         stars: { title: { en: 'Stars', zh: '星标' }, order: 'desc' },
+        downloads: { title: { en: 'Weekly downloads', zh: '周下载量' }, order: 'desc' },
       },
     },
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),

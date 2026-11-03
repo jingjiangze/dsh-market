@@ -95,11 +95,14 @@ jobs:
         run: node crawler/crawl.mjs --publish-only
 
       - name: Add the other languages
+        # The detail drawer shows one language at a time, so every entry needs its
+        # ja/ko/ru text: a bigger per-run budget fills a 10k catalogue in a few runs
+        # while the content-hash cache keeps later runs cheap.
         env:
           TRANSLATE_LANGS: ja,ko,ru
-          TRANSLATE_CONCURRENCY: '12'
-          TRANSLATE_MAX_STRINGS: '600'
-          TRANSLATE_BUDGET_MS: '360000'
+          TRANSLATE_CONCURRENCY: '16'
+          TRANSLATE_MAX_STRINGS: '1500'
+          TRANSLATE_BUDGET_MS: '480000'
         run: node crawler/translate.mjs
 
       - name: Assemble the site

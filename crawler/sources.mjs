@@ -64,6 +64,7 @@ function fromFormatOne(document, label) {
       description: { en: textOf(plugin.description), zh: textOf(plugin.description) },
       repo: plugin.repository?.url,
       stars: plugin.metadata?.sortKeys?.stars,
+      downloads: plugin.metadata?.sortKeys?.downloads,
     })
   }
   return records
@@ -147,6 +148,7 @@ export async function discoverFederated(log = console.log) {
         existing.title ??= record.title
         existing.repo ??= record.repo
         existing.stars ??= record.stars
+        existing.downloads ??= record.downloads
       }
       log(`source ${key}: ${records.length} npm candidates`)
     } catch (err) {
