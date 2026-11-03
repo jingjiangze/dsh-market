@@ -2343,6 +2343,51 @@
       ]
     },
     {
+      "name": "dsh-herta",
+      "title": {
+        "en": "dsh-herta",
+        "zh": "黑塔"
+      },
+      "description": {
+        "en": "Installs Herta (黑塔) as a DeepSeek Harness agent — persona, memory, narrative layer, voice and UI. · DSH 插件：把 Herta（黑塔）作为一个 agent 装进 DeepSeek Harness —— 人设、记忆、语音与界面。",
+        "zh": "把黑塔作为 DeepSeek Harness 智能体装入：携带人格与记忆提示词段的 preset、六个记忆与语音工具、区分内心与发言的叙述层、80 条随包语音、本地与 MiniMax 两条语音合成链路，以及两个用她自己的组件渲染会话的对话视图。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/dsh-herta@0.1.11/icon.png",
+      "homepage": "https://github.com/HerTa-st/Herta-dsh#readme",
+      "repository": {
+        "url": "https://github.com/HerTa-st/Herta-dsh"
+      },
+      "metadata": {
+        "keywords": [
+          "deepseek",
+          "harness",
+          "dsh",
+          "dsh-plugin",
+          "herta",
+          "agent",
+          "persona",
+          "memory"
+        ],
+        "category": "ui",
+        "labels": [
+          "src-awesome",
+          "trust-readme-verified"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.11",
+          "publishTimestamp": 1792238179,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-hyperframes",
       "title": {
         "en": "dsh-hyperframes",
