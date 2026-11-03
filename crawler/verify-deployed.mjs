@@ -1,5 +1,5 @@
-# Verifies what users actually download: the deployed index must be byte-identical
-# to the repository copy and must still pass the real format-1 validator.
+// Verifies what users actually download: the deployed index must be byte-identical
+// to the repository copy and must still pass the real format-1 validator.
 import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
@@ -12,9 +12,10 @@ const { parseMarketIndex } = await import('@deepseek-ai/dsh-plugin-market-index'
 
 const sha = (value) => createHash('sha256').update(value).digest('hex').slice(0, 16)
 const failures = []
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const local = await readFile(join(root, 'site', 'index.json'))
-console.log(`local  ${sha(local)}  ${local.length} B`)
+console.log(`local         ${sha(local)}  ${local.length} B`)
 
 let pagesBytes = null
 for (const [label, url, required] of [['github-pages', PAGES, true], ['brand-domain', BRAND, false]]) {
@@ -29,9 +30,9 @@ for (const [label, url, required] of [['github-pages', PAGES, true], ['brand-dom
       if (attempt === 3) {
         const message = `${label} unreachable: ${err.message}`
         if (required) failures.push(message)
-        else console.log(`warn   ${message} (not fatal)`)
+        else console.log(`warn          ${message} (not fatal)`)
       } else {
-        await new Promise((r) => setTimeout(r, 3000 * attempt))
+        await sleep(3000 * attempt)
       }
     }
   }
@@ -51,7 +52,7 @@ if (pagesBytes && sha(pagesBytes) !== sha(local)) {
 }
 
 if (failures.length) {
-  for (const failure of failures) console.log(`FAIL   ${failure}`)
+  for (const failure of failures) console.log(`FAIL          ${failure}`)
   process.exit(1)
 }
 console.log('\nSYNC OK')
