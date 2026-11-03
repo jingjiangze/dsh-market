@@ -1,6 +1,6 @@
 // Executes the browser bundle against a minimal DOM stub, with the ModelScope
 // browse fixtures served by a fake fetch. Catches a page that would render nothing,
-// lose its detail view, or quietly drop the sort/random controls.
+// lose its detail view, drop the sort/random controls, or ignore a mirror tier.
 import { readFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -50,23 +50,25 @@ const document = {
   getElementById: (id) => element(id),
   querySelectorAll: () => [],
   querySelector: (selector) => (selector === '.seg' ? segElement : null),
-  createElement: (tag) => ({ tag, dataset: {}, textContent: '', append() {}, setAttribute() {} }),
+  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', append() {}, setAttribute() {} }),
   addEventListener() {},
   head: { appendChild() {} },
+  body: { append() {} },
   styleSheets: [],
 }
 const localStorage = { getItem: () => null, setItem() {} }
 const navigator = { language: 'zh-CN', clipboard: { writeText: async () => {} } }
 const location = { origin: 'https://example.test', pathname: '/dsh-market/' }
+const fakeWindow = { __r: 0, addEventListener() {} }
 const fetchStub = async (url) => {
   const text = String(url)
   const body = text.endsWith('meta.json') ? META : text.endsWith('0.json') ? CHUNK : { at: new Date().toISOString() }
   return { ok: true, status: 200, json: async () => body }
 }
 
-const run = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console',
+const run = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console', 'window',
   `${source}\nreturn { render, openDetail, openGuide, state, chrome }`)
-const api = run(document, localStorage, navigator, location, fetchStub, () => 0, console)
+const api = run(document, localStorage, navigator, location, fetchStub, () => 0, console, fakeWindow)
 await api.state.meta
 await new Promise((resolve) => setTimeout(resolve, 120))
 
@@ -78,15 +80,28 @@ const sortHtml = element('sort').innerHTML
 const cards = (list.match(/class=card/g) ?? []).length
 
 if (!api.state.meta) problems.push('meta.json was never fetched')
+if (!element('a').innerHTML.includes('<header')) problems.push('the bundle did not inject the shell into #a')
 if (cards === 0) problems.push('no plugin card rendered')
 if (!meta.includes(String(META.total))) problems.push(`header does not show the total: ${JSON.stringify(meta)}`)
 if (!list.includes('data-open=')) problems.push('cards are not clickable')
 for (const key of ['stars', 'downloads', 'recent']) if (!sortHtml.includes(`data-sort="${key}"`)) problems.push(`sort switch missing (${key})`)
 if (!/data-random/.test(sortHtml)) problems.push('random pick button missing')
 if (!/class=grp/.test(cats)) problems.push('category rail is not grouped under DSH 优化')
-if ((cats.match(/data-cat=/g) ?? []).length < 3) problems.push('category chips missing')
 
-// Detail drawer: single language, install command, prev/next, position.
+// Stars sort: the highest-star entry must come first.
+api.state.sort = 'stars'
+api.render()
+const firstStar = (element('list').innerHTML.match(/data-open="([^"]+)"/) ?? [])[1]
+if (firstStar !== 'dsh-ops') problems.push(`stars sort put ${JSON.stringify(firstStar)} first`)
+// Downloads sort: only one fixture carries downloads, so it must lead.
+api.state.sort = 'downloads'
+api.render()
+const firstDownload = (element('list').innerHTML.match(/data-open="([^"]+)"/) ?? [])[1]
+if (firstDownload !== 'dsh-ops') problems.push(`downloads sort put ${JSON.stringify(firstDownload)} first`)
+api.state.sort = 'stars'
+api.render()
+
+// Detail modal: single language, install command, prev/next — and no close button.
 const dialog = element('dlg')
 api.openDetail('dsh-ops')
 if (!dialog.open) problems.push('opening a card did not open the dialog')
@@ -94,6 +109,7 @@ if (!/class=lead/.test(dialog.innerHTML)) problems.push('dialog has no descripti
 if (!/data-copy=/.test(dialog.innerHTML)) problems.push('dialog has no install command')
 if (!/data-next/.test(dialog.innerHTML) || !/class=nav/.test(dialog.innerHTML)) problems.push('dialog has no next/position controls')
 if (/class=dual/.test(dialog.innerHTML)) problems.push('dialog still renders the old bilingual columns')
+if (/class=close|关闭/.test(dialog.innerHTML)) problems.push('dialog still renders the removed close button')
 
 // Segments only change which index link is shown/copied — the list must not change.
 const before = (element('list').innerHTML.match(/class=card/g) ?? []).length
@@ -102,23 +118,23 @@ api.render()
 if (element('src').textContent !== 'https://jingjiangze.github.io/dsh-market/index.cn.json') problems.push('domestic segment did not switch the copied link')
 if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) problems.push('segment switch must not filter the list')
 
-// Integration guide modal.
-api.openGuide()
-if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
-if (!/index(\.cn|\.intl)?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
-
-// The dataset link must be offered as its own source and copy the ModelScope URL.
+// The dataset source must be offered and must copy the ModelScope URL.
 if (!segElement.children.some((child) => child.dataset.idx === 'data')) problems.push('dataset index link is not offered in the source switch')
 api.state.copyTarget = 'data'
 api.render()
 if (!String(element('src').textContent).includes('modelscope.cn')) problems.push('dataset source does not copy the ModelScope index URL')
+
+// Integration guide modal.
+api.openGuide()
+if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
+if (!/index(\.cn|\.intl)?\.json/.test(dialog.innerHTML)) problems.push('guide does not show the index URL')
 
 // A second instance whose tier-1 source is down must fall through to tier 2.
 const brokenFetch = async (url) => {
   if (String(url).includes('modelscope.cn')) throw new Error('tier down')
   return fetchStub(url)
 }
-const api2 = run(document, localStorage, navigator, location, brokenFetch, () => 0, console)
+const api2 = run(document, localStorage, navigator, location, brokenFetch, () => 0, console, fakeWindow)
 await api2.state.meta
 await new Promise((resolve) => setTimeout(resolve, 120))
 if (api2.state.plugins.length === 0) problems.push('fallback source did not load any plugin')
@@ -128,7 +144,7 @@ if (api2.state.tier !== 1) problems.push(`expected tier 2 to answer, got tier ${
 const avatarMeta = { ...META, total: 1, chunks: ['0.json'], categories: { agent: { title: { en: 'Agents', zh: '智能体' } } } }
 const avatarChunk = [{ n: 'x/avatar-only', t: '头像插件', e: 'Avatar only', d: '只有仓库', de: 'repo only', c: 'agent', v: '1.0.0', p: 1, g: 'https://github.com/someone.png?size=80' }]
 const avatarFetch = async (url) => ({ ok: true, json: async () => (String(url).endsWith('meta.json') ? avatarMeta : avatarChunk) })
-const api3 = run(document, localStorage, navigator, location, avatarFetch, () => 0, console)
+const api3 = run(document, localStorage, navigator, location, avatarFetch, () => 0, console, fakeWindow)
 await api3.state.meta
 await new Promise((resolve) => setTimeout(resolve, 80))
 if (!element('list').innerHTML.includes('github.com/someone.png')) problems.push('repository-owner avatar is not used as the icon fallback')
@@ -143,4 +159,4 @@ if (problems.length) {
   for (const problem of problems) console.log(`FAIL  ${problem}`)
   process.exit(1)
 }
-console.log(`PASS  ${cards} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, chunked load, segments filter, ja switch, detail nav`)
+console.log(`PASS  ${cards} cards, ${(cats.match(/data-cat=/g) ?? []).length} chips, shell injected, sorts verified, no close button, dataset link, tier fallback, ja switch`)
