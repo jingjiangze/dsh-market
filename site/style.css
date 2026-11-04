@@ -373,3 +373,10 @@ body > footer i { font-style: normal; color: var(--line-2); }
   .kw, .stamp { padding-left: 16px; padding-right: 16px; }
   body > footer { font-size: 10.5px; gap: 6px; }
 }
+
+/* region toggle sits before the language buttons */
+.seg .region {
+  color: #cfe0ff; background: rgba(77, 107, 254, .18);
+  border: 1px solid rgba(124, 147, 255, .45);
+}
+.seg .region::before { content: "◐ "; opacity: .8; }

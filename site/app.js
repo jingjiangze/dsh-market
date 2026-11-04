@@ -13,40 +13,34 @@ const PLACEHOLDER = {
   ko: '플러그인 · 작성자 · 키워드 검색',
   ru: 'Поиск плагинов, авторов, ключевых слов',
 }
-// Index sources are per language, and where they live depends on the network:
-// the ModelScope dataset is fast inside China but unreachable from abroad, so a
-// reader outside China is pointed at (and served from) GitHub Pages instead.
+// Subscription links are two-dimensional: region × language.
+//   国内源 (ModelScope dataset, fast inside China, unreachable abroad)
+//   国外源 (GitHub Pages, reachable everywhere)
+// Each language has one document in each region, so a reader who wants Japanese can
+// subscribe to exactly the Japanese catalogue that their network can download.
 const DATASET = 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web'
 const PAGES = 'https://jingjiangze.github.io/dsh-market'
-const SOURCES = ['all', 'zh', 'en', 'ja', 'ko', 'ru']
-const IDX_LABEL = { all: '全部', zh: '中文', en: 'English', ja: '日本語', ko: '한국어', ru: 'Русский' }
+const IDX_LABEL = { zh: '中文', en: 'English', ja: '日本語', ko: '한국어', ru: 'Русский' }
+const REGION_LABEL = { cn: '国内源', intl: '国外源' }
 
-// China: dataset first. Everywhere else: GitHub first (the dataset would just time
-// out). The tier that worked is remembered, so repeat visits skip the bad one.
 function inChina() {
   const tz = String(Intl.DateTimeFormat().resolvedOptions().timeZone ?? '')
   const lang = String(navigator.language ?? '').toLowerCase()
   return /Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Hong_Kong|Macau|Taipei)$/.test(tz) || lang.startsWith('zh')
 }
 
-function indexUrl(id) {
-  if (id === 'all') return inChina() ? `${DATASET}/index.json` : `${PAGES}/index.json`
-  // Per-language documents live on the dataset; abroad the combined document on
-  // Pages already carries every language, so that is what is copied there.
-  return inChina() ? `${DATASET}/index.${id}.json` : `${PAGES}/index.json`
+function indexUrl(lang = state.copyTarget, region = state.region) {
+  const base = region === 'cn' ? DATASET : PAGES
+  return `${base}/index.${lang}.json`
 }
 
-const TIERS = inChina()
-  ? [
-    `${DATASET}/browse`,
-    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
-    `${PAGES}/browse`,
-  ]
-  : [
-    `${PAGES}/browse`,
-    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse',
-    `${DATASET}/browse`,
-  ]
+// Data comes from the same region the reader picked; the other mirrors stay as
+// fallbacks so a blocked dataset or a cold jsDelivr does not break the page.
+function tiersFor(region) {
+  return region === 'cn'
+    ? [`${DATASET}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${PAGES}/browse`]
+    : [`${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${DATASET}/browse`]
+}
 const SRC_LABEL = { 'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome', 'src-mydsh': 'mydsh' }
 const TRUST_LABEL = { 'trust-readme-verified': 'README 核对', 'trust-repo-fallback': '仓库固定', 'zh-fallback': '中文待补', 'catalog-only': '仅目录', 'no-engines': '未声明版本' }
 const SORTS = [['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z']]
@@ -60,7 +54,7 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'all', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false }
+const state = { lang: 'zh', copyTarget: 'zh', region: localStorage.getItem('dsh-market-region') || (inChina() ? 'cn' : 'intl'), query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false }
 
 const $ = (id) => document.getElementById(id)
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
@@ -244,11 +238,14 @@ function withTimeout(url) {
 
 // Try each tier in order; the first one that answers wins and is remembered.
 async function fetchTiered(path) {
-  const order = state.tier >= 0 ? [state.tier, ...TIERS.keys()].filter((value, index, all) => all.indexOf(value) === index) : [...TIERS.keys()]
+  const tiers = tiersFor(state.region)
+  const order = state.tier >= 0
+    ? [state.tier, ...[...tiers.keys()]].filter((value, index, all) => all.indexOf(value) === index)
+    : [...tiers.keys()]
   let lastError = null
   for (const index of order) {
     try {
-      const body = await withTimeout(`${TIERS[index]}/${path}`)
+      const body = await withTimeout(`${tiers[index]}/${path}`)
       state.tier = index
       // Remember which mirror worked, so the next visit starts there instead of
       // paying the dataset timeout from abroad.
@@ -322,6 +319,18 @@ function ensureStyles() {
 
 document.addEventListener('click', (event) => {
   if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
+  const regionButton = event.target.closest('[data-region]')
+  if (regionButton) {
+    // Flip between the dataset (国内) and GitHub Pages (国外); the copied link and
+    // the data tiers both follow.
+    state.region = state.region === 'cn' ? 'intl' : 'cn'
+    state.tier = -1
+    localStorage.setItem('dsh-market-region', state.region)
+    try { localStorage.removeItem('dsh-market-tier') } catch {}
+    chrome()
+    render()
+    return
+  }
   const idxButton = event.target.closest('[data-idx]')
   if (idxButton) {
     for (const button of document.querySelectorAll('[data-idx]')) button.removeAttribute('aria-pressed')
@@ -392,7 +401,7 @@ $('lang').addEventListener('change', (event) => {
   localStorage.setItem('dsh-market-lang', state.lang)
   // Switching the interface language also switches the index link, so the copied
   // URL always matches the language on screen.
-  if (SOURCES.includes(state.lang)) state.copyTarget = state.lang
+  if (LANGS.includes(state.lang)) state.copyTarget = state.lang
   chrome()
   render()
   if ($('dlg').open) (state.guide ? openGuide() : state.open && openDetail(state.open))
@@ -405,12 +414,15 @@ function chrome() {
   $('lang').innerHTML = LANGS.map((lang) => `<option value=${lang}>${LANG_LABEL[lang]}</option>`).join('')
   $('lang').value = state.lang
   $('q').placeholder = PLACEHOLDER[state.lang] ?? PLACEHOLDER.en
-  // Source buttons are built here (not in the shell): one per language plus "all".
+  // The row is: region toggle, then one button per language (the "全部" entry is
+  // gone — every subscription is now region × language).
   const seg = document.querySelector?.('.seg')
   if (seg) {
-    seg.innerHTML = Object.entries(IDX_LABEL)
-      .map(([id, label]) => `<button data-idx="${id}"${state.copyTarget === id ? ' aria-pressed=true' : ''}>${label}</button>`)
+    const region = `<button class=region data-region="${state.region}">${REGION_LABEL[state.region]}</button>`
+    const langs = LANGS
+      .map((lang) => `<button data-idx="${lang}"${state.copyTarget === lang ? ' aria-pressed=true' : ''}>${IDX_LABEL[lang]}</button>`)
       .join('')
+    seg.innerHTML = region + langs
   }
 }
 
