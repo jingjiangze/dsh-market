@@ -120,6 +120,13 @@ jobs:
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
+      - name: Build the sharded index for slow networks
+        # 6 parts of ~650 KB: each downloads in ~2 s from China, while the whole 4 MB
+        # document took 40-88 s there. DSH registers every part as its own source.
+        env:
+          LITE_SHARDS: '6'
+        run: node crawler/shard-index.mjs
+
       - name: Assemble the site
         run: |
           cp dist/index.json site/index.json
