@@ -15,7 +15,9 @@ const OFFLINE = process.argv.includes('--offline')
 const HTML_LIMIT = 1024
 // 12 MB: a merged ~10k-entry index (slim catalog entries + verified ones) lands
 // around 9.6 MB, and DSH handles documents of this size (20k ≈ 7.6 MB bare).
-const MAX_INDEX_BYTES = 12 * 1024 * 1024
+// 16 MB: the catalogue grew to ~12.2 MB once popularity tiers, the `updated` sort
+// key and git sources were added, and DSH parses documents of this size fine.
+const MAX_INDEX_BYTES = 16 * 1024 * 1024
 // The registry sweep is bounded: it exists to catch drift in what we verified, not
 // to re-proof a 10k catalogue on every run.
 const MAX_REGISTRY_CHECKS = 500
