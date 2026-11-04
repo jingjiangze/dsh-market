@@ -20,7 +20,7 @@ concurrency:
 jobs:
   translate:
     runs-on: ubuntu-latest
-    timeout-minutes: 50
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -37,9 +37,9 @@ jobs:
       - name: Translate the backlog
         env:
           TRANSLATE_LANGS: ja,ko,ru
-          TRANSLATE_CONCURRENCY: '12'
-          TRANSLATE_MAX_STRINGS: '20000'
-          TRANSLATE_BUDGET_MS: '2100000'
+          TRANSLATE_CONCURRENCY: '16'
+          TRANSLATE_MAX_STRINGS: '30000'
+          TRANSLATE_BUDGET_MS: '2700000'
         run: node crawler/translate.mjs
 
       - name: Build one index per language
@@ -47,7 +47,7 @@ jobs:
 
       - name: Assemble the served copy
         # `ci` compares site/index.json with dist/index.json byte for byte, and this
-        # job is what adds the translations to dist — without this copy the two drift
+        # job is what adds the translations to dist 鈥?without this copy the two drift
         # and every push after a translate run fails the gate.
         run: cp dist/index.json site/index.json
 
@@ -68,3 +68,4 @@ jobs:
         run: |
           set -o pipefail
           node crawler/publish-api.mjs | tee /dev/stderr
+
