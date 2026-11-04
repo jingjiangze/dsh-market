@@ -131,6 +131,7 @@ jobs:
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
+      - name: Assemble the site
         run: |
           cp dist/index.json site/index.json
           cp dist/index.sidecar.json site/sidecar.json
