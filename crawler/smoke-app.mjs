@@ -125,6 +125,18 @@ api.render()
 if (!/modelscope\.cn/.test(String(element('src').textContent))) problems.push('a language source does not point at the dataset')
 if (api.state.lang !== 'zh') problems.push('render() alone should not change the interface language')
 
+// Region × language: the same language has a domestic and an overseas link.
+api.chrome()
+if (!/data-region=/.test(segElement.innerHTML)) problems.push('the region toggle button is missing')
+api.state.region = 'intl'
+api.render()
+if (!/jingjiangze\.github\.io/.test(String(element('src').textContent))) problems.push('the overseas region does not copy the Pages link')
+if (!/index\.ja\.json/.test(String(element('src').textContent))) problems.push('the overseas region lost the per-language document')
+if (/modelscope/.test(String(element('src').textContent))) problems.push('the overseas link still points at the dataset')
+api.state.region = 'cn'
+api.render()
+if (!/modelscope[\s\S]*index\.ja\.json/.test(String(element('src').textContent))) problems.push('switching back to the domestic region does not restore the dataset link')
+
 // Integration guide modal.
 api.openGuide()
 if (!dialog.open || !/class=guide/.test(dialog.innerHTML)) problems.push('integration guide did not open')
