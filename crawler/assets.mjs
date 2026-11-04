@@ -23,8 +23,12 @@ const TIERS = [
   (process.env.ASSET_TIER3 || '/a'),
 ]
 
-const css = await readFile(join(site, 'style.css'))
-const js = await readFile(join(site, 'app.js'))
+// Hash and publish LF-normalised bytes: this machine writes CRLF, the CI runner
+// checks out LF, and hashing the raw working-tree bytes made the version name differ
+// between the two (ci then refused the commit).
+const lf = (buffer) => Buffer.from(buffer.toString('utf8').replace(/\r\n/g, '\n'), 'utf8')
+const css = lf(await readFile(join(site, 'style.css')))
+const js = lf(await readFile(join(site, 'app.js')))
 const version = createHash('sha1').update(css).update(js).digest('hex').slice(0, 10)
 
 await mkdir(join(assetsDir, version), { recursive: true })

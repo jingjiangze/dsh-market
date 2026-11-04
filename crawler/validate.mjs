@@ -146,7 +146,10 @@ if (version) {
     fail('site/a assets', `site/a/${version} is missing its files`)
   }
   if (css && js) {
-    const digest = createHash('sha1').update(css).update(js).digest('hex').slice(0, 10)
+    // Same LF normalisation assets.mjs uses: this machine writes CRLF and the
+    // runner checks out LF, so the raw bytes hash differently.
+    const lf = (buffer) => Buffer.from(buffer.toString('utf8').replace(/\r\n/g, '\n'), 'utf8')
+    const digest = createHash('sha1').update(lf(css)).update(lf(js)).digest('hex').slice(0, 10)
     if (digest !== version) fail('site/a assets', `${version} does not match the combined hash (${digest})`)
     else note('site/a assets', `${version}/style.css ${css.length} B + app.js ${js.length} B match`)
   }
