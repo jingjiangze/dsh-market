@@ -61,15 +61,22 @@ node crawler/crawl.mjs                # 爬取并生成 dist/
 - **多语言**：右上角切换 中文 / English / 日本語 / 한국어 / Русский；ja/ko/ru 由 CI 里的 Google Translate 生成（`crawler/translate.mjs`，按内容哈希缓存，失败即跳过不发布）。
 - 卡片**点击打开详情**：中英对照 + 类别/版本/作者/发布/来源/包名 + 安装命令一键复制；卡片本身不再放「主页」按钮（链接在详情里）。
 
-## 多索引源（按国内外来源分）
+## 索引源：一个链接就够了
 
-| 索引源 | 收录范围 |
-|---|---|
-| `index.json` | 全部（三个联邦目录 + npm 检索） |
-| `index.cn.json` | 国内目录收录（dsh.so / mydsh.xyz）或中文文案由作者/本仓库提供 |
-| `index.intl.json` | 国际目录（awesome-dsh-plugin）收录或 npm 检索直接命中 |
+| 索引源 | 内容 | 国内实测 |
+|---|---|---|
+| **`index.zh.json`** | 全部 1 万余条，中英双语（推荐加这一个） | 4.3 MB，**gzip 后 1.08 MB / 1.8 秒** |
+| `index.<lang>.json` | en / ja / ko / ru，同一份目录的其它语言 | 各 4.3–4.8 MB |
+| `index.json` | 五语合并文档（站点与工具用，最大） | 11.6 MB，gzip 2.2 MB / 24 秒 |
 
-三个都是完整的 format 1 文档，加任意一个即可用；URL 把文件名换掉即可。
+**关键事实（实测）**：GitHub Pages 对 JSON 走 `Content-Encoding: gzip`，所以 4.3 MB 的文件实际只传 1.08 MB。用不带 `Accept-Encoding` 的 `curl` 测会得到「40–88 秒」的假象。
+
+不建议、也不需要的做法（都验证过不可用）：
+- ModelScope 数据集 URL：`/resolve/` 与 API 都 **302 → cdn-lfs-cn-1**，DSH 的加载器拒绝重定向；
+- 品牌域 `dsh.jiangjiangze.icu`：国内被限速到约 4 KB/s；
+- jsDelivr 镜像：该路径返回 **403**；
+- 分片（多链接）：能满足速度，但配置要写 6 条，已撤掉；
+- Cloudflare Worker：明确不使用。
 
 ## 双语与分类
 

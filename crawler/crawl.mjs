@@ -749,30 +749,15 @@ async function main() {
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
-  // Two extra sources, split by which catalog listed the entry: the domestic ones
-  // (dsh.so, mydsh.xyz) versus the international ones (awesome-dsh-plugin, npm
-  // search). Each is a complete format-1 document, so a reader can add only the
-  // source that fits their network. Labels carry the origin for both the entries
-  // verified this run and the slim ones published straight from a catalog.
-  const hasLabel = (plugin, ids) => (plugin.metadata?.labels ?? []).some((label) => ids.includes(label))
-  const isCnEntry = (plugin) => hasLabel(plugin, ['src-dshso', 'src-mydsh'])
-  const isIntlEntry = (plugin) => hasLabel(plugin, ['src-awesome', 'src-npm'])
-  const strip = ({ _sidecar, ...rest }) => rest
-  const splitIndex = (predicate, titleEn, titleZh) => ({
-    ...index,
-    title: { en: titleEn, zh: titleZh },
-    plugins: published.filter(predicate).map(strip),
-  })
-  const cnIndex = splitIndex(isCnEntry, 'DSH Plugin Index · domestic sources', 'DSH 插件索引 · 国内源')
-  const intlIndex = splitIndex(isIntlEntry, 'DSH Plugin Index · international sources', 'DSH 插件索引 · 国际源')
-
+  // The domestic/international split documents were retired: a reader picks a
+  // language document instead (crawler/lang-index.mjs), and one link per language
+  // is what DSH can actually subscribe to. Generating the old splits cost ~10 MB of
+  // JSON per run and nothing read them.
   await mkdir(OUT, { recursive: true })
   const DRY = process.argv.includes('--dry-run')
   if (DRY) {
-    console.log(`dry-run: would write ${published.length} plugins (${JSON.stringify(index).length} bytes), cn ${cnIndex.plugins.length}, intl ${intlIndex.plugins.length}`)
+    console.log(`dry-run: would write ${published.length} plugins (${JSON.stringify(index).length} bytes)`)
   } else {
-    await writeFile(join(OUT, 'index.cn.json'), JSON.stringify(cnIndex, null, 2) + '\n')
-    await writeFile(join(OUT, 'index.intl.json'), JSON.stringify(intlIndex, null, 2) + '\n')
     await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
     await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
