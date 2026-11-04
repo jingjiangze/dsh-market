@@ -15,6 +15,21 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
 const pick = (value, lang) => (typeof value === 'string' ? value : (value?.[lang] ?? ''))
 
+// Installs from the Chinese document go through the npm mirror: the schema allows a
+// per-version `source.registry`, and npmjs is slow to reach from mainland China
+// (the same reason we serve the page itself from a China-friendly path).
+const CN_REGISTRY = process.env.CN_REGISTRY || 'https://registry.npmmirror.com'
+const CN_LANGS = new Set((process.env.CN_REGISTRY_LANGS || 'zh').split(',').map((v) => v.trim()))
+
+// Rewrite the version source: keep `type`, add the mirror when this language is a
+// China-facing document, and drop any registry the crawler already set.
+function sourceFor(version, lang) {
+  const base = { type: version?.source?.type ?? 'npm' }
+  if (base.type !== 'npm') return version?.source ?? base
+  const registry = CN_LANGS.has(lang) ? CN_REGISTRY : version?.source?.registry
+  return registry ? { ...base, registry } : base
+}
+
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const plugins = index.plugins ?? []
 
@@ -45,6 +60,7 @@ for (const lang of LANGS) {
       ...plugin,
       title: localized(plugin.title, lang),
       description: localized(plugin.description, lang),
+      versions: (plugin.versions ?? []).map((version) => ({ ...version, source: sourceFor(version, lang) })),
     })),
   }
   const slim = {
@@ -60,13 +76,13 @@ for (const lang of LANGS) {
         },
         metadata: {
           category: plugin.metadata?.category ?? 'other',
-          ...(plugin.metadata?.labels?.length ? { labels: plugin.metadata.labels.slice(0, 3) } : {}),
+          ...(plugin.metadata?.labels?.length ? { labels: plugin.metadata.labels.slice(0, 4) } : {}),
           ...(plugin.metadata?.sortKeys ? { sortKeys: plugin.metadata.sortKeys } : {}),
         },
         versions: [{
           version: version.version ?? '',
           publishTimestamp: version.publishTimestamp ?? 0,
-          source: version.source ?? { type: 'npm' },
+          source: sourceFor(version, lang),
           ...(version.engines ? { engines: version.engines } : {}),
         }],
       }

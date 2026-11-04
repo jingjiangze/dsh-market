@@ -107,6 +107,17 @@ jobs:
           ENRICH_MAX_DOWNLOADS: '3000'
         run: node crawler/enrich.mjs
 
+      - name: Give npm-less entries a git install target
+        # Characters that exist only in a catalog have no npm package to install, so
+        # they are pinned to a repository commit instead (the schema's `git` source).
+        # Capped and cached: ~2.7k candidates at 600 per run.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GIT_SOURCE_CONCURRENCY: '8'
+          GIT_SOURCE_BUDGET_MS: '480000'
+          GIT_SOURCE_MAX: '600'
+        run: node crawler/git-source.mjs
+
       - name: Add the other languages
         # Only the increment: the cache makes repeats free, and the dedicated
         # translate.yml job works through the backlog on its own schedule.

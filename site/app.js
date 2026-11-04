@@ -42,7 +42,20 @@ function tiersFor(region) {
     : [`${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${DATASET}/browse`]
 }
 const SRC_LABEL = { 'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome', 'src-mydsh': 'mydsh' }
-const TRUST_LABEL = { 'trust-readme-verified': 'README 核对', 'trust-repo-fallback': '仓库固定', 'zh-fallback': '中文待补', 'catalog-only': '仅目录', 'no-engines': '未声明版本' }
+const TRUST_LABEL = {
+  'trust-readme-verified': 'README 核对',
+  'trust-repo-fallback': '仓库固定',
+  'zh-fallback': '中文待补',
+  'catalog-only': '仅目录',
+  'no-engines': '未声明版本',
+  // popularity tiers published by the crawler
+  'stars-hot': '★ 1k+',
+  'stars-mid': '★ 100+',
+  'stars-new': '★ <100',
+  'dl-hot': '↓ 1k+',
+  'dl-mid': '↓ 100+',
+  'install-verified': '已验证安装',
+}
 const SORTS = [['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z']]
 const TIMEOUT = 8000
 
@@ -74,7 +87,7 @@ const catTitle = (id) => {
   const value = state.meta?.categories?.[id]?.title
   return (typeof value === 'string' ? value : value?.[state.lang] ?? value?.en) ?? id
 }
-const badges = (entry) => [...new Set((entry.l ?? []).map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null).filter(Boolean))].slice(0, 3)
+const badges = (entry) => [...new Set((entry.l ?? []).map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null).filter(Boolean))].slice(0, 4)
 
 function matches(entry) {
   if (state.category !== 'all' && entry.c !== state.category) return false

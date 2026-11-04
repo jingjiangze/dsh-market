@@ -294,9 +294,9 @@ function categoryFor(record, ...texts) {
 }
 
 // Only labels that change a reader's decision are published: which catalog listed
-// the plugin, whether that catalog verified it, and whether the Chinese text is
-// still a placeholder. "auto-crawled" and "engines-pinned" were true for every
-// entry and only added noise to every card.
+// the plugin, whether that catalog verified it, whether the Chinese text is still a
+// placeholder, and — the way dsh.so does it — which popularity tier the package is
+// in, so the list itself shows whether a plugin is established or brand new.
 const KEEP_LABELS = new Set([
   'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh',
   'trust-readme-verified', 'trust-repo-fallback',
@@ -304,15 +304,37 @@ const KEEP_LABELS = new Set([
   // Published from a catalog we could not re-verify this run: the reader should
   // know the compatibility claim is the catalog's, not ours.
   'no-engines', 'catalog-only',
+  // Popularity tiers (generated, see tierLabels).
+  'stars-hot', 'stars-mid', 'stars-new',
+  'dl-hot', 'dl-mid',
+  'install-verified',
 ])
+
+// Tier labels. The validator allows any number of labels (only duplicates are
+// rejected), so tiers do not have to displace the source/trust labels.
+function tierLabels(stars, downloads, verified) {
+  const tiers = []
+  if (Number.isFinite(stars) && stars > 0) {
+    if (stars >= 1000) tiers.push('stars-hot')
+    else if (stars >= 100) tiers.push('stars-mid')
+    else tiers.push('stars-new')
+  }
+  if (Number.isFinite(downloads) && downloads > 0) {
+    if (downloads >= 1000) tiers.push('dl-hot')
+    else if (downloads >= 100) tiers.push('dl-mid')
+  }
+  if (verified) tiers.push('install-verified')
+  return tiers
+}
 
 function displayLabels(labels) {
   const kept = [...new Set((labels ?? []).filter((label) => KEEP_LABELS.has(label)))]
   // Flags first: "no-engines"/"catalog-only" are what the validator and the reader
-  // rely on, so a 3-label budget must never squeeze them out in favour of a source.
+  // rely on, so the budget must never squeeze them out in favour of a source.
   const flags = kept.filter((label) => label === 'no-engines' || label === 'catalog-only')
   const rest = kept.filter((label) => !flags.includes(label))
-  return [...flags, ...rest].slice(0, 3)
+  // 5 fits a source + a trust/tier pair without turning the card into a wall.
+  return [...flags, ...rest].slice(0, 5)
 }
 
 // --------------------------------------------------------------- localization
@@ -554,6 +576,7 @@ async function main() {
         }
         const repoUrl = httpUrl(man.repository?.url)
         const homeUrl = /^https?:\/\//i.test(String(man.homepage ?? '')) ? String(man.homepage) : null
+        const publishTs = Math.floor(Date.parse(pack.time[version]) / 1000) || 0
         plugins.push({
           name,
           title: { en: enTitle, zh: zh.title || enTitle },
@@ -567,16 +590,26 @@ async function main() {
           metadata: {
             keywords: (man.keywords || []).slice(0, 8),
             category,
-            ...(record?.stars ? { sortKeys: { stars: record.stars } } : {}),
+            ...(record?.stars || record?.downloads || publishTs
+              ? {
+                sortKeys: {
+                  ...(record?.stars ? { stars: record.stars } : {}),
+                  ...(record?.downloads ? { downloads: record.downloads } : {}),
+                  // Lets DSH sort by recency natively instead of only on our site.
+                  ...(publishTs ? { updated: publishTs } : {}),
+                },
+              }
+              : {}),
             labels: displayLabels([
               ...(provenance.get(name)?.origins ?? ['src-npm']),
               ...(provenance.get(name)?.trust ?? []),
               `zh-${zh.source}`,
+              ...tierLabels(record?.stars, record?.downloads, true),
             ]),
           },
           versions: [{
             version,
-            publishTimestamp: Math.floor(Date.parse(pack.time[version]) / 1000),
+            publishTimestamp: publishTs,
             source: { type: 'npm' },
             engines: { dsh: man.engines.dsh },
           }],
@@ -674,6 +707,7 @@ async function main() {
         ...(record.trust ?? []),
         ...(record.hintEngines ? [] : ['no-engines']),
         'catalog-only',
+        ...tierLabels(record.stars, record.downloads, false),
       ])
       slimEntries.push({
         name: record.name,
@@ -686,8 +720,14 @@ async function main() {
         metadata: {
           category: categoryFor(record, record.name, titleEn, descEn),
           labels,
-          ...(record.stars || record.downloads
-            ? { sortKeys: { ...(record.stars ? { stars: record.stars } : {}), ...(record.downloads ? { downloads: record.downloads } : {}) } }
+          ...(record.stars || record.downloads || record.hintPublishTimestamp
+            ? {
+              sortKeys: {
+                ...(record.stars ? { stars: record.stars } : {}),
+                ...(record.downloads ? { downloads: record.downloads } : {}),
+                ...(record.hintPublishTimestamp ? { updated: record.hintPublishTimestamp } : {}),
+              },
+            }
             : {}),
         },
         versions: [{
@@ -738,12 +778,22 @@ async function main() {
         'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
         'catalog-only': { title: { en: 'from catalog', zh: '仅目录收录' } },
         'no-engines': { title: { en: 'no engines.dsh', zh: '未声明版本' } },
+        // Popularity tiers, generated from the numbers the catalogs publish.
+        'stars-hot': { title: { en: '★ 1k+', zh: '★ 1k+' } },
+        'stars-mid': { title: { en: '★ 100+', zh: '★ 100+' } },
+        'stars-new': { title: { en: '★ <100', zh: '★ <100' } },
+        'dl-hot': { title: { en: '1k+ weekly installs', zh: '周下载 1k+' } },
+        'dl-mid': { title: { en: '100+ weekly installs', zh: '周下载 100+' } },
+        'install-verified': { title: { en: 'install verified', zh: '已通过安装验证' } },
       },
       // Star counts are carried from the catalogs that publish them, so "sort by
       // stars" in DSH works on this index instead of only on dsh.so's own.
       sortKeys: {
         stars: { title: { en: 'Stars', zh: '星标' }, order: 'desc' },
         downloads: { title: { en: 'Weekly downloads', zh: '周下载量' }, order: 'desc' },
+        // Newest first by publish time: this is what the site already offers and
+        // what DSH otherwise cannot sort by.
+        updated: { title: { en: 'Recently updated', zh: '最近更新' }, order: 'desc' },
       },
     },
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
