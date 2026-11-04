@@ -53,6 +53,7 @@ jobs:
           cp site/_headers site-cf/ 2>/dev/null || true
           cp site/stats.json site-cf/ 2>/dev/null || true
           cp site/index.zh.json site-cf/ 2>/dev/null || true
+          cp site/index.zh.lite.json site-cf/ 2>/dev/null || true
           du -sh site-cf
       - uses: cloudflare/wrangler-action@v3
         # The brand domain mirrors GitHub Pages; it is not the source of truth.
