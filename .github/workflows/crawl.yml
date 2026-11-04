@@ -133,8 +133,10 @@ jobs:
         # last audit) so the page does not depend on github.com; the origin URL
         # stays in the entry as the browser-side fallback.
         env:
-          ICON_CONCURRENCY: '12'
+          ICON_CONCURRENCY: '16'
           ICON_BUDGET_MS: '720000'
+          # 7,112 urls in total; 3,000 per run fills the mirror in ~3 runs.
+          ICON_MAX_PER_RUN: '3000'
         run: node crawler/icons.mjs
 
       - name: Build the browse chunks
