@@ -63,7 +63,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          PUBLISH_PATHS: data dist
+          PUBLISH_PATHS: data dist site
           PUBLISH_MESSAGE: 'chore(i18n): fill ja/ko/ru text and refresh the per-language indexes'
         run: |
           set -o pipefail
