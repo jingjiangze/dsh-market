@@ -39,16 +39,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Trim the Cloudflare bundle
-        # Only the shell, its assets and the hashed copies go to Cloudflare: the
-        # ~20 MB of index documents made wrangler's asset check return 500 and left
-        # the brand domain on an old deployment. The page reads data from ModelScope.
+      - name: Assemble the Cloudflare bundle
+        # The brand domain is the relay a DSH index source can actually use: the
+        # ModelScope dataset answers 302 to its CDN and DSH rejects redirects, while
+        # GitHub Pages takes 40-88 s from China. So the shell, its hashed assets and
+        # ONE language index (zh) are served straight from here — no Worker involved.
+        # Only one document goes up at a time: a ~20 MB bundle used to make
+        # wrangler's asset check return 500 and froze this deployment.
         run: |
           mkdir -p site-cf
           cp site/index.html site/style.css site/app.js site-cf/
           cp -r site/a site-cf/a
           cp site/_headers site-cf/ 2>/dev/null || true
           cp site/stats.json site-cf/ 2>/dev/null || true
+          cp site/index.zh.json site-cf/ 2>/dev/null || true
           du -sh site-cf
       - uses: cloudflare/wrangler-action@v3
         # The brand domain mirrors GitHub Pages; it is not the source of truth.
