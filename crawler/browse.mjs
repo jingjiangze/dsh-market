@@ -21,7 +21,8 @@ const trim = (text) => String(text ?? '').replace(/\s+/g, ' ').trim().slice(0, D
 
 // Icon chain the reader asked for:
 //   1. the icon the package itself ships (`i`)
-//   2. the GitHub project's own artwork (`p2`, opengraph card of the repo)
+//   2. the GitHub project's own artwork is NOT used: its opengraph card is a
+//      1200x630 white canvas that reads as a broken image once loaded
 //   3. the developer's avatar (`g`, the account that owns the repository)
 //   4. the CSS dot, when none of the above exists
 function repoParts(repoUrl) {
@@ -77,9 +78,15 @@ const plugins = rawPlugins.map((plugin) => {
       const avatar = `https://github.com/${parts.owner}.png?size=48`
       entry.g = mirrored(avatar) ?? avatar
       if (entry.g !== avatar) entry.gb = avatar
-      entry.p2 = `https://opengraph.githubassets.com/1/${parts.owner}/${parts.repo}`
     }
   }
+  // The GitHub opengraph card is deliberately NOT part of the chain: it is a
+  // 1200x630 white canvas that loads fine and then looks like a broken image.
+  // Extra detail for the modal that a card does not need.
+  const keywords = plugin.metadata?.keywords ?? []
+  if (keywords.length) entry.kw = keywords.slice(0, 8)
+  const engines = plugin.versions?.[0]?.engines?.dsh
+  if (engines) entry.eg = String(engines)
   const extra = ['ja', 'ko', 'ru']
     .map((lang) => [lang, pick(plugin.title, lang), trim(pick(plugin.description, lang))])
     .filter(([, title, desc]) => title || desc)

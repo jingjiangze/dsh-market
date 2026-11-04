@@ -352,3 +352,24 @@ body > footer {
 .dh { display: flex; align-items: center; gap: 12px; padding: 18px 22px 8px; }
 .dh h3 { padding: 0; }
 .hicon { width: 44px; height: 44px; border-radius: 12px; object-fit: contain; background: var(--bg); border: 1px solid var(--line); }
+
+/* detail extras + footer statistics */
+.kw { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0 22px 10px; }
+.kw b {
+  font-size: 10.5px; font-weight: 500; color: #b7c3ff;
+  background: rgba(77, 107, 254, .14); border: 1px solid rgba(124, 147, 255, .26);
+  border-radius: 6px; padding: 1px 7px;
+}
+.stamp { margin: 0; padding: 0 22px 12px; font-size: 11px; color: var(--dim); }
+.dh .dot { width: 44px; height: 44px; border-radius: 12px; }
+
+body > footer {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 8px; line-height: 1.9;
+}
+body > footer span { white-space: nowrap; }
+body > footer i { font-style: normal; color: var(--line-2); }
+@media (max-width: 720px) {
+  .kw, .stamp { padding-left: 16px; padding-right: 16px; }
+  body > footer { font-size: 10.5px; gap: 6px; }
+}

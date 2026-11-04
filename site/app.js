@@ -99,12 +99,13 @@ function byOrder(a, b) {
 
 // Icon chain: the package icon, then the repository owner's avatar (developer),
 // then the CSS dot. `onerror` swaps down the chain without extra requests.
-// One helper for both views: the first URL that loads wins, and the chain walks
-// dataset copy → origin mirror → project artwork → developer avatar → nothing.
+// One helper for both views: try each URL in order, and when the chain runs out
+// swap the <img> for the CSS dot — an <img> with no valid source shows the
+// browser's broken-image box, which is exactly what a wrong avatar looked like.
 function imgChain(chain, attributes) {
   const urls = chain.filter(Boolean)
   if (!urls.length) return ''
-  return `<img ${attributes} src="${esc(urls[0])}" data-chain="${esc(urls.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.remove();return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
+  return `<img ${attributes} src="${esc(urls[0])}" data-chain="${esc(urls.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.outerHTML='<i class=dot></i>';return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
 }
 
 function icon(entry) {
@@ -143,16 +144,41 @@ function render() {
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
   $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
+  renderFooter()
   const visible = pool.slice(0, state.limit)
   $('list').innerHTML = pool.length
     ? visible.map(card).join('') + (pool.length > visible.length ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
     : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
 }
 
+// Footer states what the catalogue actually contains, because "10,995 plugins" says
+// nothing about how many carry stars, downloads or a translation.
+function renderFooter() {
+  const footer = document.querySelector?.('body > footer')
+  const items = state.plugins
+  if (!footer || !items.length) return
+  const withStars = items.filter((entry) => entry.s > 0).length
+  const withDownloads = items.filter((entry) => entry.dl > 0).length
+  const translated = items.filter((entry) => (entry.x ?? []).length > 0).length
+  const categories = Object.keys(state.meta?.categories ?? {}).length
+  const pct = (value) => `${Math.round((value / items.length) * 100)}%`
+  const updated = state.meta?.updatedAt ? day(Date.parse(state.meta.updatedAt) / 1000) : ''
+  const parts = [
+    `收录 ${items.length}`,
+    `${categories} 个分类`,
+    `星标 ${withStars}（${pct(withStars)}）`,
+    `下载量 ${withDownloads}（${pct(withDownloads)}）`,
+    `多语言 ${translated}（${pct(translated)}）`,
+    updated ? `更新 ${updated}` : '',
+    '交流 QQ：1689170897',
+  ].filter(Boolean)
+  footer.innerHTML = parts.map((text) => `<span>${esc(text)}</span>`).join('<i>·</i>')
+}
+
 // The detail view shows a larger icon and walks the full chain the reader asked
 // for: package icon → the project's GitHub artwork → the developer's avatar.
 function heroIcon(entry) {
-  return imgChain([entry.i, entry.ib, entry.p2, entry.g, entry.gb], 'class=hicon')
+  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'class=hicon')
 }
 
 function detailHtml(entry) {
@@ -162,19 +188,24 @@ function detailHtml(entry) {
     ['作者', entry.a],
     ['发布', day(entry.p)],
     ['星标', entry.s ? num(entry.s) : ''],
-    ['下载', entry.dl ? num(entry.dl) : ''],
+    ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
+    ['DSH 版本', entry.eg],
     ['来源', badges(entry).join(' · ')],
     ['包名', entry.n],
   ].filter(([, value]) => value)
   const install = `${entry.n}@${entry.v || ''}`
   const links = [entry.h, entry.r].filter(Boolean)
+  const keywords = (entry.kw ?? []).map((word) => `<b>${esc(word)}</b>`).join('')
   const position = state.visible.findIndex((item) => item.n === entry.n)
   const total = state.visible.length
+  const updated = state.meta?.updatedAt ? day(Date.parse(state.meta.updatedAt) / 1000) : ''
   return `<div class=dh>${heroIcon(entry)}<h3>${esc(titleOf(entry)) || esc(entry.n)}</h3></div>`
     + `<p class=lead>${esc(descOf(entry))}</p>`
     + `<dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl>`
     + `<p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p>`
+    + (keywords ? `<p class=kw>${keywords}</p>` : '')
     + (links.length ? `<p class=links>${links.map((url) => `<a href="${esc(url)}" target=_blank rel=noreferrer>${esc(url.replace(/^https?:\/\//, ''))}</a>`).join(' ')}</p>` : '')
+    + (updated ? `<p class=stamp>目录更新于 ${esc(updated)}</p>` : '')
     + `<div class=nav><button data-prev${position <= 0 ? ' disabled' : ''}>← 上一个</button><span>${position >= 0 ? position + 1 : '?'} / ${total}</span><button data-next${position < 0 || position + 1 >= total ? ' disabled' : ''}>下一个 →</button></div>`
 }
 

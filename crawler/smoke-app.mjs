@@ -38,6 +38,7 @@ function element(id) {
   }
   return elements.get(id)
 }
+const footerElement = { innerHTML: '' }
 const segElement = {
   children: [],
   querySelector(selector) {
@@ -49,7 +50,7 @@ const document = {
   activeElement: null,
   getElementById: (id) => element(id),
   querySelectorAll: () => [],
-  querySelector: (selector) => (selector === '.seg' ? segElement : null),
+  querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : null),
   createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', append() {}, setAttribute() {} }),
   addEventListener() {},
   head: { appendChild() {} },
@@ -154,6 +155,11 @@ api.state.lang = 'ja'
 api.chrome()
 api.render()
 if (!element('list').innerHTML.includes('チーム編成')) problems.push('ja translation is not used after switching language')
+
+// Footer statistics must come from the loaded catalogue, including the QQ line.
+if (!/收录/.test(footerElement.innerHTML)) problems.push('footer does not show the catalogue size')
+if (!/星标/.test(footerElement.innerHTML)) problems.push('footer does not show star coverage')
+if (!/1689170897/.test(footerElement.innerHTML)) problems.push('footer lost the QQ line')
 
 if (problems.length) {
   for (const problem of problems) console.log(`FAIL  ${problem}`)
