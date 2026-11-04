@@ -8,3 +8,9 @@ dist/rejections.json
 dist/index.*.json
 dist/index.sidecar.json
 _tmp/
+
+# a local 
+pm i for the validator must never be published
+node_modules/
+package-lock.json
+
