@@ -73698,7 +73698,9 @@
       "name": "dsh-boot-splash",
       "title": {
         "en": "@oumaekumiko0821/dsh-splash-gojo",
-        "zh": "@oumaekumiko0821/dsh-splash-gojo"
+        "zh": "@oumaekumiko0821/dsh-splash-gojo",
+        "ja": "@oumaekumiko0821/dsh-splash-gojo",
+        "ru": "@oumaekumiko0821/dsh-splash-gojo"
       },
       "description": {
         "en": "为 DeepSeek Harness 提供全屏开机动画的插件，启动时显示内联图片，且无运行时依赖。",
@@ -73874,7 +73876,9 @@
       "name": "dsh-chat-width",
       "title": {
         "en": "dsh-chat-width",
-        "zh": "dsh-chat-width"
+        "zh": "dsh-chat-width",
+        "ko": "dsh-채팅-너비",
+        "ru": "dsh-чат-ширина"
       },
       "description": {
         "en": "为 DeepSeek Harness 网页界面添加可拖拽手柄，调节聊天内容宽度，范围 748px 到 1040px。",
@@ -74193,7 +74197,10 @@
       "name": "dsh-cost-tracker",
       "title": {
         "en": "dsh-cost-tracker",
-        "zh": "dsh-cost-tracker"
+        "zh": "dsh-cost-tracker",
+        "ja": "dsh-コストトラッカー",
+        "ko": "dsh 비용 추적기",
+        "ru": "dsh-отслеживание затрат"
       },
       "description": {
         "en": "为 DeepSeek Harness Web 记录每日 LLM 调用花费，可按会话、模型和日期查看。",
@@ -74931,7 +74938,10 @@
       "name": "dsh-file-explorer",
       "title": {
         "en": "dsh-file-explorer",
-        "zh": "dsh-file-explorer"
+        "zh": "dsh-file-explorer",
+        "ja": "dsh-ファイルエクスプローラー",
+        "ko": "dsh 파일 탐색기",
+        "ru": "dsh-файл-проводник"
       },
       "description": {
         "en": "在 DSH Web UI 侧边栏浏览当前工作区文件，支持预览和编辑，无需离开聊天界面。",
@@ -76118,7 +76128,10 @@
       "name": "dsh-notifications",
       "title": {
         "en": "dsh-notifications",
-        "zh": "dsh-notifications"
+        "zh": "dsh-notifications",
+        "ja": "dsh-通知",
+        "ko": "dsh 알림",
+        "ru": "dsh-уведомления"
       },
       "description": {
         "en": "为 DeepSeek Harness 会话提供浏览器通知，在待审批、有提问、成功或失败时提醒，点击通知可打开对应会话。",
@@ -76779,7 +76792,10 @@
       "name": "dsh-plugin-market",
       "title": {
         "en": "dsh-plugin-market",
-        "zh": "dsh-plugin-market"
+        "zh": "dsh-plugin-market",
+        "ja": "dsh-プラグイン-マーケット",
+        "ko": "dsh-플러그인-시장",
+        "ru": "dsh-плагин-рынок"
       },
       "description": {
         "en": "DeepSeek Harness 插件市场，可浏览、搜索并安装 dsh-plugin 主题的插件。",
@@ -77095,7 +77111,10 @@
       "name": "dsh-plugin-studio",
       "title": {
         "en": "dsh-plugin-studio",
-        "zh": "dsh-plugin-studio"
+        "zh": "dsh-plugin-studio",
+        "ja": "dsh-プラグイン-スタジオ",
+        "ko": "dsh-플러그인-스튜디오",
+        "ru": "dsh-плагин-студия"
       },
       "description": {
         "en": "DSH 插件管理器：在 Web 设置页按官方/社区分组管理已安装插件，支持查看详情、一键启停与卸载，并内置 GitHub 插件市场，可按高收藏或增长最快榜单浏览、搜索插件并一键安装。",
@@ -77627,7 +77646,10 @@
       "name": "dsh-security-audit",
       "title": {
         "en": "@MarchLiu/dsh-cf-sas",
-        "zh": "@MarchLiu/dsh-cf-sas"
+        "zh": "@MarchLiu/dsh-cf-sas",
+        "ja": "@MarchLiu/dsh-cf-sas",
+        "ko": "@MarchLiu/dsh-cf-sas",
+        "ru": "@МарчЛю/dsh-cf-sas"
       },
       "description": {
         "en": "将 Cloudflare 安全审计技能升级为 DSH 插件，自治编排沙箱审计任务，并在面板中展示进度与最终报告。",
@@ -78295,7 +78317,10 @@
       "name": "dsh-thinking-effort",
       "title": {
         "en": "dsh-thinking-effort",
-        "zh": "dsh-thinking-effort"
+        "zh": "dsh-thinking-effort",
+        "ja": "dsh-思考-努力",
+        "ko": "DSH-생각-노력",
+        "ru": "dsh-мышление-усилие"
       },
       "description": {
         "en": "为 DeepSeek Harness 中的第三方厂商模型添加关闭、低、中、高四档推理等级，并可为会话添加引用文件夹。",
@@ -78720,7 +78745,10 @@
       "name": "dsh-vision",
       "title": {
         "en": "vision-use",
-        "zh": "vision-use"
+        "zh": "vision-use",
+        "ja": "視覚利用",
+        "ko": "시력 사용",
+        "ru": "использование видения"
       },
       "description": {
         "en": "为 DSH Agent 提供视觉通道和鼠标键盘控制，直接看见并操作 Windows 桌面，带 Codex 风格蓝色覆盖层，按 Esc 可随时中止。",
@@ -79104,7 +79132,10 @@
       "name": "dsh-whale-pet",
       "title": {
         "en": "dsh-whale-pet",
-        "zh": "dsh-whale-pet"
+        "zh": "dsh-whale-pet",
+        "ja": "dsh-クジラ-ペット",
+        "ko": "dsh-고래-애완동물",
+        "ru": "dsh-кит-питомец"
       },
       "description": {
         "en": "为 DeepSeek Harness Web UI 添加一只蓝色鲸鱼桌面宠物，会游动、跟随鼠标，可拖动和互动。",
@@ -80322,7 +80353,10 @@
       "name": "@duke-dsh-plugins/dsh-archive-manager",
       "title": {
         "en": "dsh-archive-manager",
-        "zh": "dsh-archive-manager"
+        "zh": "dsh-archive-manager",
+        "ja": "dsh-アーカイブマネージャー",
+        "ko": "dsh-아카이브-관리자",
+        "ru": "dsh-архив-менеджер"
       },
       "description": {
         "en": "为 DSH（DeepSeek Harness）提供归档管理功能的插件，附带 Web 界面。",
@@ -80394,7 +80428,10 @@
       "name": "@eternalnight/dsh-theme",
       "title": {
         "en": "dsh-theme",
-        "zh": "dsh-theme"
+        "zh": "dsh-theme",
+        "ja": "dsh-テーマ",
+        "ko": "dsh 테마",
+        "ru": "dsh-тема"
       },
       "description": {
         "en": "为 DeepSeek Harness 提供主题皮肤，包含内置主题、静态图片和动态 360 跟随视频背景。",
@@ -81136,7 +81173,10 @@
       "name": "@picgo/dsh-plugin",
       "title": {
         "en": "dsh-plugin",
-        "zh": "dsh-plugin"
+        "zh": "dsh-plugin",
+        "ja": "dshプラグイン",
+        "ko": "dsh 플러그인",
+        "ru": "dsh-плагин"
       },
       "description": {
         "en": "借助 PicGo，在 DeepSeek Harness 中把图片和文件上传到你自己配置的图床",
@@ -81314,7 +81354,10 @@
       "name": "@stardustlc/dsh-docker",
       "title": {
         "en": "dsh-docker",
-        "zh": "dsh-docker"
+        "zh": "dsh-docker",
+        "ja": "dsh-docker",
+        "ko": "dsh-docker",
+        "ru": "dsh-докер"
       },
       "description": {
         "en": "DeepSeek Harness 容器管理插件，通过 subprocess 提供 docker ps、logs、inspect、exec、manage 五个工具，argv 无 shell 注入，exec 需审批。",
@@ -82081,7 +82124,10 @@
       "name": "dsh-about",
       "title": {
         "en": "dsh-about",
-        "zh": "dsh-about"
+        "zh": "dsh-about",
+        "ja": "dsh-について",
+        "ko": "dsh 정보",
+        "ru": "dsh-о"
       },
       "description": {
         "en": "为 DeepSeek Harness Web 设置添加“关于”页，展示 DSH 版本、插件版本与项目链接。",
@@ -83752,7 +83798,10 @@
       "name": "dsh-codegraph",
       "title": {
         "en": "codegraph",
-        "zh": "codegraph"
+        "zh": "codegraph",
+        "ja": "コードグラフ",
+        "ko": "코드그래프",
+        "ru": "кодограф"
       },
       "description": {
         "en": "将代码符号、调用点和导入索引到 SQLite，通过 CLI 或 stdio MCP 工具服务回答调用与依赖问题",
@@ -83995,7 +84044,10 @@
       "name": "dsh-composer-history-2",
       "title": {
         "en": "dsh-composer-history",
-        "zh": "dsh-composer-history"
+        "zh": "dsh-composer-history",
+        "ja": "dsh-composer-history",
+        "ko": "dsh-작곡가-역사",
+        "ru": "dsh-композитор-история"
       },
       "description": {
         "en": "为 DSH 网页界面输入框添加指令历史，按上下方向键循环浏览已发送的指令，到达末尾时恢复此前正在编辑的草稿。",
@@ -85709,7 +85761,10 @@
       "name": "dsh-im-gateway",
       "title": {
         "en": "dsh-im-gateway",
-        "zh": "dsh-im-gateway"
+        "zh": "dsh-im-gateway",
+        "ja": "dsh-im-ゲートウェイ",
+        "ko": "dsh-im-게이트웨이",
+        "ru": "dsh-im-шлюз"
       },
       "description": {
         "en": "一个即时通讯网关，将各类聊天工具接入 DeepSeek Harness 的代理会话，并支持用斜杠命令控制这些会话。",
@@ -86200,7 +86255,10 @@
       "name": "dsh-llm-workbuddy",
       "title": {
         "en": "dsh-llm-workbuddy",
-        "zh": "dsh-llm-workbuddy"
+        "zh": "dsh-llm-workbuddy",
+        "ja": "dsh-llm-ワークバディ",
+        "ko": "dsh-llm-workbuddy",
+        "ru": "dsh-llm-workbuddy"
       },
       "description": {
         "en": "通过本地代理让 DSH 调用 WorkBuddy/CodeBuddy 的模型，无需 API key",
@@ -86344,7 +86402,10 @@
       "name": "dsh-mattpocock-skills",
       "title": {
         "en": "dsh-mattpocock-skills",
-        "zh": "dsh-mattpocock-skills"
+        "zh": "dsh-mattpocock-skills",
+        "ja": "dsh-マットポコック-スキル",
+        "ko": "dsh-mattpocock-기술",
+        "ru": "dsh-mattpocock-skills"
       },
       "description": {
         "en": "DeepSeek Harness 插件，移植 Matt Pocock 的工程技能包，包含 grilling、spec/ticket 流程、TDD、代码审查和领域建模等技能。",
@@ -86449,7 +86510,10 @@
       "name": "dsh-mcp-connect",
       "title": {
         "en": "dsh-mcp-bridge",
-        "zh": "dsh-mcp-bridge"
+        "zh": "dsh-mcp-bridge",
+        "ja": "dsh-mcp-ブリッジ",
+        "ko": "dsh-mcp-브리지",
+        "ru": "dsh-mcp-мост"
       },
       "description": {
         "en": "Zero-dependency MCP client bridge for DeepSeek Harness: connect stdio/HTTP MCP servers and auto-register their tools for the agent.",
@@ -88060,7 +88124,10 @@
       "name": "dsh-pet-android",
       "title": {
         "en": "@Tongyu3/dsh-pet-android",
-        "zh": "@Tongyu3/dsh-pet-android"
+        "zh": "@Tongyu3/dsh-pet-android",
+        "ja": "@Tongyu3/dsh-pet-android",
+        "ko": "@Tongyu3/dsh-pet-android",
+        "ru": "@Tongyu3/dsh-pet-android"
       },
       "description": {
         "en": "dsh-pet 的 Android 衍生插件，用系统悬浮窗承载桌宠显示，并自动探测宿主载体。",
@@ -88556,7 +88623,10 @@
       "name": "dsh-plugin-index",
       "title": {
         "en": "@ymck-x/dsh-plugin-index",
-        "zh": "@ymck-x/dsh-plugin-index"
+        "zh": "@ymck-x/dsh-plugin-index",
+        "ja": "@ymck-x/dsh-plugin-index",
+        "ko": "@ymck-x/dsh-plugin-index",
+        "ru": "@ymck-x/dsh-plugin-index"
       },
       "description": {
         "en": "在 DSH 内浏览并一键安装 1 万余个插件，只依据 package.json 中的 dsh.bundle.patch 字段校验真伪，而不看热度。",
@@ -88944,7 +89014,10 @@
       "name": "dsh-plugin-template",
       "title": {
         "en": "@exoticknight/dsh-plugin-template",
-        "zh": "@exoticknight/dsh-plugin-template"
+        "zh": "@exoticknight/dsh-plugin-template",
+        "ja": "@exoticnight/dsh-plugin-template",
+        "ko": "@exoticknight/dsh-플러그인-템플릿",
+        "ru": "@exoticknight/dsh-plugin-template"
       },
       "description": {
         "en": "DSH 插件模板与 AI 操作手册，用于创建、发布和列出 DeepSeek Harness 插件。",
@@ -89014,7 +89087,10 @@
       "name": "dsh-plugins-90",
       "title": {
         "en": "dsh-plugins",
-        "zh": "dsh-plugins"
+        "zh": "dsh-plugins",
+        "ja": "dsh-プラグイン",
+        "ko": "dsh 플러그인",
+        "ru": "dsh-плагины"
       },
       "description": {
         "en": "dsh-plugins 仓库的安装指南，涵盖从 GitHub 安装、版本固定和本地调试。",
@@ -89364,7 +89440,10 @@
       "name": "dsh-quota-panel",
       "title": {
         "en": "dsh-quota-panel",
-        "zh": "dsh-quota-panel"
+        "zh": "dsh-quota-panel",
+        "ja": "dsh-quota-パネル",
+        "ko": "dsh-할당량 패널",
+        "ru": "dsh-quota-панель"
       },
       "description": {
         "en": "在 dsh Web 界面角落显示各服务商额度与余额面板，通过服务端凭证代理获取数据，并支持配置驱动的页面角标。",
@@ -90696,7 +90775,10 @@
       "name": "dsh-skills-manager",
       "title": {
         "en": "dsh-skills-manager",
-        "zh": "dsh-skills-manager"
+        "zh": "dsh-skills-manager",
+        "ja": "dsh-スキルマネージャー",
+        "ko": "dsh-기술-관리자",
+        "ru": "dsh-skills-менеджер"
       },
       "description": {
         "en": "DeepSeek Harness 设置页中的技能管理器，按系统/用户分类，支持用户技能的开关、编辑、删除和新建。",
@@ -91196,7 +91278,10 @@
       "name": "dsh-task-control",
       "title": {
         "en": "dsh-task-control",
-        "zh": "dsh-task-control"
+        "zh": "dsh-task-control",
+        "ja": "dsh-タスク制御",
+        "ko": "dsh-작업-제어",
+        "ru": "dsh-управление задачами"
       },
       "description": {
         "en": "DeepSeek Harness 插件，可一键急停卡死的 pip/GitHub 下载，并检测下载进度、识别卡死状态。",
@@ -91477,7 +91562,10 @@
       "name": "dsh-theme",
       "title": {
         "en": "dsh-theme",
-        "zh": "dsh-theme"
+        "zh": "dsh-theme",
+        "ja": "dsh-テーマ",
+        "ko": "dsh 테마",
+        "ru": "dsh-тема"
       },
       "description": {
         "en": "为 DeepSeek Harness 网页界面提供 30 款主题，可作为客户端插件或独立 CSS 使用",
@@ -91725,7 +91813,10 @@
       "name": "dsh-tidewatch",
       "title": {
         "en": "dsh-tidewatch",
-        "zh": "dsh-tidewatch"
+        "zh": "dsh-tidewatch",
+        "ja": "dsh-潮見",
+        "ko": "dsh-tidewatch",
+        "ru": "dsh-tidewatch"
       },
       "description": {
         "en": "在输入框附近显示 DeepSeek 峰谷定价状态、倒计时和会话费用的浮动徽章。",
@@ -91760,7 +91851,10 @@
       "name": "dsh-token-optimizer",
       "title": {
         "en": "dsh-token-optimizer",
-        "zh": "dsh-token-optimizer"
+        "zh": "dsh-token-optimizer",
+        "ja": "dsh-トークンオプティマイザー",
+        "ko": "dsh-토큰 최적화 프로그램",
+        "ru": "dsh-токен-оптимизатор"
       },
       "description": {
         "en": "为DeepSeek Harness提供确定性、可恢复的工具结果压缩与缓存感知的上下文压缩。",
@@ -93309,7 +93403,10 @@
       "name": "dsh-workspace-explorer",
       "title": {
         "en": "dsh-workspace-explorer",
-        "zh": "dsh-workspace-explorer"
+        "zh": "dsh-workspace-explorer",
+        "ja": "dsh-ワークスペース-エクスプローラー",
+        "ko": "dsh-작업 공간-탐색기",
+        "ru": "dsh-workspace-explorer"
       },
       "description": {
         "en": "VS Code 风格双栏资源管理器：左侧多工作区文件树支持语言着色图标、行内重命名及新建文件/文件夹，右侧可拖拽缩放的编辑器带行号、状态栏和 10 种语言语法高亮。",
@@ -93766,7 +93863,10 @@
       "name": "dshp",
       "title": {
         "en": "dshp",
-        "zh": "dshp"
+        "zh": "dshp",
+        "ja": "DFS",
+        "ko": "DFS",
+        "ru": "ДФС"
       },
       "description": {
         "en": "管理 DeepSeek Harness 配置档案：列出、创建、克隆、对比配置，并将整套 dsh 设置导出为单个可移植文件分享。",
@@ -95061,7 +95161,10 @@
       "name": "@d4cluvtrain/dsh-plugin-manager",
       "title": {
         "en": "dsh-plugin-manager",
-        "zh": "dsh-plugin-manager"
+        "zh": "dsh-plugin-manager",
+        "ja": "dsh-プラグインマネージャー",
+        "ko": "dsh-플러그인-관리자",
+        "ru": "dsh-плагин-менеджер"
       },
       "description": {
         "en": "在 web 界面侧边栏添加插件管理入口，可查看、启用或禁用、发现并安装 dsh 插件。",
@@ -95133,7 +95236,10 @@
       "name": "@deepforce/dsh-balance",
       "title": {
         "en": "dsh-balance",
-        "zh": "dsh-balance"
+        "zh": "dsh-balance",
+        "ja": "dsh-バランス",
+        "ko": "dsh-균형",
+        "ru": "dsh-баланс"
       },
       "description": {
         "en": "通过 /balance 命令和编辑器停靠栏显示账户余额、充值链接以及本次会话的费用估算。",
@@ -95546,7 +95652,10 @@
       "name": "@dsh-external/dsh-memory-manager",
       "title": {
         "en": "dsh-memory-manager",
-        "zh": "dsh-memory-manager"
+        "zh": "dsh-memory-manager",
+        "ja": "dsh-メモリマネージャ",
+        "ko": "dsh-메모리-관리자",
+        "ru": "dsh-менеджер памяти"
       },
       "description": {
         "en": "为 DSH 提供跨会话记忆管理，包括 Markdown 记忆库、约定自动注入、会话摘要和代理记忆工具。",
@@ -95652,7 +95761,10 @@
       "name": "@dsh-external/dsh-session-manager",
       "title": {
         "en": "dsh-session-manager",
-        "zh": "dsh-session-manager"
+        "zh": "dsh-session-manager",
+        "ja": "dsh-セッションマネージャー",
+        "ko": "dsh-세션-관리자",
+        "ru": "dsh-сессионный менеджер"
       },
       "description": {
         "en": "为 DeepSeek Harness 网页版添加右键菜单和底部会话管理器，用于置顶或取消置顶聊天。",
@@ -96036,7 +96148,10 @@
       "name": "@feiyang666/dsh-mobile-remote",
       "title": {
         "en": "dsh-mobile-remote",
-        "zh": "dsh-mobile-remote"
+        "zh": "dsh-mobile-remote",
+        "ja": "dsh-モバイル-リモート",
+        "ko": "dsh-모바일-원격",
+        "ru": "dsh-mobile-remote"
       },
       "description": {
         "en": "DeepSeek Harness 移动端远程控制插件，设置页提供扫码连接二维码、一键开启远程控制和在线设备数统计，并优化手机端界面，让局域网内手机可远程操控电脑端 DeepSeek Harness。",
@@ -96747,7 +96862,10 @@
       "name": "@kihara777/dsh-api-balance",
       "title": {
         "en": "dsh-api-balance",
-        "zh": "dsh-api-balance"
+        "zh": "dsh-api-balance",
+        "ja": "dsh-api-balance",
+        "ko": "dsh-api-균형",
+        "ru": "dsh-api-баланс"
       },
       "description": {
         "en": "在 DeepSeek Harness webui 用量圆圈弹出面板中加入「用量 / 余额」标签切换，展示 API 账户余额与用量明细。",
@@ -96849,7 +96967,10 @@
       "name": "@lanxing/dsh-skill-manager",
       "title": {
         "en": "dsh-skill-manager",
-        "zh": "dsh-skill-manager"
+        "zh": "dsh-skill-manager",
+        "ja": "dsh-スキルマネージャー",
+        "ko": "dsh-기술-관리자",
+        "ru": "dsh-skill-менеджер"
       },
       "description": {
         "en": "为 DSH Web 界面添加技能面板，可查看、开关和管理技能。",
@@ -97298,7 +97419,10 @@
       "name": "@marlonlau/dsh-wallpaper-engine",
       "title": {
         "en": "dsh-wallpaper-engine",
-        "zh": "dsh-wallpaper-engine"
+        "zh": "dsh-wallpaper-engine",
+        "ja": "dsh-壁紙エンジン",
+        "ko": "dsh-벽지-엔진",
+        "ru": "dsh-обои-движок"
       },
       "description": {
         "en": "一键切换 DSH 背景，素材取自本地 Wallpaper Engine 的图片和视频",
@@ -97512,7 +97636,10 @@
       "name": "@neptune810/dsh-model-router",
       "title": {
         "en": "dsh-model-router",
-        "zh": "dsh-model-router"
+        "zh": "dsh-model-router",
+        "ja": "dsh-モデル-ルーター",
+        "ko": "dsh-모델-라우터",
+        "ru": "dsh-модель-маршрутизатор"
       },
       "description": {
         "en": "为 DeepSeek Harness 逐步设置 flash 模型的推理强度，模型本身不变，最大强度需手动开启。",
@@ -97723,7 +97850,10 @@
       "name": "@skkjkk/dsh-usage-dashboard",
       "title": {
         "en": "dsh-usage-dashboard",
-        "zh": "dsh-usage-dashboard"
+        "zh": "dsh-usage-dashboard",
+        "ja": "dsh-使用状況-ダッシュボード",
+        "ko": "dsh-사용-대시보드",
+        "ru": "dsh-использование-приборная панель"
       },
       "description": {
         "en": "DSH 用量统计面板插件，按 token、费用、时长和会话聚合数据，并提供趋势、热力图和日历视图。",
@@ -98216,7 +98346,10 @@
       "name": "@xfqz86/dsh-usage-stats",
       "title": {
         "en": "dsh-usage-stats",
-        "zh": "dsh-usage-stats"
+        "zh": "dsh-usage-stats",
+        "ja": "dsh-使用状況の統計",
+        "ko": "dsh-사용-통계",
+        "ru": "dsh-использование-статистика"
       },
       "description": {
         "en": "DSH 侧边栏 token 用量统计，按模型/会话/日期展示并提示额度预警。",
@@ -98253,7 +98386,10 @@
       "name": "@yangzhe1991/dsh-code-review",
       "title": {
         "en": "dsh-code-review",
-        "zh": "dsh-code-review"
+        "zh": "dsh-code-review",
+        "ja": "dsh-コードレビュー",
+        "ko": "dsh-코드-검토",
+        "ru": "dsh-код-обзор"
       },
       "description": {
         "en": "DSH Web 插件，一键为 git diff 打开独立双列代码审查页，支持语法高亮与行内评论。",
@@ -98360,7 +98496,10 @@
       "name": "@yuuz12/dsh-tavily",
       "title": {
         "en": "dsh-tavily",
-        "zh": "dsh-tavily"
+        "zh": "dsh-tavily",
+        "ja": "dsh-tavily",
+        "ko": "dsh-tavily",
+        "ru": "dsh-тавили"
       },
       "description": {
         "en": "为DeepSeek Harness提供基于Tavily的网络搜索插件，支持多密钥轮换、故障转移和Web设置管理。",
@@ -98606,7 +98745,10 @@
       "name": "@zljr/dsh-share",
       "title": {
         "en": "dsh-share",
-        "zh": "dsh-share"
+        "zh": "dsh-share",
+        "ja": "dsh-共有",
+        "ko": "dsh-공유",
+        "ru": "dsh-доля"
       },
       "description": {
         "en": "把 DeepSeek Harness 会话导出为只读、带令牌校验的 HTML 快照，并通过局域网分享",
@@ -99713,7 +99855,10 @@
       "name": "dsh-annotate",
       "title": {
         "en": "@DWJZ/dsh-annotate",
-        "zh": "@DWJZ/dsh-annotate"
+        "zh": "@DWJZ/dsh-annotate",
+        "ja": "@DWJZ/dsh-annotate",
+        "ko": "@DWJZ/dsh-주석",
+        "ru": "@DWJZ/dsh-аннотация"
       },
       "description": {
         "en": "在 DSH 回答中选中文字添加备注，累积后一次性发送给 agent。",
@@ -99816,7 +99961,10 @@
       "name": "dsh-api-balance",
       "title": {
         "en": "@CH2008445/dsh-api-balance",
-        "zh": "@CH2008445/dsh-api-balance"
+        "zh": "@CH2008445/dsh-api-balance",
+        "ja": "@CH2008445/dsh-api-balance",
+        "ko": "@CH2008445/dsh-api-balance",
+        "ru": "@CH2008445/dsh-api-balance"
       },
       "description": {
         "en": "在 DSH 侧边栏页脚显示 DeepSeek API 账户余额与单次运行费用，API 密钥仅保留在宿主进程中。",
@@ -100544,7 +100692,10 @@
       "name": "dsh-balance-19",
       "title": {
         "en": "dsh-balance",
-        "zh": "dsh-balance"
+        "zh": "dsh-balance",
+        "ja": "dsh-バランス",
+        "ko": "dsh-균형",
+        "ru": "dsh-баланс"
       },
       "description": {
         "en": "在 DeepSeek Harness 输入框下方状态栏显示当前供应商余额与用量，包括 DeepSeek 官方余额和本会话花费，以及 Kimi Coding、OpenCode Go、GLM Coding Plan 等订阅用量，按供应商判断、2 秒轮询、5 分钟缓存。",
@@ -100613,7 +100764,10 @@
       "name": "dsh-balance-monitor-3",
       "title": {
         "en": "dsh-balance-monitor",
-        "zh": "dsh-balance-monitor"
+        "zh": "dsh-balance-monitor",
+        "ja": "dsh-バランスモニター",
+        "ko": "dsh-균형-모니터",
+        "ru": "dsh-баланс-монитор"
       },
       "description": {
         "en": "在 dsh 侧边栏底部显示 DeepSeek 账户余额和花费金额。",
@@ -102559,7 +102713,10 @@
       "name": "dsh-computer-use-12",
       "title": {
         "en": "dsh-computer-use",
-        "zh": "dsh-computer-use"
+        "zh": "dsh-computer-use",
+        "ja": "dsh-コンピューターの使用",
+        "ko": "dsh-컴퓨터 사용",
+        "ru": "dsh-использование компьютера"
       },
       "description": {
         "en": "面向 DeepSeek Harness 的跨平台桌面 computer-use 插件，通过内置原生辅助程序截取屏幕区域。",
@@ -107415,7 +107572,10 @@
       "name": "dsh-kun-like-pet",
       "title": {
         "en": "dsh-kun-like-pet",
-        "zh": "dsh-kun-like-pet"
+        "zh": "dsh-kun-like-pet",
+        "ja": "dshくんのようなペット",
+        "ko": "dsh-kun-like-pet",
+        "ru": "Дш-кун-лайк-питомец"
       },
       "description": {
         "en": "为 DeepSeek Harness 网页界面提供桌面宠物，根据智能体状态播放动画和音效。",
@@ -107593,7 +107753,10 @@
       "name": "dsh-launcher",
       "title": {
         "en": "dsh-launcher",
-        "zh": "dsh-launcher"
+        "zh": "dsh-launcher",
+        "ja": "dsh ランチャー",
+        "ko": "dsh 실행기",
+        "ru": "dsh-пусковая установка"
       },
       "description": {
         "en": "安装一个零依赖终端命令 dsh-go，运行后启动 dsh harness 并自动打开浏览器，约 9 KB。",
@@ -107628,7 +107791,10 @@
       "name": "dsh-launcher-30",
       "title": {
         "en": "dsh-launcher",
-        "zh": "dsh-launcher"
+        "zh": "dsh-launcher",
+        "ja": "dsh ランチャー",
+        "ko": "dsh 실행기",
+        "ru": "dsh-пусковая установка"
       },
       "description": {
         "en": "为 DSH Web 自动创建 Windows 桌面快捷方式，双击直达工作页面，未启动时自动拉起 dsh web。",
@@ -108956,7 +109122,10 @@
       "name": "dsh-mobile-remote",
       "title": {
         "en": "dsh-mobile-remote",
-        "zh": "dsh-mobile-remote"
+        "zh": "dsh-mobile-remote",
+        "ja": "dsh-モバイル-リモート",
+        "ko": "dsh-모바일-원격",
+        "ru": "dsh-mobile-remote"
       },
       "description": {
         "en": "DeepSeek Harness WeChat remote-control plugin: drive your dsh agent from WeChat — two-way file transfer, proactive notifications, multi-session switching (iLink",
@@ -109063,7 +109232,10 @@
       "name": "dsh-model-switch",
       "title": {
         "en": "dsh-model-switch",
-        "zh": "dsh-model-switch"
+        "zh": "dsh-model-switch",
+        "ja": "dsh-モデル-スイッチ",
+        "ko": "dsh-모델-스위치",
+        "ru": "dsh-модель-переключатель"
       },
       "description": {
         "en": "在DeepSeek Harness中切换主模型、子代理、搜索、图像生成、对话和Plan的模型路线。",
@@ -109205,7 +109377,10 @@
       "name": "dsh-multimedia-webui-input",
       "title": {
         "en": "dsh-attachments",
-        "zh": "dsh-attachments"
+        "zh": "dsh-attachments",
+        "ja": "dsh-添付ファイル",
+        "ko": "dsh 첨부 파일",
+        "ru": "dsh-вложения"
       },
       "description": {
         "en": "为 DSH WebUI 跨平台添加多媒体输入和工作区附件支持。",
@@ -109625,7 +109800,10 @@
       "name": "dsh-notification",
       "title": {
         "en": "dsh-notification",
-        "zh": "dsh-notification"
+        "zh": "dsh-notification",
+        "ja": "dsh-通知",
+        "ko": "dsh 알림",
+        "ru": "dsh-уведомление"
       },
       "description": {
         "en": "know when your agent finishes a turn, hits an error, or is waiting for your approval — without watching the tab.",
