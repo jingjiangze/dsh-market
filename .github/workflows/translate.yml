@@ -45,6 +45,12 @@ jobs:
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
+      - name: Assemble the served copy
+        # `ci` compares site/index.json with dist/index.json byte for byte, and this
+        # job is what adds the translations to dist — without this copy the two drift
+        # and every push after a translate run fails the gate.
+        run: cp dist/index.json site/index.json
+
       - name: Publish the language indexes to the dataset
         env:
           MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}

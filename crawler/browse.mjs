@@ -97,14 +97,14 @@ const plugins = rawPlugins.map((plugin) => {
   if (keywords.length) entry.kw = keywords.slice(0, 8)
   const engines = plugin.versions?.[0]?.engines?.dsh
   if (engines) entry.eg = String(engines)
-  const extra = sidecar.get(plugin.name)
-  if (extra) {
-    if (extra.unpackedSize > 0) entry.sz = Math.round(extra.unpackedSize / 1048576 * 10) / 10
-    if (extra.zhSource) entry.zh = extra.zhSource
-    if (extra.gates?.length) entry.gn = extra.gates.length
-    if (extra.distIntegrity) entry.dg = 1
-    if (extra.attestations) entry.at = 1
-    if (extra.origins?.length > 1) entry.on = extra.origins.length
+  const meta = sidecar.get(plugin.name)
+  if (meta) {
+    if (meta.unpackedSize > 0) entry.sz = Math.round(meta.unpackedSize / 1048576 * 10) / 10
+    if (meta.zhSource) entry.zh = meta.zhSource
+    if (meta.gates?.length) entry.gn = meta.gates.length
+    if (meta.distIntegrity) entry.dg = 1
+    if (meta.attestations) entry.at = 1
+    if (meta.origins?.length > 1) entry.on = meta.origins.length
   }
   const extra = ['ja', 'ko', 'ru']
     .map((lang) => [lang, pick(plugin.title, lang), trim(pick(plugin.description, lang))])
