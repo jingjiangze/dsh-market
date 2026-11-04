@@ -51,7 +51,7 @@ const document = {
   getElementById: (id) => element(id),
   querySelectorAll: () => [],
   querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : null),
-  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', append() {}, setAttribute() {} }),
+  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, setAttribute() {}, addEventListener() {}, classList: { toggle() {}, add() {}, remove() {} } }),
   addEventListener() {},
   head: { appendChild() {} },
   body: { append() {} },

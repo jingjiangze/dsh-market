@@ -1,14 +1,15 @@
 // Publishes the page's static files to the ModelScope dataset that mirrors this
-// site: the hashed stylesheet/bundle and the chunked browse index.
+// site: the hashed stylesheet/bundle, the chunked browse index, the mirrored icons
+// and the per-language index documents.
 //
-// ModelScope measured 0.16-0.19 s per file with `Access-Control-Allow-Origin: *`
+// ModelScope measured 0.16-0.23 s per file with `Access-Control-Allow-Origin: *`
 // and a correct Content-Type per extension, against 7.4 s for the same bytes on
-// jsDelivr from this network — which is why the page now reads them from there.
+// jsDelivr from this network — which is why the page reads them from there.
 //
 //   MODELSCOPE_TOKEN=... node crawler/ms-upload.mjs
-//   node crawler/ms-upload.mjs --dry-run     # stage only, no push
+//   node crawler/ms-upload.mjs --dry-run     # report, change nothing
 import { execFileSync } from 'node:child_process'
-import { readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -21,6 +22,7 @@ const DRY = process.argv.includes('--dry-run')
 const WORK = process.env.MODELSCOPE_WORKDIR || join(root, '..', '_tmp', 'ms-upload')
 const REPO = join(WORK, 'repo')
 const REMOTE = `https://www.modelscope.cn/datasets/${DATASET}.git`
+const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
 
 const git = (args, options = {}) => execFileSync('git', args, { cwd: options.cwd ?? REPO, encoding: 'utf8', stdio: options.stdio ?? 'pipe' })
 const firstLine = (error) => {
@@ -39,110 +41,106 @@ if (!existsSync(join(REPO, '.git'))) {
   git(['sparse-checkout', 'set', 'web'])
   git(['checkout', BRANCH])
 }
-// Sync to the remote tip before writing anything: a shallow clone cannot rebase,
-// and a stale HEAD makes the push non-fast-forward (which is what broke CI).
-try {
-  git(['fetch', '--depth', '1', 'origin', BRANCH])
-  git(['reset', '--mixed', 'FETCH_HEAD'])
-} catch (error) {
-  console.log(`ms-upload: sync skipped (${firstLine(error)})`)
-}
 
-// Local files that must appear under web/ in the dataset.
+// ---- what this run owns -------------------------------------------------------
 const plan = []
+const add = (from, to) => plan.push({ from, to })
+
 const assetsRoot = join(root, 'site', 'a')
 if (existsSync(assetsRoot)) {
-  const { readdir } = await import('node:fs/promises')
   for (const hash of await readdir(assetsRoot)) {
     for (const file of await readdir(join(assetsRoot, hash))) {
-      plan.push({ from: join(assetsRoot, hash, file), to: `web/a/${hash}/${file}` })
+      add(join(assetsRoot, hash, file), `web/a/${hash}/${file}`)
     }
   }
 }
-const browseRoot = join(root, 'dist', 'browse')
-if (process.env.MODELSCOPE_SKIP_BROWSE !== '1' && existsSync(browseRoot)) {
-  const { readdir } = await import('node:fs/promises')
-  for (const file of await readdir(browseRoot)) {
-    plan.push({ from: join(browseRoot, file), to: `web/browse/${file}` })
+if (process.env.MODELSCOPE_SKIP_BROWSE !== '1' && existsSync(join(root, 'dist', 'browse'))) {
+  for (const file of await readdir(join(root, 'dist', 'browse'))) {
+    add(join(root, 'dist', 'browse', file), `web/browse/${file}`)
   }
 }
-// Mirrored icons/avatars, so the dataset also serves the artwork.
-const iconsRoot = join(root, 'dist', 'icons')
-if (existsSync(iconsRoot)) {
-  const { readdir } = await import('node:fs/promises')
-  for (const file of await readdir(iconsRoot)) {
-    plan.push({ from: join(iconsRoot, file), to: `web/icons/${file}` })
+if (existsSync(join(root, 'dist', 'icons'))) {
+  for (const file of await readdir(join(root, 'dist', 'icons'))) {
+    add(join(root, 'dist', 'icons', file), `web/icons/${file}`)
   }
 }
-// The full format-1 documents live here too, so the dataset can be used as an
-// index source on its own (and so the page can show those links).
 if (process.env.MODELSCOPE_SKIP_DOCS !== '1') {
   for (const file of ['index.json', 'index.cn.json', 'index.intl.json']) {
     const from = join(root, 'site', file)
-    if (existsSync(from)) plan.push({ from, to: `web/${file}` })
+    if (existsSync(from)) add(from, `web/${file}`)
   }
-  for (const lang of ['zh', 'en', 'ja', 'ko', 'ru']) {
+  for (const lang of LANGS) {
     const from = join(root, 'dist', `index.${lang}.json`)
-    if (existsSync(from)) plan.push({ from, to: `web/index.${lang}.json` })
+    if (existsSync(from)) add(from, `web/index.${lang}.json`)
   }
 }
+
 if (!plan.length) {
   console.log('ms-upload: nothing to publish')
   process.exit(0)
 }
-
-// Copy every planned file unconditionally, then let git decide what changed: a
-// byte comparison here skipped files a previous (rejected) push had already left
-// in the working tree, so nothing was ever committed.
-for (const entry of plan) {
-  // Split on "/" rather than rewriting separators: on Linux a literal backslash is a
-// valid filename character, so `replace(/\//g,'\\')` silently wrote files called
-// `web\browse\0.json` into the repo root, `git add web` found nothing, and the step
-// reported success while publishing nothing.
-const target = join(REPO, ...entry.to.split('/'))
-  await mkdir(dirname(target), { recursive: true })
-  await writeFile(target, await readFile(entry.from))
-}
-console.log(`ms-upload: ${plan.length} file(s) staged`)
+console.log(`ms-upload: ${plan.length} file(s) planned`)
 if (DRY) process.exit(0)
 
-try {
+// Only the directories this run owns are staged. A blanket `git add -A web` also
+// stages the *absence* of files missing from this (possibly partial) working tree,
+// which silently deleted another run's mirrored icons.
+const owned = [...new Set(plan.map((entry) => entry.to.split('/').slice(0, 2).join('/')))]
+const authRemote = TOKEN ? REMOTE.replace('https://', `https://oauth2:${TOKEN}@`) : null
+
+// Publish with retries: the crawl and the translate job both push to this branch,
+// so an attempt can lose the race and must re-sync, re-stage and commit again.
+async function publishOnce(attempt) {
+  try {
+    git(['fetch', '--depth', '1', 'origin', BRANCH])
+    git(['reset', '--mixed', 'FETCH_HEAD'])
+  } catch (error) {
+    console.log(`ms-upload: sync failed (${firstLine(error)})`)
+    return false
+  }
+  for (const entry of plan) {
+    // Split on "/" rather than rewriting separators: on Linux a literal backslash is
+    // a valid filename character, so `replace(/\//g,'\\')` wrote files named
+    // `web\browse\0.json` into the repo root and published nothing.
+    const target = join(REPO, ...entry.to.split('/'))
+    await mkdir(dirname(target), { recursive: true })
+    await writeFile(target, await readFile(entry.from))
+  }
   git(['config', 'user.name', 'dsh-market-bot'])
   git(['config', 'user.email', 'dsh-market-bot@users.noreply.github.com'])
   git(['config', 'commit.gpgsign', 'false'])
-  git(['add', '-A', 'web'])
-} catch (error) {
-  console.log(`ms-upload: staging failed (${firstLine(error)})`)
-  process.exit(1)
+  for (const path of owned) git(['add', '-A', '--', path])
+  if (!git(['status', '--porcelain', ...owned]).trim()) {
+    console.log('ms-upload: dataset already up to date')
+    return true
+  }
+  try {
+    git(['commit', '-m', `publish web assets (${plan.length} files, attempt ${attempt})`])
+  } catch (error) {
+    if (/nothing to commit/i.test(`${error.stdout ?? ''}${error.stderr ?? ''}`)) {
+      console.log('ms-upload: dataset already up to date')
+      return true
+    }
+    console.log(`ms-upload: commit failed (${firstLine(error)})`)
+    return false
+  }
+  if (!authRemote) {
+    console.log('ms-upload: MODELSCOPE_TOKEN is missing, staged but not pushed')
+    return true
+  }
+  try {
+    git(['-c', 'http.sslVerify=false', 'push', authRemote, `HEAD:${BRANCH}`])
+    console.log(`ms-upload: pushed ${plan.length} file(s) to ${DATASET}@${BRANCH}`)
+    return true
+  } catch (error) {
+    console.log(`ms-upload: push rejected (${firstLine(error)}) — re-syncing`)
+    return false
+  }
 }
 
-if (!git(['status', '--porcelain', 'web']).trim()) {
-  console.log('ms-upload: dataset already up to date')
-  process.exit(0)
+for (let attempt = 1; attempt <= 4; attempt++) {
+  if (await publishOnce(attempt)) process.exit(0)
+  await new Promise((resolve) => setTimeout(resolve, 2000 * attempt))
 }
-
-let committed = false
-try {
-  const out = git(['commit', '-m', `publish site assets (${plan.length} file(s))`])
-  committed = !/nothing to commit/i.test(out)
-} catch (error) {
-  const text = `${error.stdout ?? ''}${error.stderr ?? ''}`
-  committed = !/nothing to commit/i.test(text)
-  if (!committed) console.log(`ms-upload: commit failed (${firstLine(error)})`)
-}
-if (!committed) {
-  console.log('ms-upload: dataset already up to date')
-  process.exit(0)
-}
-if (!TOKEN) {
-  console.log('ms-upload: MODELSCOPE_TOKEN is missing, staged but not pushed')
-  process.exit(0)
-}
-const authRemote = REMOTE.replace('https://', `https://oauth2:${TOKEN}@`)
-try {
-  git(['-c', 'http.sslVerify=false', 'push', authRemote, `HEAD:${BRANCH}`])
-} catch (error) {
-  console.log(`ms-upload: push failed (${firstLine(error)})`)
-  process.exit(1)
-}
-console.log(`ms-upload: pushed ${plan.length} file(s) to ${DATASET}@${BRANCH}`)
+console.log('ms-upload: gave up after 4 attempts')
+process.exit(1)

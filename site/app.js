@@ -131,6 +131,10 @@ function render() {
     parts.push(chip(id, catTitle(id), counts.get(id) ?? 0))
   }
   $('cats').innerHTML = parts.join('')
+  // On a phone the rail is a horizontal strip: keep the selected chip in view.
+  try {
+    document.querySelector('.chip[aria-pressed]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
+  } catch {}
   const buttons = SORTS.map(([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`).join('')
   $('sort').innerHTML = `<span class=sorts>${buttons}</span><button class=dice data-random>🎲 随机</button>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
@@ -175,6 +179,8 @@ function heroIcon(entry) {
   return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'class=hicon')
 }
 
+const ZH_SOURCE = { native: '包自带中文', override: '人工整理', catalog: '目录提供', detected: '作者原文', fallback: '暂用英文' }
+
 function detailHtml(entry) {
   const pairs = [
     ['类别', catTitle(entry.c)],
@@ -184,6 +190,10 @@ function detailHtml(entry) {
     ['星标', entry.s ? num(entry.s) : ''],
     ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
     ['DSH 版本', entry.eg],
+    ['安装体积', entry.sz ? `${entry.sz} MB` : ''],
+    ['中文来源', ZH_SOURCE[entry.zh] ?? ''],
+    ['收录位数', entry.on ? `${entry.on} 个目录` : ''],
+    ['校验', entry.dg ? `完整性✓${entry.at ? ' 签名✓' : ''}` : ''],
     ['来源', badges(entry).join(' · ')],
     ['包名', entry.n],
   ].filter(([, value]) => value)
@@ -434,3 +444,12 @@ loadIndex()
 // 1.2 s is enough for the dataset copy to apply; abroad it 404s immediately, so
 // the fallback sheet lands before the reader notices unstyled text.
 setTimeout(ensureStyles, 1200)
+
+// Back-to-top for phones: the list runs to 10k entries once every chunk is loaded.
+const toTop = document.createElement('button')
+toTop.className = 'totop'
+toTop.type = 'button'
+toTop.textContent = '↑'
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+document.body.append(toTop)
+window.addEventListener('scroll', () => toTop.classList.toggle('on', window.scrollY > 700), { passive: true })

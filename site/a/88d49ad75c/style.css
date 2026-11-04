@@ -380,3 +380,61 @@ body > footer i { font-style: normal; color: var(--line-2); }
   border: 1px solid rgba(124, 147, 255, .45);
 }
 .seg .region::before { content: "◐ "; opacity: .8; }
+
+/* ── mobile polish ─────────────────────────────────────────────────────── */
+html { -webkit-text-size-adjust: 100%; }
+button, .card, .chip, .src { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+/* the two swipe strips fade at the edges so it is obvious they scroll */
+.seg, #cats {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+}
+.seg button, .chip { scroll-snap-align: center; }
+
+/* a card is a tap target: give it a pressed state and an affordance */
+.card { position: relative; }
+.card:active { transform: scale(.994); }
+@media (hover: none) {
+  .card::before {
+    content: "›"; position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%); font-size: 18px; color: var(--line-2);
+  }
+  .card .body { padding-right: 14px; }
+}
+
+/* back to top */
+.totop {
+  position: fixed; right: 14px; z-index: 40;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: 40px; height: 40px; border-radius: 50%;
+  font-size: 16px; line-height: 1; color: var(--text);
+  background: rgba(16, 22, 37, .92); border: 1px solid var(--line-2);
+  box-shadow: 0 12px 30px -14px #000;
+  opacity: 0; pointer-events: none; transition: opacity .18s ease;
+}
+.totop.on { opacity: 1; pointer-events: auto; }
+
+/* phone: the detail panel keeps its title and its prev/next bar on screen */
+@media (max-width: 720px) {
+  dialog { display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .dh {
+    position: sticky; top: 0; z-index: 2;
+    background: linear-gradient(180deg, #121a2b 70%, rgba(18, 26, 43, .92));
+    backdrop-filter: blur(6px);
+  }
+  dialog dl { flex: 0 0 auto; }
+  .nav {
+    position: sticky; bottom: 0; z-index: 2; margin-top: auto;
+    padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(0deg, #0b101a 70%, rgba(11, 16, 26, .92));
+    backdrop-filter: blur(6px);
+  }
+  .nav button { min-height: 42px; }
+  .totop { display: block; }
+}
+@media (min-width: 721px) {
+  .totop { display: none; }
+}

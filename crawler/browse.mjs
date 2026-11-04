@@ -41,6 +41,16 @@ const mirrored = (url) => (url && iconCache[url]?.name ? `${ICON_BASE}/${iconCac
 
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const rawPlugins = index.plugins ?? []
+// The sidecar carries what the crawl learned about each package (unpacked size,
+// where the Chinese text came from, integrity/attestation records, gate list); the
+// detail view shows a few of those.
+const sidecar = await readFile(join(root, 'dist', 'index.sidecar.json'), 'utf8')
+  .then((text) => {
+    const map = new Map()
+    for (const entry of JSON.parse(text).plugins ?? []) map.set(entry.name, entry)
+    return map
+  })
+  .catch(() => new Map())
 if (rawPlugins.length < MIN_PLUGINS && !FORCE) {
   console.error(`browse: refusing to publish ${rawPlugins.length} plugins (< ${MIN_PLUGINS}); set BROWSE_FORCE=1 to override`)
   process.exit(1)
@@ -87,6 +97,15 @@ const plugins = rawPlugins.map((plugin) => {
   if (keywords.length) entry.kw = keywords.slice(0, 8)
   const engines = plugin.versions?.[0]?.engines?.dsh
   if (engines) entry.eg = String(engines)
+  const extra = sidecar.get(plugin.name)
+  if (extra) {
+    if (extra.unpackedSize > 0) entry.sz = Math.round(extra.unpackedSize / 1048576 * 10) / 10
+    if (extra.zhSource) entry.zh = extra.zhSource
+    if (extra.gates?.length) entry.gn = extra.gates.length
+    if (extra.distIntegrity) entry.dg = 1
+    if (extra.attestations) entry.at = 1
+    if (extra.origins?.length > 1) entry.on = extra.origins.length
+  }
   const extra = ['ja', 'ko', 'ru']
     .map((lang) => [lang, pick(plugin.title, lang), trim(pick(plugin.description, lang))])
     .filter(([, title, desc]) => title || desc)
