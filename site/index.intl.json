@@ -242,7 +242,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 4665,
-          "downloads": 81598
+          "downloads": 70725
         },
         "labels": [
           "src-npm",
@@ -292,7 +292,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 4006,
-          "downloads": 202539
+          "downloads": 225228
         },
         "labels": [
           "src-npm",
@@ -346,7 +346,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 2647
+          "stars": 2672
         }
       },
       "versions": [
@@ -390,7 +390,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 1211,
-          "downloads": 23810
+          "downloads": 25660
         },
         "labels": [
           "src-npm",
@@ -531,7 +531,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 846,
-          "downloads": 26446
+          "downloads": 26848
         },
         "labels": [
           "src-npm",
@@ -580,7 +580,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 604,
-          "downloads": 63916
+          "downloads": 56901
         },
         "labels": [
           "src-npm",
@@ -634,7 +634,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 449
+          "stars": 454
         }
       },
       "versions": [
@@ -681,7 +681,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 444
+          "stars": 454
         }
       },
       "versions": [
@@ -729,8 +729,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 391,
-          "downloads": 5256
+          "stars": 400,
+          "downloads": 4898
         }
       },
       "versions": [
@@ -742,55 +742,6 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.1 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-mattpocock-skills-deck",
-      "title": {
-        "en": "dsh-mattpocock-skills-deck",
-        "zh": "dsh-mattpocock-skills-deck"
-      },
-      "description": {
-        "en": "安装即自带mattpocock/skills v1.3.1的27个工程与效率技能，无需手动装技能。400亿token打造本插件，在原始技能之上提供10倍的开发效率，也能帮助新手更快上手该技能套件。全力支持GitHub issue；Markdown为预览版；GitLab暂不支持。感谢您的使用和支持💗",
-        "zh": "🌹安装即自带mattpocock/skills v1.3.2的27个工程与效率技能，无需手动装技能。520亿token打造本插件，在原始技能之上提供10倍的开发效率，也能帮助新手更快上手该技能套件。支持 GitHub 与 GitLab 的 issue；本地 Markdown 为预览版。感谢您的使用和支持💗"
-      },
-      "homepage": "https://github.com/FeatherHunter/dsh-mattpocock-skills-deck",
-      "repository": {
-        "url": "https://github.com/FeatherHunter/dsh-mattpocock-skills-deck"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh",
-          "dsh-plugin",
-          "deepseek-harness",
-          "plugin",
-          "mattpocock",
-          "skills",
-          "wayfinder",
-          "triage"
-        ],
-        "category": "enhance-models",
-        "sortKeys": {
-          "stars": 280,
-          "downloads": 9781
-        },
-        "labels": [
-          "src-npm",
-          "src-awesome",
-          "src-dshso"
-        ]
-      },
-      "versions": [
-        {
-          "version": "1.7.51",
-          "publishTimestamp": 1791511555,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2"
           }
         }
       ]
@@ -828,7 +779,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 278
+          "stars": 283
         }
       },
       "versions": [
@@ -840,6 +791,55 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-mattpocock-skills-deck",
+      "title": {
+        "en": "dsh-mattpocock-skills-deck",
+        "zh": "dsh-mattpocock-skills-deck"
+      },
+      "description": {
+        "en": "安装即自带mattpocock/skills v1.3.1的27个工程与效率技能，无需手动装技能。400亿token打造本插件，在原始技能之上提供10倍的开发效率，也能帮助新手更快上手该技能套件。全力支持GitHub issue；Markdown为预览版；GitLab暂不支持。感谢您的使用和支持💗",
+        "zh": "🌹安装即自带mattpocock/skills v1.3.2的27个工程与效率技能，无需手动装技能。520亿token打造本插件，在原始技能之上提供10倍的开发效率，也能帮助新手更快上手该技能套件。支持 GitHub 与 GitLab 的 issue；本地 Markdown 为预览版。感谢您的使用和支持💗"
+      },
+      "homepage": "https://github.com/FeatherHunter/dsh-mattpocock-skills-deck",
+      "repository": {
+        "url": "https://github.com/FeatherHunter/dsh-mattpocock-skills-deck"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "deepseek-harness",
+          "plugin",
+          "mattpocock",
+          "skills",
+          "wayfinder",
+          "triage"
+        ],
+        "category": "enhance-models",
+        "sortKeys": {
+          "stars": 280,
+          "downloads": 8143
+        },
+        "labels": [
+          "src-npm",
+          "src-awesome",
+          "src-dshso"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.7.51",
+          "publishTimestamp": 1791511555,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2"
           }
         }
       ]
@@ -910,7 +910,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 248,
-          "downloads": 646
+          "downloads": 506
         },
         "labels": [
           "src-awesome",
@@ -960,7 +960,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 244,
-          "downloads": 2272
+          "downloads": 2252
         },
         "labels": [
           "src-awesome",
@@ -1008,7 +1008,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 229,
-          "downloads": 2382
+          "downloads": 2293
         },
         "labels": [
           "src-npm",
@@ -1058,7 +1058,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 215,
-          "downloads": 1250
+          "downloads": 1171
         },
         "labels": [
           "src-awesome",
@@ -1075,6 +1075,45 @@
           },
           "engines": {
             "dsh": ">=0.2.1-0 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@michengai/dsh-agency-agents",
+      "title": {
+        "en": "@michengai/dsh-agency-agents",
+        "zh": "Agency Agents"
+      },
+      "description": {
+        "en": "DSH Agency Agents — 为 DeepSeek Harness 提供 331 名可召唤的专业智能体 · 331 summonable domain experts for DeepSeek Harness",
+        "zh": "为 DeepSeek Harness 提供 321 名可召唤的专业智能体。"
+      },
+      "icon": "https://cdn.jsdelivr.net/npm/@michengai/dsh-agency-agents@1.2.20/assets/icon.svg",
+      "homepage": "https://github.com/MichengAI/dsh-agency-agents#readme",
+      "repository": {
+        "url": "https://github.com/MichengAI/dsh-agency-agents"
+      },
+      "metadata": {
+        "keywords": [],
+        "category": "other",
+        "labels": [
+          "src-awesome",
+          "trust-readme-verified"
+        ],
+        "sortKeys": {
+          "stars": 212
+        }
+      },
+      "versions": [
+        {
+          "version": "1.2.20",
+          "publishTimestamp": 1793349965,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -1108,7 +1147,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 212,
-          "downloads": 1597
+          "downloads": 1300
         },
         "labels": [
           "src-npm",
@@ -1125,45 +1164,6 @@
           },
           "engines": {
             "dsh": ">=0.1.6-0 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.1-0 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "@michengai/dsh-agency-agents",
-      "title": {
-        "en": "@michengai/dsh-agency-agents",
-        "zh": "Agency Agents"
-      },
-      "description": {
-        "en": "DSH Agency Agents — 为 DeepSeek Harness 提供 331 名可召唤的专业智能体 · 331 summonable domain experts for DeepSeek Harness",
-        "zh": "为 DeepSeek Harness 提供 321 名可召唤的专业智能体。"
-      },
-      "icon": "https://cdn.jsdelivr.net/npm/@michengai/dsh-agency-agents@1.2.20/assets/icon.svg",
-      "homepage": "https://github.com/MichengAI/dsh-agency-agents#readme",
-      "repository": {
-        "url": "https://github.com/MichengAI/dsh-agency-agents"
-      },
-      "metadata": {
-        "keywords": [],
-        "category": "other",
-        "labels": [
-          "src-awesome",
-          "trust-readme-verified"
-        ],
-        "sortKeys": {
-          "stars": 207
-        }
-      },
-      "versions": [
-        {
-          "version": "1.2.20",
-          "publishTimestamp": 1793349965,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -1196,7 +1196,7 @@
         "category": "enhance-tools",
         "sortKeys": {
           "stars": 197,
-          "downloads": 2968
+          "downloads": 2620
         },
         "labels": [
           "src-npm",
@@ -1246,7 +1246,7 @@
         "category": "data",
         "sortKeys": {
           "stars": 179,
-          "downloads": 4412
+          "downloads": 3473
         },
         "labels": [
           "src-npm",
@@ -1291,7 +1291,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 162,
-          "downloads": 13653
+          "downloads": 13160
         },
         "labels": [
           "src-npm",
@@ -1343,7 +1343,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 159
+          "stars": 160
         }
       },
       "versions": [
@@ -1387,7 +1387,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 142,
-          "downloads": 2372
+          "downloads": 2246
         },
         "labels": [
           "src-awesome",
@@ -1442,7 +1442,7 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 123
+          "stars": 131
         }
       },
       "versions": [
@@ -1481,7 +1481,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 118
+          "stars": 120
         }
       },
       "versions": [
@@ -1525,7 +1525,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 95,
-          "downloads": 2488
+          "downloads": 2757
         },
         "labels": [
           "src-npm",
@@ -1575,7 +1575,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 90,
-          "downloads": 2818
+          "downloads": 2480
         },
         "labels": [
           "src-npm",
@@ -1671,7 +1671,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 72,
-          "downloads": 2290
+          "downloads": 2206
         },
         "labels": [
           "src-awesome",
@@ -1724,8 +1724,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 68,
-          "downloads": 565
+          "stars": 70,
+          "downloads": 525
         }
       },
       "versions": [
@@ -1770,7 +1770,7 @@
         "category": "other",
         "sortKeys": {
           "stars": 65,
-          "downloads": 1465
+          "downloads": 1052
         },
         "labels": [
           "src-awesome",
@@ -1820,7 +1820,7 @@
         "category": "enhance-memory",
         "sortKeys": {
           "stars": 64,
-          "downloads": 2600
+          "downloads": 2908
         },
         "labels": [
           "src-npm",
@@ -1868,7 +1868,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 62,
-          "downloads": 2880
+          "downloads": 2383
         },
         "labels": [
           "src-awesome",
@@ -1907,7 +1907,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 62,
-          "downloads": 1035
+          "downloads": 1030
         },
         "labels": [
           "src-awesome",
@@ -1924,45 +1924,6 @@
           },
           "engines": {
             "dsh": ">=0.1.7-alpha.1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "@openma/deepseek-harness-acp",
-      "title": {
-        "en": "@openma/deepseek-harness-acp",
-        "zh": "@openma/deepseek-harness-acp"
-      },
-      "description": {
-        "en": "Agent Client Protocol (ACP) adapter for DeepSeek Harness — use DeepSeek Harness from ACP clients such as Zed.",
-        "zh": "Agent Client Protocol (ACP) adapter for DeepSeek Harness — use DeepSeek Harness from ACP clients such as Zed."
-      },
-      "homepage": "https://dshsuite.dev/#other-products",
-      "repository": {
-        "url": "https://github.com/openma-ai/deepseek-harness-acp"
-      },
-      "metadata": {
-        "keywords": [],
-        "category": "other",
-        "labels": [
-          "zh-fallback",
-          "src-awesome",
-          "trust-readme-verified"
-        ],
-        "sortKeys": {
-          "stars": 60
-        }
-      },
-      "versions": [
-        {
-          "version": "0.4.40",
-          "publishTimestamp": 1792990883,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.7-rc.2"
           }
         }
       ]
@@ -1997,7 +1958,7 @@
           "trust-readme-verified"
         ],
         "sortKeys": {
-          "stars": 59
+          "stars": 61
         }
       },
       "versions": [
@@ -2009,6 +1970,45 @@
           },
           "engines": {
             "dsh": "0.2.0-rc.2 || >=0.2.1-rc.2 <0.2.2-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@openma/deepseek-harness-acp",
+      "title": {
+        "en": "@openma/deepseek-harness-acp",
+        "zh": "@openma/deepseek-harness-acp"
+      },
+      "description": {
+        "en": "Agent Client Protocol (ACP) adapter for DeepSeek Harness — use DeepSeek Harness from ACP clients such as Zed.",
+        "zh": "Agent Client Protocol (ACP) adapter for DeepSeek Harness — use DeepSeek Harness from ACP clients such as Zed."
+      },
+      "homepage": "https://dshsuite.dev/#other-products",
+      "repository": {
+        "url": "https://github.com/openma-ai/deepseek-harness-acp"
+      },
+      "metadata": {
+        "keywords": [],
+        "category": "other",
+        "labels": [
+          "zh-fallback",
+          "src-awesome",
+          "trust-readme-verified"
+        ],
+        "sortKeys": {
+          "stars": 61
+        }
+      },
+      "versions": [
+        {
+          "version": "0.4.40",
+          "publishTimestamp": 1792990883,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.2"
           }
         }
       ]
@@ -2042,7 +2042,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 59,
-          "downloads": 3526
+          "downloads": 3224
         },
         "labels": [
           "src-awesome",
@@ -2092,7 +2092,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 58,
-          "downloads": 1423
+          "downloads": 1392
         },
         "labels": [
           "src-awesome",
@@ -2142,7 +2142,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 53,
-          "downloads": 1255
+          "downloads": 982
         },
         "labels": [
           "src-awesome",
@@ -2240,7 +2240,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 48,
-          "downloads": 2023
+          "downloads": 1540
         },
         "labels": [
           "src-npm",
@@ -2287,7 +2287,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 48,
-          "downloads": 6900
+          "downloads": 6740
         },
         "labels": [
           "src-npm",
@@ -2336,7 +2336,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 44,
-          "downloads": 5875
+          "downloads": 4484
         },
         "labels": [
           "src-npm",
@@ -2384,7 +2384,7 @@
         "category": "enhance-memory",
         "sortKeys": {
           "stars": 43,
-          "downloads": 962
+          "downloads": 919
         },
         "labels": [
           "src-npm",
@@ -2431,7 +2431,7 @@
         "category": "enhance-tools",
         "sortKeys": {
           "stars": 41,
-          "downloads": 4168
+          "downloads": 3923
         },
         "labels": [
           "src-npm",
@@ -2481,7 +2481,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 41,
-          "downloads": 5668
+          "downloads": 5683
         },
         "labels": [
           "src-npm",
@@ -2576,7 +2576,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 37,
-          "downloads": 2928
+          "downloads": 2212
         },
         "labels": [
           "src-npm",
@@ -2624,7 +2624,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 37,
-          "downloads": 2425
+          "downloads": 1974
         },
         "labels": [
           "src-npm",
@@ -2674,7 +2674,7 @@
         "category": "enhance-tools",
         "sortKeys": {
           "stars": 36,
-          "downloads": 2514
+          "downloads": 2140
         },
         "labels": [
           "src-awesome",
@@ -2724,7 +2724,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 36,
-          "downloads": 2988
+          "downloads": 2494
         },
         "labels": [
           "src-npm",
@@ -2772,7 +2772,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 31,
-          "downloads": 2926
+          "downloads": 2994
         },
         "labels": [
           "src-npm",
@@ -2869,7 +2869,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 27,
-          "downloads": 1002
+          "downloads": 1222
         },
         "labels": [
           "src-awesome",
@@ -2919,7 +2919,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 26,
-          "downloads": 1494
+          "downloads": 1273
         },
         "labels": [
           "src-awesome",
@@ -2969,7 +2969,7 @@
         "category": "work",
         "sortKeys": {
           "stars": 25,
-          "downloads": 4630
+          "downloads": 6970
         },
         "labels": [
           "src-npm",
@@ -3019,7 +3019,7 @@
         "category": "enhance-tools",
         "sortKeys": {
           "stars": 24,
-          "downloads": 3518
+          "downloads": 3298
         },
         "labels": [
           "src-npm",
@@ -3069,7 +3069,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 24,
-          "downloads": 2418
+          "downloads": 2341
         },
         "labels": [
           "src-awesome",
@@ -3118,7 +3118,7 @@
         "category": "media",
         "sortKeys": {
           "stars": 24,
-          "downloads": 5955
+          "downloads": 6491
         },
         "labels": [
           "src-npm",
@@ -3168,7 +3168,7 @@
         "category": "enhance-memory",
         "sortKeys": {
           "stars": 24,
-          "downloads": 1774
+          "downloads": 1426
         },
         "labels": [
           "src-awesome",
@@ -3217,7 +3217,7 @@
         "category": "media",
         "sortKeys": {
           "stars": 24,
-          "downloads": 6644
+          "downloads": 7226
         },
         "labels": [
           "src-npm",
@@ -3267,7 +3267,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 24,
-          "downloads": 4867
+          "downloads": 5523
         },
         "labels": [
           "src-npm",
@@ -3317,7 +3317,7 @@
         ],
         "sortKeys": {
           "stars": 23,
-          "downloads": 4548
+          "downloads": 6230
         }
       },
       "versions": [
@@ -3361,7 +3361,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 23,
-          "downloads": 2255
+          "downloads": 2023
         },
         "labels": [
           "src-npm",
@@ -3412,7 +3412,7 @@
         "category": "other",
         "sortKeys": {
           "stars": 23,
-          "downloads": 4009
+          "downloads": 4066
         },
         "labels": [
           "src-npm",
@@ -3509,7 +3509,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 21,
-          "downloads": 3020
+          "downloads": 3048
         },
         "labels": [
           "src-awesome",
@@ -3558,7 +3558,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 21,
-          "downloads": 1280
+          "downloads": 1030
         },
         "labels": [
           "src-awesome",
@@ -3609,7 +3609,7 @@
         "category": "work",
         "sortKeys": {
           "stars": 21,
-          "downloads": 13084
+          "downloads": 12750
         },
         "labels": [
           "src-npm",
@@ -3658,7 +3658,7 @@
         "category": "enhance-memory",
         "sortKeys": {
           "stars": 16,
-          "downloads": 21025
+          "downloads": 34610
         },
         "labels": [
           "src-npm",
@@ -3707,7 +3707,7 @@
         "category": "agent",
         "sortKeys": {
           "stars": 15,
-          "downloads": 547
+          "downloads": 559
         },
         "labels": [
           "src-awesome",
@@ -3754,7 +3754,7 @@
         "category": "enhance-memory",
         "sortKeys": {
           "stars": 15,
-          "downloads": 12798
+          "downloads": 8772
         },
         "labels": [
           "src-npm",
@@ -3804,7 +3804,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 15,
-          "downloads": 593
+          "downloads": 585
         },
         "labels": [
           "src-awesome",
@@ -3874,6 +3874,53 @@
       ]
     },
     {
+      "name": "dsh-codebuddy-cli",
+      "title": {
+        "en": "dsh-codebuddy-cli",
+        "zh": "dsh-codebuddy-cli"
+      },
+      "description": {
+        "en": "复用 CodeBuddy CLI 的登录态，把 CodeBuddy 包含的模型自动接入 DeepSeek Harness — reuse the CodeBuddy CLI sign-in to bring its models into DeepSeek Harness with zero configuration.",
+        "zh": "复用 CodeBuddy CLI 的登录态，把 CodeBuddy 包含的模型自动接入 DeepSeek Harness — reuse the CodeBuddy CLI sign-in to bring its models into DeepSeek Harness with zero configuration."
+      },
+      "author": "fu827707013",
+      "homepage": "https://github.com/fu827707013/dsh-codebuddy-cli#readme",
+      "repository": {
+        "url": "https://github.com/fu827707013/dsh-codebuddy-cli"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh-plugin",
+          "deepseek-harness",
+          "deepseek",
+          "codebuddy",
+          "codebuddy-cli",
+          "model-provider"
+        ],
+        "category": "enhance-models",
+        "labels": [
+          "src-awesome",
+          "src-mydsh",
+          "trust-readme-verified"
+        ],
+        "sortKeys": {
+          "stars": 12
+        }
+      },
+      "versions": [
+        {
+          "version": "0.4.6",
+          "publishTimestamp": 1793154845,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
       "name": "dsh-ide-git",
       "title": {
         "en": "dsh-ide-git",
@@ -3902,7 +3949,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 12,
-          "downloads": 2882
+          "downloads": 2767
         },
         "labels": [
           "src-npm",
@@ -3957,7 +4004,7 @@
         ],
         "sortKeys": {
           "stars": 11,
-          "downloads": 3008
+          "downloads": 3117
         }
       },
       "versions": [
@@ -4022,53 +4069,6 @@
       ]
     },
     {
-      "name": "dsh-codebuddy-cli",
-      "title": {
-        "en": "dsh-codebuddy-cli",
-        "zh": "dsh-codebuddy-cli"
-      },
-      "description": {
-        "en": "复用 CodeBuddy CLI 的登录态，把 CodeBuddy 包含的模型自动接入 DeepSeek Harness — reuse the CodeBuddy CLI sign-in to bring its models into DeepSeek Harness with zero configuration.",
-        "zh": "复用 CodeBuddy CLI 的登录态，把 CodeBuddy 包含的模型自动接入 DeepSeek Harness — reuse the CodeBuddy CLI sign-in to bring its models into DeepSeek Harness with zero configuration."
-      },
-      "author": "fu827707013",
-      "homepage": "https://github.com/fu827707013/dsh-codebuddy-cli#readme",
-      "repository": {
-        "url": "https://github.com/fu827707013/dsh-codebuddy-cli"
-      },
-      "metadata": {
-        "keywords": [
-          "dsh-plugin",
-          "deepseek-harness",
-          "deepseek",
-          "codebuddy",
-          "codebuddy-cli",
-          "model-provider"
-        ],
-        "category": "enhance-models",
-        "labels": [
-          "src-awesome",
-          "src-mydsh",
-          "trust-readme-verified"
-        ],
-        "sortKeys": {
-          "stars": 11
-        }
-      },
-      "versions": [
-        {
-          "version": "0.4.6",
-          "publishTimestamp": 1793154845,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.2.1-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
       "name": "dsh-mobile-plugin",
       "title": {
         "en": "@WNLUO/dsh-mobile-plugin",
@@ -4094,7 +4094,7 @@
         "category": "other",
         "sortKeys": {
           "stars": 10,
-          "downloads": 16724
+          "downloads": 21682
         },
         "labels": [
           "src-npm",
@@ -4142,7 +4142,7 @@
         "category": "enhance-tools",
         "sortKeys": {
           "stars": 10,
-          "downloads": 2786
+          "downloads": 2347
         },
         "labels": [
           "src-npm",
@@ -4191,7 +4191,7 @@
         "category": "media",
         "sortKeys": {
           "stars": 9,
-          "downloads": 5875
+          "downloads": 6537
         },
         "labels": [
           "src-npm",
@@ -4244,7 +4244,7 @@
         ],
         "sortKeys": {
           "stars": 8,
-          "downloads": 11509
+          "downloads": 12799
         }
       },
       "versions": [
@@ -4289,7 +4289,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 7,
-          "downloads": 899
+          "downloads": 1047
         },
         "labels": [
           "src-awesome",
@@ -4338,7 +4338,7 @@
         "category": "connect",
         "sortKeys": {
           "stars": 6,
-          "downloads": 1961
+          "downloads": 1705
         },
         "labels": [
           "src-npm",
@@ -4392,7 +4392,7 @@
         ],
         "sortKeys": {
           "stars": 6,
-          "downloads": 1777
+          "downloads": 1988
         }
       },
       "versions": [
@@ -4438,7 +4438,7 @@
         "category": "other",
         "sortKeys": {
           "stars": 5,
-          "downloads": 3822
+          "downloads": 3926
         },
         "labels": [
           "src-npm",
@@ -4491,7 +4491,7 @@
         ],
         "sortKeys": {
           "stars": 5,
-          "downloads": 22238
+          "downloads": 18267
         }
       },
       "versions": [
@@ -4541,7 +4541,7 @@
         ],
         "sortKeys": {
           "stars": 4,
-          "downloads": 2742
+          "downloads": 3410
         }
       },
       "versions": [
@@ -4586,7 +4586,7 @@
         "category": "enhance-models",
         "sortKeys": {
           "stars": 4,
-          "downloads": 2971
+          "downloads": 2851
         },
         "labels": [
           "src-npm",
@@ -4635,7 +4635,7 @@
         "category": "eco",
         "sortKeys": {
           "stars": 4,
-          "downloads": 3766
+          "downloads": 3921
         },
         "labels": [
           "src-npm",
@@ -4731,7 +4731,7 @@
         "category": "enhance-ui",
         "sortKeys": {
           "stars": 2,
-          "downloads": 5698
+          "downloads": 4270
         },
         "labels": [
           "src-npm",
@@ -4780,7 +4780,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 2,
-          "downloads": 8203
+          "downloads": 8643
         },
         "labels": [
           "src-npm",
@@ -4833,7 +4833,7 @@
         ],
         "sortKeys": {
           "stars": 1,
-          "downloads": 6798
+          "downloads": 1173
         }
       },
       "versions": [
@@ -4879,7 +4879,7 @@
         "category": "other",
         "sortKeys": {
           "stars": 1,
-          "downloads": 7577
+          "downloads": 7935
         },
         "labels": [
           "src-npm",
@@ -4930,7 +4930,7 @@
         "category": "ops",
         "sortKeys": {
           "stars": 1,
-          "downloads": 2637
+          "downloads": 2657
         },
         "labels": [
           "src-npm",
@@ -4984,7 +4984,7 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "downloads": 4138
+          "downloads": 3055
         }
       },
       "versions": [
@@ -5074,7 +5074,7 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "downloads": 2418
+          "downloads": 6521
         }
       },
       "versions": [
@@ -5250,7 +5250,7 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "downloads": 6314
+          "downloads": 4128
         }
       },
       "versions": [
@@ -5287,8 +5287,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 5347,
-          "downloads": 514644
+          "stars": 5466,
+          "downloads": 486071
         }
       },
       "versions": [
@@ -5325,8 +5325,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 4832,
-          "downloads": 146439
+          "stars": 4855,
+          "downloads": 148306
         }
       },
       "versions": [
@@ -5363,8 +5363,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 4725,
-          "downloads": 127420
+          "stars": 4737,
+          "downloads": 150183
         }
       },
       "versions": [
@@ -5398,14 +5398,14 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 3118,
-          "downloads": 58967
+          "stars": 3170,
+          "downloads": 59832
         }
       },
       "versions": [
         {
-          "version": "5.9.1",
-          "publishTimestamp": 1793464689,
+          "version": "5.10.0",
+          "publishTimestamp": 1793724813,
           "source": {
             "type": "npm"
           }
@@ -5433,8 +5433,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 2685,
-          "downloads": 10635
+          "stars": 2731,
+          "downloads": 10263
         }
       },
       "versions": [
@@ -5468,14 +5468,14 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 1318,
-          "downloads": 7308
+          "stars": 1495,
+          "downloads": 10321
         }
       },
       "versions": [
         {
-          "version": "0.6.0",
-          "publishTimestamp": 1793349393,
+          "version": "0.6.2",
+          "publishTimestamp": 1793640389,
           "source": {
             "type": "npm"
           },
@@ -5506,8 +5506,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 1307,
-          "downloads": 2819
+          "stars": 1322,
+          "downloads": 2629
         }
       },
       "versions": [
@@ -5541,8 +5541,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 1075,
-          "downloads": 37135
+          "stars": 1084,
+          "downloads": 37565
         }
       },
       "versions": [
@@ -5576,8 +5576,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 1026,
-          "downloads": 51573
+          "stars": 1076,
+          "downloads": 51547
         }
       },
       "versions": [
@@ -5614,8 +5614,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 911,
-          "downloads": 26097
+          "stars": 917,
+          "downloads": 27205
         }
       },
       "versions": [
@@ -5649,8 +5649,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 707,
-          "downloads": 878
+          "stars": 710,
+          "downloads": 871
         }
       },
       "versions": [
@@ -5687,8 +5687,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 675,
-          "downloads": 7071
+          "stars": 678,
+          "downloads": 6790
         }
       },
       "versions": [
@@ -5725,8 +5725,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 657,
-          "downloads": 29045
+          "stars": 663,
+          "downloads": 30549
         }
       },
       "versions": [
@@ -5763,7 +5763,7 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 647
+          "stars": 649
         }
       },
       "versions": [
@@ -5797,8 +5797,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 506,
-          "downloads": 110855
+          "stars": 519,
+          "downloads": 114628
         }
       },
       "versions": [
@@ -5835,8 +5835,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 488,
-          "downloads": 49799
+          "stars": 496,
+          "downloads": 44391
         }
       },
       "versions": [
@@ -5873,14 +5873,14 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 442,
-          "downloads": 18465
+          "stars": 447,
+          "downloads": 15434
         }
       },
       "versions": [
         {
-          "version": "0.19.6",
-          "publishTimestamp": 1793335673,
+          "version": "0.19.7",
+          "publishTimestamp": 1793712602,
           "source": {
             "type": "npm"
           },
@@ -5911,8 +5911,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 386,
-          "downloads": 3451
+          "stars": 387,
+          "downloads": 3443
         }
       },
       "versions": [
@@ -5946,14 +5946,49 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 355,
-          "downloads": 537
+          "stars": 357,
+          "downloads": 507
         }
       },
       "versions": [
         {
           "version": "0.1.0-rc.10",
           "publishTimestamp": 1789354555,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-guizang-design",
+      "title": {
+        "en": "@op7418/dsh-guizang-design",
+        "zh": "@op7418/dsh-guizang-design"
+      },
+      "description": {
+        "en": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案",
+        "zh": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案"
+      },
+      "repository": {
+        "url": "https://github.com/op7418/dsh-guizang-design"
+      },
+      "metadata": {
+        "category": "media",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 354,
+          "downloads": 1826
+        }
+      },
+      "versions": [
+        {
+          "version": "0.1.3",
+          "publishTimestamp": 1793422921,
           "source": {
             "type": "npm"
           }
@@ -5981,8 +6016,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 331,
-          "downloads": 2296
+          "stars": 333,
+          "downloads": 2223
         }
       },
       "versions": [
@@ -6020,13 +6055,13 @@
         ],
         "sortKeys": {
           "stars": 301,
-          "downloads": 22790
+          "downloads": 22744
         }
       },
       "versions": [
         {
-          "version": "11.2.0",
-          "publishTimestamp": 1793554824,
+          "version": "11.3.0",
+          "publishTimestamp": 1793639942,
           "source": {
             "type": "npm"
           },
@@ -6057,14 +6092,14 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 291,
-          "downloads": 11254
+          "stars": 292,
+          "downloads": 11660
         }
       },
       "versions": [
         {
-          "version": "0.3.0",
-          "publishTimestamp": 1793568343,
+          "version": "0.3.1",
+          "publishTimestamp": 1793647059,
           "source": {
             "type": "npm"
           },
@@ -6095,14 +6130,14 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 276,
-          "downloads": 6617
+          "stars": 280,
+          "downloads": 6821
         }
       },
       "versions": [
         {
-          "version": "0.26.3",
-          "publishTimestamp": 1793159759,
+          "version": "0.26.4",
+          "publishTimestamp": 1793684716,
           "source": {
             "type": "npm"
           },
@@ -6134,48 +6169,13 @@
         ],
         "sortKeys": {
           "stars": 263,
-          "downloads": 478
+          "downloads": 476
         }
       },
       "versions": [
         {
           "version": "0.1.6",
           "publishTimestamp": 1792046194,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-guizang-design",
-      "title": {
-        "en": "@op7418/dsh-guizang-design",
-        "zh": "@op7418/dsh-guizang-design"
-      },
-      "description": {
-        "en": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案",
-        "zh": "歸藏设计 · DeepSeek Harness 插件：网页 PPT、图文卡片、网页排版、去 AI 味四个 skill，一套设计系统；作品库、内容生产工作流、语气档案"
-      },
-      "repository": {
-        "url": "https://github.com/op7418/dsh-guizang-design"
-      },
-      "metadata": {
-        "category": "media",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 253,
-          "downloads": 309
-        }
-      },
-      "versions": [
-        {
-          "version": "0.1.3",
-          "publishTimestamp": 1793422921,
           "source": {
             "type": "npm"
           }
@@ -6203,8 +6203,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 238,
-          "downloads": 5749
+          "stars": 242,
+          "downloads": 3721
         }
       },
       "versions": [
@@ -6216,41 +6216,6 @@
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-codex-effort-slider",
-      "title": {
-        "en": "@Microqian2th/dsh-codex-effort-slider",
-        "zh": "@Microqian2th/dsh-codex-effort-slider"
-      },
-      "description": {
-        "en": "Codex 风格的推理等级滑条（DeepSeek Harness 插件）：可拖动连续滑条 + 高档位渐变星尘特效",
-        "zh": "Codex 风格的推理等级滑条（DeepSeek Harness 插件）：可拖动连续滑条 + 高档位渐变星尘特效"
-      },
-      "repository": {
-        "url": "https://github.com/Microqian2th/dsh-codex-effort-slider"
-      },
-      "metadata": {
-        "category": "connect",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 237,
-          "downloads": 4641
-        }
-      },
-      "versions": [
-        {
-          "version": "1.1.4",
-          "publishTimestamp": 1793287853,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -6276,19 +6241,54 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 233,
-          "downloads": 22371
+          "stars": 240,
+          "downloads": 30775
         }
       },
       "versions": [
         {
-          "version": "0.8.67",
-          "publishTimestamp": 1793434483,
+          "version": "0.8.72",
+          "publishTimestamp": 1793711114,
           "source": {
             "type": "npm"
           },
           "engines": {
             "dsh": ">=0.1.0-rc.6 <0.3.0 >=0.1.2-rc.1 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-codex-effort-slider",
+      "title": {
+        "en": "@Microqian2th/dsh-codex-effort-slider",
+        "zh": "@Microqian2th/dsh-codex-effort-slider"
+      },
+      "description": {
+        "en": "Codex 风格的推理等级滑条（DeepSeek Harness 插件）：可拖动连续滑条 + 高档位渐变星尘特效",
+        "zh": "Codex 风格的推理等级滑条（DeepSeek Harness 插件）：可拖动连续滑条 + 高档位渐变星尘特效"
+      },
+      "repository": {
+        "url": "https://github.com/Microqian2th/dsh-codex-effort-slider"
+      },
+      "metadata": {
+        "category": "connect",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 238,
+          "downloads": 4846
+        }
+      },
+      "versions": [
+        {
+          "version": "1.1.4",
+          "publishTimestamp": 1793287853,
+          "source": {
+            "type": "npm"
           }
         }
       ]
@@ -6314,8 +6314,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 225,
-          "downloads": 644
+          "stars": 229,
+          "downloads": 850
         }
       },
       "versions": [
@@ -6350,7 +6350,7 @@
         ],
         "sortKeys": {
           "stars": 221,
-          "downloads": 3832
+          "downloads": 3621
         }
       },
       "versions": [
@@ -6384,8 +6384,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 215,
-          "downloads": 1364
+          "stars": 219,
+          "downloads": 1313
         }
       },
       "versions": [
@@ -6420,7 +6420,7 @@
         ],
         "sortKeys": {
           "stars": 206,
-          "downloads": 1164
+          "downloads": 1280
         }
       },
       "versions": [
@@ -6455,7 +6455,7 @@
         ],
         "sortKeys": {
           "stars": 192,
-          "downloads": 602
+          "downloads": 611
         }
       },
       "versions": [
@@ -6490,7 +6490,7 @@
         ],
         "sortKeys": {
           "stars": 192,
-          "downloads": 562
+          "downloads": 570
         }
       },
       "versions": [
@@ -6528,7 +6528,7 @@
         ],
         "sortKeys": {
           "stars": 188,
-          "downloads": 2949
+          "downloads": 2848
         }
       },
       "versions": [
@@ -6562,8 +6562,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 187,
-          "downloads": 10258
+          "stars": 188,
+          "downloads": 9086
         }
       },
       "versions": [
@@ -6600,8 +6600,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 178,
-          "downloads": 4116
+          "stars": 179,
+          "downloads": 4000
         }
       },
       "versions": [
@@ -6635,14 +6635,14 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 167,
-          "downloads": 5151
+          "stars": 166,
+          "downloads": 4673
         }
       },
       "versions": [
         {
-          "version": "1.11.0",
-          "publishTimestamp": 1793284000,
+          "version": "1.15.4",
+          "publishTimestamp": 1793710599,
           "source": {
             "type": "npm"
           }
@@ -6670,8 +6670,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 159,
-          "downloads": 1133
+          "stars": 160,
+          "downloads": 1040
         }
       },
       "versions": [
@@ -6706,7 +6706,7 @@
         ],
         "sortKeys": {
           "stars": 136,
-          "downloads": 646
+          "downloads": 621
         }
       },
       "versions": [
@@ -6740,8 +6740,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 133,
-          "downloads": 280
+          "stars": 134,
+          "downloads": 275
         }
       },
       "versions": [
@@ -6776,53 +6776,15 @@
         ],
         "sortKeys": {
           "stars": 129,
-          "downloads": 957
+          "downloads": 974
         }
       },
       "versions": [
         {
-          "version": "2.6.0",
-          "publishTimestamp": 1790267201,
+          "version": "3.0.0",
+          "publishTimestamp": 1793649161,
           "source": {
             "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-tabbit",
-      "title": {
-        "en": "dsh-tabbit",
-        "zh": "dsh-tabbit"
-      },
-      "description": {
-        "en": "Tabbit Browser plugins for Deepseek Harness",
-        "zh": "Tabbit Browser plugins for Deepseek Harness"
-      },
-      "repository": {
-        "url": "https://github.com/Tabbit-Browser/dsh-tabbit"
-      },
-      "metadata": {
-        "category": "eco",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "stars": 121,
-          "downloads": 661
-        }
-      },
-      "versions": [
-        {
-          "version": "0.4.0",
-          "publishTimestamp": 1791800262,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.1-rc.2 || >=0.1.2-alpha.1"
           }
         }
       ]
@@ -6848,8 +6810,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 120,
-          "downloads": 5210
+          "stars": 123,
+          "downloads": 4859
         }
       },
       "versions": [
@@ -6861,6 +6823,44 @@
           },
           "engines": {
             "dsh": ">=0.1.5-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-tabbit",
+      "title": {
+        "en": "dsh-tabbit",
+        "zh": "dsh-tabbit"
+      },
+      "description": {
+        "en": "Tabbit Browser plugins for Deepseek Harness",
+        "zh": "Tabbit Browser plugins for Deepseek Harness"
+      },
+      "repository": {
+        "url": "https://github.com/Tabbit-Browser/dsh-tabbit"
+      },
+      "metadata": {
+        "category": "eco",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 122,
+          "downloads": 666
+        }
+      },
+      "versions": [
+        {
+          "version": "0.4.1",
+          "publishTimestamp": 1793681401,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.1-rc.2 || >=0.1.2-alpha.1"
           }
         }
       ]
@@ -6921,48 +6921,13 @@
         ],
         "sortKeys": {
           "stars": 101,
-          "downloads": 1102
+          "downloads": 1396
         }
       },
       "versions": [
         {
           "version": "0.3.2",
           "publishTimestamp": 1793351345,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-network-settings",
-      "title": {
-        "en": "dsh-network-settings",
-        "zh": "dsh-network-settings"
-      },
-      "description": {
-        "en": "DSH网络设置插件 | DeepSeek Harness network diagnostics, proxy detection and repair for Windows/WSL/MacOS",
-        "zh": "DSH网络设置插件 | DeepSeek Harness network diagnostics, proxy detection and repair for Windows/WSL/MacOS"
-      },
-      "repository": {
-        "url": "https://github.com/kanneiren/dsh-network-settings"
-      },
-      "metadata": {
-        "category": "agent",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 100,
-          "downloads": 557
-        }
-      },
-      "versions": [
-        {
-          "version": "0.3.3",
-          "publishTimestamp": 1787321899,
           "source": {
             "type": "npm"
           }
@@ -6990,14 +6955,84 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 98,
-          "downloads": 1570
+          "stars": 99,
+          "downloads": 1585
         }
       },
       "versions": [
         {
           "version": "2.15.0",
           "publishTimestamp": 1790876134,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-network-settings",
+      "title": {
+        "en": "dsh-network-settings",
+        "zh": "dsh-network-settings"
+      },
+      "description": {
+        "en": "DSH网络设置插件 | DeepSeek Harness network diagnostics, proxy detection and repair for Windows/WSL/MacOS",
+        "zh": "DSH网络设置插件 | DeepSeek Harness network diagnostics, proxy detection and repair for Windows/WSL/MacOS"
+      },
+      "repository": {
+        "url": "https://github.com/kanneiren/dsh-network-settings"
+      },
+      "metadata": {
+        "category": "agent",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 98,
+          "downloads": 544
+        }
+      },
+      "versions": [
+        {
+          "version": "0.3.3",
+          "publishTimestamp": 1787321899,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-prompt",
+      "title": {
+        "en": "dsh-prompt",
+        "zh": "dsh-prompt"
+      },
+      "description": {
+        "en": "💡DSH 的 Prompt提示词工具箱：常用prompt保存后点击即可注入到对话框——省时省力，/prompt 自动提示已有Prompt。 💡The Prompt toolbox for DSH: save frequently-used prompts and inject them into the dialo",
+        "zh": "💡DSH 的 Prompt提示词工具箱：常用prompt保存后点击即可注入到对话框——省时省力，/prompt 自动提示已有Prompt。 💡The Prompt toolbox for DSH: save frequently-used prompts and inject them into the dialo"
+      },
+      "repository": {
+        "url": "https://github.com/FeatherHunter/dsh-prompt"
+      },
+      "metadata": {
+        "category": "eco",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 95,
+          "downloads": 3579
+        }
+      },
+      "versions": [
+        {
+          "version": "0.4.41",
+          "publishTimestamp": 1793647086,
           "source": {
             "type": "npm"
           }
@@ -7025,8 +7060,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 96,
-          "downloads": 386
+          "stars": 95,
+          "downloads": 359
         }
       },
       "versions": [
@@ -7061,7 +7096,7 @@
         ],
         "sortKeys": {
           "stars": 94,
-          "downloads": 1122
+          "downloads": 1029
         }
       },
       "versions": [
@@ -7073,41 +7108,6 @@
           },
           "engines": {
             "dsh": "^0.1.5-rc.2 || ^0.2.0-rc.1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-prompt",
-      "title": {
-        "en": "dsh-prompt",
-        "zh": "dsh-prompt"
-      },
-      "description": {
-        "en": "💡DSH 的 Prompt提示词工具箱：常用prompt保存后点击即可注入到对话框——省时省力，/prompt 自动提示已有Prompt。 💡The Prompt toolbox for DSH: save frequently-used prompts and inject them into the dialo",
-        "zh": "💡DSH 的 Prompt提示词工具箱：常用prompt保存后点击即可注入到对话框——省时省力，/prompt 自动提示已有Prompt。 💡The Prompt toolbox for DSH: save frequently-used prompts and inject them into the dialo"
-      },
-      "repository": {
-        "url": "https://github.com/FeatherHunter/dsh-prompt"
-      },
-      "metadata": {
-        "category": "eco",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 93,
-          "downloads": 3108
-        }
-      },
-      "versions": [
-        {
-          "version": "0.4.40",
-          "publishTimestamp": 1793467252,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -7134,7 +7134,7 @@
         ],
         "sortKeys": {
           "stars": 92,
-          "downloads": 1233
+          "downloads": 1140
         }
       },
       "versions": [
@@ -7146,6 +7146,44 @@
           },
           "engines": {
             "dsh": "*"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-notify-me",
+      "title": {
+        "en": "dsh-notify-me",
+        "zh": "dsh-notify-me"
+      },
+      "description": {
+        "en": "DSH 桌面消息提醒插件 / desktop notification and message alerts for DeepSeek Harness web：需要你操作（可操作提醒）与回复完成提醒，系统通知+提示音+标签页标题，设置页开关 + 中英通知语言",
+        "zh": "DSH 桌面消息提醒插件 / desktop notification and message alerts for DeepSeek Harness web：需要你操作（可操作提醒）与回复完成提醒，系统通知+提示音+标签页标题，设置页开关 + 中英通知语言"
+      },
+      "repository": {
+        "url": "https://github.com/chromoany/dsh-notify-me"
+      },
+      "metadata": {
+        "category": "enhance-ui",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 91,
+          "downloads": 8422
+        }
+      },
+      "versions": [
+        {
+          "version": "1.17.0",
+          "publishTimestamp": 1793208448,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.1.0-rc.6 || ^0.1.1-rc.2 || ^0.1.2-rc.1 || ^0.1.5-rc.1 || >=0.1.6-alpha.2 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -7172,7 +7210,7 @@
         ],
         "sortKeys": {
           "stars": 87,
-          "downloads": 520
+          "downloads": 503
         }
       },
       "versions": [
@@ -7184,44 +7222,6 @@
           },
           "engines": {
             "dsh": ">=0.1.2-alpha.1 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-notify-me",
-      "title": {
-        "en": "dsh-notify-me",
-        "zh": "dsh-notify-me"
-      },
-      "description": {
-        "en": "DSH 桌面消息提醒插件 / desktop notification and message alerts for DeepSeek Harness web：需要你操作（可操作提醒）与回复完成提醒，系统通知+提示音+标签页标题，设置页开关 + 中英通知语言",
-        "zh": "DSH 桌面消息提醒插件 / desktop notification and message alerts for DeepSeek Harness web：需要你操作（可操作提醒）与回复完成提醒，系统通知+提示音+标签页标题，设置页开关 + 中英通知语言"
-      },
-      "repository": {
-        "url": "https://github.com/chromoany/dsh-notify-me"
-      },
-      "metadata": {
-        "category": "enhance-ui",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "stars": 87,
-          "downloads": 9420
-        }
-      },
-      "versions": [
-        {
-          "version": "1.17.0",
-          "publishTimestamp": 1793208448,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": "^0.1.0-rc.6 || ^0.1.1-rc.2 || ^0.1.2-rc.1 || ^0.1.5-rc.1 || >=0.1.6-alpha.2 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -7282,13 +7282,13 @@
         ],
         "sortKeys": {
           "stars": 78,
-          "downloads": 2984
+          "downloads": 2488
         }
       },
       "versions": [
         {
-          "version": "0.9.9",
-          "publishTimestamp": 1793581962,
+          "version": "0.9.10",
+          "publishTimestamp": 1793688183,
           "source": {
             "type": "npm"
           }
@@ -7317,7 +7317,7 @@
         ],
         "sortKeys": {
           "stars": 75,
-          "downloads": 724
+          "downloads": 647
         }
       },
       "versions": [
@@ -7385,8 +7385,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 68,
-          "downloads": 3113
+          "stars": 70,
+          "downloads": 2591
         }
       },
       "versions": [
@@ -7398,6 +7398,41 @@
           },
           "engines": {
             "dsh": "^0.1.0-rc.6 || ^0.2.0-rc.2 || ^0.2.1-alpha.1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-pet-live2d",
+      "title": {
+        "en": "@A8Chann/dsh-pet-live2d",
+        "zh": "@A8Chann/dsh-pet-live2d"
+      },
+      "description": {
+        "en": "DSH Web GUI 的 Live2D 桌宠插件：可拖动、跟随鼠标、跟着会话状态换动作与表情，右键面板可换装",
+        "zh": "DSH Web GUI 的 Live2D 桌宠插件：可拖动、跟随鼠标、跟着会话状态换动作与表情，右键面板可换装"
+      },
+      "repository": {
+        "url": "https://github.com/A8Chann/dsh-pet-live2d"
+      },
+      "metadata": {
+        "category": "enhance-ui",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 68,
+          "downloads": 7474
+        }
+      },
+      "versions": [
+        {
+          "version": "3.4.1",
+          "publishTimestamp": 1793109076,
+          "source": {
+            "type": "npm"
           }
         }
       ]
@@ -7424,7 +7459,7 @@
         ],
         "sortKeys": {
           "stars": 67,
-          "downloads": 481
+          "downloads": 477
         }
       },
       "versions": [
@@ -7436,41 +7471,6 @@
           },
           "engines": {
             "dsh": "^0.1.5-rc.1 || ^0.2.0-rc.1"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-pet-live2d",
-      "title": {
-        "en": "@A8Chann/dsh-pet-live2d",
-        "zh": "@A8Chann/dsh-pet-live2d"
-      },
-      "description": {
-        "en": "DSH Web GUI 的 Live2D 桌宠插件：可拖动、跟随鼠标、跟着会话状态换动作与表情，右键面板可换装",
-        "zh": "DSH Web GUI 的 Live2D 桌宠插件：可拖动、跟随鼠标、跟着会话状态换动作与表情，右键面板可换装"
-      },
-      "repository": {
-        "url": "https://github.com/A8Chann/dsh-pet-live2d"
-      },
-      "metadata": {
-        "category": "enhance-ui",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 67,
-          "downloads": 8186
-        }
-      },
-      "versions": [
-        {
-          "version": "3.4.1",
-          "publishTimestamp": 1793109076,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -7496,8 +7496,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 66,
-          "downloads": 1050
+          "stars": 67,
+          "downloads": 1022
         }
       },
       "versions": [
@@ -7509,6 +7509,78 @@
           },
           "engines": {
             "dsh": "*"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-save-token",
+      "title": {
+        "en": "dsh-plugin-save-token",
+        "zh": "dsh-plugin-save-token"
+      },
+      "description": {
+        "en": "A DeepSeek Harness (dsh) dynamic plugin that cuts token cost without cutting model intelligence",
+        "zh": "A DeepSeek Harness (dsh) dynamic plugin that cuts token cost without cutting model intelligence"
+      },
+      "repository": {
+        "url": "https://github.com/vibe-any/dsh-plugin-save-token"
+      },
+      "metadata": {
+        "category": "agent",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 66,
+          "downloads": 11971
+        }
+      },
+      "versions": [
+        {
+          "version": "2.4.1",
+          "publishTimestamp": 1788485395,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-web-startup-auth",
+      "title": {
+        "en": "dsh-web-startup-auth",
+        "zh": "dsh-web-startup-auth"
+      },
+      "description": {
+        "en": "DSH（DeepSeek Harness）远程 Web 启动 + 用户名/密码认证插件。 | DeepSeek Harness Remote‑Web‑Launch Plugin with Username/Password Auth",
+        "zh": "DSH（DeepSeek Harness）远程 Web 启动 + 用户名/密码认证插件。 | DeepSeek Harness Remote‑Web‑Launch Plugin with Username/Password Auth"
+      },
+      "repository": {
+        "url": "https://github.com/GDWhisper/dsh-web-startup-auth"
+      },
+      "metadata": {
+        "category": "connect",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 66
+        }
+      },
+      "versions": [
+        {
+          "version": "0.1.13",
+          "publishTimestamp": 1792400782,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.7-rc.1 <0.3.0-0"
           }
         }
       ]
@@ -7535,7 +7607,7 @@
         ],
         "sortKeys": {
           "stars": 65,
-          "downloads": 1342
+          "downloads": 1237
         }
       },
       "versions": [
@@ -7547,78 +7619,6 @@
           },
           "engines": {
             "dsh": "^0.1.5-alpha.1 || ^0.1.6-alpha.1 || ^0.1.7-alpha.1 || ^0.1.7-rc.1 || ^0.2.0-rc.1 || ^0.2.0-rc.2"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-web-startup-auth",
-      "title": {
-        "en": "dsh-web-startup-auth",
-        "zh": "dsh-web-startup-auth"
-      },
-      "description": {
-        "en": "DSH（DeepSeek Harness）远程 Web 启动 + 用户名/密码认证插件。 | DeepSeek Harness Remote‑Web‑Launch Plugin with Username/Password Auth",
-        "zh": "DSH（DeepSeek Harness）远程 Web 启动 + 用户名/密码认证插件。 | DeepSeek Harness Remote‑Web‑Launch Plugin with Username/Password Auth"
-      },
-      "repository": {
-        "url": "https://github.com/GDWhisper/dsh-web-startup-auth"
-      },
-      "metadata": {
-        "category": "connect",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "stars": 65
-        }
-      },
-      "versions": [
-        {
-          "version": "0.1.13",
-          "publishTimestamp": 1792400782,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.7-rc.1 <0.3.0-0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-plugin-save-token",
-      "title": {
-        "en": "dsh-plugin-save-token",
-        "zh": "dsh-plugin-save-token"
-      },
-      "description": {
-        "en": "A DeepSeek Harness (dsh) dynamic plugin that cuts token cost without cutting model intelligence",
-        "zh": "A DeepSeek Harness (dsh) dynamic plugin that cuts token cost without cutting model intelligence"
-      },
-      "repository": {
-        "url": "https://github.com/vibe-any/dsh-plugin-save-token"
-      },
-      "metadata": {
-        "category": "agent",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 64,
-          "downloads": 11063
-        }
-      },
-      "versions": [
-        {
-          "version": "2.4.1",
-          "publishTimestamp": 1788485395,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -7681,84 +7681,14 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 57,
-          "downloads": 1093
+          "stars": 58,
+          "downloads": 967
         }
       },
       "versions": [
         {
           "version": "0.4.2",
           "publishTimestamp": 1789986403,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-bottom-info-bar",
-      "title": {
-        "en": "dsh-bottom-info-bar",
-        "zh": "dsh-bottom-info-bar"
-      },
-      "description": {
-        "en": "DeepSeek Harness (DSH) plugin: replaces the stats row under the composer with provider and model, balance or subscription quota, peak/off-peak pricing, and sess",
-        "zh": "DeepSeek Harness (DSH) plugin: replaces the stats row under the composer with provider and model, balance or subscription quota, peak/off-peak pricing, and sess"
-      },
-      "repository": {
-        "url": "https://github.com/songoao25/dsh-bottom-info-bar"
-      },
-      "metadata": {
-        "category": "eco",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 56,
-          "downloads": 8563
-        }
-      },
-      "versions": [
-        {
-          "version": "1.21.10",
-          "publishTimestamp": 1793259634,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-preset-enhance",
-      "title": {
-        "en": "@bychv/dsh-preset-enhance",
-        "zh": "@bychv/dsh-preset-enhance"
-      },
-      "description": {
-        "en": "SillyTavern preset mode, macro engine and editor for DeepSeek Harness",
-        "zh": "SillyTavern preset mode, macro engine and editor for DeepSeek Harness"
-      },
-      "repository": {
-        "url": "https://github.com/bychv/dsh-preset-enhance"
-      },
-      "metadata": {
-        "category": "agent",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 56,
-          "downloads": 779
-        }
-      },
-      "versions": [
-        {
-          "version": "0.3.6-rc.1",
-          "publishTimestamp": 1792211625,
           "source": {
             "type": "npm"
           }
@@ -7786,8 +7716,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 56,
-          "downloads": 2563
+          "stars": 58,
+          "downloads": 2713
         }
       },
       "versions": [
@@ -7821,8 +7751,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 55,
-          "downloads": 2611
+          "stars": 57,
+          "downloads": 2432
         }
       },
       "versions": [
@@ -7834,6 +7764,111 @@
           },
           "engines": {
             "dsh": ">=0.1.0-rc.1 <0.1.0 || >=0.1.5-rc.1 <0.2.0-0 || >=0.2.0-rc.1 <0.3.0-0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-preset-enhance",
+      "title": {
+        "en": "@bychv/dsh-preset-enhance",
+        "zh": "@bychv/dsh-preset-enhance"
+      },
+      "description": {
+        "en": "SillyTavern preset mode, macro engine and editor for DeepSeek Harness",
+        "zh": "SillyTavern preset mode, macro engine and editor for DeepSeek Harness"
+      },
+      "repository": {
+        "url": "https://github.com/bychv/dsh-preset-enhance"
+      },
+      "metadata": {
+        "category": "agent",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 56,
+          "downloads": 843
+        }
+      },
+      "versions": [
+        {
+          "version": "0.3.6-rc.1",
+          "publishTimestamp": 1792211625,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-bottom-info-bar",
+      "title": {
+        "en": "dsh-bottom-info-bar",
+        "zh": "dsh-bottom-info-bar"
+      },
+      "description": {
+        "en": "DeepSeek Harness (DSH) plugin: replaces the stats row under the composer with provider and model, balance or subscription quota, peak/off-peak pricing, and sess",
+        "zh": "DeepSeek Harness (DSH) plugin: replaces the stats row under the composer with provider and model, balance or subscription quota, peak/off-peak pricing, and sess"
+      },
+      "repository": {
+        "url": "https://github.com/songoao25/dsh-bottom-info-bar"
+      },
+      "metadata": {
+        "category": "eco",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 55,
+          "downloads": 9374
+        }
+      },
+      "versions": [
+        {
+          "version": "1.21.10",
+          "publishTimestamp": 1793259634,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@angelky7/dsh-browser-control",
+      "title": {
+        "en": "@angelky7/dsh-browser-control",
+        "zh": "@angelky7/dsh-browser-control"
+      },
+      "description": {
+        "en": "Chrome 浏览器扩展 + DeepSeek Harness 插件，让 AI Agent 直接操控你的真实浏览器。",
+        "zh": "Chrome 浏览器扩展 + DeepSeek Harness 插件，让 AI Agent 直接操控你的真实浏览器。"
+      },
+      "repository": {
+        "url": "https://github.com/angelky7/dsh-browser-control"
+      },
+      "metadata": {
+        "category": "connect",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 54,
+          "downloads": 1092
+        }
+      },
+      "versions": [
+        {
+          "version": "1.4.0",
+          "publishTimestamp": 1793711429,
+          "source": {
+            "type": "npm"
           }
         }
       ]
@@ -7860,7 +7895,7 @@
         ],
         "sortKeys": {
           "stars": 54,
-          "downloads": 525
+          "downloads": 513
         }
       },
       "versions": [
@@ -7872,41 +7907,6 @@
           },
           "engines": {
             "dsh": "*"
-          }
-        }
-      ]
-    },
-    {
-      "name": "@angelky7/dsh-browser-control",
-      "title": {
-        "en": "@angelky7/dsh-browser-control",
-        "zh": "@angelky7/dsh-browser-control"
-      },
-      "description": {
-        "en": "Chrome 浏览器扩展 + DeepSeek Harness 插件，让 AI Agent 直接操控你的真实浏览器。",
-        "zh": "Chrome 浏览器扩展 + DeepSeek Harness 插件，让 AI Agent 直接操控你的真实浏览器。"
-      },
-      "repository": {
-        "url": "https://github.com/angelky7/dsh-browser-control"
-      },
-      "metadata": {
-        "category": "connect",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 53,
-          "downloads": 856
-        }
-      },
-      "versions": [
-        {
-          "version": "1.2.0",
-          "publishTimestamp": 1793363637,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -7933,7 +7933,7 @@
         ],
         "sortKeys": {
           "stars": 53,
-          "downloads": 1050
+          "downloads": 990
         }
       },
       "versions": [
@@ -7968,7 +7968,7 @@
         ],
         "sortKeys": {
           "stars": 52,
-          "downloads": 418
+          "downloads": 426
         }
       },
       "versions": [
@@ -7977,6 +7977,44 @@
           "publishTimestamp": 1789057190,
           "source": {
             "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-recall-plugin",
+      "title": {
+        "en": "dsh-recall-plugin",
+        "zh": "dsh-recall-plugin"
+      },
+      "description": {
+        "en": "消息撤回插件：回到发送该消息时的状态 DSH Message Recall Plugin: Return to the state when the message was sent",
+        "zh": "消息撤回插件：回到发送该消息时的状态 DSH Message Recall Plugin: Return to the state when the message was sent"
+      },
+      "repository": {
+        "url": "https://github.com/limbo947/dsh-recall-plugin"
+      },
+      "metadata": {
+        "category": "agent",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 52,
+          "downloads": 3369
+        }
+      },
+      "versions": [
+        {
+          "version": "2.6.3",
+          "publishTimestamp": 1793688812,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.2-alpha.1 <0.1.3 || >=0.1.3-alpha.1 <0.1.4 || >=0.1.5-alpha.1 <0.1.6 || >=0.1.6-alpha.1 <0.1.7 || >=0.1.7-alpha.1 <0.1.8 || >=0.2.0-rc.1 <0.2.1 || >=0.2.1-alpha.1 <0.3.0"
           }
         }
       ]
@@ -8019,116 +8057,6 @@
       ]
     },
     {
-      "name": "dsh-recall-plugin",
-      "title": {
-        "en": "dsh-recall-plugin",
-        "zh": "dsh-recall-plugin"
-      },
-      "description": {
-        "en": "消息撤回插件：回到发送该消息时的状态 DSH Message Recall Plugin: Return to the state when the message was sent",
-        "zh": "消息撤回插件：回到发送该消息时的状态 DSH Message Recall Plugin: Return to the state when the message was sent"
-      },
-      "repository": {
-        "url": "https://github.com/limbo947/dsh-recall-plugin"
-      },
-      "metadata": {
-        "category": "agent",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "stars": 51,
-          "downloads": 2827
-        }
-      },
-      "versions": [
-        {
-          "version": "2.6.2",
-          "publishTimestamp": 1793635633,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.2-alpha.1 <0.1.3 || >=0.1.3-alpha.1 <0.1.4 || >=0.1.5-alpha.1 <0.1.6 || >=0.1.6-alpha.1 <0.1.7 || >=0.1.7-alpha.1 <0.1.8 || >=0.2.0-rc.1 <0.2.1 || >=0.2.1-alpha.1 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-knit",
-      "title": {
-        "en": "dsh-knit",
-        "zh": "dsh-knit"
-      },
-      "description": {
-        "en": "面向 AI Coding Agent 的任务感知工作区上下文检索与生命周期追踪：按当前任务找到、组织并持续追踪最相关的文档、代码与媒体。纯本地、零模型调用、零网络。 Task-aware workspace context retrieval and lifecycle tracking for AI coding a",
-        "zh": "面向 AI Coding Agent 的任务感知工作区上下文检索与生命周期追踪：按当前任务找到、组织并持续追踪最相关的文档、代码与媒体。纯本地、零模型调用、零网络。 Task-aware workspace context retrieval and lifecycle tracking for AI coding a"
-      },
-      "repository": {
-        "url": "https://github.com/PolinniZhong/dsh-knit"
-      },
-      "metadata": {
-        "category": "enhance-ui",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 48,
-          "downloads": 736
-        }
-      },
-      "versions": [
-        {
-          "version": "0.25.0",
-          "publishTimestamp": 1793377337,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-sticky-note",
-      "title": {
-        "en": "dsh-sticky-note",
-        "zh": "dsh-sticky-note"
-      },
-      "description": {
-        "en": "左下角便签：随手记点子/感想/TODO，实时保存到归档目录，清单+悬浮归档",
-        "zh": "左下角便签：随手记点子/感想/TODO，实时保存到归档目录，清单+悬浮归档"
-      },
-      "repository": {
-        "url": "https://github.com/Meredith2328/dsh-sticky-note"
-      },
-      "metadata": {
-        "category": "enhance-tools",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-mydsh"
-        ],
-        "sortKeys": {
-          "stars": 47
-        }
-      },
-      "versions": [
-        {
-          "version": "0.6.0",
-          "publishTimestamp": 1793349232,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": "^0.2.0-rc.2 *"
-          }
-        }
-      ]
-    },
-    {
       "name": "@dely0/dsh-personal-workbench",
       "title": {
         "en": "dsh-personal-workbench",
@@ -8150,7 +8078,7 @@
         ],
         "sortKeys": {
           "stars": 46,
-          "downloads": 203
+          "downloads": 1294
         }
       },
       "versions": [
@@ -8185,13 +8113,48 @@
         ],
         "sortKeys": {
           "stars": 46,
-          "downloads": 729
+          "downloads": 664
         }
       },
       "versions": [
         {
           "version": "0.4.2",
           "publishTimestamp": 1792496998,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-knit",
+      "title": {
+        "en": "dsh-knit",
+        "zh": "dsh-knit"
+      },
+      "description": {
+        "en": "面向 AI Coding Agent 的任务感知工作区上下文检索与生命周期追踪：按当前任务找到、组织并持续追踪最相关的文档、代码与媒体。纯本地、零模型调用、零网络。 Task-aware workspace context retrieval and lifecycle tracking for AI coding a",
+        "zh": "面向 AI Coding Agent 的任务感知工作区上下文检索与生命周期追踪：按当前任务找到、组织并持续追踪最相关的文档、代码与媒体。纯本地、零模型调用、零网络。 Task-aware workspace context retrieval and lifecycle tracking for AI coding a"
+      },
+      "repository": {
+        "url": "https://github.com/PolinniZhong/dsh-knit"
+      },
+      "metadata": {
+        "category": "enhance-ui",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 46,
+          "downloads": 970
+        }
+      },
+      "versions": [
+        {
+          "version": "0.25.0",
+          "publishTimestamp": 1793377337,
           "source": {
             "type": "npm"
           }
@@ -8220,7 +8183,7 @@
         ],
         "sortKeys": {
           "stars": 46,
-          "downloads": 583
+          "downloads": 586
         }
       },
       "versions": [
@@ -8229,6 +8192,43 @@
           "publishTimestamp": 1790580910,
           "source": {
             "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-sticky-note",
+      "title": {
+        "en": "dsh-sticky-note",
+        "zh": "dsh-sticky-note"
+      },
+      "description": {
+        "en": "左下角便签：随手记点子/感想/TODO，实时保存到归档目录，清单+悬浮归档",
+        "zh": "左下角便签：随手记点子/感想/TODO，实时保存到归档目录，清单+悬浮归档"
+      },
+      "repository": {
+        "url": "https://github.com/Meredith2328/dsh-sticky-note"
+      },
+      "metadata": {
+        "category": "enhance-tools",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 46
+        }
+      },
+      "versions": [
+        {
+          "version": "0.6.0",
+          "publishTimestamp": 1793349232,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "^0.2.0-rc.2 *"
           }
         }
       ]
@@ -8255,48 +8255,13 @@
         ],
         "sortKeys": {
           "stars": 45,
-          "downloads": 3094
+          "downloads": 3740
         }
       },
       "versions": [
         {
-          "version": "0.20.1",
-          "publishTimestamp": 1793526945,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "@jiyr0119/dsh-workspace-explorer",
-      "title": {
-        "en": "dsh-workspace-explorer",
-        "zh": "dsh-workspace-explorer"
-      },
-      "description": {
-        "en": "DeepSeek Harness 工作区文件资源管理器:右侧目录树面板,点击/拖拽文件引用进输入框,UI 对齐 DSH 原生风格 | Workspace file explorer plugin for DeepSeek Harness: right-side file tree panel, click or dra",
-        "zh": "DeepSeek Harness 工作区文件资源管理器:右侧目录树面板,点击/拖拽文件引用进输入框,UI 对齐 DSH 原生风格 | Workspace file explorer plugin for DeepSeek Harness: right-side file tree panel, click or dra"
-      },
-      "repository": {
-        "url": "https://github.com/Jiyr0119/dsh-workspace-explorer"
-      },
-      "metadata": {
-        "category": "enhance-ui",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 44,
-          "downloads": 499
-        }
-      },
-      "versions": [
-        {
-          "version": "0.10.0",
-          "publishTimestamp": 1791945910,
+          "version": "0.22.0",
+          "publishTimestamp": 1793706406,
           "source": {
             "type": "npm"
           }
@@ -8324,8 +8289,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 44,
-          "downloads": 1160
+          "stars": 45,
+          "downloads": 1409
         }
       },
       "versions": [
@@ -8337,6 +8302,41 @@
           },
           "engines": {
             "dsh": "*"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@jiyr0119/dsh-workspace-explorer",
+      "title": {
+        "en": "dsh-workspace-explorer",
+        "zh": "dsh-workspace-explorer"
+      },
+      "description": {
+        "en": "DeepSeek Harness 工作区文件资源管理器:右侧目录树面板,点击/拖拽文件引用进输入框,UI 对齐 DSH 原生风格 | Workspace file explorer plugin for DeepSeek Harness: right-side file tree panel, click or dra",
+        "zh": "DeepSeek Harness 工作区文件资源管理器:右侧目录树面板,点击/拖拽文件引用进输入框,UI 对齐 DSH 原生风格 | Workspace file explorer plugin for DeepSeek Harness: right-side file tree panel, click or dra"
+      },
+      "repository": {
+        "url": "https://github.com/Jiyr0119/dsh-workspace-explorer"
+      },
+      "metadata": {
+        "category": "enhance-ui",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 44,
+          "downloads": 481
+        }
+      },
+      "versions": [
+        {
+          "version": "0.10.0",
+          "publishTimestamp": 1791945910,
+          "source": {
+            "type": "npm"
           }
         }
       ]
@@ -8363,7 +8363,7 @@
         ],
         "sortKeys": {
           "stars": 42,
-          "downloads": 608
+          "downloads": 627
         }
       },
       "versions": [
@@ -8401,7 +8401,7 @@
         ],
         "sortKeys": {
           "stars": 42,
-          "downloads": 1499
+          "downloads": 1285
         }
       },
       "versions": [
@@ -8436,7 +8436,7 @@
         ],
         "sortKeys": {
           "stars": 41,
-          "downloads": 583
+          "downloads": 548
         }
       },
       "versions": [
@@ -8445,6 +8445,44 @@
           "publishTimestamp": 1787673567,
           "source": {
             "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-ai4scholar",
+      "title": {
+        "en": "dsh-ai4scholar",
+        "zh": "dsh-ai4scholar"
+      },
+      "description": {
+        "en": "AI4Scholar for DeepSeek Harness (dsh): 38 native academic tools — Semantic Scholar, PubMed, Google Scholar, arXiv, bioRxiv/medRxiv, DOI, full text, auto-cite, f",
+        "zh": "AI4Scholar for DeepSeek Harness (dsh): 38 native academic tools — Semantic Scholar, PubMed, Google Scholar, arXiv, bioRxiv/medRxiv, DOI, full text, auto-cite, f"
+      },
+      "repository": {
+        "url": "https://github.com/literaf/dsh-ai4scholar"
+      },
+      "metadata": {
+        "category": "enhance-memory",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-mydsh"
+        ],
+        "sortKeys": {
+          "stars": 40,
+          "downloads": 2313
+        }
+      },
+      "versions": [
+        {
+          "version": "0.3.8",
+          "publishTimestamp": 1792573953,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": ">=0.1.0-rc.6"
           }
         }
       ]
@@ -8471,7 +8509,7 @@
         ],
         "sortKeys": {
           "stars": 40,
-          "downloads": 576
+          "downloads": 560
         }
       },
       "versions": [
@@ -8506,7 +8544,7 @@
         ],
         "sortKeys": {
           "stars": 38,
-          "downloads": 588
+          "downloads": 687
         }
       },
       "versions": [
@@ -8520,39 +8558,36 @@
       ]
     },
     {
-      "name": "dsh-ai4scholar",
+      "name": "dsh-origin-plugin",
       "title": {
-        "en": "dsh-ai4scholar",
-        "zh": "dsh-ai4scholar"
+        "en": "dsh-origin-plugin",
+        "zh": "dsh-origin-plugin"
       },
       "description": {
-        "en": "AI4Scholar for DeepSeek Harness (dsh): 38 native academic tools — Semantic Scholar, PubMed, Google Scholar, arXiv, bioRxiv/medRxiv, DOI, full text, auto-cite, f",
-        "zh": "AI4Scholar for DeepSeek Harness (dsh): 38 native academic tools — Semantic Scholar, PubMed, Google Scholar, arXiv, bioRxiv/medRxiv, DOI, full text, auto-cite, f"
+        "en": "Drive OriginLab Origin scientific plotting from AI chat via MCP. 74 tools: modal-dialog watchdog, LabTalk safety gate, FigureSpec declarative YAML, fit params, ",
+        "zh": "Drive OriginLab Origin scientific plotting from AI chat via MCP. 74 tools: modal-dialog watchdog, LabTalk safety gate, FigureSpec declarative YAML, fit params, "
       },
       "repository": {
-        "url": "https://github.com/literaf/dsh-ai4scholar"
+        "url": "https://github.com/Fantasality/dsh-origin-plugin"
       },
       "metadata": {
-        "category": "enhance-memory",
+        "category": "media",
         "labels": [
+          "no-engines",
           "catalog-only",
-          "src-awesome",
-          "src-mydsh"
+          "src-awesome"
         ],
         "sortKeys": {
           "stars": 38,
-          "downloads": 2465
+          "downloads": 1039
         }
       },
       "versions": [
         {
-          "version": "0.3.8",
-          "publishTimestamp": 1792573953,
+          "version": "2.7.3",
+          "publishTimestamp": 1789697262,
           "source": {
             "type": "npm"
-          },
-          "engines": {
-            "dsh": ">=0.1.0-rc.6"
           }
         }
       ]
@@ -8578,7 +8613,7 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 36
+          "stars": 37
         }
       },
       "versions": [
@@ -8629,41 +8664,6 @@
       ]
     },
     {
-      "name": "dsh-origin-plugin",
-      "title": {
-        "en": "dsh-origin-plugin",
-        "zh": "dsh-origin-plugin"
-      },
-      "description": {
-        "en": "Drive OriginLab Origin scientific plotting from AI chat via MCP. 74 tools: modal-dialog watchdog, LabTalk safety gate, FigureSpec declarative YAML, fit params, ",
-        "zh": "Drive OriginLab Origin scientific plotting from AI chat via MCP. 74 tools: modal-dialog watchdog, LabTalk safety gate, FigureSpec declarative YAML, fit params, "
-      },
-      "repository": {
-        "url": "https://github.com/Fantasality/dsh-origin-plugin"
-      },
-      "metadata": {
-        "category": "media",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 35,
-          "downloads": 1000
-        }
-      },
-      "versions": [
-        {
-          "version": "2.7.3",
-          "publishTimestamp": 1789697262,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
       "name": "dsh-prompt-enhance",
       "title": {
         "en": "dsh-prompt-enhance",
@@ -8684,14 +8684,14 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 33,
-          "downloads": 3974
+          "stars": 34,
+          "downloads": 3332
         }
       },
       "versions": [
         {
-          "version": "0.3.2",
-          "publishTimestamp": 1792679072,
+          "version": "0.3.4",
+          "publishTimestamp": 1793675537,
           "source": {
             "type": "npm"
           },
@@ -8723,7 +8723,7 @@
         ],
         "sortKeys": {
           "stars": 32,
-          "downloads": 458
+          "downloads": 620
         }
       },
       "versions": [
@@ -8757,8 +8757,8 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 31,
-          "downloads": 817
+          "stars": 32,
+          "downloads": 792
         }
       },
       "versions": [
@@ -8793,7 +8793,7 @@
         ],
         "sortKeys": {
           "stars": 31,
-          "downloads": 477
+          "downloads": 488
         }
       },
       "versions": [
@@ -8827,8 +8827,8 @@
           "src-dshso"
         ],
         "sortKeys": {
-          "stars": 28,
-          "downloads": 3948
+          "stars": 29,
+          "downloads": 4012
         }
       },
       "versions": [
@@ -8866,7 +8866,7 @@
         ],
         "sortKeys": {
           "stars": 28,
-          "downloads": 3516
+          "downloads": 2778
         }
       },
       "versions": [
@@ -8904,7 +8904,7 @@
         ],
         "sortKeys": {
           "stars": 27,
-          "downloads": 1409
+          "downloads": 1149
         }
       },
       "versions": [
@@ -8941,48 +8941,13 @@
           "src-awesome"
         ],
         "sortKeys": {
-          "stars": 26
+          "stars": 27
         }
       },
       "versions": [
         {
           "version": "2.1.0",
           "publishTimestamp": 1787875553,
-          "source": {
-            "type": "npm"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-memgas",
-      "title": {
-        "en": "dsh-memgas",
-        "zh": "dsh-memgas"
-      },
-      "description": {
-        "en": "Long-term memory plugin for DeepSeek Harness (dsh): four-channel retrieval fusion and continuous memory evolution. Memory construction and retrieval are based o",
-        "zh": "Long-term memory plugin for DeepSeek Harness (dsh): four-channel retrieval fusion and continuous memory evolution. Memory construction and retrieval are based o"
-      },
-      "repository": {
-        "url": "https://github.com/quqxui/dsh-memgas"
-      },
-      "metadata": {
-        "category": "enhance-memory",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 26,
-          "downloads": 263
-        }
-      },
-      "versions": [
-        {
-          "version": "0.2.1",
-          "publishTimestamp": 1788612980,
           "source": {
             "type": "npm"
           }
@@ -9010,8 +8975,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 26,
-          "downloads": 942
+          "stars": 27,
+          "downloads": 972
         }
       },
       "versions": [
@@ -9023,6 +8988,41 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-memgas",
+      "title": {
+        "en": "dsh-memgas",
+        "zh": "dsh-memgas"
+      },
+      "description": {
+        "en": "Long-term memory plugin for DeepSeek Harness (dsh): four-channel retrieval fusion and continuous memory evolution. Memory construction and retrieval are based o",
+        "zh": "Long-term memory plugin for DeepSeek Harness (dsh): four-channel retrieval fusion and continuous memory evolution. Memory construction and retrieval are based o"
+      },
+      "repository": {
+        "url": "https://github.com/quqxui/dsh-memgas"
+      },
+      "metadata": {
+        "category": "enhance-memory",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 26,
+          "downloads": 271
+        }
+      },
+      "versions": [
+        {
+          "version": "0.2.1",
+          "publishTimestamp": 1788612980,
+          "source": {
+            "type": "npm"
           }
         }
       ]
@@ -9049,13 +9049,48 @@
         ],
         "sortKeys": {
           "stars": 25,
-          "downloads": 214
+          "downloads": 218
         }
       },
       "versions": [
         {
           "version": "0.1.0-rc.4",
           "publishTimestamp": 1791259142,
+          "source": {
+            "type": "npm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-super-code",
+      "title": {
+        "en": "@ArtlexYoung/dsh-super-code",
+        "zh": "@ArtlexYoung/dsh-super-code"
+      },
+      "description": {
+        "en": "一个更快、更节省、更准确的 DeepSeek Harness 插编码件。在 SWE-bench Pro 最难的 100 道题中，回答耗时减少21.8%，每题token减少34.6%，正确率甚至增加了6.5%。A faster, more accurate, and more cost-effective DeepSee",
+        "zh": "一个更快、更节省、更准确的 DeepSeek Harness 插编码件。在 SWE-bench Pro 最难的 100 道题中，回答耗时减少21.8%，每题token减少34.6%，正确率甚至增加了6.5%。A faster, more accurate, and more cost-effective DeepSee"
+      },
+      "repository": {
+        "url": "https://github.com/ArtlexYoung/dsh-super-code"
+      },
+      "metadata": {
+        "category": "dev",
+        "labels": [
+          "no-engines",
+          "catalog-only",
+          "src-awesome"
+        ],
+        "sortKeys": {
+          "stars": 25,
+          "downloads": 1508
+        }
+      },
+      "versions": [
+        {
+          "version": "0.3.10",
+          "publishTimestamp": 1793718113,
           "source": {
             "type": "npm"
           }
@@ -9084,7 +9119,7 @@
         ],
         "sortKeys": {
           "stars": 23,
-          "downloads": 1114
+          "downloads": 1297
         }
       },
       "versions": [
@@ -9096,41 +9131,6 @@
           },
           "engines": {
             "dsh": ">=0.1.0-rc.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "dsh-super-code",
-      "title": {
-        "en": "@ArtlexYoung/dsh-super-code",
-        "zh": "@ArtlexYoung/dsh-super-code"
-      },
-      "description": {
-        "en": "一个更快、更节省、更准确的 DeepSeek Harness 插编码件。在 SWE-bench Pro 最难的 100 道题中，回答耗时减少21.8%，每题token减少34.6%，正确率甚至增加了6.5%。A faster, more accurate, and more cost-effective DeepSee",
-        "zh": "一个更快、更节省、更准确的 DeepSeek Harness 插编码件。在 SWE-bench Pro 最难的 100 道题中，回答耗时减少21.8%，每题token减少34.6%，正确率甚至增加了6.5%。A faster, more accurate, and more cost-effective DeepSee"
-      },
-      "repository": {
-        "url": "https://github.com/ArtlexYoung/dsh-super-code"
-      },
-      "metadata": {
-        "category": "dev",
-        "labels": [
-          "no-engines",
-          "catalog-only",
-          "src-awesome"
-        ],
-        "sortKeys": {
-          "stars": 23,
-          "downloads": 1514
-        }
-      },
-      "versions": [
-        {
-          "version": "0.3.9",
-          "publishTimestamp": 1793199511,
-          "source": {
-            "type": "npm"
           }
         }
       ]
@@ -9157,7 +9157,7 @@
         ],
         "sortKeys": {
           "stars": 22,
-          "downloads": 950
+          "downloads": 1061
         }
       },
       "versions": [
@@ -9226,7 +9226,7 @@
         ],
         "sortKeys": {
           "stars": 20,
-          "downloads": 1079
+          "downloads": 1101
         }
       },
       "versions": [
@@ -9261,7 +9261,7 @@
         ],
         "sortKeys": {
           "stars": 20,
-          "downloads": 1846
+          "downloads": 1716
         }
       },
       "versions": [
@@ -9296,7 +9296,7 @@
         ],
         "sortKeys": {
           "stars": 20,
-          "downloads": 207
+          "downloads": 164
         }
       },
       "versions": [
@@ -9330,8 +9330,8 @@
           "src-mydsh"
         ],
         "sortKeys": {
-          "stars": 18,
-          "downloads": 1612
+          "stars": 19,
+          "downloads": 1395
         }
       },
       "versions": [
@@ -9369,7 +9369,7 @@
         ],
         "sortKeys": {
           "stars": 17,
-          "downloads": 1521
+          "downloads": 1178
         }
       },
       "versions": [
@@ -9404,7 +9404,7 @@
         ],
         "sortKeys": {
           "stars": 17,
-          "downloads": 796
+          "downloads": 734
         }
       },
       "versions": [
@@ -9442,7 +9442,7 @@
         ],
         "sortKeys": {
           "stars": 17,
-          "downloads": 1008
+          "downloads": 968
         }
       },
       "versions": [
@@ -9480,7 +9480,7 @@
         ],
         "sortKeys": {
           "stars": 15,
-          "downloads": 545
+          "downloads": 578
         }
       },
       "versions": [
@@ -9518,7 +9518,7 @@
         ],
         "sortKeys": {
           "stars": 15,
-          "downloads": 211
+          "downloads": 209
         }
       },
       "versions": [
@@ -9556,7 +9556,7 @@
         ],
         "sortKeys": {
           "stars": 15,
-          "downloads": 1589
+          "downloads": 2331
         }
       },
       "versions": [
@@ -9591,7 +9591,7 @@
         ],
         "sortKeys": {
           "stars": 14,
-          "downloads": 1168
+          "downloads": 1162
         }
       },
       "versions": [
@@ -9603,6 +9603,44 @@
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@cocofhu/skillhub",
+      "title": {
+        "en": "skillhub",
+        "zh": "skillhub"
+      },
+      "description": {
+        "en": "skillhub of deepseek-harness",
+        "zh": "skillhub of deepseek-harness"
+      },
+      "repository": {
+        "url": "https://github.com/cocofhu/skillhub"
+      },
+      "metadata": {
+        "category": "eco",
+        "labels": [
+          "catalog-only",
+          "src-awesome",
+          "src-dshso"
+        ],
+        "sortKeys": {
+          "stars": 13,
+          "downloads": 3035
+        }
+      },
+      "versions": [
+        {
+          "version": "0.2.16",
+          "publishTimestamp": 1787564208,
+          "source": {
+            "type": "npm"
+          },
+          "engines": {
+            "dsh": "*"
           }
         }
       ]
@@ -9629,13 +9667,13 @@
         ],
         "sortKeys": {
           "stars": 13,
-          "downloads": 3516
+          "downloads": 3661
         }
       },
       "versions": [
         {
-          "version": "0.12.19",
-          "publishTimestamp": 1793363915,
+          "version": "0.12.23",
+          "publishTimestamp": 1793722799,
           "source": {
             "type": "npm"
           },
@@ -9672,8 +9710,8 @@
       },
       "versions": [
         {
-          "version": "0.3.1",
-          "publishTimestamp": 1790748591,
+          "version": "0.3.2",
+          "publishTimestamp": 1793691460,
           "source": {
             "type": "npm"
           },
@@ -9705,7 +9743,7 @@
         ],
         "sortKeys": {
           "stars": 13,
-          "downloads": 743
+          "downloads": 677
         }
       },
       "versions": [
@@ -9740,7 +9778,7 @@
         ],
         "sortKeys": {
           "stars": 13,
-          "downloads": 399
+          "downloads": 397
         }
       },
       "versions": [
@@ -9752,44 +9790,6 @@
           },
           "engines": {
             "dsh": ">=0.1.2-alpha.1 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "@cocofhu/skillhub",
-      "title": {
-        "en": "skillhub",
-        "zh": "skillhub"
-      },
-      "description": {
-        "en": "skillhub of deepseek-harness",
-        "zh": "skillhub of deepseek-harness"
-      },
-      "repository": {
-        "url": "https://github.com/cocofhu/skillhub"
-      },
-      "metadata": {
-        "category": "eco",
-        "labels": [
-          "catalog-only",
-          "src-awesome",
-          "src-dshso"
-        ],
-        "sortKeys": {
-          "stars": 12,
-          "downloads": 3132
-        }
-      },
-      "versions": [
-        {
-          "version": "0.2.16",
-          "publishTimestamp": 1787564208,
-          "source": {
-            "type": "npm"
-          },
-          "engines": {
-            "dsh": "*"
           }
         }
       ]
@@ -9816,7 +9816,7 @@
         ],
         "sortKeys": {
           "stars": 12,
-          "downloads": 1170
+          "downloads": 1328
         }
       },
       "versions": [
@@ -9854,7 +9854,7 @@
         ],
         "sortKeys": {
           "stars": 11,
-          "downloads": 2041
+          "downloads": 2507
         }
       },
       "versions": [
@@ -9889,7 +9889,7 @@
         ],
         "sortKeys": {
           "stars": 11,
-          "downloads": 673
+          "downloads": 479
         }
       },
       "versions": [
@@ -9927,13 +9927,13 @@
         ],
         "sortKeys": {
           "stars": 11,
-          "downloads": 1004
+          "downloads": 997
         }
       },
       "versions": [
         {
-          "version": "0.40.0",
-          "publishTimestamp": 1793331440,
+          "version": "0.40.1",
+          "publishTimestamp": 1793675578,
           "source": {
             "type": "npm"
           },
@@ -9965,7 +9965,7 @@
         ],
         "sortKeys": {
           "stars": 10,
-          "downloads": 782
+          "downloads": 734
         }
       },
       "versions": [
@@ -10040,7 +10040,7 @@
         ],
         "sortKeys": {
           "stars": 9,
-          "downloads": 516
+          "downloads": 559
         }
       },
       "versions": [
@@ -10075,7 +10075,7 @@
         ],
         "sortKeys": {
           "stars": 9,
-          "downloads": 740
+          "downloads": 679
         }
       },
       "versions": [
@@ -10113,7 +10113,7 @@
         ],
         "sortKeys": {
           "stars": 8,
-          "downloads": 268
+          "downloads": 271
         }
       },
       "versions": [
@@ -10182,7 +10182,7 @@
         ],
         "sortKeys": {
           "stars": 7,
-          "downloads": 550
+          "downloads": 640
         }
       },
       "versions": [
@@ -10220,7 +10220,7 @@
         ],
         "sortKeys": {
           "stars": 7,
-          "downloads": 107
+          "downloads": 113
         }
       },
       "versions": [
@@ -10258,7 +10258,7 @@
         ],
         "sortKeys": {
           "stars": 7,
-          "downloads": 354
+          "downloads": 337
         }
       },
       "versions": [
@@ -10293,7 +10293,7 @@
         ],
         "sortKeys": {
           "stars": 7,
-          "downloads": 1977
+          "downloads": 1904
         }
       },
       "versions": [
@@ -10328,7 +10328,7 @@
         ],
         "sortKeys": {
           "stars": 6,
-          "downloads": 438
+          "downloads": 439
         }
       },
       "versions": [
@@ -10363,7 +10363,7 @@
         ],
         "sortKeys": {
           "stars": 6,
-          "downloads": 627
+          "downloads": 597
         }
       },
       "versions": [
@@ -10432,7 +10432,7 @@
         ],
         "sortKeys": {
           "stars": 5,
-          "downloads": 253
+          "downloads": 243
         }
       },
       "versions": [
@@ -10467,7 +10467,7 @@
         ],
         "sortKeys": {
           "stars": 5,
-          "downloads": 1289
+          "downloads": 1245
         }
       },
       "versions": [

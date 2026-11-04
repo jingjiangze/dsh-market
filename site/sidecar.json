@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-04T01:33:40.339Z",
+  "generatedAt": "2026-11-04T11:39:00.497Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "catalogue": {
     "carried": 563,
     "verifiedThisRun": 0,
-    "catalogOnly": 10432,
-    "published": 10995
+    "catalogOnly": 10459,
+    "published": 11022
   },
   "gates": {
     "minAgeDays": 3,
@@ -358,6 +358,31 @@
       ]
     },
     {
+      "name": "@michengai/dsh-archive-manager",
+      "version": "1.1.22",
+      "category": "memory",
+      "distIntegrity": "sha512-EtQNkVh2utFN0ewSe9s/HjK858Xk42Mk/Hc9Boe4A9LttB2l9jPNA+Rr10aOEfX9WgPPn1R8AWVq1CjHbGKN6A==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-archive-manager@1.1.22",
+      "unpackedSize": 1141781,
+      "zhSource": "native",
+      "origins": [
+        "src-npm",
+        "src-awesome"
+      ],
+      "trust": [
+        "trust-readme-verified"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-mattpocock-skills-deck",
       "version": "1.7.51",
       "category": "enhance-models",
@@ -376,31 +401,6 @@
         "trust-readme-verified",
         "trust-source-index",
         "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "@michengai/dsh-archive-manager",
-      "version": "1.1.22",
-      "category": "memory",
-      "distIntegrity": "sha512-EtQNkVh2utFN0ewSe9s/HjK858Xk42Mk/Hc9Boe4A9LttB2l9jPNA+Rr10aOEfX9WgPPn1R8AWVq1CjHbGKN6A==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-archive-manager@1.1.22",
-      "unpackedSize": 1141781,
-      "zhSource": "native",
-      "origins": [
-        "src-npm",
-        "src-awesome"
-      ],
-      "trust": [
-        "trust-readme-verified"
       ],
       "gates": [
         "bundle",
@@ -579,6 +579,30 @@
       ]
     },
     {
+      "name": "@michengai/dsh-agency-agents",
+      "version": "1.2.20",
+      "category": "other",
+      "distIntegrity": "sha512-CYrLgYuCnJ3XTrSp9GIP8u4gn//11HHNm9b1PTcyrkTA33DKKoDj8yQ6qYHJlDuyimpXt/7GLUXJrVQGXr4G8w==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-agency-agents@1.2.20",
+      "unpackedSize": 10777038,
+      "zhSource": "native",
+      "origins": [
+        "src-awesome"
+      ],
+      "trust": [
+        "trust-readme-verified"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-research-report",
       "version": "0.3.30",
       "category": "ops",
@@ -597,30 +621,6 @@
         "trust-readme-verified",
         "trust-unpinned",
         "trust-source-index"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "@michengai/dsh-agency-agents",
-      "version": "1.2.20",
-      "category": "other",
-      "distIntegrity": "sha512-CYrLgYuCnJ3XTrSp9GIP8u4gn//11HHNm9b1PTcyrkTA33DKKoDj8yQ6qYHJlDuyimpXt/7GLUXJrVQGXr4G8w==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@michengai%2fdsh-agency-agents@1.2.20",
-      "unpackedSize": 10777038,
-      "zhSource": "native",
-      "origins": [
-        "src-awesome"
-      ],
-      "trust": [
-        "trust-readme-verified"
       ],
       "gates": [
         "bundle",
@@ -1110,14 +1110,15 @@
       ]
     },
     {
-      "name": "@openma/deepseek-harness-acp",
-      "version": "0.4.40",
+      "name": "@goodandready/dsh-russian-lang",
+      "version": "0.4.17",
       "category": "other",
-      "distIntegrity": "sha512-nBPjjKh8n5aPxhQ2JqsLhRFJFoeIWubDFbjKNVOXcUsNEyMjwG3KkGaWerpaQ+xeQWBGuB/Phfteshef008rIQ==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@openma%2fdeepseek-harness-acp@0.4.40",
-      "unpackedSize": 175925675,
-      "zhSource": "fallback",
+      "distIntegrity": "sha512-zGaRNcK6dwJnPxgyawCOESEGcnpPU6NlVEExsVNwbjGm6muaBt+bqAxtJ+CR/flb4a53Xdd5V3a7qh4N+0OqSA==",
+      "attestations": null,
+      "unpackedSize": 2559911,
+      "zhSource": "override",
       "origins": [
+        "src-npm",
         "src-awesome"
       ],
       "trust": [
@@ -1134,15 +1135,14 @@
       ]
     },
     {
-      "name": "@goodandready/dsh-russian-lang",
-      "version": "0.4.17",
+      "name": "@openma/deepseek-harness-acp",
+      "version": "0.4.40",
       "category": "other",
-      "distIntegrity": "sha512-zGaRNcK6dwJnPxgyawCOESEGcnpPU6NlVEExsVNwbjGm6muaBt+bqAxtJ+CR/flb4a53Xdd5V3a7qh4N+0OqSA==",
-      "attestations": null,
-      "unpackedSize": 2559911,
-      "zhSource": "override",
+      "distIntegrity": "sha512-nBPjjKh8n5aPxhQ2JqsLhRFJFoeIWubDFbjKNVOXcUsNEyMjwG3KkGaWerpaQ+xeQWBGuB/Phfteshef008rIQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/@openma%2fdeepseek-harness-acp@0.4.40",
+      "unpackedSize": 175925675,
+      "zhSource": "fallback",
       "origins": [
-        "src-npm",
         "src-awesome"
       ],
       "trust": [
@@ -3191,6 +3191,32 @@
       ]
     },
     {
+      "name": "dsh-codebuddy-cli",
+      "version": "0.4.6",
+      "category": "models",
+      "distIntegrity": "sha512-/Nsamr/j6oeCMFPbTUgxOj2X05SxEXPjfEWygA+5v7yGoLEbEqM5DnQuy7SweCVeE3DzZ6yj2Nfzs0gXgh5LBQ==",
+      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-codebuddy-cli@0.4.6",
+      "unpackedSize": 409170,
+      "zhSource": "detected",
+      "origins": [
+        "src-awesome",
+        "src-mydsh"
+      ],
+      "trust": [
+        "trust-readme-verified",
+        "trust-unpinned"
+      ],
+      "gates": [
+        "bundle",
+        "engines.dsh",
+        "min-age",
+        "no-install-script",
+        "license",
+        "category",
+        "zh"
+      ]
+    },
+    {
       "name": "dsh-fast",
       "version": "0.2.27",
       "category": "enhance-models",
@@ -3407,32 +3433,6 @@
       "attestations": null,
       "unpackedSize": 48121360,
       "zhSource": "fallback",
-      "origins": [
-        "src-awesome",
-        "src-mydsh"
-      ],
-      "trust": [
-        "trust-readme-verified",
-        "trust-unpinned"
-      ],
-      "gates": [
-        "bundle",
-        "engines.dsh",
-        "min-age",
-        "no-install-script",
-        "license",
-        "category",
-        "zh"
-      ]
-    },
-    {
-      "name": "dsh-codebuddy-cli",
-      "version": "0.4.6",
-      "category": "models",
-      "distIntegrity": "sha512-/Nsamr/j6oeCMFPbTUgxOj2X05SxEXPjfEWygA+5v7yGoLEbEqM5DnQuy7SweCVeE3DzZ6yj2Nfzs0gXgh5LBQ==",
-      "attestations": "https://registry.npmjs.org/-/npm/v1/attestations/dsh-codebuddy-cli@0.4.6",
-      "unpackedSize": 409170,
-      "zhSource": "detected",
       "origins": [
         "src-awesome",
         "src-mydsh"
@@ -14446,7 +14446,7 @@
     },
     {
       "name": "dshmarket",
-      "version": "1.73.8",
+      "version": "1.73.9",
       "category": "data"
     },
     {
@@ -14481,7 +14481,7 @@
     },
     {
       "name": "@xmanrui/dsh-im",
-      "version": "5.9.1",
+      "version": "5.10.0",
       "category": "connect"
     },
     {
@@ -14510,6 +14510,11 @@
       "category": "enhance-tools"
     },
     {
+      "name": "ds-harness-remote",
+      "version": "0.6.2",
+      "category": "connect"
+    },
+    {
       "name": "dsh-plugin-radar",
       "version": "0.1.1",
       "category": "other"
@@ -14520,18 +14525,13 @@
       "category": "enhance-memory"
     },
     {
-      "name": "ds-harness-remote",
-      "version": "0.6.0",
-      "category": "connect"
-    },
-    {
       "name": "@yunmiao/studymate",
       "version": "2.0.3",
       "category": "agent"
     },
     {
       "name": "dsh-tavern",
-      "version": "2.7.26",
+      "version": "2.7.27",
       "category": "other"
     },
     {
@@ -14540,14 +14540,14 @@
       "category": "media"
     },
     {
-      "name": "dsh-blender-plugin",
-      "version": "3.0.4",
-      "category": "media"
-    },
-    {
       "name": "dsh-connect-workbuddy",
       "version": "5.17.0",
       "category": "connect"
+    },
+    {
+      "name": "dsh-blender-plugin",
+      "version": "3.0.4",
+      "category": "media"
     },
     {
       "name": "@liustack/modsearch",
@@ -14596,7 +14596,7 @@
     },
     {
       "name": "dsh-free-search",
-      "version": "0.9.27",
+      "version": "0.9.30",
       "category": "data"
     },
     {
@@ -14631,7 +14631,7 @@
     },
     {
       "name": "dsh-claude-style",
-      "version": "0.19.6",
+      "version": "0.19.7",
       "category": "enhance-ui"
     },
     {
@@ -14680,14 +14680,24 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-guizang-design",
+      "version": "0.1.3",
+      "category": "media"
+    },
+    {
       "name": "dsh-video-storyboard",
-      "version": "0.6.4",
+      "version": "0.6.5",
       "category": "media"
     },
     {
       "name": "meow-memory",
-      "version": "0.32.4",
+      "version": "0.32.5",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-bili-whale",
+      "version": "0.4.6",
+      "category": "agent"
     },
     {
       "name": "@nagi-ovo/dsh-visualize",
@@ -14701,12 +14711,12 @@
     },
     {
       "name": "dsh-dream-skin",
-      "version": "11.2.0",
+      "version": "11.3.0",
       "category": "enhance-ui"
     },
     {
       "name": "dsh-config-manager",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "category": "connect"
     },
     {
@@ -14716,7 +14726,7 @@
     },
     {
       "name": "dsh-ego-browser",
-      "version": "0.9.8",
+      "version": "0.9.9",
       "category": "connect"
     },
     {
@@ -14726,7 +14736,7 @@
     },
     {
       "name": "dsh-chat-import",
-      "version": "0.26.3",
+      "version": "0.26.4",
       "category": "connect"
     },
     {
@@ -14738,11 +14748,6 @@
       "name": "@fylar/dsh-fylar-office-editor",
       "version": "0.1.6",
       "category": "agent"
-    },
-    {
-      "name": "dsh-guizang-design",
-      "version": "0.1.3",
-      "category": "media"
     },
     {
       "name": "dsh-model-router",
@@ -14765,13 +14770,13 @@
       "category": "connect"
     },
     {
-      "name": "dsh-codex-effort-slider",
-      "version": "1.1.4",
+      "name": "dsh-remote",
+      "version": "0.8.72",
       "category": "connect"
     },
     {
-      "name": "dsh-remote",
-      "version": "0.8.67",
+      "name": "dsh-codex-effort-slider",
+      "version": "1.1.4",
       "category": "connect"
     },
     {
@@ -14821,7 +14826,7 @@
     },
     {
       "name": "dsh-engramory",
-      "version": "1.2.0",
+      "version": "1.5.0",
       "category": "enhance-memory"
     },
     {
@@ -14855,6 +14860,11 @@
       "category": "connect"
     },
     {
+      "name": "dsh-web-mobile",
+      "version": "3.2.1",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-550c-boot",
       "version": "0.5.4",
       "category": "enhance-ui"
@@ -14863,11 +14873,6 @@
       "name": "dsh-client-auto-continue",
       "version": "0.17.3",
       "category": "data"
-    },
-    {
-      "name": "dsh-web-mobile",
-      "version": "3.2.1",
-      "category": "enhance-ui"
     },
     {
       "name": "@a9i5k4/dsh-auto-memory",
@@ -14881,7 +14886,7 @@
     },
     {
       "name": "@dickpy/dsh-imagegen",
-      "version": "1.11.0",
+      "version": "1.15.4",
       "category": "media"
     },
     {
@@ -14920,14 +14925,14 @@
       "category": "enhance-memory"
     },
     {
-      "name": "dsh-imagegen",
-      "version": "0.1.0",
-      "category": "enhance-models"
-    },
-    {
       "name": "scientific-figure-library",
       "version": "0.8.1",
       "category": "eco"
+    },
+    {
+      "name": "dsh-imagegen",
+      "version": "0.1.0",
+      "category": "enhance-models"
     },
     {
       "name": "dsh-usage",
@@ -14936,7 +14941,7 @@
     },
     {
       "name": "dsh-easyrewrite",
-      "version": "2.6.0",
+      "version": "3.0.0",
       "category": "enhance-ui"
     },
     {
@@ -14946,18 +14951,8 @@
     },
     {
       "name": "dsh-recall-unread",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-tabbit",
-      "version": "0.4.0",
-      "category": "eco"
-    },
-    {
-      "name": "@noob-stupid/dsh-plugin-console",
-      "version": "0.5.99",
-      "category": "dev"
     },
     {
       "name": "dsh-auto-memory",
@@ -14965,8 +14960,18 @@
       "category": "enhance-memory"
     },
     {
+      "name": "dsh-tabbit",
+      "version": "0.4.1",
+      "category": "eco"
+    },
+    {
+      "name": "@noob-stupid/dsh-plugin-console",
+      "version": "0.5.101",
+      "category": "dev"
+    },
+    {
       "name": "dsh-watcher",
-      "version": "0.8.0",
+      "version": "0.9.0",
       "category": "other"
     },
     {
@@ -15045,19 +15050,14 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-network-settings",
-      "version": "0.3.3",
-      "category": "agent"
-    },
-    {
       "name": "gongwen-skill",
       "version": "2.15.0",
       "category": "agent"
     },
     {
-      "name": "dsh-strata",
-      "version": "0.12.1",
-      "category": "connect"
+      "name": "dsh-network-settings",
+      "version": "0.3.3",
+      "category": "agent"
     },
     {
       "name": "dsh-fish-3",
@@ -15066,8 +15066,13 @@
     },
     {
       "name": "dsh-fish-memory",
-      "version": "1.5.1",
+      "version": "1.5.2",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-prompt",
+      "version": "0.4.41",
+      "category": "eco"
     },
     {
       "name": "dsh-session-manager",
@@ -15075,14 +15080,14 @@
       "category": "other"
     },
     {
+      "name": "dsh-strata",
+      "version": "0.12.1",
+      "category": "connect"
+    },
+    {
       "name": "@daweifu/capability-menu",
       "version": "0.1.8",
       "category": "agent"
-    },
-    {
-      "name": "dsh-prompt",
-      "version": "0.4.40",
-      "category": "eco"
     },
     {
       "name": "local-shell-mcp",
@@ -15092,6 +15097,11 @@
     {
       "name": "dsh-smooth-stream",
       "version": "0.7.0",
+      "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-notify-me",
+      "version": "1.17.0",
       "category": "enhance-ui"
     },
     {
@@ -15111,7 +15121,7 @@
     },
     {
       "name": "dsh-better-display",
-      "version": "0.3.9",
+      "version": "0.3.10",
       "category": "enhance-ui"
     },
     {
@@ -15123,11 +15133,6 @@
       "name": "dsh-mobile-remote",
       "version": "0.1.0",
       "category": "connect"
-    },
-    {
-      "name": "dsh-notify-me",
-      "version": "1.17.0",
-      "category": "enhance-ui"
     },
     {
       "name": "dsh-stock-watch",
@@ -15151,7 +15156,7 @@
     },
     {
       "name": "dsh-taskboard",
-      "version": "0.9.9",
+      "version": "0.9.10",
       "category": "agent"
     },
     {
@@ -15180,19 +15185,24 @@
       "category": "connect"
     },
     {
-      "name": "dsh-mcp-connector",
-      "version": "0.2.93",
-      "category": "connect"
-    },
-    {
       "name": "dsh-blender",
       "version": "0.2.4",
       "category": "agent"
     },
     {
+      "name": "dsh-mcp-connector",
+      "version": "0.2.93",
+      "category": "connect"
+    },
+    {
       "name": "dsh-model-fusion",
-      "version": "0.2.9",
+      "version": "0.2.10",
       "category": "enhance-models"
+    },
+    {
+      "name": "dsh-pet-live2d",
+      "version": "3.4.1",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-agy",
@@ -15205,9 +15215,9 @@
       "category": "other"
     },
     {
-      "name": "dsh-pet-live2d",
-      "version": "3.4.1",
-      "category": "enhance-ui"
+      "name": "dsh-deepread",
+      "version": "1.0.1",
+      "category": "enhance-memory"
     },
     {
       "name": "meow-smooth",
@@ -15215,14 +15225,9 @@
       "category": "connect"
     },
     {
-      "name": "dsh-deepread",
-      "version": "1.0.1",
-      "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-better-reasoning-effort",
-      "version": "0.5.4",
-      "category": "connect"
+      "name": "dsh-plugin-save-token",
+      "version": "2.4.1",
+      "category": "agent"
     },
     {
       "name": "dsh-web-startup-auth",
@@ -15230,13 +15235,13 @@
       "category": "connect"
     },
     {
-      "name": "dsh-auto-collapse",
-      "version": "0.2.1",
-      "category": "agent"
+      "name": "dsh-better-reasoning-effort",
+      "version": "0.5.4",
+      "category": "connect"
     },
     {
-      "name": "dsh-plugin-save-token",
-      "version": "2.4.1",
+      "name": "dsh-auto-collapse",
+      "version": "0.2.1",
       "category": "agent"
     },
     {
@@ -15265,24 +15270,29 @@
       "category": "enhance-memory"
     },
     {
-      "name": "deepseek-harness-skin",
-      "version": "0.1.2",
-      "category": "enhance-ui"
-    },
-    {
       "name": "dsh-token-pet",
       "version": "0.4.2",
       "category": "enhance-ui"
     },
     {
-      "name": "search-boost",
-      "version": "0.2.4",
+      "name": "dsh-web-search-free",
+      "version": "1.9.1",
       "category": "connect"
     },
     {
-      "name": "dsh-bottom-info-bar",
-      "version": "1.21.10",
-      "category": "eco"
+      "name": "deepseek-harness-skin",
+      "version": "0.1.2",
+      "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-drawai",
+      "version": "0.3.4",
+      "category": "enhance-tools"
+    },
+    {
+      "name": "search-boost",
+      "version": "0.2.4",
+      "category": "connect"
     },
     {
       "name": "dsh-pet-remielle",
@@ -15295,19 +15305,19 @@
       "category": "agent"
     },
     {
-      "name": "dsh-web-search-free",
-      "version": "1.9.1",
-      "category": "connect"
-    },
-    {
       "name": "@dsh-external/dsh-client-ui-skin-denia",
       "version": "1.0.0",
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-drawai",
-      "version": "0.3.4",
-      "category": "enhance-tools"
+      "name": "dsh-bottom-info-bar",
+      "version": "1.21.10",
+      "category": "eco"
+    },
+    {
+      "name": "@angelky7/dsh-browser-control",
+      "version": "1.4.0",
+      "category": "connect"
     },
     {
       "name": "dsh-thinking-effort",
@@ -15318,11 +15328,6 @@
       "name": "dsh-timeline",
       "version": "0.1.5",
       "category": "agent"
-    },
-    {
-      "name": "@angelky7/dsh-browser-control",
-      "version": "1.2.0",
-      "category": "connect"
     },
     {
       "name": "dsh-message-edit",
@@ -15360,6 +15365,11 @@
       "category": "other"
     },
     {
+      "name": "dsh-recall-plugin",
+      "version": "2.6.3",
+      "category": "agent"
+    },
+    {
       "name": "@huanlin/dsh-plugin-mineru",
       "version": "0.4.1",
       "category": "media"
@@ -15368,11 +15378,6 @@
       "name": "dsh-purge-5",
       "version": "1.1.73",
       "category": "dev"
-    },
-    {
-      "name": "dsh-recall-plugin",
-      "version": "2.6.2",
-      "category": "agent"
     },
     {
       "name": "dsh-splash-animation",
@@ -15386,7 +15391,7 @@
     },
     {
       "name": "dsh-feiyu-mood",
-      "version": "0.8.5",
+      "version": "0.8.7",
       "category": "other"
     },
     {
@@ -15398,11 +15403,6 @@
       "name": "meow-cachebilling",
       "version": "0.8.0",
       "category": "enhance-memory"
-    },
-    {
-      "name": "dsh-knit",
-      "version": "0.25.0",
-      "category": "enhance-ui"
     },
     {
       "name": "dsh-krouter",
@@ -15430,11 +15430,6 @@
       "category": "other"
     },
     {
-      "name": "dsh-sticky-note",
-      "version": "0.6.0",
-      "category": "enhance-tools"
-    },
-    {
       "name": "dsh-theme",
       "version": "1.0.1",
       "category": "enhance-ui"
@@ -15450,14 +15445,29 @@
       "category": "dev"
     },
     {
+      "name": "dsh-knit",
+      "version": "0.25.0",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-session-workbench",
       "version": "1.0.3",
       "category": "enhance-memory"
     },
     {
+      "name": "dsh-sticky-note",
+      "version": "0.6.0",
+      "category": "enhance-tools"
+    },
+    {
       "name": "dsh-bloom-theme",
-      "version": "0.20.1",
+      "version": "0.22.0",
       "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-lark-link",
+      "version": "0.6.2",
+      "category": "connect"
     },
     {
       "name": "dsh-models-config-plugin",
@@ -15468,11 +15478,6 @@
       "name": "@jiyr0119/dsh-workspace-explorer",
       "version": "0.10.0",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-lark-link",
-      "version": "0.6.2",
-      "category": "connect"
     },
     {
       "name": "@dsh-external/dsh-ui-whale",
@@ -15531,7 +15536,7 @@
     },
     {
       "name": "dsh-video-skin",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "category": "enhance-ui"
     },
     {
@@ -15543,6 +15548,11 @@
       "name": "dsh-web-tools",
       "version": "0.3.8",
       "category": "enhance-tools"
+    },
+    {
+      "name": "dsh-ai4scholar",
+      "version": "0.3.8",
+      "category": "enhance-memory"
     },
     {
       "name": "dsh-skillhub",
@@ -15575,9 +15585,9 @@
       "category": "dev"
     },
     {
-      "name": "dsh-ai4scholar",
-      "version": "0.3.8",
-      "category": "enhance-memory"
+      "name": "dsh-origin-plugin",
+      "version": "2.7.3",
+      "category": "media"
     },
     {
       "name": "dsh-whale-galgame",
@@ -15588,6 +15598,11 @@
       "name": "@dsh-eac/skin-loader-pack",
       "version": "1.2.0",
       "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-chat-manager",
+      "version": "0.2.0",
+      "category": "connect"
     },
     {
       "name": "dsh-qq-plugin",
@@ -15603,11 +15618,6 @@
       "name": "@dsh-external/dsh-minigames",
       "version": "0.10.9",
       "category": "data"
-    },
-    {
-      "name": "dsh-chat-manager",
-      "version": "0.2.0",
-      "category": "connect"
     },
     {
       "name": "dsh-effort-slider",
@@ -15665,11 +15675,6 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-origin-plugin",
-      "version": "2.7.3",
-      "category": "media"
-    },
-    {
       "name": "dsh-phone",
       "version": "0.1.0",
       "category": "enhance-ui"
@@ -15681,13 +15686,18 @@
     },
     {
       "name": "@mofeng2223/dsh-claude-provider",
-      "version": "0.6.4",
+      "version": "0.6.5",
       "category": "enhance-models"
     },
     {
       "name": "dsh-chat-wallpaper",
       "version": "0.1.0",
       "category": "enhance-ui"
+    },
+    {
+      "name": "dsh-prompt-enhance",
+      "version": "0.3.4",
+      "category": "connect"
     },
     {
       "name": "dsh-theme-firefly",
@@ -15706,7 +15716,7 @@
     },
     {
       "name": "better-dsh-session-deletetool",
-      "version": "0.6.3",
+      "version": "0.6.4",
       "category": "other"
     },
     {
@@ -15723,11 +15733,6 @@
       "name": "dsh-plugin-marketplace-3",
       "version": "0.3.0",
       "category": "dev"
-    },
-    {
-      "name": "dsh-prompt-enhance",
-      "version": "0.3.2",
-      "category": "connect"
     },
     {
       "name": "dsh-session-delete",
@@ -15751,7 +15756,7 @@
     },
     {
       "name": "minecraft-dev",
-      "version": "0.11.0",
+      "version": "0.12.12",
       "category": "agent"
     },
     {
@@ -15768,6 +15773,11 @@
       "name": "@hr98w/dsh-memory",
       "version": "0.1.5",
       "category": "enhance-memory"
+    },
+    {
+      "name": "dsh-mcp-studio",
+      "version": "1.0.6",
+      "category": "connect"
     },
     {
       "name": "dsh-toolkit",
@@ -15801,13 +15811,8 @@
     },
     {
       "name": "dsh-m",
-      "version": "0.12.0",
+      "version": "0.12.3",
       "category": "enhance-tools"
-    },
-    {
-      "name": "dsh-mcp-studio",
-      "version": "1.0.6",
-      "category": "connect"
     },
     {
       "name": "dsh-opencode-zen",
@@ -15851,7 +15856,7 @@
     },
     {
       "name": "dsh-plugin",
-      "version": "2.2.7",
+      "version": "2.3.3",
       "category": "other"
     },
     {
@@ -15875,6 +15880,11 @@
       "category": "enhance-tools"
     },
     {
+      "name": "@yolk_vat-y/dsh-project-memory",
+      "version": "0.6.9",
+      "category": "enhance-memory"
+    },
+    {
       "name": "dsh-paper-reader",
       "version": "0.4.2",
       "category": "work"
@@ -15882,11 +15892,6 @@
     {
       "name": "@yejiming/dsh-museai-tavern",
       "version": "0.0.2",
-      "category": "enhance-memory"
-    },
-    {
-      "name": "@yolk_vat-y/dsh-project-memory",
-      "version": "0.6.9",
       "category": "enhance-memory"
     },
     {
@@ -15925,6 +15930,11 @@
       "category": "dev"
     },
     {
+      "name": "dsh-file-upload",
+      "version": "2.1.0",
+      "category": "connect"
+    },
+    {
       "name": "dsh-ponytail",
       "version": "1.0.0",
       "category": "other"
@@ -15933,6 +15943,11 @@
       "name": "dsh-proxy",
       "version": "0.4.0",
       "category": "other"
+    },
+    {
+      "name": "dsh-reference-anything",
+      "version": "0.5.2",
+      "category": "connect"
     },
     {
       "name": "dsh-usage-statistics-panel",
@@ -15950,11 +15965,6 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-file-upload",
-      "version": "2.1.0",
-      "category": "connect"
-    },
-    {
       "name": "dsh-memgas",
       "version": "0.2.1",
       "category": "enhance-memory"
@@ -15963,11 +15973,6 @@
       "name": "dsh-novel-forge",
       "version": "1.4.2",
       "category": "agent"
-    },
-    {
-      "name": "dsh-reference-anything",
-      "version": "0.5.2",
-      "category": "connect"
     },
     {
       "name": "@dsh-external/dsh-stickers",
@@ -15988,6 +15993,11 @@
       "name": "dsh-computer-use-codex-style",
       "version": "0.1.0",
       "category": "enhance-models"
+    },
+    {
+      "name": "dsh-super-code",
+      "version": "0.3.10",
+      "category": "dev"
     },
     {
       "name": "dsh-conversation-navigator",
@@ -16023,11 +16033,6 @@
       "name": "dsh-streamfold",
       "version": "0.7.12",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-super-code",
-      "version": "0.3.9",
-      "category": "dev"
     },
     {
       "name": "dsh-ui-appearance",
@@ -16071,7 +16076,7 @@
     },
     {
       "name": "dsh-plugin-mesh",
-      "version": "0.5.8",
+      "version": "0.5.10",
       "category": "other"
     },
     {
@@ -16126,7 +16131,7 @@
     },
     {
       "name": "@goodandready/dsh-subscriptions",
-      "version": "0.7.65",
+      "version": "0.7.67",
       "category": "enhance-models"
     },
     {
@@ -16311,7 +16316,7 @@
     },
     {
       "name": "dsh-hdc-bridge",
-      "version": "0.10.2",
+      "version": "0.10.3",
       "category": "connect"
     },
     {
@@ -16321,7 +16326,12 @@
     },
     {
       "name": "dsh-see-now",
-      "version": "0.0.6",
+      "version": "0.0.9",
+      "category": "media"
+    },
+    {
+      "name": "dsh-tool-antigravity",
+      "version": "0.5.2",
       "category": "media"
     },
     {
@@ -16378,11 +16388,6 @@
       "name": "dsh-think-bounce-pet",
       "version": "0.1.0",
       "category": "enhance-ui"
-    },
-    {
-      "name": "dsh-tool-antigravity",
-      "version": "0.5.2",
-      "category": "media"
     },
     {
       "name": "dsh-ui-ux-pro-max",
@@ -16656,7 +16661,7 @@
     },
     {
       "name": "dsh-sgme",
-      "version": "0.6.3",
+      "version": "0.6.4",
       "category": "enhance-memory"
     },
     {
@@ -16736,7 +16741,7 @@
     },
     {
       "name": "dsh-watch-together",
-      "version": "0.2.6",
+      "version": "0.2.11",
       "category": "media"
     },
     {
@@ -16755,6 +16760,11 @@
       "category": "enhance-ui"
     },
     {
+      "name": "@cocofhu/skillhub",
+      "version": "0.2.16",
+      "category": "eco"
+    },
+    {
       "name": "@dsh-external/dsh-plannotator",
       "version": "0.1.3",
       "category": "enhance-memory"
@@ -16766,7 +16776,7 @@
     },
     {
       "name": "@goodandready/dsh-image-gen",
-      "version": "0.12.19",
+      "version": "0.12.23",
       "category": "media"
     },
     {
@@ -16776,7 +16786,7 @@
     },
     {
       "name": "@ryubyte/dsh-a2a",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "category": "dev"
     },
     {
@@ -16788,6 +16798,11 @@
       "name": "@y9931666/dsh-plugin-roundtable",
       "version": "1.0.0-rc.3",
       "category": "other"
+    },
+    {
+      "name": "@yh4922/dsh-workspace",
+      "version": "0.12.4",
+      "category": "dev"
     },
     {
       "name": "better-model-provider",
@@ -16903,11 +16918,6 @@
       "name": "reasoning-slider",
       "version": "0.0.7",
       "category": "enhance-ui"
-    },
-    {
-      "name": "@cocofhu/skillhub",
-      "version": "0.2.16",
-      "category": "eco"
     },
     {
       "name": "@dsh-external/dsh-plugin-local-ai-tts",
@@ -17076,7 +17086,7 @@
     },
     {
       "name": "@crosery/dsh-viewer",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "category": "work"
     },
     {
@@ -17191,7 +17201,7 @@
     },
     {
       "name": "dsh-obsidian-mem",
-      "version": "1.0.7",
+      "version": "2.0.2",
       "category": "work"
     },
     {
@@ -17236,7 +17246,7 @@
     },
     {
       "name": "dsh-rofm",
-      "version": "1.3.0",
+      "version": "1.4.2",
       "category": "enhance-memory"
     },
     {
@@ -17246,7 +17256,7 @@
     },
     {
       "name": "dsh-taskfold",
-      "version": "0.40.0",
+      "version": "0.40.1",
       "category": "enhance-memory"
     },
     {
@@ -17256,7 +17266,7 @@
     },
     {
       "name": "dsh-voice",
-      "version": "0.5.4",
+      "version": "0.5.5",
       "category": "media"
     },
     {
@@ -17375,6 +17385,11 @@
       "category": "other"
     },
     {
+      "name": "dsh-game-daily",
+      "version": "0.3.1",
+      "category": "agent"
+    },
+    {
       "name": "dsh-ikun-pet",
       "version": "2.2.0",
       "category": "enhance-ui"
@@ -17411,12 +17426,12 @@
     },
     {
       "name": "dsh-plugin-weixin",
-      "version": "1.3.1",
+      "version": "1.4.5",
       "category": "connect"
     },
     {
       "name": "dsh-qol",
-      "version": "1.0.12",
+      "version": "1.0.13",
       "category": "enhance-ui"
     },
     {
@@ -17491,7 +17506,7 @@
     },
     {
       "name": "task-passport",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "category": "other"
     },
     {
@@ -17531,7 +17546,7 @@
     },
     {
       "name": "@feng0531/dsh-code-review",
-      "version": "0.87.1",
+      "version": "0.87.6",
       "category": "dev"
     },
     {
@@ -17651,7 +17666,7 @@
     },
     {
       "name": "dsh-plugin-control-your-schedule",
-      "version": "0.5.2",
+      "version": "0.6.0",
       "category": "work"
     },
     {
@@ -17831,7 +17846,7 @@
     },
     {
       "name": "dsh-connect-sensenova-token-plan",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "category": "connect"
     },
     {
@@ -17946,7 +17961,7 @@
     },
     {
       "name": "dsh-notch",
-      "version": "0.3.6",
+      "version": "0.3.7",
       "category": "other"
     },
     {
@@ -18026,7 +18041,7 @@
     },
     {
       "name": "dsh-server-deck",
-      "version": "0.4.1",
+      "version": "0.5.0",
       "category": "other"
     },
     {
@@ -18371,7 +18386,7 @@
     },
     {
       "name": "dsh-laya",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "category": "other"
     },
     {
@@ -18511,7 +18526,7 @@
     },
     {
       "name": "dsh-sql",
-      "version": "0.5.9",
+      "version": "0.5.10",
       "category": "enhance-memory"
     },
     {
@@ -18631,7 +18646,7 @@
     },
     {
       "name": "@dsh-use/wallpaper-engine",
-      "version": "0.11.0",
+      "version": "0.12.0",
       "category": "enhance-ui"
     },
     {
@@ -19051,7 +19066,7 @@
     },
     {
       "name": "dsh-rss",
-      "version": "0.9.8",
+      "version": "0.9.9",
       "category": "data"
     },
     {
@@ -19111,7 +19126,7 @@
     },
     {
       "name": "dsh-ui-beautify-5",
-      "version": "0.5.2",
+      "version": "0.5.3",
       "category": "enhance-ui"
     },
     {
@@ -19216,7 +19231,7 @@
     },
     {
       "name": "pstack-dsh",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "category": "other"
     },
     {
@@ -19271,7 +19286,7 @@
     },
     {
       "name": "@huai_xin/dsh-workbuddy",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "category": "other"
     },
     {
@@ -19311,7 +19326,7 @@
     },
     {
       "name": "@liuyu-f/dsh-plugin-session-cascade-delete",
-      "version": "1.0.5",
+      "version": "1.0.6",
       "category": "agent"
     },
     {
@@ -19341,7 +19356,7 @@
     },
     {
       "name": "@xrn1997/dsh-session-delete",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "category": "enhance-tools"
     },
     {
@@ -19476,7 +19491,7 @@
     },
     {
       "name": "dsh-call-session",
-      "version": "0.1.10",
+      "version": "0.1.11",
       "category": "agent"
     },
     {
@@ -19601,7 +19616,7 @@
     },
     {
       "name": "dsh-feed-the-seek",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "category": "data"
     },
     {
@@ -19636,7 +19651,7 @@
     },
     {
       "name": "dsh-grok-kit",
-      "version": "0.2.9",
+      "version": "0.2.10",
       "category": "other"
     },
     {
@@ -19676,7 +19691,7 @@
     },
     {
       "name": "dsh-kimi-subscription",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "category": "enhance-tools"
     },
     {
@@ -19736,7 +19751,7 @@
     },
     {
       "name": "dsh-media-gen",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "category": "other"
     },
     {
@@ -20306,7 +20321,7 @@
     },
     {
       "name": "@kirkchinese/dsh-capability-catalog",
-      "version": "0.1.4",
+      "version": "0.1.6",
       "category": "enhance-memory"
     },
     {
@@ -20371,7 +20386,7 @@
     },
     {
       "name": "@xiaotuchu/dsh-theme-eye-care",
-      "version": "2.1.0",
+      "version": "2.2.1",
       "category": "enhance-ui"
     },
     {
@@ -20416,7 +20431,7 @@
     },
     {
       "name": "deepseek-computer-use",
-      "version": "0.2.7",
+      "version": "0.2.8",
       "category": "dev"
     },
     {
@@ -20741,7 +20756,7 @@
     },
     {
       "name": "dsh-lite-memory",
-      "version": "0.18.77",
+      "version": "0.18.80",
       "category": "enhance-memory"
     },
     {
@@ -20801,7 +20816,7 @@
     },
     {
       "name": "dsh-model-think-level",
-      "version": "2.3.3",
+      "version": "2.3.5",
       "category": "media"
     },
     {
@@ -21236,7 +21251,7 @@
     },
     {
       "name": "dsh-windows-mcp",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "category": "agent"
     },
     {
@@ -21451,7 +21466,7 @@
     },
     {
       "name": "@iasiv5/dsh-skins",
-      "version": "1.5.25",
+      "version": "1.5.27",
       "category": "enhance-ui"
     },
     {
@@ -21491,7 +21506,7 @@
     },
     {
       "name": "@lovedolove/veyra",
-      "version": "0.1.64",
+      "version": "0.1.68",
       "category": "enhance-memory"
     },
     {
@@ -21536,12 +21551,12 @@
     },
     {
       "name": "@sputnikzaychik/dsh-qq-bot",
-      "version": "0.12.8",
+      "version": "0.13.0",
       "category": "connect"
     },
     {
       "name": "@stardustlc/dsh-docker",
-      "version": "0.5.7",
+      "version": "0.5.8",
       "category": "dev"
     },
     {
@@ -21561,7 +21576,7 @@
     },
     {
       "name": "@xia-sc/dsh-git",
-      "version": "0.7.4",
+      "version": "0.7.5",
       "category": "connect"
     },
     {
@@ -21596,7 +21611,7 @@
     },
     {
       "name": "baifanyu-ofm",
-      "version": "0.2.0",
+      "version": "0.3.1",
       "category": "enhance-models"
     },
     {
@@ -22101,7 +22116,7 @@
     },
     {
       "name": "dsh-git-credentials",
-      "version": "0.6.1",
+      "version": "0.7.0",
       "category": "enhance-memory"
     },
     {
@@ -22256,7 +22271,7 @@
     },
     {
       "name": "dsh-mcp-tools",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "category": "enhance-memory"
     },
     {
@@ -22316,7 +22331,7 @@
     },
     {
       "name": "dsh-model",
-      "version": "0.27.1",
+      "version": "0.28.2",
       "category": "enhance-models"
     },
     {
@@ -22841,7 +22856,7 @@
     },
     {
       "name": "dsh-slack",
-      "version": "0.4.7",
+      "version": "0.4.8",
       "category": "connect"
     },
     {
@@ -22876,7 +22891,7 @@
     },
     {
       "name": "dsh-subusage",
-      "version": "0.23.0",
+      "version": "0.24.0",
       "category": "connect"
     },
     {
@@ -22921,7 +22936,7 @@
     },
     {
       "name": "dsh-team-rooms",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "category": "enhance-memory"
     },
     {
@@ -23176,7 +23191,7 @@
     },
     {
       "name": "dsh-workspace-api-key",
-      "version": "0.2.14",
+      "version": "0.2.15",
       "category": "enhance-tools"
     },
     {
@@ -23700,6 +23715,11 @@
       "category": "enhance-tools"
     },
     {
+      "name": "@lijian-ui/dsh-file-manager",
+      "version": "0.2.4",
+      "category": "data"
+    },
+    {
       "name": "@ljwei-stak/dsh-boot-animation",
       "version": "0.4.0",
       "category": "enhance-ui"
@@ -23741,7 +23761,7 @@
     },
     {
       "name": "@lovedolove/dsh-codebase-memory-mcp",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "category": "enhance-memory"
     },
     {
@@ -23891,7 +23911,7 @@
     },
     {
       "name": "@yiyunet/dsh-dingtalk-connector",
-      "version": "1.0.3",
+      "version": "1.1.0",
       "category": "other"
     },
     {
@@ -23956,7 +23976,7 @@
     },
     {
       "name": "balance-dsh",
-      "version": "2.1.9",
+      "version": "2.2.1",
       "category": "connect"
     },
     {
@@ -24291,7 +24311,7 @@
     },
     {
       "name": "dsh-bundle-antigravity-host",
-      "version": "0.1.31",
+      "version": "0.1.35",
       "category": "agent"
     },
     {
@@ -24331,7 +24351,7 @@
     },
     {
       "name": "dsh-cet-vocab",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "category": "work"
     },
     {
@@ -24816,7 +24836,7 @@
     },
     {
       "name": "dsh-dragndrop-attachments",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "category": "work"
     },
     {
@@ -24941,7 +24961,7 @@
     },
     {
       "name": "dsh-fish-tts",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "category": "connect"
     },
     {
@@ -25011,7 +25031,7 @@
     },
     {
       "name": "dsh-git-push",
-      "version": "2.16.1",
+      "version": "2.18.0",
       "category": "connect"
     },
     {
@@ -25096,7 +25116,7 @@
     },
     {
       "name": "dsh-homepage",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "other"
     },
     {
@@ -25261,7 +25281,7 @@
     },
     {
       "name": "dsh-llm-local-token",
-      "version": "1.7.0",
+      "version": "1.8.0",
       "category": "enhance-tools"
     },
     {
@@ -25551,12 +25571,12 @@
     },
     {
       "name": "dsh-origin-bridge-2",
-      "version": "0.4.9",
+      "version": "0.4.10",
       "category": "media"
     },
     {
       "name": "dsh-page-refresh",
-      "version": "1.2.2",
+      "version": "1.2.3",
       "category": "data"
     },
     {
@@ -26020,6 +26040,11 @@
       "category": "work"
     },
     {
+      "name": "dsh-rayrun-computer",
+      "version": "1.0.0",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-rea-powerpack",
       "version": "0.1.4",
       "category": "connect"
@@ -26216,7 +26241,7 @@
     },
     {
       "name": "dsh-session-accordion",
-      "version": "2.5.6",
+      "version": "2.5.8",
       "category": "enhance-memory"
     },
     {
@@ -26321,7 +26346,7 @@
     },
     {
       "name": "dsh-sidecard-ask",
-      "version": "2.1.8",
+      "version": "2.1.10",
       "category": "agent"
     },
     {
@@ -27411,7 +27436,7 @@
     },
     {
       "name": "@cold777/dsh-takeover",
-      "version": "0.4.3",
+      "version": "0.1.0",
       "category": "agent"
     },
     {
@@ -27976,7 +28001,7 @@
     },
     {
       "name": "@goodandready/dsh-opencode-provider",
-      "version": "0.5.19",
+      "version": "0.5.21",
       "category": "enhance-models"
     },
     {
@@ -28051,7 +28076,7 @@
     },
     {
       "name": "@idoall/dsh-notify",
-      "version": "0.4.11",
+      "version": "0.4.12",
       "category": "connect"
     },
     {
@@ -28085,6 +28110,11 @@
       "category": "enhance-memory"
     },
     {
+      "name": "@jaxzhou/dsh-file-explorer",
+      "version": "0.1.11",
+      "category": "dev"
+    },
+    {
       "name": "@jaxzhou/dsh-mathmatic-symbol",
       "version": "0.1.2",
       "category": "media"
@@ -28096,7 +28126,7 @@
     },
     {
       "name": "@jochenyang/dsh-rewind-plugin",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "category": "enhance-memory"
     },
     {
@@ -28390,6 +28420,11 @@
       "category": "enhance-models"
     },
     {
+      "name": "@lucagiftzek/dsh-artifacts",
+      "version": "2.2.0",
+      "category": "data"
+    },
+    {
       "name": "@lxchapu/dsh-session-purge",
       "version": "0.1.2",
       "category": "enhance-tools"
@@ -28625,6 +28660,11 @@
       "category": "dev"
     },
     {
+      "name": "@s1lencewill/dsh-markdown-reader",
+      "version": "0.4.2",
+      "category": "data"
+    },
+    {
       "name": "@samecorner/dsh-client-ui-token-usage",
       "version": "0.1.3",
       "category": "enhance-memory"
@@ -28665,6 +28705,11 @@
       "category": "other"
     },
     {
+      "name": "@starplume/dsh-chat-mode",
+      "version": "0.2.0-beta.2",
+      "category": "data"
+    },
+    {
       "name": "@starsinc1708/dsh-tool-council",
       "version": "0.1.5-rc.2",
       "category": "enhance-tools"
@@ -28686,7 +28731,7 @@
     },
     {
       "name": "@stofone/dsh-agent-roster",
-      "version": "0.7.0",
+      "version": "1.4.0",
       "category": "agent"
     },
     {
@@ -28816,7 +28861,7 @@
     },
     {
       "name": "@xiaotuchu/dsh-file-tree",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "enhance-tools"
     },
     {
@@ -28901,12 +28946,12 @@
     },
     {
       "name": "@yiyunet/dsh-kill-ai-slop",
-      "version": "0.7.17",
+      "version": "0.8.0",
       "category": "dev"
     },
     {
       "name": "@yiyunet/dsh-proxy-egress",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "category": "enhance-tools"
     },
     {
@@ -28931,7 +28976,7 @@
     },
     {
       "name": "@zdt3476/dsh-metrics",
-      "version": "1.0.3",
+      "version": "1.1.0",
       "category": "enhance-tools"
     },
     {
@@ -29401,7 +29446,7 @@
     },
     {
       "name": "dsh-ai-with-u",
-      "version": "0.5.2",
+      "version": "0.5.3",
       "category": "enhance-memory"
     },
     {
@@ -29615,11 +29660,6 @@
       "category": "enhance-tools"
     },
     {
-      "name": "dsh-artifacts-2",
-      "version": "2.2.0",
-      "category": "data"
-    },
-    {
       "name": "dsh-asc-cli",
       "version": "0.1.0",
       "category": "enhance-tools"
@@ -29696,7 +29736,7 @@
     },
     {
       "name": "dsh-auto-model-routing",
-      "version": "0.6.3",
+      "version": "0.6.5",
       "category": "enhance-models"
     },
     {
@@ -29861,7 +29901,7 @@
     },
     {
       "name": "dsh-bili-danmaku-lite",
-      "version": "0.4.7",
+      "version": "0.5.0",
       "category": "work"
     },
     {
@@ -30105,11 +30145,6 @@
       "category": "enhance-ui"
     },
     {
-      "name": "dsh-chat-mode-2",
-      "version": "0.2.0-beta.2",
-      "category": "data"
-    },
-    {
       "name": "dsh-chat-nav",
       "version": "0.1.0",
       "category": "enhance-ui"
@@ -30136,7 +30171,7 @@
     },
     {
       "name": "dsh-check-for-updates",
-      "version": "1.14.0",
+      "version": "1.15.1",
       "category": "enhance-ui"
     },
     {
@@ -30236,7 +30271,7 @@
     },
     {
       "name": "dsh-client-ui-notes",
-      "version": "0.1.14",
+      "version": "0.1.16",
       "category": "enhance-memory"
     },
     {
@@ -30721,7 +30756,7 @@
     },
     {
       "name": "dsh-decision-layer",
-      "version": "0.7.2",
+      "version": "0.7.3",
       "category": "agent"
     },
     {
@@ -31171,7 +31206,7 @@
     },
     {
       "name": "dsh-feiyu-wardrobe",
-      "version": "0.10.0",
+      "version": "1.0.0",
       "category": "enhance-models"
     },
     {
@@ -31246,12 +31281,12 @@
     },
     {
       "name": "dsh-fingerprint",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "category": "enhance-models"
     },
     {
       "name": "dsh-flakefinder",
-      "version": "0.4.8",
+      "version": "0.4.9",
       "category": "dev"
     },
     {
@@ -31266,7 +31301,7 @@
     },
     {
       "name": "dsh-fofatoto",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "category": "data"
     },
     {
@@ -31756,7 +31791,7 @@
     },
     {
       "name": "dsh-inner-browser-use",
-      "version": "0.47.11",
+      "version": "0.47.25",
       "category": "data"
     },
     {
@@ -32196,7 +32231,7 @@
     },
     {
       "name": "dsh-maa-cli",
-      "version": "1.0.9",
+      "version": "1.1.0",
       "category": "enhance-tools"
     },
     {
@@ -32206,7 +32241,7 @@
     },
     {
       "name": "dsh-magpie-connector",
-      "version": "0.5.1",
+      "version": "0.6.2",
       "category": "enhance-models"
     },
     {
@@ -32375,6 +32410,11 @@
       "category": "data"
     },
     {
+      "name": "dsh-mdvault",
+      "version": "1.2.4",
+      "category": "work"
+    },
+    {
       "name": "dsh-media-dock",
       "version": "0.1.1",
       "category": "work"
@@ -32498,6 +32538,11 @@
       "name": "dsh-mermaid-renderer",
       "version": "1.3.0",
       "category": "data"
+    },
+    {
+      "name": "dsh-mermaid-smooth",
+      "version": "0.2.3",
+      "category": "enhance-ui"
     },
     {
       "name": "dsh-message-edit-2",
@@ -32626,7 +32671,7 @@
     },
     {
       "name": "dsh-mobile-use",
-      "version": "1.4.30",
+      "version": "1.4.33",
       "category": "enhance-ui"
     },
     {
@@ -32811,7 +32856,7 @@
     },
     {
       "name": "dsh-multi-session",
-      "version": "0.3.4",
+      "version": "0.5.3",
       "category": "other"
     },
     {
@@ -32991,7 +33036,7 @@
     },
     {
       "name": "dsh-od-quota",
-      "version": "0.1.2",
+      "version": "0.1.5",
       "category": "other"
     },
     {
@@ -33176,7 +33221,7 @@
     },
     {
       "name": "dsh-pause-resume",
-      "version": "0.9.2",
+      "version": "0.9.3",
       "category": "enhance-ui"
     },
     {
@@ -34016,7 +34061,7 @@
     },
     {
       "name": "dsh-plugin-toolkit",
-      "version": "0.13.13",
+      "version": "0.14.0",
       "category": "enhance-tools"
     },
     {
@@ -34051,7 +34096,7 @@
     },
     {
       "name": "dsh-plugin-upgrader",
-      "version": "1.6.3",
+      "version": "1.7.2",
       "category": "other"
     },
     {
@@ -34771,7 +34816,7 @@
     },
     {
       "name": "dsh-ris-ide",
-      "version": "1.7.1",
+      "version": "1.7.2",
       "category": "enhance-tools"
     },
     {
@@ -34781,7 +34826,7 @@
     },
     {
       "name": "dsh-ronge-adaptive-skill-archive",
-      "version": "5.6.3",
+      "version": "5.8.1",
       "category": "enhance-memory"
     },
     {
@@ -34841,7 +34886,7 @@
     },
     {
       "name": "dsh-rustvy",
-      "version": "1.3.1",
+      "version": "1.4.0",
       "category": "enhance-ui"
     },
     {
@@ -35111,7 +35156,7 @@
     },
     {
       "name": "dsh-session-fork-tree",
-      "version": "0.9.0",
+      "version": "0.9.26",
       "category": "other"
     },
     {
@@ -35266,7 +35311,7 @@
     },
     {
       "name": "dsh-session-title-stamp",
-      "version": "0.5.0",
+      "version": "0.7.1",
       "category": "other"
     },
     {
@@ -35415,8 +35460,13 @@
       "category": "data"
     },
     {
+      "name": "dsh-sidebar-panel-collapse",
+      "version": "0.1.0",
+      "category": "enhance-tools"
+    },
+    {
       "name": "dsh-sidebar-row-menu",
-      "version": "1.3.5",
+      "version": "1.4.2",
       "category": "enhance-memory"
     },
     {
@@ -35631,7 +35681,7 @@
     },
     {
       "name": "dsh-soul",
-      "version": "0.9.0",
+      "version": "0.10.0",
       "category": "enhance-models"
     },
     {
@@ -35791,7 +35841,7 @@
     },
     {
       "name": "dsh-step-governor",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "category": "other"
     },
     {
@@ -35846,7 +35896,7 @@
     },
     {
       "name": "dsh-subagent-models",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "category": "agent"
     },
     {
@@ -36191,7 +36241,7 @@
     },
     {
       "name": "dsh-theme-whalegirl",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "category": "enhance-ui"
     },
     {
@@ -36216,7 +36266,7 @@
     },
     {
       "name": "dsh-thinking-panel",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "category": "enhance-ui"
     },
     {
@@ -36476,7 +36526,7 @@
     },
     {
       "name": "dsh-toomuch-plugins",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "category": "other"
     },
     {
@@ -36591,7 +36641,7 @@
     },
     {
       "name": "dsh-ui-liteglass",
-      "version": "0.1.0",
+      "version": "0.2.4",
       "category": "enhance-ui"
     },
     {
@@ -36686,7 +36736,7 @@
     },
     {
       "name": "dsh-url-router",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "category": "data"
     },
     {
@@ -36910,6 +36960,11 @@
       "category": "enhance-ui"
     },
     {
+      "name": "dsh-wallpaper-skin-3",
+      "version": "0.7.0",
+      "category": "enhance-ui"
+    },
+    {
       "name": "dsh-wallpaper-theme-2",
       "version": "1.0.0",
       "category": "enhance-ui"
@@ -36962,6 +37017,11 @@
     {
       "name": "dsh-web-auto-open",
       "version": "0.1.3",
+      "category": "data"
+    },
+    {
+      "name": "dsh-web-mermaid-2",
+      "version": "1.0.0",
       "category": "data"
     },
     {
@@ -37246,7 +37306,7 @@
     },
     {
       "name": "dsh-workplan",
-      "version": "1.11.1",
+      "version": "1.12.0",
       "category": "other"
     },
     {
@@ -37845,6 +37905,11 @@
       "category": "agent"
     },
     {
+      "name": "memory-lattice",
+      "version": "0.2.10",
+      "category": "enhance-memory"
+    },
+    {
       "name": "meow-file-view",
       "version": "0.1.0",
       "category": "dev"
@@ -37856,7 +37921,7 @@
     },
     {
       "name": "minecraft-dev-starter",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "category": "eco"
     },
     {
@@ -38100,13 +38165,18 @@
       "category": "connect"
     },
     {
+      "name": "@7gzgn/dsh-tool-gate",
+      "version": "0.1.0",
+      "category": "agent"
+    },
+    {
       "name": "@99galaxy/dsh-plugin-market",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "category": "enhance-ui"
     },
     {
       "name": "@99galaxy/dsh-turn-notify",
-      "version": "1.0.2",
+      "version": "1.0.4",
       "category": "connect"
     },
     {
@@ -38171,7 +38241,7 @@
     },
     {
       "name": "@aichixiaojuzi/dsh-model-quick-switch",
-      "version": "0.1.3",
+      "version": "0.2.0",
       "category": "enhance-models"
     },
     {
@@ -38321,7 +38391,7 @@
     },
     {
       "name": "@brantshi1/dsh-hotkey-enhance",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "category": "enhance-models"
     },
     {
@@ -38396,7 +38466,7 @@
     },
     {
       "name": "@cliven/dsh-dafeiyu-notice",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "category": "other"
     },
     {
@@ -38436,7 +38506,7 @@
     },
     {
       "name": "@dafantong01/dsh-memory-palace",
-      "version": "0.2.12",
+      "version": "0.2.13",
       "category": "enhance-memory"
     },
     {
@@ -39051,7 +39121,7 @@
     },
     {
       "name": "@dsh-ft/dsh-fft-paper-trading",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "category": "other"
     },
     {
@@ -39241,7 +39311,7 @@
     },
     {
       "name": "@francescoli/dsh-quota",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "category": "connect"
     },
     {
@@ -39271,7 +39341,7 @@
     },
     {
       "name": "@gongfpp/dsh-novel-fish",
-      "version": "0.1.4",
+      "version": "0.1.6",
       "category": "enhance-tools"
     },
     {
@@ -39296,7 +39366,7 @@
     },
     {
       "name": "@goodandready/dsh-ollama-cloud-provider",
-      "version": "0.1.14",
+      "version": "0.1.15",
       "category": "enhance-models"
     },
     {
@@ -39536,7 +39606,7 @@
     },
     {
       "name": "@jojonadam/dsh-blender",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "category": "work"
     },
     {
@@ -39581,7 +39651,7 @@
     },
     {
       "name": "@kennielearngames/dsh-arcade",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "category": "data"
     },
     {
@@ -40010,6 +40080,11 @@
       "category": "work"
     },
     {
+      "name": "@mirai27/dsh-provider-card",
+      "version": "0.1.2",
+      "category": "enhance-models"
+    },
+    {
       "name": "@mishiqian/lan-im",
       "version": "0.5.0",
       "category": "connect"
@@ -40071,7 +40146,7 @@
     },
     {
       "name": "@moyumole/dsh-plugin-updates",
-      "version": "0.2.6",
+      "version": "0.3.3",
       "category": "data"
     },
     {
@@ -40336,7 +40411,7 @@
     },
     {
       "name": "@stardustlc/dsh-review",
-      "version": "0.4.8",
+      "version": "0.5.0",
       "category": "agent"
     },
     {
@@ -40500,6 +40575,11 @@
       "category": "connect"
     },
     {
+      "name": "@tzyc/dsh-model-visibility",
+      "version": "1.6.0",
+      "category": "enhance-memory"
+    },
+    {
       "name": "@uachar/dsh-ui-chime",
       "version": "0.1.3",
       "category": "connect"
@@ -40581,7 +40661,7 @@
     },
     {
       "name": "@whybebabo/dsh-better-workspace",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "category": "enhance-ui"
     },
     {
@@ -40911,7 +40991,7 @@
     },
     {
       "name": "@zumikua/dsh-junie-subagent",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "category": "agent"
     },
     {
@@ -41275,6 +41355,11 @@
       "category": "work"
     },
     {
+      "name": "dsh-academic-skills-2",
+      "version": "0.1.1",
+      "category": "dev"
+    },
+    {
       "name": "dsh-academy",
       "version": "0.1.0",
       "category": "enhance-memory"
@@ -41551,7 +41636,7 @@
     },
     {
       "name": "dsh-agent-instructions-editor",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "category": "enhance-tools"
     },
     {
@@ -41701,7 +41786,7 @@
     },
     {
       "name": "dsh-agents-visualization",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "other"
     },
     {
@@ -42191,7 +42276,7 @@
     },
     {
       "name": "dsh-app-updater",
-      "version": "1.3.7",
+      "version": "1.3.14",
       "category": "other"
     },
     {
@@ -42236,7 +42321,7 @@
     },
     {
       "name": "dsh-approval-consult",
-      "version": "1.0.0",
+      "version": "1.1.2",
       "category": "dev"
     },
     {
@@ -42631,7 +42716,7 @@
     },
     {
       "name": "dsh-audio-visualizer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "data"
     },
     {
@@ -42686,7 +42771,7 @@
     },
     {
       "name": "dsh-auto-approval-frame",
-      "version": "0.6.4",
+      "version": "0.6.8",
       "category": "ops"
     },
     {
@@ -43036,7 +43121,7 @@
     },
     {
       "name": "dsh-balance-whale-intl",
-      "version": "1.8.0",
+      "version": "1.8.1",
       "category": "data"
     },
     {
@@ -43316,7 +43401,7 @@
     },
     {
       "name": "dsh-better-left-sidebar",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "category": "enhance-ui"
     },
     {
@@ -43636,7 +43721,7 @@
     },
     {
       "name": "dsh-bmad-method",
-      "version": "0.1.1",
+      "version": "0.2.2",
       "category": "agent"
     },
     {
@@ -44226,7 +44311,7 @@
     },
     {
       "name": "dsh-capability-gateway",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "category": "connect"
     },
     {
@@ -44436,7 +44521,7 @@
     },
     {
       "name": "dsh-chat-background",
-      "version": "1.2.1",
+      "version": "1.0.0",
       "category": "enhance-ui"
     },
     {
@@ -44458,6 +44543,11 @@
       "name": "dsh-chat-diff-summary-legacy",
       "version": "0.1.2",
       "category": "dev"
+    },
+    {
+      "name": "dsh-chat-enhancer",
+      "version": "0.2.0",
+      "category": "data"
     },
     {
       "name": "dsh-chat-eraser",
@@ -45316,7 +45406,7 @@
     },
     {
       "name": "dsh-command-context",
-      "version": "0.4.4",
+      "version": "0.4.6",
       "category": "enhance-memory"
     },
     {
@@ -45421,7 +45511,7 @@
     },
     {
       "name": "dsh-composer-ease",
-      "version": "0.9.69",
+      "version": "0.9.70",
       "category": "data"
     },
     {
@@ -45491,7 +45581,7 @@
     },
     {
       "name": "dsh-composer-rewind",
-      "version": "2.1.1",
+      "version": "2.3.0",
       "category": "data"
     },
     {
@@ -45533,6 +45623,11 @@
       "name": "dsh-computer-use-26",
       "version": "0.1.0",
       "category": "enhance-tools"
+    },
+    {
+      "name": "dsh-computer-use-27",
+      "version": "0.1.0",
+      "category": "media"
     },
     {
       "name": "dsh-computer-use-next",
@@ -45623,6 +45718,11 @@
       "name": "dsh-connect-tabbit-2",
       "version": "0.4.0",
       "category": "other"
+    },
+    {
+      "name": "dsh-connect-teleagent",
+      "version": "0.11.0",
+      "category": "media"
     },
     {
       "name": "dsh-consumer-loan",
@@ -45766,7 +45866,7 @@
     },
     {
       "name": "dsh-conversation-find",
-      "version": "0.2.6",
+      "version": "0.2.9",
       "category": "data"
     },
     {
@@ -45966,7 +46066,7 @@
     },
     {
       "name": "dsh-cost-pill-cny",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "enhance-models"
     },
     {
@@ -46006,7 +46106,7 @@
     },
     {
       "name": "dsh-cot-anchor",
-      "version": "0.4.1",
+      "version": "0.4.2",
       "category": "enhance-memory"
     },
     {
@@ -46546,7 +46646,7 @@
     },
     {
       "name": "dsh-decision-engine",
-      "version": "1.1.0",
+      "version": "1.3.1",
       "category": "agent"
     },
     {
@@ -46631,7 +46731,7 @@
     },
     {
       "name": "dsh-deepseek-billing-period",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "category": "connect"
     },
     {
@@ -46861,7 +46961,7 @@
     },
     {
       "name": "dsh-derive-watcher",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "category": "enhance-memory"
     },
     {
@@ -47021,7 +47121,7 @@
     },
     {
       "name": "dsh-dev-plugins",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "category": "data"
     },
     {
@@ -47891,7 +47991,7 @@
     },
     {
       "name": "dsh-eval-pack",
-      "version": "0.1.0-alpha.12",
+      "version": "0.1.0",
       "category": "dev"
     },
     {
@@ -48283,6 +48383,11 @@
       "name": "dsh-fileview",
       "version": "1.1.0",
       "category": "data"
+    },
+    {
+      "name": "dsh-finalize",
+      "version": "0.3.0",
+      "category": "work"
     },
     {
       "name": "dsh-finance-dock",
@@ -48741,7 +48846,7 @@
     },
     {
       "name": "dsh-freight-audit",
-      "version": "0.1.0-alpha.14",
+      "version": "0.1.0",
       "category": "ops"
     },
     {
@@ -49091,7 +49196,7 @@
     },
     {
       "name": "dsh-ghg",
-      "version": "0.1.0-alpha.18",
+      "version": "0.1.0",
       "category": "other"
     },
     {
@@ -49157,6 +49262,11 @@
     {
       "name": "dsh-git-nexus",
       "version": "0.1.1",
+      "category": "dev"
+    },
+    {
+      "name": "dsh-git-session-vault",
+      "version": "0.2.0",
       "category": "dev"
     },
     {
@@ -49411,7 +49521,7 @@
     },
     {
       "name": "dsh-goodies",
-      "version": "0.1.11",
+      "version": "0.1.13",
       "category": "connect"
     },
     {
@@ -50041,7 +50151,7 @@
     },
     {
       "name": "dsh-history-keeper",
-      "version": "0.1.0-rc.24",
+      "version": "0.1.0-rc.31",
       "category": "dev"
     },
     {
@@ -50176,7 +50286,7 @@
     },
     {
       "name": "dsh-hs-candidate",
-      "version": "0.1.0-alpha.13",
+      "version": "0.1.0",
       "category": "other"
     },
     {
@@ -50556,7 +50666,7 @@
     },
     {
       "name": "dsh-inkpond",
-      "version": "0.3.2",
+      "version": "0.3.3",
       "category": "other"
     },
     {
@@ -50616,7 +50726,7 @@
     },
     {
       "name": "dsh-instruction-memory",
-      "version": "1.4.7",
+      "version": "1.4.8",
       "category": "enhance-memory"
     },
     {
@@ -50873,6 +50983,11 @@
       "name": "dsh-jev-loop",
       "version": "0.1.3",
       "category": "agent"
+    },
+    {
+      "name": "dsh-jingle-notch",
+      "version": "0.1.0",
+      "category": "enhance-tools"
     },
     {
       "name": "dsh-jinhsi-avatar",
@@ -51476,7 +51591,7 @@
     },
     {
       "name": "dsh-legal-intake",
-      "version": "0.1.0-alpha.11",
+      "version": "0.1.0",
       "category": "other"
     },
     {
@@ -51940,6 +52055,11 @@
       "category": "enhance-memory"
     },
     {
+      "name": "dsh-longpress-shot",
+      "version": "1.11.2",
+      "category": "media"
+    },
+    {
       "name": "dsh-longshot",
       "version": "0.1.1",
       "category": "other"
@@ -52061,7 +52181,7 @@
     },
     {
       "name": "dsh-magpie-quota",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "category": "enhance-models"
     },
     {
@@ -52201,7 +52321,7 @@
     },
     {
       "name": "dsh-material-library",
-      "version": "1.2.0",
+      "version": "1.4.4",
       "category": "other"
     },
     {
@@ -52241,7 +52361,7 @@
     },
     {
       "name": "dsh-mcd-mcp",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "connect"
     },
     {
@@ -52596,7 +52716,7 @@
     },
     {
       "name": "dsh-memory-tiers",
-      "version": "0.8.2",
+      "version": "1.2.2",
       "category": "enhance-memory"
     },
     {
@@ -52638,11 +52758,6 @@
       "name": "dsh-meow",
       "version": "0.2.0",
       "category": "connect"
-    },
-    {
-      "name": "dsh-mermaid-6",
-      "version": "0.1.0",
-      "category": "work"
     },
     {
       "name": "dsh-mermaid-7",
@@ -52736,7 +52851,7 @@
     },
     {
       "name": "dsh-mijia-sidebar",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "category": "enhance-tools"
     },
     {
@@ -52791,7 +52906,7 @@
     },
     {
       "name": "dsh-mini",
-      "version": "0.1.15",
+      "version": "0.1.16",
       "category": "media"
     },
     {
@@ -53180,11 +53295,6 @@
       "category": "enhance-models"
     },
     {
-      "name": "dsh-model-visibility-2",
-      "version": "1.6.0",
-      "category": "enhance-memory"
-    },
-    {
       "name": "dsh-models-filter",
       "version": "1.0.0",
       "category": "enhance-ui"
@@ -53406,7 +53516,7 @@
     },
     {
       "name": "dsh-my-phone",
-      "version": "1.8.38",
+      "version": "1.8.41",
       "category": "other"
     },
     {
@@ -53446,7 +53556,7 @@
     },
     {
       "name": "dsh-napcat-keeper",
-      "version": "2.8.2",
+      "version": "2.9.2",
       "category": "other"
     },
     {
@@ -53971,7 +54081,7 @@
     },
     {
       "name": "dsh-offload",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "data"
     },
     {
@@ -54271,7 +54381,7 @@
     },
     {
       "name": "dsh-opencode-usage-settings",
-      "version": "1.2.0",
+      "version": "1.4.1",
       "category": "enhance-models"
     },
     {
@@ -54301,7 +54411,7 @@
     },
     {
       "name": "dsh-openrouter-plus",
-      "version": "0.6.0",
+      "version": "0.7.1",
       "category": "enhance-models"
     },
     {
@@ -54751,7 +54861,7 @@
     },
     {
       "name": "dsh-peak-reminder",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "category": "connect"
     },
     {
@@ -55206,7 +55316,7 @@
     },
     {
       "name": "dsh-pim-lint",
-      "version": "0.1.0-alpha.12",
+      "version": "0.1.0",
       "category": "dev"
     },
     {
@@ -55791,7 +55901,7 @@
     },
     {
       "name": "dsh-plugin-highlight-notes",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "other"
     },
     {
@@ -56040,6 +56150,11 @@
       "category": "other"
     },
     {
+      "name": "dsh-plugin-opencode-go-usage",
+      "version": "1.0.1",
+      "category": "enhance-models"
+    },
+    {
       "name": "dsh-plugin-opencode-useragent",
       "version": "1.0.0",
       "category": "enhance-tools"
@@ -56056,7 +56171,7 @@
     },
     {
       "name": "dsh-plugin-orchd",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "agent"
     },
     {
@@ -56163,6 +56278,11 @@
       "name": "dsh-plugin-remote",
       "version": "0.5.12",
       "category": "data"
+    },
+    {
+      "name": "dsh-plugin-remote-ssh-2",
+      "version": "0.2.0",
+      "category": "connect"
     },
     {
       "name": "dsh-plugin-restart-control",
@@ -56666,7 +56786,7 @@
     },
     {
       "name": "dsh-policy-ledger",
-      "version": "0.2.0-alpha.14",
+      "version": "0.2.0",
       "category": "ops"
     },
     {
@@ -57066,7 +57186,7 @@
     },
     {
       "name": "dsh-private-background",
-      "version": "1.3.1",
+      "version": "1.3.3",
       "category": "enhance-ui"
     },
     {
@@ -57111,7 +57231,7 @@
     },
     {
       "name": "dsh-profile-stats",
-      "version": "2.4.8",
+      "version": "2.4.11",
       "category": "data"
     },
     {
@@ -57281,7 +57401,7 @@
     },
     {
       "name": "dsh-prompt-snippets",
-      "version": "1.1.0",
+      "version": "1.3.0",
       "category": "enhance-ui"
     },
     {
@@ -57576,12 +57696,12 @@
     },
     {
       "name": "dsh-qq-tools",
-      "version": "0.9.5",
+      "version": "0.10.2",
       "category": "enhance-memory"
     },
     {
       "name": "dsh-qqbot-guard",
-      "version": "1.1.0",
+      "version": "1.3.1",
       "category": "ops"
     },
     {
@@ -57961,7 +58081,7 @@
     },
     {
       "name": "dsh-rea-10",
-      "version": "1.0.3",
+      "version": "1.2.0",
       "category": "other"
     },
     {
@@ -57996,7 +58116,7 @@
     },
     {
       "name": "dsh-reading",
-      "version": "0.9.4",
+      "version": "0.9.6",
       "category": "other"
     },
     {
@@ -58131,7 +58251,7 @@
     },
     {
       "name": "dsh-reflex",
-      "version": "0.3.17",
+      "version": "0.3.18",
       "category": "other"
     },
     {
@@ -58183,6 +58303,11 @@
       "name": "dsh-reliability-guards",
       "version": "0.1.0",
       "category": "enhance-tools"
+    },
+    {
+      "name": "dsh-reload-buttons",
+      "version": "0.1.1",
+      "category": "other"
     },
     {
       "name": "dsh-rely",
@@ -59591,7 +59716,7 @@
     },
     {
       "name": "dsh-session-merge",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "category": "dev"
     },
     {
@@ -59626,7 +59751,7 @@
     },
     {
       "name": "dsh-session-notify-5",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "category": "connect"
     },
     {
@@ -59741,7 +59866,7 @@
     },
     {
       "name": "dsh-session-status-hub",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "category": "other"
     },
     {
@@ -59751,7 +59876,7 @@
     },
     {
       "name": "dsh-session-superagent",
-      "version": "0.9.113",
+      "version": "0.9.165",
       "category": "dev"
     },
     {
@@ -60031,7 +60156,7 @@
     },
     {
       "name": "dsh-shortcut-extensions",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "category": "ops"
     },
     {
@@ -60101,7 +60226,7 @@
     },
     {
       "name": "dsh-side-memo",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "category": "enhance-ui"
     },
     {
@@ -60261,7 +60386,7 @@
     },
     {
       "name": "dsh-sidebar-todo",
-      "version": "0.2.3",
+      "version": "0.3.1",
       "category": "enhance-ui"
     },
     {
@@ -60351,7 +60476,7 @@
     },
     {
       "name": "dsh-site-bridge",
-      "version": "0.9.0",
+      "version": "0.10.0",
       "category": "data"
     },
     {
@@ -60486,7 +60611,7 @@
     },
     {
       "name": "dsh-skill-tag",
-      "version": "0.1.13",
+      "version": "0.1.15",
       "category": "agent"
     },
     {
@@ -60956,7 +61081,7 @@
     },
     {
       "name": "dsh-stardew-blind-whale-farmer",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "category": "media"
     },
     {
@@ -61201,7 +61326,7 @@
     },
     {
       "name": "dsh-subagent-codex-pro",
-      "version": "0.7.0",
+      "version": "0.8.0",
       "category": "agent"
     },
     {
@@ -61561,7 +61686,7 @@
     },
     {
       "name": "dsh-task-deck",
-      "version": "1.1.6",
+      "version": "1.5.0",
       "category": "other"
     },
     {
@@ -62076,12 +62201,12 @@
     },
     {
       "name": "dsh-tiaforge",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "category": "connect"
     },
     {
       "name": "dsh-tick",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "category": "connect"
     },
     {
@@ -62123,6 +62248,11 @@
       "name": "dsh-time-machine",
       "version": "0.1.0",
       "category": "enhance-tools"
+    },
+    {
+      "name": "dsh-time-memory",
+      "version": "0.1.0",
+      "category": "enhance-memory"
     },
     {
       "name": "dsh-time-watchdog",
@@ -62171,7 +62301,7 @@
     },
     {
       "name": "dsh-tip-jar",
-      "version": "0.2.6",
+      "version": "0.2.8",
       "category": "dev"
     },
     {
@@ -62311,7 +62441,7 @@
     },
     {
       "name": "dsh-token-dash",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "category": "enhance-models"
     },
     {
@@ -62641,7 +62771,7 @@
     },
     {
       "name": "dsh-tps",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "category": "enhance-ui"
     },
     {
@@ -62741,7 +62871,7 @@
     },
     {
       "name": "dsh-travel-recon",
-      "version": "0.1.0-alpha.14",
+      "version": "0.1.0",
       "category": "ops"
     },
     {
@@ -62776,7 +62906,7 @@
     },
     {
       "name": "dsh-tri-model",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "category": "dev"
     },
     {
@@ -64571,7 +64701,7 @@
     },
     {
       "name": "dsh-wiki-notes",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "enhance-memory"
     },
     {
@@ -64781,7 +64911,7 @@
     },
     {
       "name": "dsh-working-changes",
-      "version": "0.1.1",
+      "version": "0.5.2",
       "category": "dev"
     },
     {
@@ -64846,7 +64976,7 @@
     },
     {
       "name": "dsh-workspace-control",
-      "version": "0.5.2",
+      "version": "0.6.0",
       "category": "dev"
     },
     {
@@ -65021,7 +65151,7 @@
     },
     {
       "name": "dsh-ws-recency",
-      "version": "0.16.0",
+      "version": "0.24.1",
       "category": "other"
     },
     {
@@ -65376,7 +65506,7 @@
     },
     {
       "name": "dwguard-dsh-hmos",
-      "version": "0.6.0",
+      "version": "0.6.6",
       "category": "agent"
     },
     {
@@ -65391,7 +65521,7 @@
     },
     {
       "name": "fanframe",
-      "version": "1.10.0-beta.16",
+      "version": "1.10.0-beta.19",
       "category": "enhance-ui"
     },
     {
@@ -65621,7 +65751,7 @@
     },
     {
       "name": "meshy-dsh",
-      "version": "0.2.1",
+      "version": "0.3.2",
       "category": "agent"
     },
     {
@@ -65788,6 +65918,11 @@
       "name": "rainbow-fart-dsh",
       "version": "0.5.7",
       "category": "enhance-ui"
+    },
+    {
+      "name": "readable-diagrams",
+      "version": "1.1.0",
+      "category": "other"
     },
     {
       "name": "rein-scene-forge-dsh-plugin",
