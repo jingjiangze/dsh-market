@@ -453,17 +453,6 @@ button, .card, .chip, .src { -webkit-tap-highlight-color: transparent; touch-act
 }
 .ins-btn:disabled { opacity: .55; }
 
-.acts { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; margin: 0; }
-.acts button {
-  width: 28px; height: 24px; padding: 0; font-size: 12px; line-height: 1;
-  border-radius: 7px; color: var(--muted);
-  background: rgba(10, 14, 22, .72); border: 1px solid var(--line-2);
-  opacity: .45; transition: opacity .15s ease, border-color .15s ease;
-}
-.card:hover .acts button, .acts button:focus-visible { opacity: 1; }
-.acts button[aria-pressed="true"] { opacity: 1; border-color: var(--acc, #6b8bff); color: #fff; }
-.acts button[data-vote="-1"][aria-pressed="true"] { border-color: #ff7a7a; }
-.card .body { padding-bottom: 34px; }
 .badges .own { color: #8fe3a2; }
 .badges .up { color: #ffcf6b; }
 

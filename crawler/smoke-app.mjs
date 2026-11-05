@@ -122,20 +122,24 @@ if (!/index\.zh\.json/.test(String(element('src').textContent))) problems.push('
 if ((element('list').innerHTML.match(/class=card/g) ?? []).length !== before) problems.push('source switch must not filter the list')
 api.state.copyTarget = 'ja'
 api.render()
-if (!/modelscope\.cn/.test(String(element('src').textContent))) problems.push('a language source does not point at the dataset')
+// One source only: the dataset answers 302 and DSH cannot follow a redirect, so the
+// copied link must always be the GitHub Pages document.
+if (!/jingjiangze\.github\.io/.test(String(element('src').textContent))) problems.push('a language source does not point at GitHub Pages')
+if (/modelscope/.test(String(element('src').textContent))) problems.push('a language source still points at the dataset')
 if (api.state.lang !== 'zh') problems.push('render() alone should not change the interface language')
 
-// Region × language: the same language has a domestic and an overseas link.
+// The region toggle is gone: there is no second, usable source to switch between.
 api.chrome()
-if (!/data-region=/.test(segElement.innerHTML)) problems.push('the region toggle button is missing')
-api.state.region = 'intl'
-api.render()
-if (!/jingjiangze\.github\.io/.test(String(element('src').textContent))) problems.push('the overseas region does not copy the Pages link')
-if (!/index\.ja\.json/.test(String(element('src').textContent))) problems.push('the overseas region lost the per-language document')
-if (/modelscope/.test(String(element('src').textContent))) problems.push('the overseas link still points at the dataset')
-api.state.region = 'cn'
-api.render()
-if (!/modelscope[\s\S]*index\.ja\.json/.test(String(element('src').textContent))) problems.push('switching back to the domestic region does not restore the dataset link')
+if (/data-region/.test(segElement.innerHTML)) problems.push('the removed region toggle is still rendered')
+
+// The daily rail: six picks, present without any personal signal.
+const rail = /** @type {any} */ (element('rec'))
+if (rail && rail.innerHTML && !/今日推荐/.test(rail.innerHTML)) problems.push('the daily rail lost its heading')
+if (rail && rail.innerHTML) {
+  const picked = (rail.innerHTML.match(/class=rec-item/g) ?? []).length
+  // The stub catalogue only holds a few entries, so expect 1..6 rather than exactly 6.
+  if (picked < 1 || picked > 6) problems.push(`the daily rail holds ${picked} entries, expected 1-6`)
+}
 
 // Integration guide modal.
 api.openGuide()
