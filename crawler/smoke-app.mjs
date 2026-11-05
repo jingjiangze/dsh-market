@@ -68,7 +68,7 @@ const fetchStub = async (url) => {
 }
 
 const run = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console', 'window',
-  `${source}\nreturn { render, openDetail, openGuide, state, chrome }`)
+  `${source}\nreturn { render, openDetail, openGuide, state, chrome, favorites, saveFavorites }`)
 const api = run(document, localStorage, navigator, location, fetchStub, () => 0, console, fakeWindow)
 await api.state.meta
 await new Promise((resolve) => setTimeout(resolve, 120))
@@ -140,6 +140,37 @@ if (rail && rail.innerHTML) {
   // The stub catalogue only holds a few entries, so expect 1..6 rather than exactly 6.
   if (picked < 1 || picked > 6) problems.push(`the daily rail holds ${picked} entries, expected 1-6`)
 }
+
+// Trust badge, three-level install grade, favorites, trending sorts and the
+// compatibility control all render from index data alone (no backend needed).
+api.state.copyTarget = 'zh'
+api.state.sort = 'stars'
+api.state.compat = 'all'
+api.state.favorites = false
+api.render()
+const cardHtml = element('list').innerHTML
+if (!/class=trust/.test(cardHtml)) problems.push('trust badge is missing from cards')
+if (!/class=grade/.test(cardHtml)) problems.push('install-grade badge is missing from cards')
+if (!/class=fav/.test(cardHtml)) problems.push('favorite button is missing from cards')
+const sorts = element('sort').innerHTML
+for (const key of ['data-sort="trend7"', 'data-sort="trend30"', 'data-sort="trend90"']) {
+  if (!sorts.includes(key)) problems.push(`trending sort ${key} is missing`)
+}
+if (!/id=compat/.test(sorts)) problems.push('compatibility dropdown is missing')
+if (!/data-fav-toggle/.test(sorts)) problems.push('favorites filter is missing')
+
+// Favorites are a bookmark, not a vote: adding one and enabling the filter leaves
+// exactly that card, and the count appears on the toggle.
+api.favorites.add('dsh-ops')
+api.saveFavorites()
+api.state.favorites = true
+api.render()
+const favCards = (element('list').innerHTML.match(/class=card/g) ?? []).length
+if (favCards !== 1) problems.push(`favorites filter showed ${favCards} cards, expected 1`)
+api.state.favorites = false
+api.favorites.delete('dsh-ops')
+api.saveFavorites()
+api.render()
 
 // Integration guide modal.
 api.openGuide()

@@ -467,3 +467,26 @@ button, .card, .chip, .src { -webkit-tap-highlight-color: transparent; touch-act
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .rec-item i { display: block; font-style: normal; font-size: 11px; color: var(--muted); }
+
+/* ── trust / install grade / favorites ─────────────────────────────────── */
+.badges .trust, .badges .grade { border: 1px solid transparent; }
+.badges .trust.t0 { color: #8fe3a2; }
+.badges .trust.t1 { color: #ffcf6b; }
+.badges .trust.t2 { color: #ff8f8f; }
+.badges .trust.t3 { color: #a8c0ff; }
+.badges .grade.g0 { color: #8fe3a2; border-color: rgba(143,227,162,.35); }
+.badges .grade.g1 { color: #ffcf6b; border-color: rgba(255,207,107,.35); }
+.badges .grade.g2 { color: #ff8f8f; border-color: rgba(255,143,143,.35); }
+.fav {
+  position: absolute; right: 8px; top: 8px; width: 28px; height: 26px;
+  padding: 0; font-size: 15px; line-height: 1; color: var(--muted);
+  background: rgba(10,14,22,.72); border: 1px solid var(--line-2); border-radius: 7px;
+  opacity: .5;
+}
+.card:hover .fav, .fav:focus-visible, .fav[aria-pressed="true"] { opacity: 1; }
+.fav[aria-pressed="true"] { color: #ffcf6b; border-color: rgba(255,207,107,.5); }
+#sort select {
+  padding: 4px 8px; font-size: 12px; color: var(--text);
+  background: rgba(255,255,255,.05); border: 1px solid var(--line-2); border-radius: 7px;
+}
+#sort [data-fav-toggle][aria-pressed="true"] { border-color: rgba(255,207,107,.5); color: #ffcf6b; }
