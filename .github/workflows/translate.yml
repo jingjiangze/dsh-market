@@ -69,3 +69,25 @@ jobs:
           set -o pipefail
           node crawler/publish-api.mjs | tee /dev/stderr
 
+      - name: Watchdog — revive a stalled crawl
+        # GitHub's scheduler is best-effort and dropped every cron event for a whole
+        # morning (all workflows stayed `active`). This job runs hourly, so whichever
+        # schedule survives can revive the other one: a stale crawl is re-dispatched
+        # from here instead of waiting for a human.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          last=$(gh run list --workflow crawl.yml --status success --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null || echo "")
+          if [ -z "$last" ]; then
+            echo "no successful crawl recorded — dispatching one"
+            gh workflow run crawl.yml --ref main
+            exit 0
+          fi
+          age_h=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 3600 ))
+          echo "last successful crawl: $last (${age_h}h ago)"
+          if [ "$age_h" -ge 4 ]; then
+            echo "catalogue is stale — dispatching crawl"
+            gh workflow run crawl.yml --ref main
+          fi
+

@@ -201,3 +201,23 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml --ref main
+
+      - name: Watchdog — revive a stalled translate job
+        # The mirror of the watchdog in translate.yml: whichever schedule GitHub
+        # actually delivers revives the other one.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          last=$(gh run list --workflow translate.yml --status success --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null || echo "")
+          if [ -z "$last" ]; then
+            echo "no successful translate recorded — dispatching one"
+            gh workflow run translate.yml --ref main
+            exit 0
+          fi
+          age_h=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 3600 ))
+          echo "last successful translate: $last (${age_h}h ago)"
+          if [ "$age_h" -ge 3 ]; then
+            echo "translation backlog is stalling — dispatching translate"
+            gh workflow run translate.yml --ref main
+          fi
