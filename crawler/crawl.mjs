@@ -772,7 +772,10 @@ for (const [name, record] of fromGitHub) {
             : {}),
         },
         versions: [{
-          version: record.hintVersion || String(gitSource?.commit ?? '').slice(0, 8) || '0.0.0',
+          // A git-only entry has no npm version; use a valid SemVer placeholder and
+          // keep the pinned commit in `source.commit`, which is what identifies the
+          // code that gets installed.
+          version: record.hintVersion || '0.0.0',
           publishTimestamp: record.hintPublishTimestamp ?? 0,
           // npm-404 entries get a commit-pinned git source, so they really install.
           source: gitSource ?? { type: 'npm' },
