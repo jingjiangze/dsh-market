@@ -11,6 +11,7 @@
 // index, install from the real package manifest).
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import { discoverFederated, discoverGitHub } from './sources.mjs'
+import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -186,112 +187,6 @@ function localized(text) {
 // Categories follow the shape community catalogs use (a declared id per plugin
 // plus a bilingual title on the index), kept deliberately small so a reader can
 // actually scan them.
-const CATEGORIES = {
-  // 一级：为 DSH 本体做加强的「优化项」优先，其次按作用域分大类。id 支持任意
-  // 字符串（校验器只要求先声明后引用），所以二级分类直接写成 `大类-细分`，
-  // 页面按前缀折叠成大类，DSH 里则显示每条细分的中文名。
-  'enhance-models': { en: 'Model providers', zh: '模型与供应商' },
-  'enhance-memory': { en: 'Memory & context', zh: '记忆与上下文' },
-  'enhance-ui': { en: 'Interface & themes', zh: '界面与主题' },
-  'enhance-tools': { en: 'Toolchain & CLI', zh: '工具链与 CLI' },
-  'enhance-perf': { en: 'Performance & caching', zh: '性能与缓存' },
-  agent: { en: 'Agents & orchestration', zh: '智能体与编排' },
-  data: { en: 'Knowledge & data', zh: '知识与数据' },
-  connect: { en: 'Integrations & connections', zh: '集成与连接' },
-  media: { en: 'Media & vision', zh: '媒体与视觉' },
-  work: { en: 'Office & content', zh: '办公与创作' },
-  ops: { en: 'Security & operations', zh: '安全与运维' },
-  dev: { en: 'Development workflow', zh: '开发工作流' },
-  eco: { en: 'Ecosystem & resources', zh: '生态与资源' },
-  other: { en: 'Other', zh: '其他' },
-}
-
-// Big groups the page folds the sub-categories into. `enhance-*` is the group the
-// user asked for: anything that strengthens DSH itself is an "优化项" first.
-const CATEGORY_GROUPS = {
-  enhance: ['enhance-models', 'enhance-memory', 'enhance-ui', 'enhance-tools', 'enhance-perf'],
-  agent: ['agent'],
-  data: ['data'],
-  connect: ['connect'],
-  media: ['media'],
-  work: ['work'],
-  ops: ['ops'],
-  dev: ['dev'],
-  eco: ['eco'],
-  other: ['other'],
-}
-
-// The federated catalogs already carry a category; reuse their judgement instead
-// of re-deriving it from keywords. These map to a *domain*, and a domain that
-// strengthens DSH itself is promoted to an `enhance-*` category below.
-const SOURCE_CATEGORIES = {
-  // dsh.so's own ten ids
-  agents: 'agent',
-  creator: 'work',
-  dev: 'dev',
-  memory: 'memory',
-  notify: 'connect',
-  office: 'work',
-  search: 'data',
-  skin: 'ui',
-  tools: 'tools',
-  vision: 'media',
-  // awesome-dsh-plugin
-  'agents-workflows': 'agent',
-  'multi-agents': 'agent',
-  'knowledge-research': 'memory',
-  'developer-tools': 'dev',
-  'ui-experience': 'ui',
-  'media-vision': 'media',
-  'web-browser': 'connect',
-  'integrations-sharing': 'connect',
-  utilities: 'tools',
-  'ecosystem-resources': 'eco',
-  // mydsh.xyz labels its categories in Chinese.
-  界面与主题: 'ui',
-  启动动画: 'ui',
-  技能: 'memory',
-  MCP: 'connect',
-  场景: 'agent',
-  提示词: 'models',
-}
-
-// A domain here means "this strengthens DSH itself", so it is an enhancement.
-const ENHANCE_DOMAINS = {
-  models: 'enhance-models',
-  memory: 'enhance-memory',
-  context: 'enhance-memory',
-  ui: 'enhance-ui',
-  tools: 'enhance-tools',
-  perf: 'enhance-perf',
-}
-
-const CATEGORY_RULES = [
-  ['ops', /\b(audit|security|secret|guard|quarantine|permission|sandbox|vet|policy|confirm|monitor|observ|log|metric)\b/],
-  ['models', /\b(provider|providers|model|models|llm|api-key|openai|anthropic|qoder|codex|cline|subscription|usage|billing|cost|token|tokens)\b/],
-  ['ui', /\b(theme|themes|skin|appearance|wallpaper|background|layout|sidebar|panel|badge|font|pet|meme|catppuccin|prts)\b|界面|主题|壁纸/],
-  ['media', /\b(image|images|video|tts|voice|audio|screenshot|vision|chart|charts|canvas|blender|music|poster|genui)\b/],
-  ['work', /\b(pdf|office|docx|xlsx|ppt|slides|markdown|notion|blog|poster|copyright|translate)\b|办公|文档/],
-  ['connect', /\b(feishu|lark|qq|telegram|discord|wechat|slack|gateway|remote|tailscale|lan|sync|share|mcp|bridge|browser|chrome|playwright|puppeteer|cdp)\b/],
-  ['memory', /\b(memory|knowledge|rag|recall|embedding|sqlite|obsidian|deepread|archive|dream|chapter|chapters)\b/],
-  ['context', /\b(context|compress|compact|summary|summarize|window|token-budget|prune)\b/],
-  ['perf', /\b(cache|caching|fast|faster|speed|latency|bench|benchmark|index|optimiz)\b/],
-  ['agent', /\b(agent-team|agent-teams|multi-agent|swarm|orchestrator|ralph|kanban|goal|checkpoint|rewind|workflow|scheduled|schedule|cron|automation|subagent|skill|skills|prompt)\b/],
-  ['data', /\b(search|index|sqlite|database|dataset|scrape|scraper|crawl|crawler|feed|rss)\b/],
-  ['tools', /\b(tool|tools|toolkit|cli|terminal|shell|worktree|git|lint|diff|debug|ide|editor|typescript|utility|utilities|calculator|converter|formatter|clipboard)\b/],
-  ['eco', /\b(catalog|index-of|awesome|gallery|market|marketplace|template|starter|boilerplate)\b/],
-]
-
-function classifyDomain(...texts) {
-  const haystack = texts.filter(Boolean).join(' ').toLowerCase()
-  for (const [id, pattern] of CATEGORY_RULES) if (pattern.test(haystack)) return id
-  return 'other'
-}
-
-function categoryFor(record, ...texts) {
-  const domain = SOURCE_CATEGORIES[record?.hintCategory] ?? classifyDomain(...texts)
-  return ENHANCE_DOMAINS[domain] ?? domain
-}
 
 // Only labels that change a reader's decision are published: which catalog listed
 // the plugin, whether that catalog verified it, whether the Chinese text is still a
@@ -703,12 +598,9 @@ for (const [name, record] of fromGitHub) {
   const textOf = (value) => (typeof value === 'string' ? value : (value?.en ?? ''))
   const kept = carried.slice(0, MAX_PLUGINS).map((entry) => {
     const plugin = entry.plugin
-    // Keep a category that this taxonomy still declares (it came from a catalog
-    // hint); anything else is re-derived so an old id can never leak out.
-    const storedCategory = plugin.metadata?.category
-    const category = CATEGORIES[storedCategory]
-      ? storedCategory
-      : categoryFor(provenance.get(plugin.name), plugin.name, textOf(plugin.title), textOf(plugin.description), (plugin.metadata?.keywords ?? []).join(' '))
+    // Always re-derive: taxonomy v2 changed the leaf ids, so a cached v1 id would
+    // keep an entry in a bucket that no longer means the same thing.
+    const category = categoryFor(provenance.get(plugin.name), plugin.name, textOf(plugin.title), textOf(plugin.description), (plugin.metadata?.keywords ?? []).join(' '))
     // Stars and weekly downloads come from the catalogs that publish them; the
     // federated discovery covers the whole pool every run, so cached entries get
     // them too.

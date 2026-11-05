@@ -65,6 +65,10 @@ function fromFormatOne(document, label) {
       trust: new Set(['trust-source-index']),
       hintEngines: newest?.engines?.dsh ?? plugin.metadata?.engines?.dsh,
       hintCategory: plugin.category ?? plugin.metadata?.category,
+      // Which vocabulary hintCategory comes from; the taxonomy picks its mapping
+      // table by this so identically-named categories in different catalogs (e.g.
+      // dsh.so `tools` vs the official curated `tools`) are not conflated.
+      hintSource: label,
       // Carried straight from the catalog so an entry we could not re-verify this
       // run can still be published with its real version and publish time.
       hintVersion: newest?.version,
@@ -95,6 +99,7 @@ function fromRepoTargets(document, label) {
       record.origins.add(label)
       if (trust) record.trust.add(trust)
       record.hintCategory ??= entry.category
+      record.hintSource ??= label
       record.repo ??= entry.full_name
       record.description ??= { en: String(entry.description ?? ''), zh: String(entry.description ?? '') }
       record.stars ??= entry.stargazers_count
@@ -116,6 +121,7 @@ function fromMydsh(document, label) {
       record.origins.add(label)
       record.trust.add('trust-unpinned')
       record.hintCategory ??= entry.category
+      record.hintSource ??= label
       record.repo ??= entry.repo
       record.stars ??= Number(entry.stars) || undefined
       record.description ??= { en: String(entry.summary ?? ''), zh: String(entry.summary ?? '') }

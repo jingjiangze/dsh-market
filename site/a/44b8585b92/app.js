@@ -303,11 +303,19 @@ function render() {
   // chunks load progressively, and "1,500" looked like the whole catalogue.
   const total = state.meta.total ?? state.plugins.length
   const parts = [chip('all', IDX_LABEL[state.copyTarget], total)]
+  // Fold the leaf ids into rails by their prefix: enhance-* -> DSH 优化,
+  // agent-* -> 智能体, data-*/media-* -> 内容, connect-* -> 连接,
+  // dev-*/*-security -> 开发与安全, eco-*/other -> 生态.
+  const GROUP_LABEL = { enhance: 'DSH 优化', agent: '智能体与工作流', content: '内容与数据', connect: '连接与运行环境', dev: '开发与安全', eco: '生态与资源' }
+  const RAIL_OF = { data: 'content', media: 'content', ops: 'dev' }
+  const groupOf = (id) => {
+    const head = RAIL_OF[id.split('-')[0]] ?? id.split('-')[0]
+    return GROUP_LABEL[head] ? head : 'eco'
+  }
   let group = null
   for (const id of Object.keys(state.meta.categories ?? {})) {
-    const prefix = id.startsWith('enhance-') ? 'enhance' : id
-    if (prefix !== group && prefix === 'enhance') parts.push('<div class=grp>DSH 优化</div>')
-    group = prefix
+    const rail = groupOf(id)
+    if (rail !== group) { parts.push(`<div class=grp>${GROUP_LABEL[rail]}</div>`); group = rail }
     parts.push(chip(id, catTitle(id), counts.get(id) ?? 0))
   }
   $('cats').innerHTML = parts.join('')
