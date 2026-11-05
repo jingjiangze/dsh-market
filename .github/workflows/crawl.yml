@@ -85,13 +85,23 @@ jobs:
       - name: Union the shard slices
         run: node crawler/merge-parts.mjs
 
+      - name: Adapt the 2BingLing catalogue
+        # 18k entries, most of them GitHub-only. Names missing on npm are pinned to a
+        # repository commit so every published entry really can be installed. The
+        # adapter caches the 13.8 MB document and its commit lookups by upstream date.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BINGLING_MIN_STARS: '1'
+          BINGLING_MAX_GIT_LOOKUPS: '600'
+        run: node crawler/source-2bingling.mjs
+
       - name: Build the published index
         env:
           NPM_REGISTRY: https://registry.npmjs.org
           SEARCH_REGISTRY: https://registry.npmjs.org
           FALLBACK_REGISTRY: https://registry.npmmirror.com
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
-          MAX_TOTAL: '12000'
+          MAX_TOTAL: '24000'
           MERGE_EXTERNAL: '1'
           SOURCES: dshso,awesome,mydsh,polang,github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

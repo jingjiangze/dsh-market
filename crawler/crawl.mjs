@@ -298,7 +298,7 @@ function categoryFor(record, ...texts) {
 // placeholder, and — the way dsh.so does it — which popularity tier the package is
 // in, so the list itself shows whether a plugin is established or brand new.
 const KEEP_LABELS = new Set([
-  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh', 'src-polang', 'src-github',
+  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh', 'src-polang', 'src-github', 'src-2bingling',
   'trust-readme-verified', 'trust-repo-fallback',
   'zh-fallback',
   // Published from a catalog we could not re-verify this run: the reader should
@@ -452,6 +452,25 @@ async function main() {
     }
   }
   const federated = await discoverFederated()
+  // The largest community catalogue (18k entries) is merged LAST and ONLY for names
+  // nothing else knows. That is the "no duplicates" rule: an entry we already have
+  // keeps its own stars, labels and trust, and 2BingLing never overwrites it.
+  try {
+    const extra = JSON.parse(await readFile(join(root, 'data', '2bingling-records.json'), 'utf8'))
+    let added = 0
+    for (const record of Array.isArray(extra) ? extra : []) {
+      if (!record?.name || federated.has(record.name) || names.has(record.name)) continue
+      federated.set(record.name, {
+        ...record,
+        origins: new Set(record.origins ?? ['src-2bingling']),
+        trust: new Set(record.trust ?? ['trust-source-index']),
+      })
+      added++
+    }
+    console.log(`2BingLing merged: +${added} new names (duplicates skipped)`)
+  } catch (error) {
+    console.log(`2BingLing: skipped (${error.message})`)
+  }
 // GitHub repositories add what the catalogues miss: monorepos publishing many DSH
 // plugins (ShiroEirin/dsh-web-ui ships 19) and plugins that were never listed.
 const fromGitHub = await discoverGitHub(process.env.GITHUB_TOKEN || process.env.GH_TOKEN)
@@ -712,7 +731,9 @@ for (const [name, record] of fromGitHub) {
   if (MERGE_EXTERNAL) {
     for (const record of federated.values()) {
       if (cache.entries[record.name]) continue
-      if (!record.hintVersion) continue
+      // A commit-pinned git entry is installable without an npm version.
+      if (!record.hintVersion && !record.gitSource) continue
+      const gitSource = record.gitSource
       const titleEn = record.title?.en || record.name
       const descEn = String(record.description?.en ?? '').trim().slice(0, 160) || titleEn
       const descZh = String(record.description?.zh ?? record.description?.en ?? '').slice(0, 160)
@@ -745,9 +766,10 @@ for (const [name, record] of fromGitHub) {
             : {}),
         },
         versions: [{
-          version: record.hintVersion,
+          version: record.hintVersion || String(gitSource?.commit ?? '').slice(0, 8) || '0.0.0',
           publishTimestamp: record.hintPublishTimestamp ?? 0,
-          source: { type: 'npm' },
+          // npm-404 entries get a commit-pinned git source, so they really install.
+          source: gitSource ?? { type: 'npm' },
           ...(record.hintEngines ? { engines: { dsh: record.hintEngines } } : {}),
         }],
       })
@@ -789,6 +811,7 @@ for (const [name, record] of fromGitHub) {
         'src-mydsh': { title: { en: 'mydsh', zh: 'mydsh' } },
         'src-polang': { title: { en: 'open market', zh: '开放市场' } },
         'src-github': { title: { en: 'GitHub', zh: 'GitHub' } },
+        'src-2bingling': { title: { en: 'dsh.market', zh: 'dsh.market' } },
         'trust-readme-verified': { title: { en: 'README checked', zh: 'README 核对' } },
         'trust-repo-fallback': { title: { en: 'repo pinned', zh: '仓库固定' } },
         'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
