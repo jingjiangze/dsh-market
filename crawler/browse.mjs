@@ -97,6 +97,9 @@ const plugins = rawPlugins.map((plugin) => {
   if (keywords.length) entry.kw = keywords.slice(0, 8)
   const engines = plugin.versions?.[0]?.engines?.dsh
   if (engines) entry.eg = String(engines)
+  // Which install source the entry declares: git entries are pinned to a commit, so
+  // the site can show a distinct trust badge without a backend.
+  if (plugin.versions?.[0]?.source?.type === 'git') entry.src = 'git'
   const meta = sidecar.get(plugin.name)
   if (meta) {
     if (meta.unpackedSize > 0) entry.sz = Math.round(meta.unpackedSize / 1048576 * 10) / 10

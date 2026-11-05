@@ -57,7 +57,10 @@ const TRUST_LABEL = {
   'dl-mid': '↓ 100+',
   'install-verified': '已验证安装',
 }
-const SORTS = [['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z']]
+const SORTS = [
+  ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
+  ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
+]
 const TIMEOUT = 8000
 
 const GUIDE = {
@@ -68,16 +71,59 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false }
+const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all' }
 
-// ---- personal state: the installed set ---------------------------------------
-// Only what is installed on this machine. It stays in this browser; the site is
-// static and deliberately runs no server, so nothing is uploaded anywhere.
+// ---- personal state: favorites and the installed set -------------------------
+// Everything stays in this browser (the site is static and runs no Worker).
+const FAV_KEY = 'dsh-market-favorites'
 const INSTALLED_KEY = 'dsh-market-installed'
 const readStore = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback } catch { return fallback } }
+const favorites = new Set(Array.isArray(readStore(FAV_KEY, [])) ? readStore(FAV_KEY, []) : [])
 const installed = readStore(INSTALLED_KEY, {})
+const saveFavorites = () => { try { localStorage.setItem(FAV_KEY, JSON.stringify([...favorites])) } catch {} }
 const saveInstalled = () => { try { localStorage.setItem(INSTALLED_KEY, JSON.stringify(installed)) } catch {} }
+const isFavorite = (name) => favorites.has(name)
 const isInstalled = (name) => Object.prototype.hasOwnProperty.call(installed, name)
+
+// Trust / install-readiness, derived only from fields the crawler already ships.
+// 0 = verified npm entry, 1 = catalog-only (install target came from a catalogue),
+// 2 = no engines.dsh declared, 3 = git-pinned (installable, but from a commit).
+function trustOf(entry) {
+  const labels = entry.l ?? []
+  if (labels.includes('no-engines')) return { level: 2, text: '⛔ 未声明版本' }
+  if (labels.includes('catalog-only')) return { level: 1, text: '⚠️ 目录收录' }
+  if (entry.src === 'git') return { level: 3, text: '◆ Git 固定' }
+  return { level: 0, text: '✅ 已验证' }
+}
+
+// Three-level pre-flight, mirroring the "installable / risky / manual" grading used
+// by dsh-plugin-workshop: it needs no backend because every signal is in the index.
+function installGrade(entry) {
+  const labels = entry.l ?? []
+  if (labels.includes('no-engines') || !entry.eg) return { level: 2, text: '建议手动' }
+  if (labels.includes('catalog-only') || entry.src === 'git') return { level: 1, text: '有风险' }
+  return { level: 0, text: '可直接安装' }
+}
+
+// Whether an entry claims to work with the chosen DSH runtime. We only have the
+// declared range (e.g. ">=0.2.0-0 <0.3.0"); compare against the leading version.
+function compatWith(entry, runtime) {
+  if (!runtime || runtime === 'all') return true
+  if (!entry.eg) return false
+  const m = String(entry.eg).match(/(\d+)\.(\d+)\.(\d+)/)
+  if (!m) return true
+  const r = runtime.match(/(\d+)\.(\d+)/)
+  if (!r) return true
+  const major = Number(m[1]), minor = Number(m[2])
+  const rMajor = Number(r[1]), rMinor = Number(r[2])
+  // A range starting at X.Y accepts that minor line and newer majors; anything
+  // clearly older is filtered out. This is deliberately conservative.
+  return rMajor > major || (rMajor === major && rMinor >= minor)
+}
+
+const TRENDING_DAYS = { trend7: 7, trend30: 30, trend90: 90 }
+const dayMs = 86400000
+const nowMs = () => Date.now()
 
 
 
@@ -102,12 +148,23 @@ const catTitle = (id) => {
 const badges = (entry) => [...new Set((entry.l ?? []).map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null).filter(Boolean))].slice(0, 4)
 
 function matches(entry) {
+  if (state.favorites && !isFavorite(entry.n)) return false
   if (state.category !== 'all' && entry.c !== state.category) return false
+  if (!compatWith(entry, state.compat)) return false
+  const windowDays = TRENDING_DAYS[state.sort]
+  if (windowDays) {
+    const age = (nowMs() - (entry.p ?? 0) * 1000) / dayMs
+    if (age < 0 || age > windowDays) return false
+  }
   const q = state.query.trim().toLowerCase()
   if (!q) return true
+  // Small Chinese→English synonym table: searching 记忆 should also hit "memory".
+  const words = q.split(/\s+/).map((word) => ZH_EN[word] ?? word)
   const haystack = [entry.n, entry.t, entry.e, entry.d, entry.de, entry.a ?? '', ...(entry.x ?? []).flat()].join(' ').toLowerCase()
-  return q.split(/\s+/).every((word) => haystack.includes(word))
+  return words.every((word) => haystack.includes(word))
 }
+
+const ZH_EN = { 记忆: 'memory', 模型: 'model', 界面: 'ui', 工具: 'tools', 主题: 'theme', 皮肤: 'skin', 搜索: 'search', 数据: 'data', 连接: 'connect', 办公: 'work', 运维: 'ops', 开发: 'dev', 智能体: 'agent', 媒体: 'media', 性能: 'perf', 优化: 'enhance', 安全: 'security', 翻译: 'translate', 快捷键: 'shortcut' }
 
 function byOrder(a, b) {
   if (state.sort === 'name') return a.n.localeCompare(b.n)
@@ -137,7 +194,11 @@ function card(entry) {
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
   const own = [owned ? `<b class=own>已装 ${esc(installed[entry.n] ?? '')}</b>` : '', upgrade ? '<b class=up>可升级</b>' : ''].join('')
-  return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own ? `<p class=badges>${extraTags}${own}</p>` : ''}</div></article>`
+  const trust = trustOf(entry)
+  const grade = installGrade(entry)
+  const marks = `<b class=trust t${trust.level}>${esc(trust.text)}</b><b class=grade g${grade.level}>${esc(grade.text)}</b>`
+  const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
+  return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
 
 // The personal layer: what this browser says about the catalogue (votes) and what is
@@ -255,7 +316,9 @@ function render() {
     document.querySelector('.chip[aria-pressed]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
   } catch {}
   const buttons = SORTS.map(([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`).join('')
-  $('sort').innerHTML = `<span class=sorts>${buttons}</span><button class=dice data-random>🎲 随机</button>`
+  const favButton = `<button class=dice data-fav-toggle aria-pressed="${state.favorites}">★ 收藏${favorites.size ? ` ${favorites.size}` : ''}</button>`
+  const compatButton = `<select id=compat aria-label="DSH 版本兼容"><option value=all>兼容：全部</option><option value=0.2${state.compat === '0.2' ? ' selected' : ''}>0.2.x</option><option value=0.1${state.compat === '0.1' ? ' selected' : ''}>0.1.x</option></select>`
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span>${compatButton}${favButton}<button class=dice data-random>🎲 随机</button>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
@@ -264,9 +327,24 @@ function render() {
   renderPersonal(pool)
   renderFooter()
   const visible = pool.slice(0, state.limit)
+  const more = pool.length > visible.length
   $('list').innerHTML = pool.length
-    ? visible.map(card).join('') + (pool.length > visible.length ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
+    ? visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
     : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
+  // Infinite scroll: once the sentinel enters view, extend the list in place.
+  if (more) {
+    const sentinel = document.querySelector('[data-more]')
+    if (sentinel && window.IntersectionObserver && !sentinel.dataset.watched) {
+      sentinel.dataset.watched = '1'
+      const observer = new IntersectionObserver((rows) => {
+        if (!rows.some((row) => row.isIntersecting)) return
+        observer.disconnect()
+        state.limit += 120
+        render()
+      }, { rootMargin: '600px' })
+      observer.observe(sentinel)
+    }
+  }
 }
 
 // Footer states what the catalogue actually contains, because "10,995 plugins" says
@@ -450,6 +528,13 @@ function ensureStyles() {
 // Import a scan produced elsewhere (any browser, or the PowerShell one-liner).
 document.addEventListener('change', (event) => {
   const input = event.target
+  // Compatibility dropdown lives in #sort and is re-created on every render.
+  if (input && input.id === 'compat') {
+    state.compat = input.value
+    state.limit = 60
+    render()
+    return
+  }
   if (!input || input.id !== 'importFile' || !input.files?.length) return
   input.files[0].text()
     .then((text) => {
@@ -464,6 +549,19 @@ document.addEventListener('change', (event) => {
 
 document.addEventListener('click', (event) => {
   if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
+
+  const favButton = event.target.closest('[data-fav]')
+  if (favButton) {
+    event.stopPropagation()
+    const name = favButton.dataset.fav
+    if (favorites.has(name)) favorites.delete(name)
+    else favorites.add(name)
+    saveFavorites()
+    render()
+    return
+  }
+  const favToggle = event.target.closest('[data-fav-toggle]')
+  if (favToggle) { state.favorites = !state.favorites; state.limit = 60; render(); return }
 
   const scanButton = event.target.closest('[data-scan]')
   if (scanButton) {
