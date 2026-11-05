@@ -122,7 +122,7 @@ for (const plugin of candidates) {
       zh: String(plugin.descriptionZh ?? plugin.description ?? '').trim() || name,
     },
     hintEngines: plugin.install?.dshEngines,
-    hintPublishTimestamp: Date.parse(plugin.pushedAt ?? '') / 1000 || undefined,
+    hintPublishTimestamp: Date.parse(plugin.pushedAt ?? '') / 1000 || 0,
     hintIcon: undefined,
     hintVersion: undefined,
     installCommand: (plugin.install?.commands ?? [])[0],
@@ -144,6 +144,10 @@ for (const plugin of candidates) {
   if (!commit) { skipped++; continue }
   keep({
     ...base,
+    // A commit-pinned git entry has no npm version. Use a valid SemVer placeholder:
+    // the format-1 validator insists on exact SemVer, and `source.commit` is the
+    // identity that actually determines what gets installed.
+    hintVersion: '0.0.0',
     // A catalog-only entry that cannot be resolved on npm still has to be installable.
     gitSource: { type: 'git', url: repoUrl, commit },
   })
