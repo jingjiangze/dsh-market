@@ -163,7 +163,9 @@ async function ghJSON(path, token) {
 // A package.json qualifies when it carries a dsh section or a dsh keyword: that is
 // what makes it a DSH plugin rather than an ordinary npm package in the same repo.
 function packageRecord(pkg, repoUrl, stars, label) {
-  if (!pkg || typeof pkg.name !== 'string' || !pkg.name) return null
+  // The validator only accepts lowercase npm names; monorepos sometimes contain
+  // template manifests like "dsh-client-ui-__NAME__" that must not be published.
+  if (!pkg || typeof pkg.name !== 'string' || !/^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u.test(pkg.name) || pkg.name.length > 214) return null
   const dsh = pkg.dsh
   const keywords = Array.isArray(pkg.keywords) ? pkg.keywords.map((k) => String(k).toLowerCase()) : []
   const looksDsh = Boolean(dsh?.bundle?.patch || dsh?.client || dsh?.plugin) || keywords.includes('dsh-plugin') || keywords.some((k) => k.startsWith('dsh-'))
