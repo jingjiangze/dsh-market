@@ -50,7 +50,9 @@ jobs:
           CONCURRENCY: '12'
           CRAWL_BUDGET_MS: '600000'
           MERGE_EXTERNAL: '0'
-          SOURCES: dshso,awesome,mydsh
+          SOURCES: dshso,awesome,mydsh,polang,github
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_MAX_REPOS: '150'
           PART_OUT: dist/part-${{ matrix.shard }}.json
         run: node crawler/crawl.mjs
 
@@ -91,7 +93,9 @@ jobs:
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_TOTAL: '12000'
           MERGE_EXTERNAL: '1'
-          SOURCES: dshso,awesome,mydsh
+          SOURCES: dshso,awesome,mydsh,polang,github
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_MAX_REPOS: '150'
         run: node crawler/crawl.mjs --publish-only
 
       - name: Fill stars and weekly downloads
