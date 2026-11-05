@@ -677,7 +677,15 @@ for (const [name, record] of fromGitHub) {
     }
     slimEntries.sort((a, b) => (b.metadata?.sortKeys?.stars ?? 0) - (a.metadata?.sortKeys?.stars ?? 0) || a.name.localeCompare(b.name))
   }
-  const published = [...kept, ...slimEntries].slice(0, MAX_TOTAL)
+  // Last line of defence: any source (npm registry, catalogues, GitHub monorepos,
+  // 2BingLing) can hand us a name the format-1 validator rejects. Filter once here,
+  // on the assembled list, so no single adapter can fail the whole crawl at the
+  // validate step after 40 minutes of work.
+  const VALID_NAME = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u
+  const allEntries = [...kept, ...slimEntries]
+  const rejectedNames = allEntries.filter((plugin) => !VALID_NAME.test(String(plugin?.name ?? '')) || String(plugin.name).length > 214)
+  const published = allEntries.filter((plugin) => VALID_NAME.test(String(plugin?.name ?? '')) && String(plugin.name).length <= 214).slice(0, MAX_TOTAL)
+  if (rejectedNames.length) console.log(`rejected ${rejectedNames.length} invalid npm name(s): ${rejectedNames.slice(0, 5).map((p) => p.name).join(', ')}`)
   console.log(`published: ${published.length} (verified ${kept.length} + catalog-only ${Math.min(slimEntries.length, Math.max(0, MAX_TOTAL - kept.length))})`)
 
   const sidecar = {
