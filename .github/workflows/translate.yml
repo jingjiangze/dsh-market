@@ -36,7 +36,7 @@ jobs:
 
       - name: Translate the backlog
         env:
-          TRANSLATE_LANGS: ja,ko,ru
+          TRANSLATE_LANGS: zh,ja,ko,ru   # zh first: the catalogue is read in Chinese
           TRANSLATE_CONCURRENCY: '16'
           TRANSLATE_MAX_STRINGS: '30000'
           TRANSLATE_BUDGET_MS: '2700000'

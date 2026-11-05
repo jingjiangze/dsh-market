@@ -122,7 +122,7 @@ jobs:
         # Only the increment: the cache makes repeats free, and the dedicated
         # translate.yml job works through the backlog on its own schedule.
         env:
-          TRANSLATE_LANGS: ja,ko,ru
+          TRANSLATE_LANGS: zh,ja,ko,ru   # zh first: the catalogue is read in Chinese
           TRANSLATE_CONCURRENCY: '12'
           TRANSLATE_MAX_STRINGS: '3000'
           TRANSLATE_BUDGET_MS: '480000'
