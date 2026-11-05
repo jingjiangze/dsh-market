@@ -65,7 +65,10 @@ jobs:
   merge:
     needs: shard
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    # A full run takes ~45-50 min (2BingLing npm probe ~6 min, icon mirror ~12 min,
+    # translate, browse chunks, dataset upload). 40 min killed every crawl right at
+    # the publish step and looked like an unexplained "cancelled" run.
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
