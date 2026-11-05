@@ -458,8 +458,14 @@ async function main() {
   try {
     const extra = JSON.parse(await readFile(join(root, 'data', '2bingling-records.json'), 'utf8'))
     let added = 0
+    // npm names are case-insensitive in practice; compare lowercased so "Knotline"
+    // and "knotline" cannot slip through as two entries.
+    const known = new Set([...federated.keys(), ...names].map((name) => String(name).toLowerCase()))
     for (const record of Array.isArray(extra) ? extra : []) {
-      if (!record?.name || federated.has(record.name) || names.has(record.name)) continue
+      if (!record?.name) continue
+      const key = String(record.name).toLowerCase()
+      if (known.has(key)) continue
+      known.add(key)
       federated.set(record.name, {
         ...record,
         origins: new Set(record.origins ?? ['src-2bingling']),
