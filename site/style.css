@@ -438,3 +438,43 @@ button, .card, .chip, .src { -webkit-tap-highlight-color: transparent; touch-act
 @media (min-width: 721px) {
   .totop { display: none; }
 }
+
+/* ── personal layer: votes, installed set, recommendations ─────────────── */
+.ins {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 8px 0 4px; font-size: 12.5px; color: var(--muted);
+}
+.ins-stat b { color: var(--text); }
+.ins-stat b.up { color: #ffcf6b; }
+.ins-btn {
+  padding: 4px 10px; font-size: 12px; border-radius: 8px;
+  color: var(--text); background: rgba(255, 255, 255, .05);
+  border: 1px solid var(--line-2);
+}
+.ins-btn:disabled { opacity: .55; }
+
+.acts { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 4px; margin: 0; }
+.acts button {
+  width: 28px; height: 24px; padding: 0; font-size: 12px; line-height: 1;
+  border-radius: 7px; color: var(--muted);
+  background: rgba(10, 14, 22, .72); border: 1px solid var(--line-2);
+  opacity: .45; transition: opacity .15s ease, border-color .15s ease;
+}
+.card:hover .acts button, .acts button:focus-visible { opacity: 1; }
+.acts button[aria-pressed="true"] { opacity: 1; border-color: var(--acc, #6b8bff); color: #fff; }
+.acts button[data-vote="-1"][aria-pressed="true"] { border-color: #ff7a7a; }
+.card .body { padding-bottom: 34px; }
+.badges .own { color: #8fe3a2; }
+.badges .up { color: #ffcf6b; }
+
+.rec { margin: 6px 0 10px; }
+.rec h3 { margin: 0 0 6px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.rec h3 i { font-style: normal; opacity: .7; font-weight: 400; }
+.rec-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.rec-item {
+  flex: 0 0 auto; max-width: 210px; text-align: left;
+  padding: 7px 10px; border-radius: 9px; font-size: 12.5px; color: var(--text);
+  background: rgba(255, 255, 255, .04); border: 1px solid var(--line-2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rec-item i { display: block; font-style: normal; font-size: 11px; color: var(--muted); }
