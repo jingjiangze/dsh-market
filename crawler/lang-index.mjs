@@ -13,6 +13,10 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
+// Which language documents are committed for GitHub Pages (the rest stay on the
+// ModelScope dataset). Override with SITE_LANGS=zh,en when another language has to
+// become a DSH subscription link too.
+const SITE_LANGS = new Set((process.env.SITE_LANGS || 'zh').split(',').map((v) => v.trim()))
 const pick = (value, lang) => (typeof value === 'string' ? value : (value?.[lang] ?? ''))
 
 // Installs from the Chinese document go through the npm mirror: the schema allows a
@@ -91,9 +95,13 @@ for (const lang of LANGS) {
   const text = JSON.stringify(full, null, 2) + '\n'
   const slimText = JSON.stringify(slim) + '\n'
   await writeFile(join(root, 'dist', `index.${lang}.json`), text)
-  await writeFile(join(root, 'site', `index.${lang}.json`), slimText)
+  // Only the Chinese document is committed for GitHub Pages: DSH subscribes to it
+  // and Pages serves from git, so it has to be tracked. The other four live on the
+  // ModelScope dataset only — tracking them cost ~18 MB in every crawl commit and
+  // nothing read them (the site itself renders from the browse chunks).
+  if (SITE_LANGS.has(lang)) await writeFile(join(root, 'site', `index.${lang}.json`), slimText)
   const translated = full.plugins.filter((plugin) => Object.keys(plugin.title).length > 1).length
-  report.push(`${lang}: full ${(Buffer.byteLength(text) / 1048576).toFixed(2)} MB, slim ${(Buffer.byteLength(slimText) / 1048576).toFixed(2)} MB, ${translated}/${plugins.length} localized`)
+  report.push(`${lang}: full ${(Buffer.byteLength(text) / 1048576).toFixed(2)} MB, slim ${(Buffer.byteLength(slimText) / 1048576).toFixed(2)} MB${SITE_LANGS.has(lang) ? ' (tracked)' : ''}, ${translated}/${plugins.length} localized`)
 }
 console.log(`lang-index: ${plugins.length} plugins -> ${LANGS.length} documents`)
 for (const line of report) console.log(`  ${line}`)

@@ -133,8 +133,10 @@ jobs:
 
       - name: Assemble the site
         run: |
-          cp dist/index.json site/index.json
-          cp dist/index.sidecar.json site/sidecar.json
+          # Only the small, user-facing files are assembled here. index.json and the
+          # sidecar are build products kept out of git (see .gitignore): the site
+          # renders from the browse chunks in the dataset and DSH subscribes to
+          # index.zh.json, so committing them cost ~24 MB per crawl for nothing.
           cp dist/stats.json site/stats.json
 
       - name: Mirror the icons
