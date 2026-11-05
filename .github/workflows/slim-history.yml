@@ -1,0 +1,90 @@
+name: slim-history
+
+# One-off: drop the derived index documents from the repository's entire history.
+#
+# Why: every crawl commit carried dist/index.json (~12 MB), site/index.json (the same
+# bytes), the sidecar and four language documents (~18 MB), none of which anything
+# reads from git — the site renders from the browse chunks in the ModelScope dataset
+# and DSH subscribes to site/index.zh.json. The documents are now untracked, but they
+# still live in ~260 commits of history, which is what made the repository ~140 MB.
+#
+# Runs on a runner because rewriting and force-pushing 140 MB of history needs a
+# reliable network; the local checkout here cannot reach github.com consistently.
+#
+# Safety: the old tip is saved as branch `pre-slim` before main is moved, so the
+# previous history can be restored with a single force-push.
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'false = measure only, true = rewrite and force-push'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: slim-history
+  cancel-in-progress: false
+
+jobs:
+  rewrite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Measure before
+        run: |
+          echo "commits: $(git rev-list --count HEAD)"
+          du -sh .git
+          git count-objects -vH
+
+      - name: Drop the derived documents from every commit
+        run: |
+          set -euo pipefail
+          FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter '
+            git rm -r --cached --ignore-unmatch \
+              dist/index.json dist/index.sidecar.json dist/index.cn.json dist/index.intl.json \
+              site/index.json site/sidecar.json \
+              site/index.en.json site/index.ja.json site/index.ko.json site/index.ru.json
+          ' --prune-empty -- --all
+
+      - name: Expire the old objects and repack
+        run: |
+          set -euo pipefail
+          rm -rf .git/refs/original
+          git reflog expire --expire=now --all
+          git gc --prune=now --aggressive
+          echo "--- after ---"
+          du -sh .git
+          git count-objects -vH
+          echo "commits: $(git rev-list --count HEAD)"
+          echo "tracked index/stats files:"
+          git ls-files | grep -E 'index|stats' || true
+
+      - name: Verify the rewritten tree still has what the site needs
+        run: |
+          set -euo pipefail
+          for path in site/index.html site/index.zh.json site/app.js site/style.css .github/workflows/crawl.yml; do
+            if git cat-file -e "HEAD:$path"; then echo "ok      $path"; else echo "::error::missing $path"; exit 1; fi
+          done
+          for path in site/index.json dist/index.json site/sidecar.json; do
+            if git cat-file -e "HEAD:$path" 2>/dev/null; then echo "::error::still tracked $path"; exit 1; else echo "dropped $path"; fi
+          done
+
+      - name: Back up the old tip and force-push the rewritten history
+        if: inputs.apply == 'true'
+        run: |
+          set -euo pipefail
+          NEW=$(git rev-parse HEAD)
+          # The old tip is still reachable through the remote-tracking ref we cloned.
+          OLD=$(git rev-parse origin/main)
+          echo "old=$OLD new=$NEW"
+          if [ "$OLD" = "$NEW" ]; then echo "nothing was rewritten"; exit 0; fi
+          git push --force origin "$OLD:refs/heads/pre-slim"
+          git push --force origin "HEAD:refs/heads/main"
+          echo "pushed; pre-slim holds the previous history"
