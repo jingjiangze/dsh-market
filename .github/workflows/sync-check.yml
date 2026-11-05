@@ -51,7 +51,7 @@ jobs:
           echo "last successful crawl: $last (${age_h}h ago)"
           # 6h, not 4h: the crawl runs every 3h and needs 30-45 min, so a 4h threshold
           # kept re-dispatching a crawl while the previous one was still in flight.
-          if [ "$age_h" -ge 6 ]; then
+          if [ "$age_h" -ge 4 ]; then
             echo "catalogue is stale — dispatching crawl"
             gh workflow run crawl.yml --ref main
           fi
