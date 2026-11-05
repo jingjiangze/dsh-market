@@ -6,7 +6,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const PAGES = 'https://jingjiangze.github.io/dsh-market/index.json'
+const PAGES = 'https://jingjiangze.github.io/dsh-market/index.zh.json'
 // The brand domain only mirrors the shell (index documents are ~12 MB and made
 // wrangler's upload fail), so it is verified as a page, not as a JSON index.
 const BRAND = 'https://dsh.jiangjiangze.icu/'
@@ -16,7 +16,10 @@ const sha = (value) => createHash('sha256').update(value).digest('hex').slice(0,
 const failures = []
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-const local = await readFile(join(root, 'site', 'index.json'))
+// The tracked, user-facing document is index.zh.json — the DSH subscription link.
+// index.json is a build product and is no longer committed (it cost ~12 MB in every
+// crawl commit while nothing read it), so it is not used as the reference any more.
+const local = await readFile(join(root, 'site', 'index.zh.json'))
 console.log(`local         ${sha(local)}  ${local.length} B`)
 
 let pagesBytes = null
