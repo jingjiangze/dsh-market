@@ -85,7 +85,11 @@ async function onNpm(name) {
 const candidates = (document.plugins ?? [])
   .filter((plugin) => plugin.type === 'cordis-plugin')
   .filter((plugin) => (plugin.stars ?? 0) >= MIN_STARS)
-  .filter((plugin) => typeof plugin.name === 'string' && /^[a-z0-9][\w.-]*$/i.test(plugin.name))
+  // Must match the validator exactly: lowercase only, optional lowercase scope.
+  // `/i` here used to admit names like "Knotline" that the format-1 validator
+  // rejects ("must be a valid npm package name"), failing the whole crawl at the
+  // last validate step after all the data had already been uploaded.
+  .filter((plugin) => typeof plugin.name === 'string' && /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u.test(plugin.name) && plugin.name.length <= 214)
   .filter((plugin) => /^[^/\s]+\/[^/\s]+$/.test(String(plugin.fullName ?? '')))
 
 // Resolve npm availability in parallel BEFORE the main loop. One serial probe per
