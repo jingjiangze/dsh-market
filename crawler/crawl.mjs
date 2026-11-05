@@ -10,7 +10,7 @@
 // a missing entry, because DSH checks compatibility twice (market from this
 // index, install from the real package manifest).
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
-import { discoverFederated } from './sources.mjs'
+import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -298,7 +298,7 @@ function categoryFor(record, ...texts) {
 // placeholder, and — the way dsh.so does it — which popularity tier the package is
 // in, so the list itself shows whether a plugin is established or brand new.
 const KEEP_LABELS = new Set([
-  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh',
+  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh', 'src-polang', 'src-github',
   'trust-readme-verified', 'trust-repo-fallback',
   'zh-fallback',
   // Published from a catalog we could not re-verify this run: the reader should
@@ -452,6 +452,20 @@ async function main() {
     }
   }
   const federated = await discoverFederated()
+// GitHub repositories add what the catalogues miss: monorepos publishing many DSH
+// plugins (ShiroEirin/dsh-web-ui ships 19) and plugins that were never listed.
+const fromGitHub = await discoverGitHub(process.env.GITHUB_TOKEN || process.env.GH_TOKEN)
+for (const [name, record] of fromGitHub) {
+  const existing = federated.get(name)
+  if (!existing) { federated.set(name, record); continue }
+  for (const origin of record.origins) existing.origins.add(origin)
+  existing.hintRepo ??= record.hintRepo
+  existing.repo ??= record.repo
+  existing.stars ??= record.stars
+  existing.hintVersion ??= record.hintVersion
+  existing.description ??= record.description
+  existing.title ??= record.title
+}
   for (const record of federated.values()) {
     names.add(record.name)
     const entry = provenance.get(record.name) ?? { origins: new Set(), trust: new Set() }
@@ -773,6 +787,8 @@ async function main() {
         'src-dshso': { title: { en: 'dsh.so', zh: 'dsh.so' } },
         'src-awesome': { title: { en: 'awesome', zh: 'awesome' } },
         'src-mydsh': { title: { en: 'mydsh', zh: 'mydsh' } },
+        'src-polang': { title: { en: 'open market', zh: '开放市场' } },
+        'src-github': { title: { en: 'GitHub', zh: 'GitHub' } },
         'trust-readme-verified': { title: { en: 'README checked', zh: 'README 核对' } },
         'trust-repo-fallback': { title: { en: 'repo pinned', zh: '仓库固定' } },
         'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
