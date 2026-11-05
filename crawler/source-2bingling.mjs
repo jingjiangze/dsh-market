@@ -63,15 +63,23 @@ async function commitFor(fullName, branch) {
   return commitCache[fullName]
 }
 
-// A cheap existence check; only names that fail need a git source.
+const NPM_CONCURRENCY = Number(process.env.BINGLING_NPM_CONCURRENCY || 24)
+const NPM_CACHE = join(root, 'data', '2bingling-npm.json')
+let npmCache = {}
+try { npmCache = JSON.parse(await readFile(NPM_CACHE, 'utf8')) } catch { /* first run */ }
+
+// A cheap existence check; only names that fail need a git source. Cached by name so
+// repeat runs only probe entries that appeared since the last crawl.
 async function onNpm(name) {
+  if (typeof npmCache[name] === 'boolean') return npmCache[name]
   try {
     const res = await fetch(`https://registry.npmjs.org/${encodeURIComponent(name)}`, {
       headers: { accept: 'application/vnd.npm.install-v1+json' },
-      signal: AbortSignal.timeout(10000),
+      signal: AbortSignal.timeout(8000),
     })
-    return res.ok
-  } catch { return false }
+    npmCache[name] = res.ok
+  } catch { npmCache[name] = false }
+  return npmCache[name]
 }
 
 const candidates = (document.plugins ?? [])
@@ -79,6 +87,19 @@ const candidates = (document.plugins ?? [])
   .filter((plugin) => (plugin.stars ?? 0) >= MIN_STARS)
   .filter((plugin) => typeof plugin.name === 'string' && /^[a-z0-9][\w.-]*$/i.test(plugin.name))
   .filter((plugin) => /^[^/\s]+\/[^/\s]+$/.test(String(plugin.fullName ?? '')))
+
+// Resolve npm availability in parallel BEFORE the main loop. One serial probe per
+// name (10 s timeout each) used to stall this step for over an hour on 10k entries.
+const unresolved = [...new Set(candidates.map((plugin) => plugin.name).filter((name) => typeof npmCache[name] !== 'boolean'))]
+let cursor = 0
+await Promise.all(Array.from({ length: NPM_CONCURRENCY }, async () => {
+  while (cursor < unresolved.length) {
+    const name = unresolved[cursor++]
+    await onNpm(name)
+  }
+}))
+await writeFile(NPM_CACHE, JSON.stringify(npmCache))
+console.log(`2BingLing npm probe: ${unresolved.length} new names (${Object.keys(npmCache).length} cached)`)
 
 let gitLookups = 0
 let skipped = 0
@@ -112,7 +133,7 @@ for (const plugin of candidates) {
     const prior = byName.get(key)
     if (!prior || (record.gitSource && !prior.gitSource)) byName.set(key, record)
   }
-  if (await onNpm(name)) {
+  if (npmCache[name] === true) {
     // npm will be re-gated by the crawl; nothing else to do here.
     keep(base)
     continue
