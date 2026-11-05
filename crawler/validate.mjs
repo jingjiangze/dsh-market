@@ -89,13 +89,10 @@ if (parsed) {
 // 2. what is deployed must be what was validated
 const distBytes = Buffer.byteLength(distText)
 if (distBytes > MAX_INDEX_BYTES) fail('index size', `${distBytes} > ${MAX_INDEX_BYTES}`)
-// dist/index.json and site/index.json are build products, not sources: the site
-// reads the browse chunks and DSH subscribes to index.zh.json, so neither document
-// is tracked in git any more. Check the relationship only when a copy exists.
-const siteText = await read('site/index.json').catch(() => null)
-if (siteText === null) note('site/index.json', 'not tracked (derived)')
-else if (siteText !== distText) fail('site/index.json', 'differs from dist/index.json')
-else note('site/index.json', 'byte-identical to dist/index.json')
+// site/index.json is no longer a published or tracked artifact: the site renders
+// from the browse chunks in the dataset and DSH subscribes to index.zh.json. A stale
+// local copy may still sit in the working tree after a checkout, so comparing the two
+// only produced false failures. The real served documents are checked below.
 
 // The per-language documents are what a reader actually subscribes to inside DSH,
 // so each one must be a valid format-1 document on its own (the legacy
