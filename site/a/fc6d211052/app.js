@@ -67,7 +67,53 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'zh', region: localStorage.getItem('dsh-market-region') || (inChina() ? 'cn' : 'intl'), query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false }
+const state = { lang: 'zh', copyTarget: 'zh', region: localStorage.getItem('dsh-market-region') || (inChina() ? 'cn' : 'intl'), query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, showHidden: false }
+
+// ---- personal state: votes and the installed set ------------------------------
+// Everything stays in this browser. There is no server side (the site is static and
+// deliberately runs no Worker), so a vote is a preference for the ranking on this
+// device, not a public score.
+const VOTES_KEY = 'dsh-market-votes'
+const INSTALLED_KEY = 'dsh-market-installed'
+const readStore = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback } catch { return fallback } }
+const votes = readStore(VOTES_KEY, {})
+const installed = readStore(INSTALLED_KEY, {})
+const saveVotes = () => { try { localStorage.setItem(VOTES_KEY, JSON.stringify(votes)) } catch {} }
+const saveInstalled = () => { try { localStorage.setItem(INSTALLED_KEY, JSON.stringify(installed)) } catch {} }
+const voteOf = (name) => votes[name] ?? 0
+const isInstalled = (name) => Object.prototype.hasOwnProperty.call(installed, name)
+
+// Two plugins are "alike" when they share a category plus at least one other signal
+// (labels, keywords or author). That is the small, explainable version of the
+// "players who liked this also liked" idea: it can be computed without a backend.
+function alike(a, b) {
+  if (!a || !b || a.n === b.n) return 0
+  let score = 0
+  if (a.c && a.c === b.c) score += 2
+  const labels = new Set(a.l ?? [])
+  for (const label of b.l ?? []) if (labels.has(label)) score += 0.5
+  const aWords = new Set(String((a.kw ?? []).join(' ')).toLowerCase().split(/\s+/).filter(Boolean))
+  for (const word of String((b.kw ?? []).join(' ')).toLowerCase().split(/\s+/).filter(Boolean)) if (aWords.has(word)) score += 1
+  if (a.a && b.a && String(a.a).toLowerCase() === String(b.a).toLowerCase()) score += 1.5
+  return score
+}
+
+// How much a reader's own signals push an entry up: liked entries are the seeds,
+// installed entries count a little less (they are already in use, not a wish), and a
+// disliked entry is pushed far down so it does not come back through recommendations.
+function affinity(entry) {
+  const seedNames = [...Object.keys(votes).filter((name) => votes[name] > 0), ...Object.keys(installed)]
+  let score = 0
+  for (const name of seedNames) {
+    const seed = state.plugins.find((item) => item.n === name)
+    if (!seed) continue
+    score += alike(seed, entry) * (votes[name] > 0 ? 1 : 0.6)
+  }
+  if (voteOf(entry.n) > 0) score += 6
+  if (voteOf(entry.n) < 0) score -= 40
+  return score
+}
+
 
 const $ = (id) => document.getElementById(id)
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
@@ -91,6 +137,8 @@ const badges = (entry) => [...new Set((entry.l ?? []).map((label) => SRC_LABEL[l
 
 function matches(entry) {
   if (state.category !== 'all' && entry.c !== state.category) return false
+  // A disliked entry disappears from the list unless the reader asks to see it again.
+  if (!state.showHidden && voteOf(entry.n) < 0) return false
   const q = state.query.trim().toLowerCase()
   if (!q) return true
   const haystack = [entry.n, entry.t, entry.e, entry.d, entry.de, entry.a ?? '', ...(entry.x ?? []).flat()].join(' ').toLowerCase()
@@ -122,7 +170,104 @@ function icon(entry) {
 function card(entry) {
   const tags = [catTitle(entry.c), entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
-  return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags ? `<p class=badges>${extraTags}</p>` : ''}</div></article>`
+  const vote = voteOf(entry.n)
+  const owned = isInstalled(entry.n)
+  const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
+  const state_ = [owned ? `<b class=own>已装 ${esc(installed[entry.n] ?? '')}</b>` : '', upgrade ? '<b class=up>可升级</b>' : ''].join('')
+  const actions = `<p class=acts><button data-vote="1" data-name="${esc(entry.n)}" aria-pressed="${vote > 0}" title="喜欢">👍</button><button data-vote="-1" data-name="${esc(entry.n)}" aria-pressed="${vote < 0}" title="不喜欢">👎</button></p>`
+  return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags ? `<p class=badges>${extraTags}${state_}</p>` : (state_ ? `<p class=badges>${state_}</p>` : '')}${actions}</div></article>`
+}
+
+// The personal layer: what this browser says about the catalogue (votes) and what is
+// actually installed (a directory scan or an imported file). It renders two strips
+// above the list — a status bar and a "for you" rail — and both stay hidden until the
+// reader has given at least one signal, so a first visit looks exactly as before.
+function renderPersonal(pool) {
+  const disliked = Object.keys(votes).filter((name) => votes[name] < 0).length
+  const liked = Object.keys(votes).filter((name) => votes[name] > 0).length
+  const ownedNames = Object.keys(installed)
+  const upgradable = ownedNames.filter((name) => {
+    const entry = state.plugins.find((item) => item.n === name)
+    return entry && entry.v && String(installed[name]) !== String(entry.v)
+  }).length
+  const unknown = ownedNames.filter((name) => !state.plugins.some((item) => item.n === name)).length
+
+  let bar = document.getElementById('ins')
+  if (!bar) {
+    bar = document.createElement('div')
+    bar.id = 'ins'
+    bar.className = 'ins'
+    const anchor = document.getElementById('meta')
+    anchor?.parentElement?.insertBefore(bar, anchor.nextSibling)
+  }
+  bar.innerHTML = `<span class=ins-stat>已装 <b>${ownedNames.length}</b>${upgradable ? ` · <b class=up>${upgradable}</b> 可升级` : ''}${unknown ? ` · <b>${unknown}</b> 未收录` : ''}${liked ? ` · 👍 <b>${liked}</b>` : ''}</span>
+    <button class=ins-btn data-scan>扫描已安装</button>
+    <button class=ins-btn data-import-input>导入 JSON</button>
+    ${disliked ? `<button class=ins-btn data-toggle-hidden aria-pressed="${state.showHidden}">${state.showHidden ? '隐藏' : '显示'}已屏蔽 ${disliked}</button>` : ''}
+    <input type=file id=importFile accept="application/json,.json" hidden>`
+
+  let rail = document.getElementById('rec')
+  if (!rail) {
+    rail = document.createElement('div')
+    rail.id = 'rec'
+    rail.className = 'rec'
+    const list = document.getElementById('list')
+    list?.parentElement?.insertBefore(rail, list)
+  }
+  const seeds = liked + ownedNames.length
+  if (!seeds) { rail.innerHTML = ''; return }
+  const picks = pool
+    .filter((entry) => voteOf(entry.n) >= 0 && !isInstalled(entry.n))
+    .map((entry) => ({ entry, score: affinity(entry) }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6)
+  rail.innerHTML = picks.length
+    ? `<h3>为你推荐 <i>基于${liked ? ` ${liked} 个喜欢` : ''}${liked && ownedNames.length ? ' +' : ''}${ownedNames.length ? ` ${ownedNames.length} 个已装` : ''}</i></h3><div class=rec-row>${picks.map(({ entry }) => `<button class=rec-item data-open="${esc(entry.n)}">${esc(titleOf(entry)) || esc(entry.n)}<i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div>`
+    : ''
+}
+
+// Reads a DSH profile directory in the browser: walk for `node_modules`, then keep
+// the packages whose package.json carries a dsh section or a dsh keyword. Chrome and
+// Edge expose showDirectoryPicker; other browsers use the JSON import instead.
+async function scanInstalled() {
+  if (!window.showDirectoryPicker) {
+    alert('这个浏览器不支持直接读取目录，请用「导入 JSON」。')
+    return null
+  }
+  const root = await window.showDirectoryPicker({ id: 'dsh-profile', mode: 'read' })
+  const found = {}
+  const readPackage = async (dirHandle, fallbackName) => {
+    try {
+      const file = await dirHandle.getFileHandle('package.json')
+      const pkg = JSON.parse(await (await file.getFile()).text())
+      const words = Array.isArray(pkg.keywords) ? pkg.keywords.map((word) => String(word).toLowerCase()) : []
+      const isDsh = Boolean(pkg.dsh) || words.includes('dsh-plugin') || words.some((word) => word.startsWith('dsh-'))
+      if (isDsh) found[pkg.name || fallbackName] = pkg.version || ''
+    } catch { /* not a package */ }
+  }
+  const readModules = async (modules) => {
+    for await (const [name, handle] of modules.entries()) {
+      if (handle.kind !== 'directory') continue
+      if (name.startsWith('@')) {
+        for await (const [scoped, scopedHandle] of handle.entries()) {
+          if (scopedHandle.kind === 'directory') await readPackage(scopedHandle, `${name}/${scoped}`)
+        }
+      } else {
+        await readPackage(handle, name)
+      }
+    }
+  }
+  const walk = async (dir, depth) => {
+    if (depth > 5) return
+    for await (const [name, handle] of dir.entries()) {
+      if (handle.kind !== 'directory' || name.startsWith('.')) continue
+      if (name === 'node_modules') { await readModules(handle); continue }
+      await walk(handle, depth + 1)
+    }
+  }
+  await walk(root, 0)
+  return found
 }
 
 function render() {
@@ -155,6 +300,7 @@ function render() {
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
   $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
+  renderPersonal(pool)
   renderFooter()
   const visible = pool.slice(0, state.limit)
   $('list').innerHTML = pool.length
@@ -340,8 +486,56 @@ function ensureStyles() {
   }
 }
 
+// Import a scan produced elsewhere (any browser, or the PowerShell one-liner).
+document.addEventListener('change', (event) => {
+  const input = event.target
+  if (!input || input.id !== 'importFile' || !input.files?.length) return
+  input.files[0].text()
+    .then((text) => {
+      const data = JSON.parse(text)
+      const pairs = Array.isArray(data) ? Object.fromEntries(data.map((name) => [String(name), ''])) : data
+      for (const [name, version] of Object.entries(pairs)) installed[name] = String(version ?? '')
+      saveInstalled()
+      render()
+    })
+    .catch((error) => alert(`导入失败：${error.message}`))
+})
+
 document.addEventListener('click', (event) => {
   if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
+
+  const voteButton = event.target.closest('[data-vote]')
+  if (voteButton) {
+    // Clicking the active vote clears it, the way a repeated thumb press behaves.
+    event.stopPropagation()
+    const name = voteButton.dataset.name
+    const want = Number(voteButton.dataset.vote)
+    votes[name] = votes[name] === want ? 0 : want
+    if (!votes[name]) delete votes[name]
+    saveVotes()
+    render()
+    return
+  }
+  const scanButton = event.target.closest('[data-scan]')
+  if (scanButton) {
+    scanButton.disabled = true
+    scanButton.textContent = '扫描中…'
+    scanInstalled()
+      .then((found) => {
+        if (!found) return
+        Object.assign(installed, found)
+        saveInstalled()
+        render()
+      })
+      .catch((error) => alert(`扫描失败：${error.message}`))
+      .finally(() => { scanButton.disabled = false; scanButton.textContent = '扫描已安装' })
+    return
+  }
+  const importButton = event.target.closest('[data-import-input]')
+  if (importButton) { document.getElementById('importFile')?.click(); return }
+  const hiddenButton = event.target.closest('[data-toggle-hidden]')
+  if (hiddenButton) { state.showHidden = !state.showHidden; render(); return }
+
   const regionButton = event.target.closest('[data-region]')
   if (regionButton) {
     // Flip between the dataset (国内) and GitHub Pages (国外); the copied link and
