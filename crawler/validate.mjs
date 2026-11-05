@@ -191,7 +191,6 @@ async function checkPlugin(plugin) {
     }
     fail('registry', `${plugin.name}@${version.version} → ${err.message}`)
   }
-  }
 }
 
 if (!OFFLINE && parsed) {
