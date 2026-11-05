@@ -43,6 +43,17 @@ jobs:
           du -sh .git
           git count-objects -vH
 
+      - name: Normalise the working tree
+        # filter-branch refuses to run on a dirty tree, and a fresh checkout can look
+        # dirty here (line-ending normalisation from the repository's .gitattributes).
+        run: |
+          echo "--- before ---"
+          git status --porcelain | head -20
+          git reset --hard HEAD
+          echo "--- after ---"
+          git status --porcelain | head -20
+          echo "(empty above means clean)"
+
       - name: Drop the derived documents from every commit
         run: |
           set -euo pipefail
