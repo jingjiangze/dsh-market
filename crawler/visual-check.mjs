@@ -220,15 +220,21 @@ for (const vp of VIEWPORTS) {
     await page.waitForTimeout(700)
     await page.screenshot({ path: join(OUT, `${vp.name}-detail.png`) })
     // The heat button used to fall through to the stars key, so both produced the same
-  // list. Compare the first names under each sort.
-  const firstNames = async () => page.$eval('.card h2', (nodes) => nodes.slice(0, 6).map((n) => n.textContent.trim()))
-  await page.click('[data-sort="stars"]')
-  await page.waitForTimeout(250)
-  const starsOrder = await firstNames()
-  await page.click('[data-sort="score"]')
-  await page.waitForTimeout(250)
-  const heatOrder = await firstNames()
-  if (starsOrder.join() === heatOrder.join()) fail('desktop: 热度 and 星标 produce the identical order')
+    // list. Compare the first names under each sort. The clicks go through the DOM:
+    // the quiz dialog is modal, so a pointer click on the toolbar waits forever.
+    await page.evaluate(() => { const d = document.getElementById("dlg"); if (d && d.open) d.close() })
+    const orderUnder = async (mode) => {
+      await page.evaluate((sort) => document.querySelector('[data-sort="' + sort + '"]')?.click(), mode)
+      await page.waitForTimeout(300)
+      return page.$$eval(".card h2", (nodes) => nodes.slice(0, 6).map((n) => n.textContent.trim()))
+    }
+    const starsOrder = await orderUnder("stars")
+    const heatOrder = await orderUnder("score")
+    if (!starsOrder.length || !heatOrder.length) fail("desktop: no cards rendered after switching sort")
+    else if (starsOrder.join() === heatOrder.join()) fail("desktop: 热度 and 星标 produce the identical order")
+    // Reopen a card so the detail probes below have a dialog to read.
+    await page.evaluate(() => document.querySelector(".card")?.click())
+    await page.waitForTimeout(400)
   const detailGrid = await page.evaluate(() => {
     const dl = document.querySelector('#dlg dl')
     if (!dl) return null
