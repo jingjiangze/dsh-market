@@ -103,20 +103,23 @@ for (const vp of VIEWPORTS) {
     timezoneId: 'Asia/Shanghai',
   })
   const page = await context.newPage()
+  const failedAssets = []
+  const hits = []
+  const consoleErrors = []
+  page.on('console', (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text().slice(0, 200)) })
+  page.on('requestfailed', (req) => {
+    if (/\.(css|js)(\?|$)/.test(req.url())) failedAssets.push(`${req.failure()?.errorText} ${req.url()}`)
+  })
   // app.js hardcodes absolute mirror URLs for its data and its own bundle, so the
   // fixture has to answer those origins too. Routing keeps the render fully offline
   // and deterministic: no CDN, no dataset, no dependence on the runner's network.
-  await context.route(/\/browse\/meta\.json(\?.*)?$/, (route) => route.fulfill({ json: META }))
-  await context.route(/\/browse\/[^/]+\.json(\?.*)?$/, (route) => route.fulfill({ json: FIXTURE }))
+  await context.route(/\/browse\/meta\.json(\?.*)?$/, (route) => { hits.push('meta ' + route.request().url()); return route.fulfill({ json: META }) })
+  await context.route(/\/browse\/[^/]+\.json(\?.*)?$/, (route) => { hits.push('chunk ' + route.request().url()); return route.fulfill({ json: FIXTURE }) })
   await context.route(/\/a\/[0-9a-f]{10}\/style\.css(\?.*)?$/, async (route) => {
     route.fulfill({ body: await readFile(join(SITE, 'style.css')), contentType: TYPES['.css'] })
   })
   await context.route(/\/a\/[0-9a-f]{10}\/app\.js(\?.*)?$/, async (route) => {
     route.fulfill({ body: await readFile(join(SITE, 'app.js')), contentType: TYPES['.js'] })
-  })
-  const failedAssets = []
-  page.on('requestfailed', (req) => {
-    if (/\.(css|js)(\?|$)/.test(req.url())) failedAssets.push(`${req.failure()?.errorText} ${req.url()}`)
   })
   await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 60000 })
   await page.waitForSelector('.card', { timeout: 30000 }).catch(() => {})
@@ -142,9 +145,11 @@ for (const vp of VIEWPORTS) {
       overflowX: document.documentElement.scrollWidth - window.innerWidth,
       deadIdxButtons: document.querySelectorAll('[data-idx="index.cn"], [data-idx="index.intl"]').length,
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
+      metaText: (document.getElementById('meta')?.textContent ?? '').slice(0, 80),
+      listText: (document.getElementById('list')?.textContent ?? '').slice(0, 120),
     }
   })
-  report.push({ viewport: vp.name, ...probe })
+  report.push({ viewport: vp.name, ...probe, hits, consoleErrors })
 
   if (!probe.cssVar) fail(`${vp.name}: --bg empty — the stylesheet never applied`)
   if (probe.bodyBg === 'rgba(0, 0, 0, 0)') fail(`${vp.name}: body background unstyled`)
