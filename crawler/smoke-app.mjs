@@ -132,17 +132,10 @@ if (api.state.lang !== 'zh') problems.push('render() alone should not change the
 api.chrome()
 if (/data-region/.test(segElement.innerHTML)) problems.push('the removed region toggle is still rendered')
 
-// Steam-style shelves: several rows (high score / popular / new / daily). Each row
-// holds at most 8 entries and the daily row keeps its dated heading.
+// The themed shelves (high score / popular / new / daily) were removed by request:
+// the page opens straight into the category rail and the card grid.
 const rail = /** @type {any} */ (element('rec'))
-if (rail && rail.innerHTML && !/今日推荐/.test(rail.innerHTML)) problems.push('the daily shelf lost its heading')
-if (rail && rail.innerHTML) {
-  const shelves = (rail.innerHTML.match(/class=rec-shelf/g) ?? []).length
-  const picked = (rail.innerHTML.match(/class=rec-item/g) ?? []).length
-  if (shelves < 1) problems.push('no recommendation shelves were rendered')
-  if (picked < 1) problems.push('the recommendation shelves hold no entries')
-  if (picked > shelves * 8) problems.push(`${picked} entries across ${shelves} shelves exceeds 8 per shelf`)
-}
+if (rail && /rec-shelf|今日推荐/.test(rail.innerHTML)) problems.push('a retired recommendation shelf is still rendered')
 // The quiz entry point must exist on the toolbar.
 if (!/帮我选/.test(rail?.parentElement?.innerHTML ?? '') && !/帮我选/.test(/** @type {any} */ (element('sort')).innerHTML ?? '')) {
   // renderPersonal inserts it into .row; the stub has no .row, so accept its absence
