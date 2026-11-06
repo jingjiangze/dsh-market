@@ -113,8 +113,17 @@ for (const vp of VIEWPORTS) {
   // app.js hardcodes absolute mirror URLs for its data and its own bundle, so the
   // fixture has to answer those origins too. Routing keeps the render fully offline
   // and deterministic: no CDN, no dataset, no dependence on the runner's network.
-  await context.route(/\/browse\/meta\.json(\?.*)?$/, (route) => { hits.push('meta ' + route.request().url()); return route.fulfill({ json: META }) })
-  await context.route(/\/browse\/[^/]+\.json(\?.*)?$/, (route) => { hits.push('chunk ' + route.request().url()); return route.fulfill({ json: FIXTURE }) })
+  //
+  // One handler, dispatched by URL: two overlapping routes are resolved by Playwright
+  // in reverse registration order, so a broad `/browse/*.json` rule silently answered
+  // `meta.json` with the chunk array. meta stayed an array, `chunks` was undefined and
+  // the render bailed before painting a single card.
+  await context.route(/\/browse\/[^/]+\.json(\?.*)?$/, (route) => {
+    const url = route.request().url()
+    const isMeta = /\/browse\/meta\.json(\?|$)/.test(url)
+    hits.push(`${isMeta ? 'meta' : 'chunk'} ${url}`)
+    return route.fulfill({ json: isMeta ? META : FIXTURE })
+  })
   await context.route(/\/a\/[0-9a-f]{10}\/style\.css(\?.*)?$/, async (route) => {
     route.fulfill({ body: await readFile(join(SITE, 'style.css')), contentType: TYPES['.css'] })
   })
