@@ -79,7 +79,7 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all' }
+const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', targets: null }
 
 // ---- personal state: favorites and the installed set -------------------------
 // Everything stays in this browser (the site is static and runs no Worker).
@@ -401,6 +401,12 @@ function heroIcon(entry) {
 const ZH_SOURCE = { native: '包自带中文', override: '人工整理', catalog: '目录提供', detected: '作者原文', fallback: '暂用英文' }
 
 function detailHtml(entry) {
+  // The catalogue de-duplicates colliding display names by appending a suffix
+  // (`dsh-voice` -> `dsh-voice-8`), so `entry.n` is not always the package a client
+  // can install. `install-targets.json` carries the real name; when it is missing
+  // (not yet deployed, offline) every line below is exactly the old behaviour.
+  const target = state.targets?.[entry.n]
+  const packageName = target?.install || entry.n
   const pairs = [
     ['类别', catTitle(entry.c)],
     ['版本', entry.v],
@@ -414,9 +420,9 @@ function detailHtml(entry) {
     ['收录位数', entry.on ? `${entry.on} 个目录` : ''],
     ['校验', entry.dg ? `完整性✓${entry.at ? ' 签名✓' : ''}` : ''],
     ['来源', badges(entry).join(' · ')],
-    ['包名', entry.n],
+    ['包名', packageName],
   ].filter(([, value]) => value)
-  const install = `${entry.n}@${entry.v || ''}`
+  const install = `${packageName}@${target?.version || entry.v || ''}`
   const links = [entry.h, entry.r].filter(Boolean)
   const keywords = (entry.kw ?? []).map((word) => `<b>${esc(word)}</b>`).join('')
   const position = state.visible.findIndex((item) => item.n === entry.n)
@@ -485,6 +491,29 @@ async function fetchTiered(path) {
     }
   }
   throw lastError ?? new Error('no source')
+}
+
+// Install targets: the sidecar that maps a de-duplicated catalogue name onto the
+// package a client can really install (`dsh-voice-8` -> `dsh-voice@0.4.2`). It is
+// optional by design — a page that cannot fetch it keeps the old behaviour — so this
+// never blocks the list and never surfaces an error.
+async function loadTargets() {
+  const sources = [
+    `${PAGES}/install-targets.json`,
+    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/install-targets.json',
+  ]
+  for (const url of sources) {
+    try {
+      const doc = await withTimeout(url)
+      if (!doc || typeof doc.targets !== 'object' || !doc.targets) return
+      state.targets = doc.targets
+      // A dialog opened before this landed is already rendered from the bare name.
+      if (state.open) openDetail(state.open)
+      return
+    } catch {
+      // 404 here is the normal state before the first crawl publishes the sidecar.
+    }
+  }
 }
 
 // The whole catalogue is ~7 MB across ~44 chunks. The first chunk paints at once,
@@ -705,6 +734,7 @@ if (LANGS.includes(saved)) state.lang = saved
 else if (!String(navigator.language ?? '').toLowerCase().startsWith('zh')) state.lang = 'en'
 chrome()
 loadIndex()
+loadTargets()
 // 1.2 s is enough for the dataset copy to apply; abroad it 404s immediately, so
 // the fallback sheet lands before the reader notices unstyled text.
 setTimeout(ensureStyles, 1200)

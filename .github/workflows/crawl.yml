@@ -145,6 +145,14 @@ jobs:
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
+      - name: Publish the install-target sidecar
+        # A de-duplicated entry (`dsh-voice` -> `dsh-voice-8`) is not installable under
+        # the name the index shows; this reads dist/index.zh.json and writes the diff
+        # that maps those entries onto the package a client can really install. It
+        # lands in both dist/ (dataset) and site/ (the copy GitHub Pages serves), and
+        # reads the npm existence cache the 2BingLing step already filled.
+        run: node crawler/emit-install-targets.mjs
+
       - name: Assemble the site
         run: |
           # Only the small, user-facing files are assembled here. index.json and the

@@ -61,14 +61,20 @@ const localStorage = { getItem: () => null, setItem() {} }
 const navigator = { language: 'zh-CN', clipboard: { writeText: async () => {} } }
 const location = { origin: 'https://example.test', pathname: '/dsh-market/' }
 const fakeWindow = { __r: 0, addEventListener() {} }
+// The install-target sidecar: `dsh-context` is a de-duplicated catalogue name, so the
+// install command must use the package behind it.
+const TARGETS = { schema: 1, targets: { 'dsh-context': { install: 'dsh-context-real', version: '0.4.2', alias: true } } }
 const fetchStub = async (url) => {
   const text = String(url)
-  const body = text.endsWith('meta.json') ? META : text.endsWith('0.json') ? CHUNK : { at: new Date().toISOString() }
+  const body = text.endsWith('meta.json') ? META
+    : text.endsWith('0.json') ? CHUNK
+    : text.endsWith('install-targets.json') ? TARGETS
+    : { at: new Date().toISOString() }
   return { ok: true, status: 200, json: async () => body }
 }
 
 const run = new Function('document', 'localStorage', 'navigator', 'location', 'fetch', 'setTimeout', 'console', 'window',
-  `${source}\nreturn { render, openDetail, openGuide, state, chrome, favorites, saveFavorites }`)
+  `${source}\nreturn { render, openDetail, openGuide, state, chrome, favorites, saveFavorites, loadTargets }`)
 const api = run(document, localStorage, navigator, location, fetchStub, () => 0, console, fakeWindow)
 await api.state.meta
 await new Promise((resolve) => setTimeout(resolve, 120))
@@ -110,6 +116,15 @@ if (!/data-copy=/.test(dialog.innerHTML)) problems.push('dialog has no install c
 if (!/data-next/.test(dialog.innerHTML) || !/class=nav/.test(dialog.innerHTML)) problems.push('dialog has no next/position controls')
 if (/class=dual/.test(dialog.innerHTML)) problems.push('dialog still renders the old bilingual columns')
 if (/class=close|关闭/.test(dialog.innerHTML)) problems.push('dialog still renders the removed close button')
+
+// Install targets: the sidecar must replace the catalogue name in the install
+// command, and a page that cannot fetch it must keep the old bare-name command.
+await api.loadTargets()
+api.openDetail('dsh-context')
+if (!/dsh-context-real@0\.4\.2/.test(dialog.innerHTML)) problems.push('the install-target sidecar was not applied to the install command')
+api.state.targets = null
+api.openDetail('dsh-context')
+if (!/dsh-context@0\.4\.1/.test(dialog.innerHTML)) problems.push('a missing sidecar must fall back to the catalogue name')
 
 // Source buttons are per language: picking one copies that language's index and
 // must not filter the list.
