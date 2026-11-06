@@ -50,6 +50,7 @@ function localized(value, lang) {
 }
 
 const report = []
+const sizes = []
 for (const lang of LANGS) {
   // Two copies of each language document:
   //   dist/index.<lang>.json  full  -> published to the ModelScope dataset (国内源)
@@ -72,32 +73,53 @@ for (const lang of LANGS) {
       versions: (plugin.versions ?? []).map((version) => ({ ...version, source: sourceFor(version, lang) })),
     })),
   }
-  const slim = {
-    ...full,
-    plugins: plugins.map((plugin) => {
-      const version = plugin.versions?.[0] ?? {}
-      return {
-        name: plugin.name,
-        title: localized(plugin.title, lang),
-        description: {
-          ...localized(plugin.description, lang),
-          ...(pick(plugin.description, 'en') ? { en: pick(plugin.description, 'en').slice(0, 120) } : {}),
-        },
-        metadata: {
-          category: plugin.metadata?.category ?? 'other',
-          ...(plugin.metadata?.labels?.length ? { labels: plugin.metadata.labels.slice(0, 4) } : {}),
-          ...(plugin.metadata?.sortKeys ? { sortKeys: plugin.metadata.sortKeys } : {}),
-        },
-        versions: [{
-          version: version.version ?? '',
-          publishTimestamp: version.publishTimestamp ?? 0,
-          source: sourceFor(version, lang),
-          ...(version.engines ? { engines: version.engines } : {}),
-        }],
-      }
-    }),
+  // Sized for the wire, not for humans: see the budget check at the end of this file.
+  const TITLE_MAX = 48
+  const DESC_MAX = 80
+  const text60 = (value, max) => {
+    const raw = String(value ?? '')
+    return raw.length > max ? raw.slice(0, max) + '…' : raw
   }
-  const text = JSON.stringify(full, null, 2) + '\n'
+  const slimPlugin = (plugin) => {
+    const version = plugin.versions?.[0] ?? {}
+    const english = pick(plugin.description, 'en')
+    const target = lang === 'en' ? '' : pick(plugin.description, lang)
+    // Only carry the English fallback when the reader's language is missing; keeping
+    // both for every entry cost ~1.8 MB on its own.
+    const meaningful = english && english.trim().toLowerCase() !== String(plugin.name).toLowerCase()
+    const description = !meaningful
+      ? null
+      : target && target !== english
+        ? { en: text60(english, DESC_MAX), [lang]: text60(target, DESC_MAX) }
+        : { en: text60(english, DESC_MAX) }
+    return {
+      name: plugin.name,
+      ...(() => {
+        const english = text60(pick(plugin.title, 'en'), TITLE_MAX)
+        const local = lang === 'en' ? '' : text60(pick(plugin.title, lang), TITLE_MAX)
+        // `title` is optional in format 1 and DSH already renders the package name,
+        // so repeating it for 60% of the catalogue only costs bytes.
+        if ((!local || local === english) && english.toLowerCase() === String(plugin.name).toLowerCase()) return {}
+        return { title: { en: english, ...(local && local !== english ? { [lang]: local } : {}) } }
+      })(),
+      ...(description ? { description } : {}),
+      metadata: {
+        category: plugin.metadata?.category ?? 'other',
+        // Two labels: where it came from and whether it verified. The tier/score labels
+        // are the site's own ranking aids and mean nothing to DSH.
+      },
+      versions: [{
+        version: version.version ?? '',
+        publishTimestamp: version.publishTimestamp ?? 0,
+        source: sourceFor(version, lang),
+        ...(version.engines ? { engines: version.engines } : {}),
+      }],
+    }
+  }
+  const slim = { ...full, plugins: plugins.map(slimPlugin) }
+  // Dataset copy: compact, and projected exactly like the Pages copy. Indentation
+  // alone used to cost ~35% of the payload and nothing reads these files by eye.
+  const text = JSON.stringify({ ...full, plugins: full.plugins.map(slimPlugin) }) + '\n'
   const slimText = JSON.stringify(slim) + '\n'
   await writeFile(join(root, 'dist', `index.${lang}.json`), text)
   // Only the Chinese document is committed for GitHub Pages: DSH subscribes to it
@@ -105,8 +127,21 @@ for (const lang of LANGS) {
   // ModelScope dataset only — tracking them cost ~18 MB in every crawl commit and
   // nothing read them (the site itself renders from the browse chunks).
   if (SITE_LANGS.has(lang)) await writeFile(join(root, 'site', `index.${lang}.json`), slimText)
-  const translated = full.plugins.filter((plugin) => Object.keys(plugin.title).length > 1).length
+  sizes.push(Buffer.byteLength(slimText))
+  const translated = full.plugins.filter((plugin) => Object.keys(plugin.title ?? {}).length > 1).length
   report.push(`${lang}: full ${(Buffer.byteLength(text) / 1048576).toFixed(2)} MB, slim ${(Buffer.byteLength(slimText) / 1048576).toFixed(2)} MB${SITE_LANGS.has(lang) ? ' (tracked)' : ''}, ${translated}/${plugins.length} localized`)
 }
 console.log(`lang-index: ${plugins.length} plugins -> ${LANGS.length} documents`)
 for (const line of report) console.log(`  ${line}`)
+
+// Budget gate. DSH fetches this document without compression and gives the market
+// request 30 s; at the local link speed an 8.2 MB body took 26 s and timed out
+// intermittently. Anything above BUDGET_MB is a regression that breaks installation
+// for readers on a slower path, so fail the build instead of publishing it.
+const BUDGET_MB = Number(process.env.LANG_INDEX_BUDGET_MB || 6)
+const biggest = Math.max(...sizes, 0) / 1048576
+if (biggest > BUDGET_MB) {
+  console.error(`lang-index: FAIL — largest language document is ${biggest.toFixed(2)} MB, budget ${BUDGET_MB} MB`)
+  process.exit(1)
+}
+console.log(`lang-index: largest document ${biggest.toFixed(2)} MB (budget ${BUDGET_MB} MB)`)
