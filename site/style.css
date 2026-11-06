@@ -354,6 +354,7 @@ h1::before {
 .card {
   position: relative;
   display: flex;
+  align-items: flex-start;
   gap: 12px;
   padding: 15px 15px 13px;
   background: var(--plate);
@@ -391,7 +392,9 @@ h1::before {
 .card:hover::before { background: var(--blue); }
 .card:focus-visible { outline: 1px solid var(--blue); outline-offset: 2px; }
 
-.hicon {
+/* .hicon plus any direct child image: the card template used to emit a bare <img>. */
+.hicon,
+.card > img {
   flex: 0 0 auto;
   width: 44px;
   height: 44px;
