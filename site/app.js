@@ -35,12 +35,14 @@ function indexUrl(lang = state.copyTarget) {
   return `${PAGES}/index.${lang}.json`
 }
 
-// Data comes from the same region the reader picked; the other mirrors stay as
-// fallbacks so a blocked dataset or a cold jsDelivr does not break the page.
-function tiersFor(region = inChina() ? 'cn' : 'intl') {
-  return region === 'cn'
-    ? [`${DATASET}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${PAGES}/browse`]
-    : [`${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${DATASET}/browse`]
+// Data comes from the dataset first in every region. It is the only host that
+// actually carries `browse/`: Pages and jsDelivr both 404 on that path because the
+// chunks are a build product that is never committed. The old region-ordered list
+// started with Pages abroad, so a reader outside China burned two dead tiers and
+// then failed outright — the "索引加载失败：Failed to fetch" screen. Dataset first,
+// Pages last as the blocked-network hop.
+function tiersFor() {
+  return [`${DATASET}/browse`, `${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse']
 }
 const SRC_LABEL = {
   'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome',
