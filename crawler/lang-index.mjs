@@ -75,7 +75,7 @@ for (const lang of LANGS) {
   }
   // Sized for the wire, not for humans: see the budget check at the end of this file.
   const TITLE_MAX = 48
-  const DESC_MAX = 80
+  const DESC_MAX = 48
   const text60 = (value, max) => {
     const raw = String(value ?? '')
     return raw.length > max ? raw.slice(0, max) + '…' : raw
