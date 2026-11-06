@@ -14,7 +14,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: translate
+  group: catalog-publish
   cancel-in-progress: false
 
 jobs:

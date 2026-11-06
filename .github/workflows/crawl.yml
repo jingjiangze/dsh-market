@@ -1,11 +1,9 @@
 name: crawl
 
-# Three parallel shards verify different stripes of the candidate pool; one merge
-# job unions their slices into the carried catalogue, publishes the index (verified
-# entries + everything the catalogs list), translates, validates and lands it
-# through a pull request. The PR exists so every catalogue change has a reviewable
-# diff and a green test run attached; the merge happens here because pull requests
-# opened with the repository token do not start `pull_request` workflows.
+# Three parallel shards verify different stripes of the candidate pool. The merge job
+# assembles and validates the complete release, then commits it to main through the
+# Git Data API. All release gates therefore run before the write; push-triggered CI
+# remains a post-publish regression check.
 on:
   schedule:
     - cron: '17 */3 * * *'   # every three hours, at :17
@@ -13,11 +11,10 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
   actions: write
 
 concurrency:
-  group: crawl
+  group: catalog-publish
   cancel-in-progress: false
 
 jobs:
@@ -188,10 +185,19 @@ jobs:
         run: node crawler/ms-upload.mjs
 
       - name: Validate before anything lands
-        # Content checks only: the CDN copy of the site assets cannot be fresh
-        # before this branch merges, so mirror freshness is verified by `ci` and
-        # `deploy` on main instead of failing the crawl.
         run: node crawler/validate.mjs --offline
+
+      - name: Run release gates before publishing
+        env:
+          MAX_CANDIDATES: '60'
+          MAX_PLUGINS: '60'
+          CONCURRENCY: '6'
+          SOURCES: awesome
+        run: |
+          node --check site/app.js
+          node crawler/smoke-app.mjs
+          node crawler/validate.mjs
+          node crawler/crawl.mjs --dry-run
 
       - id: publish
         name: Publish through the GitHub Git Data API
