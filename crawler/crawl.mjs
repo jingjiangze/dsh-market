@@ -14,7 +14,7 @@ import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
 import { applyTranslations } from './i18n.mjs'
 import { dedupeByRepo } from './dedupe.mjs'
-import { heatOf } from './score.mjs'
+import { heatOf, heatMaxima } from './score.mjs'
 import { usecasesOf, CATEGORY_USECASES } from './usecases.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -717,8 +717,9 @@ for (const [name, record] of fromGitHub) {
   const published = merged.slice(0, MAX_TOTAL)
   // Combined heat (stars + downloads, see crawler/score.mjs). Every published entry
   // gets one so the site can sort and badge without recomputation.
+  const maxima = heatMaxima(published)
   for (const plugin of published) {
-    const total = heatOf(plugin)
+    const total = heatOf(plugin, maxima)
     // Use-case tags: a source's own tags win; a catalogue without tags falls back to
     // its category so the quiz can still reach every entry.
     const existing = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:'))

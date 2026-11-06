@@ -38,7 +38,10 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   dl: 10 + i * 11,
   l: ['src-official', i % 4 === 0 ? 'catalog-only' : 'src-npm'],
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
-  sc: 96 - (i % 40),
+  // Distinct, non-monotonic popularity so the heat and stars orders genuinely differ.
+  sc: 30 + ((i * 7) % 70),
+  s: 100 + ((i * 13) % 900),
+  dl: 50 + ((i * 29) % 400),
   // A real thumbnail so the `.hicon` path is exercised, not just the .dot fallback.
   i: 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 8 8%27%3E%3Crect width=%278%27 height=%278%27 fill=%27%234d6bfe%27/%3E%3C/svg%3E',
   u: [['finance', 'ui'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
@@ -216,7 +219,28 @@ for (const vp of VIEWPORTS) {
     await firstCard.click()
     await page.waitForTimeout(700)
     await page.screenshot({ path: join(OUT, `${vp.name}-detail.png`) })
-    const simCount = await page.locator('.sim .rec-item').count()
+    // The heat button used to fall through to the stars key, so both produced the same
+  // list. Compare the first names under each sort.
+  const firstNames = async () => page.$eval('.card h2', (nodes) => nodes.slice(0, 6).map((n) => n.textContent.trim()))
+  await page.click('[data-sort="stars"]')
+  await page.waitForTimeout(250)
+  const starsOrder = await firstNames()
+  await page.click('[data-sort="score"]')
+  await page.waitForTimeout(250)
+  const heatOrder = await firstNames()
+  if (starsOrder.join() === heatOrder.join()) fail('desktop: 热度 and 星标 produce the identical order')
+  const detailGrid = await page.evaluate(() => {
+    const dl = document.querySelector('#dlg dl')
+    if (!dl) return null
+    const labels = [...dl.querySelectorAll('dt')].map((n) => n.textContent.trim())
+    return { display: getComputedStyle(dl).display, columns: getComputedStyle(dl).gridTemplateColumns, hasHeat: labels.includes('热度') }
+  })
+  if (!detailGrid) fail('desktop: the detail dialog rendered no definition list')
+  else {
+    if (detailGrid.display !== 'grid') fail(`desktop: detail list display=${detailGrid.display}, expected grid`)
+    if (!detailGrid.hasHeat) fail('desktop: the detail dialog does not show a heat row')
+  }
+  const simCount = await page.locator('.sim .rec-item').count()
     if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
   }
   await context.close()
