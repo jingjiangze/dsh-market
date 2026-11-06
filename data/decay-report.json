@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-06T13:42:12.644Z",
+  "source": "./dist/index.json",
+  "repositories": 14705,
+  "probed": 0,
+  "failedBatches": 148,
+  "budgetExceeded": false,
+  "counts": {
+    "notFound": 0,
+    "archived": 0,
+    "forks": 0,
+    "stale": 0
+  },
+  "notFound": [],
+  "archived": [],
+  "forks": [],
+  "stale": []
+}
