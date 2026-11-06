@@ -463,7 +463,7 @@ function openDetail(name) {
   if (!entry) return
   state.open = name
   state.guide = false
-  $('dlg').innerHTML = detailHtml(entry)
+  $('dlg').innerHTML = detailHtml(entry) + similarHtml(entry)
   if (!$('dlg').open) $('dlg').showModal()
 }
 
@@ -738,6 +738,20 @@ document.body.append(toTop)
 window.addEventListener('scroll', () => toTop.classList.toggle('on', window.scrollY > 700), { passive: true })
 
 
+
+// Steam's "more like this": the detail dialog ends with the nearest neighbours the
+// crawl precomputed (see the similar pass in crawler/browse.mjs).
+function similarHtml(entry) {
+  const names = entry.sim ?? []
+  if (!names.length) return ''
+  const items = names
+    .map((name) => state.plugins.find((item) => item.n === name))
+    .filter(Boolean)
+    .slice(0, 6)
+  if (!items.length) return ''
+  return `<div class=sim><h4>相似插件</h4><div class=sim-row>${items.map((item) => `<button class=rec-item data-open="${esc(item.n)}"><b>${esc(titleOf(item)) || esc(item.n)}</b><i>${esc(catTitle(item.c))}${item.sc != null ? ` · ⇧${item.sc}` : ''}</i></button>`).join('')}</div></div>`
+}
+
 // ── "你想用 DSH 做什么？" — the quiz dsh.market ships, on static data ──────────
 // The reader picks up to three use cases; results are ranked by how many picks an
 // entry matches, then by its practical score. Every entry carries use-case ids in
@@ -749,7 +763,7 @@ const UC = {
   agents: '智能体与编排', automation: '工作流与自动化', prompts: '提示词与技能', memory: '记忆与上下文',
   models: '模型接入', billing: '用量与成本', notify: '通知与推送', email: '邮件', calendar: '日程与待办',
   writing: '笔记与写作', docs: '表格与文档', ui: '界面与主题', settings: '设置与配置', monitor: '监控与诊断',
-  security: '安全与权限', market: '插件市场', 'plugin-dev': '插件开发', remote: '远程与内网',
+  security: '安全与权限', market: '插件市场', 'plugin-dev': '插件开发', mcp: 'MCP 与协议', session: '会话与消息', remote: '远程与内网',
   mobile: '手机与移动端', fun: '娱乐与彩蛋', pet: '桌宠与挂件',
 }
 const QUIZ_MAX = 3
