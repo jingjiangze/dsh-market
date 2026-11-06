@@ -490,27 +490,3 @@ button, .card, .chip, .src { -webkit-tap-highlight-color: transparent; touch-act
   background: rgba(255,255,255,.05); border: 1px solid var(--line-2); border-radius: 7px;
 }
 #sort [data-fav-toggle][aria-pressed="true"] { border-color: rgba(255,207,107,.5); color: #ffcf6b; }
-
-/* ── Steam-style shelves + the "what do you want to do" quiz ─────────────── */
-.rec-shelf { margin: 0 0 10px; }
-.rec-shelf h3 { margin: 0 0 6px; }
-.rec-item b { display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
-.rec-item i { display: block; font-style: normal; opacity: .65; font-size: 11px; margin-top: 2px; }
-.quiz { display: flex; flex-direction: column; gap: 10px; }
-.quiz h3 { margin: 0; font-size: 15px; }
-.quiz-lead { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
-.quiz-count { font-size: 12px; color: var(--muted); }
-.quiz-count b { color: var(--text); }
-.quiz-tags { display: flex; flex-wrap: wrap; gap: 6px; max-height: 232px; overflow: auto; padding: 2px; }
-.quiz-chip {
-  padding: 5px 10px; font-size: 12.5px; border-radius: 999px; cursor: pointer;
-  color: var(--text); background: rgba(255,255,255,.04); border: 1px solid var(--line-2);
-}
-.quiz-chip[aria-pressed="true"] { background: rgba(77,107,254,.28); border-color: rgba(124,147,255,.6); color: #dfe6ff; }
-.quiz-chip[disabled] { opacity: .4; cursor: not-allowed; }
-.quiz-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
-.quiz-results .rec-item { max-width: none; }
-@media (max-width: 760px) {
-  .quiz-tags { max-height: 180px; }
-  .quiz-results { grid-template-columns: 1fr; }
-}
