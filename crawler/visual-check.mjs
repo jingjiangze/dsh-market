@@ -172,7 +172,8 @@ for (const vp of VIEWPORTS) {
   if (!probe.cssVar) fail(`${vp.name}: --bg empty — the stylesheet never applied`)
   if (probe.bodyBg === 'rgba(0, 0, 0, 0)') fail(`${vp.name}: body background unstyled`)
   if (probe.cardCount === 0) fail(`${vp.name}: no cards rendered`)
-  if (probe.railDisplay !== 'flex') fail(`${vp.name}: rail display=${probe.railDisplay}, expected flex`)
+  // The recommendation shelves were retired, so `.rec-row` only exists inside the
+  // quiz and similar strips — there is no rail to assert on first paint.
   if (probe.favPosition !== 'absolute') fail(`${vp.name}: favourite position=${probe.favPosition}, expected absolute`)
   if (probe.chipCount === 0) fail(`${vp.name}: category rail empty`)
   if (probe.gridDisplay !== 'grid') fail(`${vp.name}: .wrap display=${probe.gridDisplay}, expected grid`)
