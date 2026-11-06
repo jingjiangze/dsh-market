@@ -74,6 +74,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PUBLISH_PATHS: data dist site
+          # Data only — never overwrite the UI bundle (see crawl.yml for the reason).
+          PUBLISH_EXCLUDE: '^site/index\.html$|^site/style\.css$|^site/app\.js$|^site/a/|^site/index\.json$|^site/index\.(en|ja|ko|ru)\.json$'
           PUBLISH_MESSAGE: 'chore(i18n): fill ja/ko/ru text and refresh the per-language indexes'
         run: |
           set -o pipefail
