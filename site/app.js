@@ -189,8 +189,14 @@ const ZH_EN = { 记忆: 'memory', 模型: 'model', 界面: 'ui', 工具: 'tools'
 function byOrder(a, b) {
   if (state.sort === 'name') return a.n.localeCompare(b.n)
   if (state.sort === 'recent') return (b.p ?? 0) - (a.p ?? 0) || a.n.localeCompare(b.n)
-  const key = state.sort === 'downloads' ? 'dl' : 's'
-  return (b[key] ?? 0) - (a[key] ?? 0) || a.n.localeCompare(b.n)
+  // `score` used to fall through to the stars key, so the heat button produced the
+  // exact same list as the stars button. Each sort now names its own key and falls
+  // back to the other popularity figures before the name.
+  if (state.sort === 'score') {
+    return (b.sc ?? 0) - (a.sc ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  }
+  if (state.sort === 'downloads') return (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  return (b.s ?? 0) - (a.s ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
 }
 
 // Icon chain: the package icon, then the repository owner's avatar (developer),
