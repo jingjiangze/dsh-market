@@ -64,8 +64,9 @@ const TRUST_LABEL = {
   'install-verified': '已验证安装',
 }
 const SORTS = [
-  // Combined heat first: stars blended with downloads (see crawler/score.mjs).
-  ['score', '🔥 热度'],
+  // Practical score first: it is the ranking dsh.market's quiz uses and it is a far
+  // better first impression than raw stars (see crawler/score.mjs).
+  ['score', '⇧ 实用分'],
   ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
   ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
 ]
@@ -209,7 +210,7 @@ function icon(entry) {
 }
 
 function card(entry) {
-  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
+  const tags = [catTitle(entry.c), entry.sc != null ? `⇧ ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
@@ -246,8 +247,37 @@ function renderPersonal(pool) {
     <button class=ins-btn data-import-input>导入 JSON</button>
     <input type=file id=importFile accept="application/json,.json" hidden>`
 
-  // Themed shelves (high score / popular / new / daily) were retired by request: the
-  // catalogue now opens straight into the category rail and the card grid.
+  let rail = document.getElementById('rec')
+  if (!rail) {
+    rail = document.createElement('div')
+    rail.id = 'rec'
+    rail.className = 'rec'
+    const wrap = document.querySelector('.wrap')
+    wrap?.parentElement?.insertBefore(rail, wrap)
+  }
+  // Six entries chosen by today's date: the same rail all day, different tomorrow.
+  // It never depends on the reader, so it shows up on a first visit too.
+  const today = new Date()
+  const seedKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  let seed = 2166136261
+  for (const ch of seedKey) seed = ((seed ^ ch.charCodeAt(0)) * 16777619) >>> 0
+  const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296 }
+  const bag = pool.slice()
+  const picks = []
+  for (let i = 0; i < 6 && bag.length; i++) picks.push(bag.splice(Math.floor(rand() * bag.length), 1)[0])
+  // Steam-style rows: several independent shelves instead of one daily rail, so a
+  // first visit shows "what is good", "what is popular" and "what is new" at once.
+  const shelf = (title, note, list) => (list.length
+    ? `<div class=rec-shelf><h3>${title}${note ? ` <i>${note}</i>` : ''}</h3><div class=rec-row>${list.slice(0, 8).map((entry) => `<button class=rec-item data-open="${esc(entry.n)}"><b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}${entry.sc != null ? ` · ⇧${entry.sc}` : ''}</i></button>`).join('')}</div></div>`
+    : '')
+  const withScore = pool.filter((entry) => entry.sc != null)
+  const shelves = [
+    shelf('高分精选', '实用分', withScore.slice().sort((a, b) => b.sc - a.sc)),
+    shelf('热门', '星标', pool.slice().sort((a, b) => (b.s ?? 0) - (a.s ?? 0))),
+    shelf('新上架', '最近发布', pool.slice().sort((a, b) => (b.p ?? 0) - (a.p ?? 0))),
+    picks.length ? shelf('今日推荐', seedKey, picks) : '',
+  ].filter(Boolean)
+  rail.innerHTML = shelves.join('')
   ensureQuizButton()
 }
 
@@ -787,7 +817,7 @@ function runQuiz() {
   const filtered = query
     ? scored.filter((hit) => `${hit.entry.n} ${titleOf(hit.entry)} ${descOf(hit.entry)}`.toLowerCase().includes(query))
     : scored
-  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与热度排序：</p>` + filtered.slice(0, 12)
+  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与实用分排序：</p>` + filtered.slice(0, 12)
     .map((hit) => `<button class=rec-item data-open="${esc(hit.entry.n)}"><b>${esc(titleOf(hit.entry)) || esc(hit.entry.n)}</b><i>${esc(catTitle(hit.entry.c))} · ⇧${hit.entry.sc ?? '-'} · 命中 ${hit.matched}</i></button>`)
     .join('')
 }
