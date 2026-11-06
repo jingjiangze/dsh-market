@@ -205,11 +205,16 @@ function imgChain(chain, attributes) {
 }
 
 function icon(entry) {
-  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'loading=lazy') || '<i class=dot></i>'
+  // `class=hicon` is what sizes the thumbnail; a bare <img> expands to its intrinsic
+  // width and the card text ends up wrapping character by character.
+  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'class=hicon loading=lazy') || '<i class=dot></i>'
 }
 
 function card(entry) {
-  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
+  // Four chips only: category, heat, stars, downloads. Version, author and date live
+  // in the detail dialog; on the card they wrapped to a second line and buried the
+  // numbers people actually scan for.
+  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
@@ -314,8 +319,14 @@ function render() {
     const head = RAIL_OF[id.split('-')[0]] ?? id.split('-')[0]
     return GROUP_LABEL[head] ? head : 'eco'
   }
+  const RAIL_ORDER = ['enhance', 'agent', 'content', 'connect', 'dev', 'eco']
+  const railRank = (rail) => (RAIL_ORDER.indexOf(rail) === -1 ? RAIL_ORDER.length : RAIL_ORDER.indexOf(rail))
+  const orderedIds = Object.keys(state.meta.categories ?? {})
+    .map((id, index) => ({ id, index, rail: groupOf(id) }))
+    .sort((a, b) => railRank(a.rail) - railRank(b.rail) || a.index - b.index)
+    .map((item) => item.id)
   let group = null
-  for (const id of Object.keys(state.meta.categories ?? {})) {
+  for (const id of orderedIds) {
     const rail = groupOf(id)
     if (rail !== group) { parts.push(`<div class=grp>${GROUP_LABEL[rail]}</div>`); group = rail }
     parts.push(chip(id, catTitle(id), counts.get(id) ?? 0))
