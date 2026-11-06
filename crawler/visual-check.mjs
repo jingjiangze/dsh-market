@@ -40,6 +40,8 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
   sc: 96 - (i % 40),
   u: [['finance', 'ui'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
+  // Three neighbours each, so the detail dialog renders the similar rail.
+  sim: [0, 1, 2].map((offset) => `dsh-fixture-${(i + offset + 1) % 48}`),
 }))
 
 const META = {
@@ -204,6 +206,8 @@ for (const vp of VIEWPORTS) {
     await firstCard.click()
     await page.waitForTimeout(700)
     await page.screenshot({ path: join(OUT, `${vp.name}-detail.png`) })
+    const simCount = await page.locator('.sim .rec-item').count()
+    if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
   }
   await context.close()
 }
