@@ -579,6 +579,34 @@ dialog::backdrop { background: rgba(6, 7, 9, .84); backdrop-filter: blur(3px); }
   line-height: 1.62;
 }
 
+/* The detail rows are a <dl>, not a <table>: give them a real two-column grid or the
+   default <dd> indent leaves every value floating 40px in from its label. */
+dialog dl {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+}
+dialog dt {
+  padding: 7px 10px;
+  color: var(--faint);
+  background: var(--plate-2);
+  border-bottom: 1px solid var(--line);
+  font: 500 11px/1.6 var(--font-mono);
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+dialog dd {
+  margin: 0;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
 dialog table { width: 100%; margin: 0 0 14px; border-collapse: collapse; border: 1px solid var(--line); }
 dialog th, dialog td {
   padding: 7px 10px;
