@@ -103,6 +103,17 @@ for (const vp of VIEWPORTS) {
     timezoneId: 'Asia/Shanghai',
   })
   const page = await context.newPage()
+  // app.js hardcodes absolute mirror URLs for its data and its own bundle, so the
+  // fixture has to answer those origins too. Routing keeps the render fully offline
+  // and deterministic: no CDN, no dataset, no dependence on the runner's network.
+  await context.route(/\/browse\/meta\.json(\?.*)?$/, (route) => route.fulfill({ json: META }))
+  await context.route(/\/browse\/[^/]+\.json(\?.*)?$/, (route) => route.fulfill({ json: FIXTURE }))
+  await context.route(/\/a\/[0-9a-f]{10}\/style\.css(\?.*)?$/, async (route) => {
+    route.fulfill({ body: await readFile(join(SITE, 'style.css')), contentType: TYPES['.css'] })
+  })
+  await context.route(/\/a\/[0-9a-f]{10}\/app\.js(\?.*)?$/, async (route) => {
+    route.fulfill({ body: await readFile(join(SITE, 'app.js')), contentType: TYPES['.js'] })
+  })
   const failedAssets = []
   page.on('requestfailed', (req) => {
     if (/\.(css|js)(\?|$)/.test(req.url())) failedAssets.push(`${req.failure()?.errorText} ${req.url()}`)
