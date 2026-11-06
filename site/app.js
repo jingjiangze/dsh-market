@@ -412,6 +412,7 @@ function detailHtml(entry) {
     ['版本', entry.v],
     ['作者', entry.a],
     ['发布', day(entry.p)],
+    ['热度', entry.sc != null ? `🔥 ${entry.sc}` : ''],
     ['星标', entry.s ? num(entry.s) : ''],
     ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
     ['DSH 版本', entry.eg],
