@@ -29,10 +29,20 @@ jobs:
           node-version: 22
 
       - name: Fetch the published index
+        # dist/index.json is committed by the crawl (with translations replayed), so
+        # it is always newer than the Pages copy of site/index.json. Reading Pages
+        # used to make this job rebuild language docs from a stale 11k catalogue.
         run: |
           mkdir -p dist
-          curl -fsSL --retry 3 --max-time 180 https://jingjiangze.github.io/dsh-market/index.json -o dist/index.json
-          node -e "console.log('plugins', JSON.parse(require('fs').readFileSync('dist/index.json','utf8')).plugins.length)"
+          node -e "
+          const fs = require('fs')
+          const path = 'dist/index.json'
+          if (!fs.existsSync(path) || fs.statSync(path).size < 1000000) {
+            console.error('dist/index.json missing or too small; the crawl must run first')
+            process.exit(1)
+          }
+          console.log('plugins', JSON.parse(fs.readFileSync(path, 'utf8')).plugins.length)
+          "
 
       - name: Translate the backlog
         env:
