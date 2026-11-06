@@ -39,7 +39,7 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   l: ['src-official', i % 4 === 0 ? 'catalog-only' : 'src-npm'],
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
   sc: 96 - (i % 40),
-  u: [['ui', 'settings'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
+  u: [['finance', 'ui'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
 }))
 
 const META = {
@@ -196,6 +196,8 @@ for (const vp of VIEWPORTS) {
     const results = await page.locator('#quizResults .rec-item').count()
     if (results === 0) fail('desktop: the quiz returned no results for a picked use case')
     await page.screenshot({ path: join(OUT, 'desktop-quiz.png') })
+    await page.keyboard.press('Escape')
+    await page.waitForTimeout(300)
   }
   const firstCard = await page.$('.card')
   if (firstCard) {
