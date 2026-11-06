@@ -13,6 +13,7 @@ import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
 import { applyTranslations } from './i18n.mjs'
+import { dedupeByRepo } from './dedupe.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -650,9 +651,15 @@ for (const [name, record] of fromGitHub) {
         title: { en: titleEn, zh: record.title?.zh || titleEn },
         description: { en: descEn, zh: descZh || descEn },
         ...(record.hintIcon ? { icon: record.hintIcon } : {}),
-        // Keep the repository: the enrich step turns it into stars, and a reader
-        // needs somewhere to look at the source.
-        ...(/^https?:\/\//i.test(String(record.hintRepo ?? '')) ? { repository: { url: String(record.hintRepo).replace(/\.git$/, '') } } : {}),
+        // Keep the repository: the enrich step turns it into stars, a reader needs
+        // somewhere to look at the source, and repository-level dedupe groups on it.
+        // `record.repo` is what the federated and GitHub-discovery adapters fill in;
+        // reading only `hintRepo` dropped it, so aliases of one project could not be
+        // recognised as the same plugin.
+        ...(() => {
+          const raw = String(record.hintRepo ?? record.repo ?? '')
+          return /^https?:\/\//i.test(raw) ? { repository: { url: raw.replace(/\.git$/, '') } } : {}
+        })(),
         metadata: {
           category: categoryFor(record, record.name, titleEn, descEn),
           labels,
@@ -686,9 +693,19 @@ for (const [name, record] of fromGitHub) {
   // validate step after 40 minutes of work.
   const VALID_NAME = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u
   const allEntries = [...kept, ...slimEntries]
-  const rejectedNames = allEntries.filter((plugin) => !VALID_NAME.test(String(plugin?.name ?? '')) || String(plugin.name).length > 214)
-  const published = allEntries.filter((plugin) => VALID_NAME.test(String(plugin?.name ?? '')) && String(plugin.name).length <= 214).slice(0, MAX_TOTAL)
+  const validName = (plugin) => VALID_NAME.test(String(plugin?.name ?? '')) && String(plugin.name).length <= 214
+  const named = allEntries.filter(validName)
+  const rejectedNames = allEntries.filter((plugin) => !validName(plugin))
   if (rejectedNames.length) console.log(`rejected ${rejectedNames.length} invalid npm name(s): ${rejectedNames.slice(0, 5).map((p) => p.name).join(', ')}`)
+
+  // Deduplicate by repository as well as by name. A project published under several
+  // npm names (dsh-channel-pack vs @Ebony-Vinyl/dsh-our-free-model, same repo) used
+  // to show up as two cards. Monorepos are left alone — see crawler/dedupe.mjs.
+  const deduped = dedupeByRepo(named)
+  const merged = deduped.entries
+  if (deduped.dropped) console.log(`deduplicated ${deduped.dropped} alias entry(ies) sharing a repository (${named.length} -> ${merged.length})`)
+  for (const m of deduped.mergedRepos.slice(0, 5)) console.log(`  alias: ${m.aliases.join(', ')} -> ${m.winner} (${m.repo})`)
+  const published = merged.slice(0, MAX_TOTAL)
   console.log(`published: ${published.length} (verified ${kept.length} + catalog-only ${Math.min(slimEntries.length, Math.max(0, MAX_TOTAL - kept.length))})`)
 
   const sidecar = {
