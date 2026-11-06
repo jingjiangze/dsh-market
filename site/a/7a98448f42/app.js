@@ -534,9 +534,15 @@ async function loadIndex() {
 
 // The stylesheet is loaded from the dataset too; if that file never applied, fall
 // back through the same tiers (jsDelivr, then GitHub Pages) without blocking paint.
+//
+// Probe the *effect*, not the element: a 404'd <link> stays in document.styleSheets
+// with its href intact, so the old `href.includes('/a/')` test reported "applied"
+// for a stylesheet that never loaded. The page then stayed completely unstyled
+// while this function did nothing — exactly the regression that shipped when the
+// dataset was missing the shell's hash directory.
 function ensureStyles() {
-  const applied = [...document.styleSheets].some((sheet) => String(sheet.href ?? '').includes('/a/'))
-  if (applied) return
+  const probe = (getComputedStyle(document.documentElement).getPropertyValue('--bg') || '').trim()
+  if (probe) return
   const fallbacks = [
     'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css',
     'https://jingjiangze.github.io/dsh-market/style.css',
