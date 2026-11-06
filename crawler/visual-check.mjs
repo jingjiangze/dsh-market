@@ -39,6 +39,8 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   l: ['src-official', i % 4 === 0 ? 'catalog-only' : 'src-npm'],
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
   sc: 96 - (i % 40),
+  // A real thumbnail so the `.hicon` path is exercised, not just the .dot fallback.
+  i: 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 8 8%27%3E%3Crect width=%278%27 height=%278%27 fill=%27%234d6bfe%27/%3E%3C/svg%3E',
   u: [['finance', 'ui'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
   // Three neighbours each, so the detail dialog renders the similar rail.
   sim: [0, 1, 2].map((offset) => `dsh-fixture-${(i + offset + 1) % 48}`),
@@ -160,6 +162,8 @@ for (const vp of VIEWPORTS) {
       deadIdxButtons: document.querySelectorAll('[data-idx="index.cn"], [data-idx="index.intl"]').length,
       shelves: document.querySelectorAll('.rec-shelf').length,
       heatBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('🔥')).length,
+      thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
+      imgThumbs: document.querySelectorAll('.card img').length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
       scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
@@ -182,6 +186,11 @@ for (const vp of VIEWPORTS) {
   if (probe.deadIdxButtons) fail(`${vp.name}: dead region-toggle buttons present`)
   if (probe.shelves > 0) fail(`${vp.name}: a retired recommendation shelf is still rendered`)
   if (probe.heatBadges === 0) fail(`${vp.name}: no card shows a heat badge`)
+  // An unconstrained <img> is what broke the card layout once: icons stretched to the
+  // card width and the description wrapped one character per line.
+  if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)
+  const fat = probe.thumbWidths.filter((width) => width > 64)
+  if (fat.length) fail(`${vp.name}: card thumbnail width ${fat[0]}px, expected <= 64px`)
   if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
   if (!probe.scoreSort) fail(`${vp.name}: the heat sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
