@@ -119,6 +119,10 @@ for (const plugin of candidates) {
     hintRepo: `https://github.com/${plugin.fullName}`,
     repo: `https://github.com/${plugin.fullName}`,
     stars: plugin.stars || undefined,
+    // Every 2BingLing entry carries Chinese semantic tags (12k distinct across the
+    // corpus). They are the strongest classification signal we get from any source,
+    // so hand them to the taxonomy instead of forcing everything through `other`.
+    hintTags: Array.isArray(plugin.tags) ? plugin.tags : undefined,
     hintCategory: 'other',
     title: { en: name, zh: name },
     description: {
