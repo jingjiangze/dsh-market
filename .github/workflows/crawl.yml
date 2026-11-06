@@ -214,7 +214,7 @@ jobs:
           # committed separately. Letting the crawl publish its own checkout of them
           # rewrote the shell to a stale hashed CSS and broke every new UI element
           # (un-styled recommendation rail, favorite buttons and trust badges).
-          PUBLISH_EXCLUDE: '(^|/)(index\\.cn\\.json|index\\.intl\\.json|index\\.sidecar\\.json|sidecar\\.json)$|^site/index\\.json$|^site/index\\.(en|ja|ko|ru)\\.json$|^site/index\\.html$|^site/style\\.css$|^site/app\\.js$|^site/a/'
+          PUBLISH_EXCLUDE: '(^|/)(index\.cn\.json|index\.intl\.json|index\.sidecar\.json|sidecar\.json)$|^site/index\.json$|^site/index\.(en|ja|ko|ru)\.json$|^site/index\.html$|^site/style\.css$|^site/app\.js$|^site/a/'
           PUBLISH_MESSAGE: 'chore(crawl): refresh plugin index'
         run: |
           set -o pipefail
