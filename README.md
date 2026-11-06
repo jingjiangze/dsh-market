@@ -91,15 +91,17 @@ node crawler/crawl.mjs                # 爬取并生成 dist/
 
 | 工作流 | 触发 | 做什么 |
 |---|---|---|
-| `crawl.yml` | 每日 03:17 UTC + 手动 | 装官方验证器 → 门禁自测 → 爬取 → 组装 `site/` → **先校验再提交** → 有变化才开 `crawl/<run_id>` PR → squash 合并 → 显式触发 `deploy` |
+| `crawl.yml` | 每 3 小时 + 手动 | 三分片采集 → 合并目录 → 生成多语言/浏览分片/资源 → **离线 + 在线发布门禁** → Git Data API 提交 `main` → 显式触发 `deploy` |
 | `ci.yml` | 每次 push / 每个 PR | 门禁自测 → 官方 `@deepseek-ai/dsh-plugin-market-index` 校验 → 页面预算与引用检查 → registry 回查 → `--dry-run` 冒烟（守住 main 与人工 PR） |
 | `deploy.yml` | main 的 `site/**`、`dist/**` 变化，或由 crawl 派发 | 双端发布：GitHub Pages + Cloudflare Pages（`wrangler`） |
 | `dependabot.yml` | 每周 | GitHub Actions 版本升级 PR（人工审） |
 
+**发布纪律**：`crawl` 和 `translate` 共用 `catalog-publish` 并发组，避免两个写入者同时基于旧 `main` 创建提交；完整发布门禁在写入 `main` 前执行，push 触发的 `ci` 作为发布后回归检查。
+
 **两个必须知道的 GitHub 行为**（都已在代码里绕过）：
 
-1. **用仓库 `GITHUB_TOKEN` 推的合并不会触发其它 workflow**（防递归）→ 所以 `crawl` 合并后显式 `gh workflow run deploy.yml`，不指望 push 事件。
-2. **用 `GITHUB_TOKEN` 开的 PR，其 `pull_request` 跑起来是 `action_required`（不执行）** → 所以"测试"放在 `crawl` 合并**之前**跑；`ci` 仍照常守 push 到 main 和人工 PR。
+1. **用仓库 `GITHUB_TOKEN` 写入 `main` 不会触发其它 workflow**（防递归）→ 所以 `crawl` 提交后显式 `gh workflow run deploy.yml`，不指望 push 事件。
+2. 当前 `crawl` 走 Git Data API 直接写 `main`，不再创建 crawl PR；因此发布门禁必须在写入前执行，不能依赖 push 后才运行的 `ci` 来阻止错误版本上线。
 
 
 `ci` 里的检查（`crawler/validate.mjs`）：
