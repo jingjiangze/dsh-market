@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="DSH 插件索引">
+  <!--
+    DSH plugin index mark.
+
+    Concept: an Arknights-style angled shield (the catalogue as a container) in
+    DeepSeek blue, with one folded corner in amber (the "append" action colour).
+    Inside, two nodes joined by a link — a plugin socketed into the host — which is
+    exactly what the index lists. The 45° cut corners echo the UI's clipped plates.
+
+    Two elements only, so it stays legible at 16px in a tab.
+  -->
+  <path d="M7 3h19l7 7v27l-16-5-10 5z" fill="#4D6BFE"/>
+  <path d="M26 3l7 7h-7z" fill="#F5A623"/>
+  <path d="M15 16h6v9" fill="none" stroke="#E8EAED" stroke-width="2" stroke-linecap="square"/>
+  <circle cx="15" cy="14" r="2.6" fill="#E8EAED"/>
+  <circle cx="21" cy="26" r="2.6" fill="#F5A623"/>
+</svg>
