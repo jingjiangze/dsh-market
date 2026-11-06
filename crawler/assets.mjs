@@ -47,11 +47,12 @@ const htmlPath = join(site, 'index.html')
 const authored = (await readFile(htmlPath, 'utf8'))
   .replace(/(<link rel=stylesheet href=)[^>]*>/i, '$1/style.css>')
   .replace(/(<script type=module src=)[^>]*>/i, '$1/app.js>')
-// Tier 1 (the dataset) is what the shell points at; the bundle carries an
-// `onerror` hop to this site's own copy, and `ensureStyles` in the bundle walks
-// the rest of the tiers for the stylesheet.
+// Tier 1 (the dataset) is what the shell points at. The stylesheet gets its own
+// `onerror` hop to this site's copy so a missing dataset bundle can never leave the
+// page unstyled on first paint; the bundle's `ensureStyles` still walks the rest of
+// the tiers as a second net. The script keeps the hop it always had.
 const updated = authored
-  .replace(/(<link rel=stylesheet href=)[^>]*>/i, `$1${TIERS[0]}/${version}/style.css>`)
+  .replace(/(<link rel=stylesheet href=)[^>]*>/i, `$1${TIERS[0]}/${version}/style.css onerror="this.href='/style.css'">`)
   .replace(/(<script type=module src=)[^>]*>/i, `$1${TIERS[0]}/${version}/app.js onerror="this.src='/app.js'">`)
 await writeFile(htmlPath, updated)
 

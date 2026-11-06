@@ -82,10 +82,19 @@ if (!plan.length) {
 console.log(`ms-upload: ${plan.length} file(s) planned`)
 if (DRY) process.exit(0)
 
-// Only the directories this run owns are staged. A blanket `git add -A web` also
-// stages the *absence* of files missing from this (possibly partial) working tree,
-// which silently deleted another run's mirrored icons.
-const owned = [...new Set(plan.map((entry) => entry.to.split('/').slice(0, 2).join('/')))]
+// Only the paths this run owns are staged. A blanket `git add -A web` also stages
+// the *absence* of files missing from this (possibly partial) working tree, which
+// silently deleted another run's mirrored icons.
+//
+// `web/a` is a directory of per-hash bundles that accumulate across runs, so the
+// owned scope must be `web/a/<hash>` and never `web/a`: with the whole parent,
+// `git add -A web/a` treated every other bundle as deleted, and a bundle that a
+// published shell still pointed at vanished from the dataset — the stylesheet
+// 404'd and the site rendered with no CSS at all.
+const owned = [...new Set(plan.map((entry) => {
+  const parts = entry.to.split('/')
+  return parts[0] === 'web' && parts[1] === 'a' && parts[2] ? `web/a/${parts[2]}` : parts.slice(0, 2).join('/')
+}))]
 const authRemote = TOKEN ? REMOTE.replace('https://', `https://oauth2:${TOKEN}@`) : null
 
 // Publish with retries: the crawl and the translate job both push to this branch,
