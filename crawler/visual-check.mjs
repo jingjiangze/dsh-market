@@ -159,7 +159,7 @@ for (const vp of VIEWPORTS) {
       overflowX: document.documentElement.scrollWidth - window.innerWidth,
       deadIdxButtons: document.querySelectorAll('[data-idx="index.cn"], [data-idx="index.intl"]').length,
       shelves: document.querySelectorAll('.rec-shelf').length,
-      scoreBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('⇧')).length,
+      heatBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('🔥')).length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
       scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
@@ -179,10 +179,10 @@ for (const vp of VIEWPORTS) {
   if (probe.maxBadges > 4) fail(`${vp.name}: a card carries ${probe.maxBadges} badges, expected <= 4`)
   if (probe.overflowX > 1) fail(`${vp.name}: horizontal scroll by ${probe.overflowX}px`)
   if (probe.deadIdxButtons) fail(`${vp.name}: dead region-toggle buttons present`)
-  if (probe.shelves < 1) fail(`${vp.name}: no recommendation shelves rendered`)
-  if (probe.scoreBadges === 0) fail(`${vp.name}: no card shows a practical score`)
+  if (probe.shelves > 0) fail(`${vp.name}: a retired recommendation shelf is still rendered`)
+  if (probe.heatBadges === 0) fail(`${vp.name}: no card shows a heat badge`)
   if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
-  if (!probe.scoreSort) fail(`${vp.name}: the practical-score sort is missing`)
+  if (!probe.scoreSort) fail(`${vp.name}: the heat sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
   for (const asset of failedAssets) fail(`${vp.name}: asset failed — ${asset}`)
 
