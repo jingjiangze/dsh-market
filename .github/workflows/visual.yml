@@ -1,0 +1,53 @@
+name: visual
+
+# Real-browser check of the deployed site. The rest of the pipeline only verifies
+# bytes, and that is how a release once shipped with a stylesheet that 404'd: every
+# offline check passed while the page had no CSS at all. This job renders the live
+# URL in Chromium, asserts the computed styles, and keeps the screenshots as an
+# artifact so the result can be looked at instead of trusted.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'crawler/visual-check.mjs'
+      - '.github/workflows/visual.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright Chromium
+        run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm i --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Render and assert the deployed site
+        env:
+          VISUAL_URL: https://jingjiangze.github.io/dsh-market/
+        run: node crawler/visual-check.mjs
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-screenshots
+          path: dist/visual
+          if-no-files-found: warn
+          retention-days: 14
