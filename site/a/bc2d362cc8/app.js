@@ -64,6 +64,9 @@ const TRUST_LABEL = {
   'install-verified': '已验证安装',
 }
 const SORTS = [
+  // Practical score first: it is the ranking dsh.market's quiz uses and it is a far
+  // better first impression than raw stars (see crawler/score.mjs).
+  ['score', '⇧ 实用分'],
   ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
   ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
 ]
@@ -207,7 +210,7 @@ function icon(entry) {
 }
 
 function card(entry) {
-  const tags = [catTitle(entry.c), entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
+  const tags = [catTitle(entry.c), entry.sc != null ? `⇧ ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : '', entry.v ? `v${entry.v}` : '', entry.a ?? '', day(entry.p)].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
@@ -262,9 +265,20 @@ function renderPersonal(pool) {
   const bag = pool.slice()
   const picks = []
   for (let i = 0; i < 6 && bag.length; i++) picks.push(bag.splice(Math.floor(rand() * bag.length), 1)[0])
-  rail.innerHTML = picks.length
-    ? `<h3>今日推荐 <i>${seedKey}</i></h3><div class=rec-row>${picks.map((entry) => `<button class=rec-item data-open="${esc(entry.n)}">${esc(titleOf(entry)) || esc(entry.n)}<i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div>`
-    : ''
+  // Steam-style rows: several independent shelves instead of one daily rail, so a
+  // first visit shows "what is good", "what is popular" and "what is new" at once.
+  const shelf = (title, note, list) => (list.length
+    ? `<div class=rec-shelf><h3>${title}${note ? ` <i>${note}</i>` : ''}</h3><div class=rec-row>${list.slice(0, 8).map((entry) => `<button class=rec-item data-open="${esc(entry.n)}"><b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}${entry.sc != null ? ` · ⇧${entry.sc}` : ''}</i></button>`).join('')}</div></div>`
+    : '')
+  const withScore = pool.filter((entry) => entry.sc != null)
+  const shelves = [
+    shelf('高分精选', '实用分', withScore.slice().sort((a, b) => b.sc - a.sc)),
+    shelf('热门', '星标', pool.slice().sort((a, b) => (b.s ?? 0) - (a.s ?? 0))),
+    shelf('新上架', '最近发布', pool.slice().sort((a, b) => (b.p ?? 0) - (a.p ?? 0))),
+    picks.length ? shelf('今日推荐', seedKey, picks) : '',
+  ].filter(Boolean)
+  rail.innerHTML = shelves.join('')
+  ensureQuizButton()
 }
 
 // Reads a DSH profile directory in the browser: walk for `node_modules`, then keep
@@ -722,3 +736,93 @@ toTop.textContent = '↑'
 toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
 document.body.append(toTop)
 window.addEventListener('scroll', () => toTop.classList.toggle('on', window.scrollY > 700), { passive: true })
+
+
+// ── "你想用 DSH 做什么？" — the quiz dsh.market ships, on static data ──────────
+// The reader picks up to three use cases; results are ranked by how many picks an
+// entry matches, then by its practical score. Every entry carries use-case ids in
+// `u` (see crawler/usecases.mjs); entries without them simply never match.
+const UC = {
+  finance: '记账与财务', 'finance-market': '行情与投资', subtitle: '字幕与转写', translate: '翻译与多语言',
+  files: '文件与网盘', browse: '浏览器与抓取', knowledge: '搜索与知识库', analysis: '数据分析',
+  image: '图像与视觉', video: '视频', voice: '语音与音频', code: '代码与评审', cli: '终端与命令',
+  agents: '智能体与编排', automation: '工作流与自动化', prompts: '提示词与技能', memory: '记忆与上下文',
+  models: '模型接入', billing: '用量与成本', notify: '通知与推送', email: '邮件', calendar: '日程与待办',
+  writing: '笔记与写作', docs: '表格与文档', ui: '界面与主题', settings: '设置与配置', monitor: '监控与诊断',
+  security: '安全与权限', market: '插件市场', 'plugin-dev': '插件开发', remote: '远程与内网',
+  mobile: '手机与移动端', fun: '娱乐与彩蛋', pet: '桌宠与挂件',
+}
+const QUIZ_MAX = 3
+const quizPicks = new Set()
+
+function ensureQuizButton() {
+  const row = document.querySelector('.row')
+  if (!row || row.querySelector('[data-quiz]')) return
+  const button = document.createElement('button')
+  button.className = 'ghost'
+  button.dataset.quiz = ''
+  button.textContent = '🎯 帮我选'
+  row.insertBefore(button, row.querySelector('#meta') ?? null)
+}
+
+function quizHtml() {
+  const total = state.meta?.total ?? state.plugins.length
+  const tags = Object.entries(UC)
+    .map(([id, label]) => {
+      const on = quizPicks.has(id)
+      const full = !on && quizPicks.size >= QUIZ_MAX
+      return `<button class=quiz-chip data-quiz-tag="${id}" aria-pressed="${on}" ${full ? 'disabled' : ''}>${esc(label)}</button>`
+    }).join('')
+  return `<div class=quiz>
+    <h3>你想用 DSH 做什么？</h3>
+    <p class=quiz-lead>选 2–3 个你需要的功能，我们从 ${total} 个插件里帮你筛出最合适的。</p>
+    <div class=quiz-count>已选 <b>${quizPicks.size}</b> / ${QUIZ_MAX}</div>
+    <div class=quiz-tags>${tags}</div>
+    <div class=quiz-results id=quizResults></div>
+  </div>`
+}
+
+function runQuiz() {
+  const box = document.getElementById('quizResults')
+  if (!box) return
+  if (!quizPicks.size) { box.innerHTML = '<p class=quiz-lead>先选 1 个功能看看。</p>'; return }
+  const scored = state.plugins
+    .map((entry) => {
+      const ids = entry.u ?? []
+      let matched = 0
+      for (const pick of quizPicks) if (ids.includes(pick)) matched++
+      return { entry, matched }
+    })
+    .filter((hit) => hit.matched > 0)
+    .sort((a, b) => b.matched - a.matched || (b.entry.sc ?? 0) - (a.entry.sc ?? 0))
+  if (!scored.length) {
+    box.innerHTML = '<p class=quiz-lead>没有匹配的插件，换一个功能试试。</p>'
+    return
+  }
+  const query = (document.getElementById('quizQ')?.value ?? '').trim().toLowerCase()
+  const filtered = query
+    ? scored.filter((hit) => `${hit.entry.n} ${titleOf(hit.entry)} ${descOf(hit.entry)}`.toLowerCase().includes(query))
+    : scored
+  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与实用分排序：</p>` + filtered.slice(0, 12)
+    .map((hit) => `<button class=rec-item data-open="${esc(hit.entry.n)}"><b>${esc(titleOf(hit.entry)) || esc(hit.entry.n)}</b><i>${esc(catTitle(hit.entry.c))} · ⇧${hit.entry.sc ?? '-'} · 命中 ${hit.matched}</i></button>`)
+    .join('')
+}
+
+function openQuiz() {
+  state.quiz = true
+  $('dlg').innerHTML = quizHtml()
+  if (!$('dlg').open) $('dlg').showModal()
+  runQuiz()
+}
+
+document.addEventListener('click', (event) => {
+  if (event.target.closest('[data-quiz]')) { openQuiz(); return }
+  const chip = event.target.closest('[data-quiz-tag]')
+  if (chip) {
+    const id = chip.dataset.quizTag
+    if (quizPicks.has(id)) quizPicks.delete(id)
+    else if (quizPicks.size < QUIZ_MAX) quizPicks.add(id)
+    $('dlg').innerHTML = quizHtml()
+    runQuiz()
+  }
+})
