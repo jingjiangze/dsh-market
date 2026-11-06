@@ -50,7 +50,7 @@ jobs:
           CONCURRENCY: '12'
           CRAWL_BUDGET_MS: '600000'
           MERGE_EXTERNAL: '0'
-          SOURCES: dshso,awesome,mydsh,polang,github
+          SOURCES: dshso,awesome,mydsh,polang,official,github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_MAX_REPOS: '150'
           PART_OUT: dist/part-${{ matrix.shard }}.json
@@ -95,7 +95,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BINGLING_MIN_STARS: '1'
-          BINGLING_MAX_GIT_LOOKUPS: '600'
+          BINGLING_MAX_GIT_LOOKUPS: '3000'
         run: node crawler/source-2bingling.mjs
 
       - name: Build the published index
@@ -106,7 +106,7 @@ jobs:
           DSH_RUNTIME_VERSION: 0.2.1-rc.5
           MAX_TOTAL: '24000'
           MERGE_EXTERNAL: '1'
-          SOURCES: dshso,awesome,mydsh,polang,github
+          SOURCES: dshso,awesome,mydsh,polang,official,github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_MAX_REPOS: '150'
         run: node crawler/crawl.mjs --publish-only

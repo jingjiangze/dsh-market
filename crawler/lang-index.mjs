@@ -10,6 +10,7 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { applyTranslations } from './i18n.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
@@ -36,6 +37,10 @@ function sourceFor(version, lang) {
 
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const plugins = index.plugins ?? []
+// The translate job writes strings into dist/index.json and the content-hash cache.
+// When this step is run standalone (translate.yml) the cache may contain newer
+// translations than the document; replay them so no language document loses text.
+await applyTranslations(plugins)
 
 function localized(value, lang) {
   const english = pick(value, 'en') || pick(value, 'zh') || ''

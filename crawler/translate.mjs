@@ -14,13 +14,14 @@ import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { MAX_TEXT } from './i18n.mjs'
+
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const TARGETS = (process.env.TRANSLATE_LANGS || 'ja,ko,ru').split(',').map((s) => s.trim()).filter(Boolean)
 const OFFLINE = process.argv.includes('--offline')
 const CONCURRENCY = Number(process.env.TRANSLATE_CONCURRENCY || 12)
 const BUDGET_MS = Number(process.env.TRANSLATE_BUDGET_MS || 6 * 60 * 1000)
 const MAX_STRINGS = Number(process.env.TRANSLATE_MAX_STRINGS || 400)
-const MAX_TEXT = 420
 const CALL_TIMEOUT_MS = 6000
 
 const cachePath = join(root, 'data', 'i18n-cache.json')
