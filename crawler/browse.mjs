@@ -123,6 +123,32 @@ const plugins = rawPlugins.map((plugin) => {
 
 await rm(OUT, { recursive: true, force: true })
 await mkdir(OUT, { recursive: true })
+// ── similar entries ────────────────────────────────────────────────────────
+// Steam shows "more like this" on every page. The static equivalent: rank by shared
+// use cases first, then same category, then practical score, and keep the six best
+// names. Names rather than indexes, so a stale chunk can never point at the wrong
+// plugin.
+{
+  const casesOf = (entry) => new Set(entry.u ?? [])
+  const prepared = plugins.map((entry) => ({ entry, cases: casesOf(entry) }))
+  for (const { entry, cases } of prepared) {
+    const candidates = []
+    for (const other of prepared) {
+      if (other.entry.n === entry.n) continue
+      let overlap = 0
+      for (const id of other.cases) if (cases.has(id)) overlap++
+      const sameCategory = other.entry.c === entry.c
+      if (!overlap && !sameCategory) continue
+      candidates.push({ name: other.entry.n, score: overlap * 3 + (sameCategory ? 2 : 0), sc: other.entry.sc ?? 0 })
+    }
+    if (!candidates.length) continue
+    candidates.sort((a, b) => b.score - a.score || b.sc - a.sc)
+    entry.sim = candidates.slice(0, 6).map((item) => item.name)
+  }
+  const withSim = plugins.filter((entry) => entry.sim).length
+  console.log(`browse: similar links on ${withSim}/${plugins.length} entries`)
+}
+
 const chunks = []
 for (let i = 0; i < plugins.length; i += CHUNK) {
   const name = `${i / CHUNK}.json`

@@ -1,0 +1,96 @@
+name: decay-scan
+
+# Weekly health report for the catalogue: repositories that vanished, were archived,
+# turned into forks, or stopped being pushed to for a year.
+#
+# Report-only by design — nothing is removed automatically. The probe uses GraphQL
+# batches of 100 (2BingLing/dsh-market's recorded lesson: one REST call per repo burns
+# the quota at ~4800 requests and then the job crawls until it is cancelled), and a
+# failed batch is counted rather than retried in a sleep loop.
+on:
+  schedule:
+    - cron: '23 3 * * 1'   # Monday 03:23 UTC, away from the crawl/translate slots
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: decay-scan
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Probe the catalogue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DECAY_BATCH_SIZE: '100'
+          DECAY_CONCURRENCY: '3'
+          DECAY_BUDGET_MS: '720000'
+          DECAY_STALE_DAYS: '365'
+        run: node crawler/decay.mjs
+
+      - name: Commit the report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PUBLISH_PATHS: data
+          PUBLISH_MESSAGE: 'chore(decay): weekly repository health report'
+        run: node crawler/publish-api.mjs
+
+      - name: Summarise into a tracking issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          node -e '
+            const fs = require("fs")
+            const r = JSON.parse(fs.readFileSync("data/decay-report.json", "utf8"))
+            const c = r.counts
+            const healthy = c.notFound + c.archived + c.forks === 0
+            const lines = [
+              `checked ${r.probed}/${r.repositories} repositories on ${r.checkedAt}`,
+              "",
+              "| signal | count |",
+              "|---|---|",
+              `| repository gone (404) | ${c.notFound} |`,
+              `| archived | ${c.archived} |`,
+              `| turned into a fork | ${c.forks} |`,
+              `| no push in ${process.env.DECAY_STALE_DAYS || 365} days | ${c.stale} |`,
+              `| failed batches | ${r.failedBatches} |`,
+              "",
+              healthy ? "Nothing to do: no repository is gone, archived or forked." : "Nothing is removed automatically — this issue is the human review queue.",
+              "",
+              "<details><summary>sample</summary>",
+              "",
+              "```",
+              `gone: ${r.notFound.slice(0, 20).join(", ") || "-"}`,
+              `archived: ${r.archived.slice(0, 20).join(", ") || "-"}`,
+              `stale: ${r.stale.slice(0, 20).map((s) => `${s.repo} (${s.days}d)`).join(", ") || "-"}`,
+              "```",
+              "</details>",
+            ]
+            fs.writeFileSync("decay-issue.md", lines.join("\n"))
+            console.log(lines.slice(0, 12).join("\n"))
+          '
+          title='[decay] weekly repository health'
+          if [ "$(node -e 'const r=require("./data/decay-report.json");const c=r.counts;process.stdout.write(String(c.notFound+c.archived+c.forks))')" = "0" ]; then
+            echo "catalogue is healthy"
+          fi
+          existing=$(gh issue list --search "$title in:title" --state open --json number --jq '.[0].number // empty' || true)
+          if [ -n "${existing}" ]; then
+            gh issue comment "$existing" --body-file decay-issue.md
+          else
+            gh issue create --title "$title" --body-file decay-issue.md
+          fi
