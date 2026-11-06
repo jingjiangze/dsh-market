@@ -12,6 +12,7 @@
 import { mkdir, writeFile, readFile } from 'node:fs/promises'
 import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
+import { applyTranslations } from './i18n.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -193,7 +194,7 @@ function localized(text) {
 // placeholder, and — the way dsh.so does it — which popularity tier the package is
 // in, so the list itself shows whether a plugin is established or brand new.
 const KEEP_LABELS = new Set([
-  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh', 'src-polang', 'src-github', 'src-2bingling',
+  'src-npm', 'src-dshso', 'src-awesome', 'src-mydsh', 'src-polang', 'src-official', 'src-github', 'src-2bingling',
   'trust-readme-verified', 'trust-repo-fallback',
   'zh-fallback',
   // Published from a catalog we could not re-verify this run: the reader should
@@ -370,7 +371,9 @@ async function main() {
     }
     console.log(`2BingLing merged: +${added} new names (duplicates skipped)`)
   } catch (error) {
-    console.log(`2BingLing: skipped (${error.message})`)
+    // Shards run before the adapter step, so the records file does not exist there
+    // yet. That is expected; only the merge job consumes it.
+    if (error?.code !== 'ENOENT') console.log(`2BingLing: skipped (${error.message})`)
   }
 // GitHub repositories add what the catalogues miss: monorepos publishing many DSH
 // plugins (ShiroEirin/dsh-web-ui ships 19) and plugins that were never listed.
@@ -719,6 +722,7 @@ for (const [name, record] of fromGitHub) {
         'src-awesome': { title: { en: 'awesome', zh: 'awesome' } },
         'src-mydsh': { title: { en: 'mydsh', zh: 'mydsh' } },
         'src-polang': { title: { en: 'open market', zh: '开放市场' } },
+        'src-official': { title: { en: 'Awesome DSH Plugin', zh: '官方精选' } },
         'src-github': { title: { en: 'GitHub', zh: 'GitHub' } },
         'src-2bingling': { title: { en: 'dsh.market', zh: 'dsh.market' } },
         'trust-readme-verified': { title: { en: 'README checked', zh: 'README 核对' } },
@@ -746,6 +750,11 @@ for (const [name, record] of fromGitHub) {
     },
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
+
+  // The hourly translate job writes into data/i18n-cache.json. Replaying it here is
+  // what keeps those strings after this run rebuilds the index from shard parts;
+  // without it every crawl silently reset translation coverage to ~5%.
+  await applyTranslations(index.plugins)
 
   // The domestic/international split documents were retired: a reader picks a
   // language document instead (crawler/lang-index.mjs), and one link per language

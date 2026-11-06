@@ -27,6 +27,10 @@ const SOURCES = {
   // Open Plugin Market (github.com/polang233/dsh-plugin-index): a real format-1 index,
   // 1k plugins, 326 KB gzipped, served straight from GitHub Pages.
   polang: { label: 'src-polang', url: process.env.POLANG_INDEX || 'https://polang233.github.io/dsh-plugin-index/index.json' },
+  // Official curated "Awesome DSH Plugin" catalog: format 1, 4.7k entries, 23
+  // categories, Chinese descriptions on ~100% of entries. Distinct from the
+  // awesome feed above (repo-target entries), so it adds ~1.8k net-new plugins.
+  official: { label: 'src-official', url: process.env.OFFICIAL_INDEX || 'https://cdn.jsdelivr.net/npm/dsh-plugin-catalog/index.json' },
 }
 
 const NPM_SPEC = /^((?:@[a-z0-9][\w.-]*\/)?[a-z0-9][\w.-]*)(?:@([\w.^~<>=|-]+))?$/i
@@ -280,7 +284,7 @@ export async function discoverGitHub(token, log = console.log) {
 
 // Returns Map<name, {name, origins:Set, trust:Set, hintEngines?, title?, description?, repo?, stars?}>
 export async function discoverFederated(log = console.log) {
-  const enabled = String(process.env.SOURCES || 'dshso,awesome,mydsh,polang')
+  const enabled = String(process.env.SOURCES || 'dshso,awesome,mydsh,polang,official')
     .split(',')
     .map((name) => name.trim())
     .filter((name) => SOURCES[name])
