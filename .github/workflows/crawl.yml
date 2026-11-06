@@ -17,7 +17,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: crawl
+  group: catalog-publish
   cancel-in-progress: false
 
 jobs:
