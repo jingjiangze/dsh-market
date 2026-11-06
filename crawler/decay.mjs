@@ -67,7 +67,9 @@ async function batch(items) {
   })
   if (!res.ok) throw new Error(`graphql ${res.status}`)
   const json = await res.json()
-  if (json.errors?.length) throw new Error(json.errors[0]?.message ?? 'graphql error')
+  // Only a response without data is a real batch failure (auth, rate limit, syntax).
+  // Per-alias NOT_FOUND inside `errors` is expected and means "repository is gone".
+  if (!json.data) throw new Error(json.errors?.[0]?.message ?? `graphql without data (${res.status})`)
   return items.map((repo, i) => ({ repo, node: json.data?.[`r${i}`] ?? null }))
 }
 
@@ -76,6 +78,7 @@ const batches = []
 for (let i = 0; i < targets.length; i += BATCH) batches.push(targets.slice(i, i + BATCH))
 
 const results = []
+const errorSamples = []
 let failedBatches = 0
 for (let i = 0; i < batches.length; i += CONCURRENCY) {
   if (Date.now() - started > BUDGET_MS) {
@@ -88,7 +91,10 @@ for (let i = 0; i < batches.length; i += CONCURRENCY) {
     if (outcome.status === 'fulfilled') results.push(...outcome.value)
     // A failed batch is recorded, never retried in a sleep loop: 2BingLing's incident
     // was exactly this loop pushing a 40-minute job past its ceiling.
-    else failedBatches++
+    else {
+      failedBatches++
+      if (errorSamples.length < 5) errorSamples.push(String(outcome.reason?.message ?? outcome.reason).slice(0, 200))
+    }
   }
 }
 
@@ -111,6 +117,7 @@ const report = {
   repositories: targets.length,
   probed: results.length,
   failedBatches,
+  errorSamples,
   budgetExceeded: Date.now() - started > BUDGET_MS,
   counts: { notFound: notFound.length, archived: archived.length, forks: forks.length, stale: stale.length },
   notFound: notFound.slice(0, 500),
@@ -122,3 +129,7 @@ await mkdir(dirname(OUT), { recursive: true })
 await writeFile(OUT, JSON.stringify(report, null, 2) + '\n')
 console.log(`decay: probed ${results.length}/${targets.length} — 404 ${notFound.length}, archived ${archived.length}, fork ${forks.length}, stale ${stale.length}`)
 console.log(`decay: wrote ${OUT.replace(root, '.')} (report only; nothing was removed)`)
+if (!results.length) {
+  console.error('decay: probed nothing — refusing to report a healthy catalogue')
+  process.exit(1)
+}
