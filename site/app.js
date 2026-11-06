@@ -227,7 +227,9 @@ function card(entry) {
   const own = [owned ? `<b class=own>已装 ${esc(installed[entry.n] ?? '')}</b>` : '', upgrade ? '<b class=up>可升级</b>' : ''].join('')
   const trust = trustOf(entry)
   const grade = installGrade(entry)
-  const marks = `<b class=trust t${trust.level}>${esc(trust.text)}</b><b class=grade g${grade.level}>${esc(grade.text)}</b>`
+  // Only the actionable grade stays on the card. The trust pill printed 未声明版本 /
+  // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
+  const marks = grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : ''
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
   return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
