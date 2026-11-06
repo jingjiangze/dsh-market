@@ -37,11 +37,17 @@ for (const vp of VIEWPORTS) {
   })
   const page = await context.newPage()
   const failures = []
-  page.on('requestfailed', (req) => failures.push(`${req.failure()?.errorText} ${req.url()}`))
-  await page.goto(URL_TARGET, { waitUntil: 'networkidle', timeout: 90000 })
-  // The catalogue streams in from the dataset chunks; give the first screen time.
+  const failedAssets = []
+  page.on('requestfailed', (req) => {
+    const why = `${req.failure()?.errorText} ${req.url()}`
+    failures.push(why)
+    if (/\.(css|js)(\?|$)/.test(req.url())) failedAssets.push(why)
+  })
+  // `networkidle` never settles here: the page streams hundreds of browse chunks and
+  // mirrored icons. Wait for the first card instead, then let the layout settle.
+  await page.goto(URL_TARGET, { waitUntil: 'domcontentloaded', timeout: 60000 })
   await page.waitForSelector('.card', { timeout: 60000 }).catch(() => {})
-  await page.waitForTimeout(1500)
+  await page.waitForTimeout(2500)
 
   const probe = await page.evaluate(() => {
     const css = (sel, prop) => {
@@ -66,8 +72,11 @@ for (const vp of VIEWPORTS) {
     }
   })
 
-  report.push({ viewport: vp.name, ...probe, failures: failures.length })
+  report.push({ viewport: vp.name, ...probe, failures: failures.length, failedAssets: failedAssets.slice(0, 5) })
 
+  // A stylesheet or bundle that fails to load is the exact regression this gate
+  // exists for: every byte-level check passed while the page rendered unstyled.
+  for (const asset of failedAssets) fail(`${vp.name}: asset failed to load — ${asset}`)
   if (!probe.cssVar) fail(`${vp.name}: --bg is empty — the stylesheet never applied`)
   if (probe.bodyBg === 'rgba(0, 0, 0, 0)' || probe.bodyBg === 'rgb(255, 255, 255)') fail(`${vp.name}: body background is unstyled (${probe.bodyBg})`)
   if (probe.cardCount === 0) fail(`${vp.name}: no cards rendered`)
