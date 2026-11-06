@@ -68,6 +68,7 @@ jobs:
               `| archived | ${c.archived} |`,
               `| turned into a fork | ${c.forks} |`,
               `| no push in ${process.env.DECAY_STALE_DAYS || 365} days | ${c.stale} |`,
+              `| unverified (rate budget) | ${c.unknown} |`,
               `| failed batches | ${r.failedBatches} |`,
               "",
               healthy ? "Nothing to do: no repository is gone, archived or forked." : "Nothing is removed automatically — this issue is the human review queue.",
