@@ -42,7 +42,11 @@ function tiersFor(region = inChina() ? 'cn' : 'intl') {
     ? [`${DATASET}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${PAGES}/browse`]
     : [`${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse', `${DATASET}/browse`]
 }
-const SRC_LABEL = { 'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome', 'src-mydsh': 'mydsh' }
+const SRC_LABEL = {
+  'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome',
+  'src-mydsh': 'mydsh', 'src-polang': '开放市场', 'src-official': '官方精选',
+  'src-2bingling': '2BingLing', 'src-github': 'GitHub',
+}
 const TRUST_LABEL = {
   'trust-readme-verified': 'README 核对',
   'trust-repo-fallback': '仓库固定',
@@ -145,7 +149,19 @@ const catTitle = (id) => {
   const value = state.meta?.categories?.[id]?.title
   return (typeof value === 'string' ? value : value?.[state.lang] ?? value?.en) ?? id
 }
-const badges = (entry) => [...new Set((entry.l ?? []).map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null).filter(Boolean))].slice(0, 4)
+// Only labels that add something the card does not already say are rendered here.
+// The `tags` line carries the exact star/download numbers, so a "★ 1k+" tier pill
+// beside "★ 63" is noise, and "未声明版本"/"仅目录" repeat the trust pill right
+// before them — together they put six overlapping pills on every card.
+const BADGE_SKIP = new Set([
+  'catalog-only', 'no-engines', 'zh-fallback', 'install-verified',
+  'stars-hot', 'stars-mid', 'stars-new', 'dl-hot', 'dl-mid',
+])
+const badges = (entry) => [...new Set(entry.l ?? [])]
+  .filter((label) => !BADGE_SKIP.has(label))
+  .map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null)
+  .filter(Boolean)
+  .slice(0, 2)
 
 function matches(entry) {
   if (state.favorites && !isFavorite(entry.n)) return false
