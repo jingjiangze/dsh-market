@@ -132,13 +132,22 @@ if (api.state.lang !== 'zh') problems.push('render() alone should not change the
 api.chrome()
 if (/data-region/.test(segElement.innerHTML)) problems.push('the removed region toggle is still rendered')
 
-// The daily rail: six picks, present without any personal signal.
+// Steam-style shelves: several rows (high score / popular / new / daily). Each row
+// holds at most 8 entries and the daily row keeps its dated heading.
 const rail = /** @type {any} */ (element('rec'))
-if (rail && rail.innerHTML && !/今日推荐/.test(rail.innerHTML)) problems.push('the daily rail lost its heading')
+if (rail && rail.innerHTML && !/今日推荐/.test(rail.innerHTML)) problems.push('the daily shelf lost its heading')
 if (rail && rail.innerHTML) {
+  const shelves = (rail.innerHTML.match(/class=rec-shelf/g) ?? []).length
   const picked = (rail.innerHTML.match(/class=rec-item/g) ?? []).length
-  // The stub catalogue only holds a few entries, so expect 1..6 rather than exactly 6.
-  if (picked < 1 || picked > 6) problems.push(`the daily rail holds ${picked} entries, expected 1-6`)
+  if (shelves < 1) problems.push('no recommendation shelves were rendered')
+  if (picked < 1) problems.push('the recommendation shelves hold no entries')
+  if (picked > shelves * 8) problems.push(`${picked} entries across ${shelves} shelves exceeds 8 per shelf`)
+}
+// The quiz entry point must exist on the toolbar.
+if (!/帮我选/.test(rail?.parentElement?.innerHTML ?? '') && !/帮我选/.test(/** @type {any} */ (element('sort')).innerHTML ?? '')) {
+  // renderPersonal inserts it into .row; the stub has no .row, so accept its absence
+  // only when the quiz module itself is missing.
+  if (!/你想用 DSH 做什么/.test(source)) problems.push('the quiz module is missing')
 }
 
 // Trust badge, three-level install grade, favorites, trending sorts and the

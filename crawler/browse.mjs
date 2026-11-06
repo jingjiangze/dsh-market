@@ -76,6 +76,11 @@ const plugins = rawPlugins.map((plugin) => {
   if (labels.length) entry.l = labels
   if (plugin.author) entry.a = String(plugin.author).slice(0, 40)
   if (plugin.repository?.url) entry.r = plugin.repository.url
+  // Use-case ids and the practical score travel with the entry so the quiz, the
+  // use-case filters and the 实用分 badge need no second pass over the index.
+  const ucIds = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:')).map((k) => String(k).slice(3))
+  if (ucIds.length) entry.u = ucIds
+  if (plugin.metadata?.sortKeys?.score != null) entry.sc = plugin.metadata.sortKeys.score
   if (plugin.homepage) entry.h = plugin.homepage
   // Icon chain: dataset copy first, the origin as the fallback the browser uses if
   // that file is missing.

@@ -14,6 +14,8 @@ import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
 import { applyTranslations } from './i18n.mjs'
 import { dedupeByRepo } from './dedupe.mjs'
+import { practicalScore } from './score.mjs'
+import { usecasesOf, CATEGORY_USECASES } from './usecases.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -663,6 +665,13 @@ for (const [name, record] of fromGitHub) {
         metadata: {
           category: categoryFor(record, record.name, titleEn, descEn),
           labels,
+          // Use-case ids ("uc:<id>") are what the quiz and the use-case filters read.
+          // They ride in keywords rather than labels so the 5-label display budget is
+          // not consumed by them.
+          ...(() => {
+            const cases = usecasesOf(record.hintTags).map((id) => `uc:${id}`)
+            return cases.length ? { keywords: cases } : {}
+          })(),
           ...(record.stars || record.downloads || record.hintPublishTimestamp
             ? {
               sortKeys: {
@@ -706,6 +715,26 @@ for (const [name, record] of fromGitHub) {
   if (deduped.dropped) console.log(`deduplicated ${deduped.dropped} alias entry(ies) sharing a repository (${named.length} -> ${merged.length})`)
   for (const m of deduped.mergedRepos.slice(0, 5)) console.log(`  alias: ${m.aliases.join(', ')} -> ${m.winner} (${m.repo})`)
   const published = merged.slice(0, MAX_TOTAL)
+  // Practical score: the ranking the market shows instead of raw stars (see
+  // crawler/score.mjs). Every published entry gets one so the site can sort and
+  // badge without recomputation.
+  for (const plugin of published) {
+    const { total } = practicalScore(plugin)
+    // Use-case tags: a source's own tags win; a catalogue without tags falls back to
+    // its category so the quiz can still reach every entry.
+    const existing = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:'))
+    const fallback = existing.length ? [] : (CATEGORY_USECASES[plugin.metadata?.category] ?? []).map((id) => `uc:${id}`)
+    const keywords = [...existing, ...fallback]
+    plugin.metadata = {
+      ...plugin.metadata,
+      ...(keywords.length ? { keywords } : {}),
+      sortKeys: { ...(plugin.metadata?.sortKeys ?? {}), score: total },
+    }
+  }
+  {
+    const withCases = published.filter((p) => (p.metadata?.keywords ?? []).some((k) => String(k).startsWith('uc:'))).length
+    console.log(`scored ${published.length} entries; ${withCases} carry use-case tags`)
+  }
   console.log(`published: ${published.length} (verified ${kept.length} + catalog-only ${Math.min(slimEntries.length, Math.max(0, MAX_TOTAL - kept.length))})`)
 
   const sidecar = {
@@ -763,6 +792,8 @@ for (const [name, record] of fromGitHub) {
         // Newest first by publish time: this is what the site already offers and
         // what DSH otherwise cannot sort by.
         updated: { title: { en: 'Recently updated', zh: '最近更新' }, order: 'desc' },
+        // Practical score: what the market ranks by instead of raw stars.
+        score: { title: { en: 'Practical score', zh: '实用分' }, order: 'desc' },
       },
     },
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
