@@ -38,10 +38,12 @@ jobs:
           npm i --no-save playwright@1.49.1
           npx playwright install --with-deps chromium
 
-      - name: Render and assert the deployed site
+      - name: Render and assert the site
+        # Local fixture render (deterministic, no CDN dependency) plus a live probe of
+        # the deployed bundle's asset URLs.
         env:
           VISUAL_URL: https://jingjiangze.github.io/dsh-market/
-        run: node crawler/visual-check.mjs
+        run: node crawler/visual-check.mjs --live
 
       - name: Keep the screenshots
         if: always()
