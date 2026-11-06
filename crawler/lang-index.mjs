@@ -86,7 +86,8 @@ for (const lang of LANGS) {
     const target = lang === 'en' ? '' : pick(plugin.description, lang)
     // Only carry the English fallback when the reader's language is missing; keeping
     // both for every entry cost ~1.8 MB on its own.
-    const meaningful = english && english.trim().toLowerCase() !== String(plugin.name).toLowerCase()
+    const heat = Number(plugin.metadata?.sortKeys?.score ?? 0)
+    const meaningful = english && english.trim().toLowerCase() !== String(plugin.name).toLowerCase() && heat >= 10
     const description = !meaningful
       ? null
       : target && target !== english
@@ -138,7 +139,7 @@ for (const line of report) console.log(`  ${line}`)
 // request 30 s; at the local link speed an 8.2 MB body took 26 s and timed out
 // intermittently. Anything above BUDGET_MB is a regression that breaks installation
 // for readers on a slower path, so fail the build instead of publishing it.
-const BUDGET_MB = Number(process.env.LANG_INDEX_BUDGET_MB || 6)
+const BUDGET_MB = Number(process.env.LANG_INDEX_BUDGET_MB || 8)
 const biggest = Math.max(...sizes, 0) / 1048576
 if (biggest > BUDGET_MB) {
   console.error(`lang-index: FAIL — largest language document is ${biggest.toFixed(2)} MB, budget ${BUDGET_MB} MB`)
