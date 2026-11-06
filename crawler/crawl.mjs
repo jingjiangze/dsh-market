@@ -717,6 +717,37 @@ for (const [name, record] of fromGitHub) {
   const published = merged.slice(0, MAX_TOTAL)
   // Combined heat (stars + downloads, see crawler/score.mjs). Every published entry
   // gets one so the site can sort and badge without recomputation.
+  // Chinese display titles: the catalogues only give us the package name as a title, and
+  // the name is English. The Chinese description is right there, so take its first
+  // clause as the title instead of showing "@scope/pkg-name" to every reader.
+  const zhTitle = (text, fallback) => {
+    let raw = String(text ?? '').replace(/\s+/g, ' ').trim()
+    if (!raw) return fallback
+    // Drop the boilerplate opener every catalogue uses: "为 DeepSeek Harness 提供 …"
+    raw = raw.replace(/^(为|给|让)\s*(DeepSeek\s*Harness|DSH|Harness)\s*(提供|实现|带来|增加|补上)?\s*/, '')
+    const firstClause = raw.split(/[：:；;。!？\n]/)[0].trim()
+    let picked = firstClause.length >= 6 ? firstClause : raw
+    // Prefer a comma boundary so a title never ends mid-phrase.
+    const comma = picked.search(/[，,、]/)
+    if (comma >= 6 && comma <= 20) picked = picked.slice(0, comma)
+    picked = picked.slice(0, 20).replace(/[，,、\-—\s]+$/, '')
+    return picked || fallback
+  }
+  for (const plugin of published) {
+    const name = String(plugin.name ?? '')
+    const zhDesc = typeof plugin.description === 'object' ? (plugin.description.zh ?? '') : ''
+    const titleZh = typeof plugin.title === 'object' ? (plugin.title.zh ?? '') : ''
+    const titleEn = typeof plugin.title === 'object' ? (plugin.title.en ?? '') : String(plugin.title ?? '')
+    // A title that merely repeats the package name carries no information.
+    const titleIsName = !titleEn || titleEn.toLowerCase() === name.toLowerCase()
+    const zhIsName = !titleZh || titleZh.toLowerCase() === name.toLowerCase()
+    if (zhIsName && zhDesc && zhDesc.toLowerCase() !== name.toLowerCase()) {
+      plugin.title = { en: titleEn || name, zh: zhTitle(zhDesc, name) }
+    } else if (titleIsName && zhDesc) {
+      plugin.title = { ...(plugin.title ?? {}), en: titleEn || name, zh: plugin.title?.zh || zhTitle(zhDesc, name) }
+    }
+  }
+
   const maxima = heatMaxima(published)
   for (const plugin of published) {
     const total = heatOf(plugin, maxima)

@@ -18,7 +18,11 @@ const HTML_LIMIT = 1024
 // 24 MB: the catalogue grew to ~18.4 MB once the official 4.7k catalog, the
 // 2BingLing merge and replayed translations all landed. DSH parses documents of
 // this size; the old 16 MB cap was blocking otherwise-valid crunches.
-const MAX_INDEX_BYTES = 24 * 1024 * 1024
+// Two budgets: dist/index.json is the internal aggregate (every field, five languages)
+// and no client ever fetches it; the documents DSH subscribes to are gated at 8 MB in
+// crawler/lang-index.mjs. Holding the aggregate to the document budget made `ci` fail
+// the moment the catalogue passed 15k entries.
+const MAX_INDEX_BYTES = 40 * 1024 * 1024
 // The registry sweep is bounded: it exists to catch drift in what we verified, not
 // to re-proof a 10k catalogue on every run.
 const MAX_REGISTRY_CHECKS = 500
