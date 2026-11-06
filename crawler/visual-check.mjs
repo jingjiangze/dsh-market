@@ -37,6 +37,9 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   s: 100 + i * 37,
   dl: 10 + i * 11,
   l: ['src-official', i % 4 === 0 ? 'catalog-only' : 'src-npm'],
+  // Practical score + use-case ids, so the score badge and the quiz are exercised.
+  sc: 96 - (i % 40),
+  u: [['ui', 'settings'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
 }))
 
 const META = {
@@ -153,6 +156,10 @@ for (const vp of VIEWPORTS) {
       maxBadges: badgeCounts.length ? Math.max(...badgeCounts) : 0,
       overflowX: document.documentElement.scrollWidth - window.innerWidth,
       deadIdxButtons: document.querySelectorAll('[data-idx="index.cn"], [data-idx="index.intl"]').length,
+      shelves: document.querySelectorAll('.rec-shelf').length,
+      scoreBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('⇧')).length,
+      quizButton: Boolean(document.querySelector('[data-quiz]')),
+      scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
       metaText: (document.getElementById('meta')?.textContent ?? '').slice(0, 80),
       listText: (document.getElementById('list')?.textContent ?? '').slice(0, 120),
@@ -170,11 +177,26 @@ for (const vp of VIEWPORTS) {
   if (probe.maxBadges > 4) fail(`${vp.name}: a card carries ${probe.maxBadges} badges, expected <= 4`)
   if (probe.overflowX > 1) fail(`${vp.name}: horizontal scroll by ${probe.overflowX}px`)
   if (probe.deadIdxButtons) fail(`${vp.name}: dead region-toggle buttons present`)
+  if (probe.shelves < 1) fail(`${vp.name}: no recommendation shelves rendered`)
+  if (probe.scoreBadges === 0) fail(`${vp.name}: no card shows a practical score`)
+  if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
+  if (!probe.scoreSort) fail(`${vp.name}: the practical-score sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
   for (const asset of failedAssets) fail(`${vp.name}: asset failed — ${asset}`)
 
   await page.screenshot({ path: join(OUT, `${vp.name}-top.png`) })
   await page.screenshot({ path: join(OUT, `${vp.name}-full.png`), fullPage: true })
+  if (vp.name === 'desktop') {
+    await page.click('[data-quiz]')
+    await page.waitForTimeout(400)
+    const chips = await page.locator('.quiz-chip').count()
+    if (chips < 10) fail('desktop: the quiz shows no use-case chips')
+    await page.locator('.quiz-chip').first().click()
+    await page.waitForTimeout(400)
+    const results = await page.locator('#quizResults .rec-item').count()
+    if (results === 0) fail('desktop: the quiz returned no results for a picked use case')
+    await page.screenshot({ path: join(OUT, 'desktop-quiz.png') })
+  }
   const firstCard = await page.$('.card')
   if (firstCard) {
     await firstCard.click()
