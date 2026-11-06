@@ -203,6 +203,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           PUBLISH_PATHS: dist site data
+          # The crawl only owns DATA files. site/index.html, style.css, app.js and
+          # site/a/<hash>/ are the UI bundle: they are built by `assets.mjs` and
+          # committed separately. Letting the crawl publish its own checkout of them
+          # rewrote the shell to a stale hashed CSS and broke every new UI element
+          # (un-styled recommendation rail, favorite buttons and trust badges).
+          PUBLISH_EXCLUDE: '(^|/)(index\\.cn\\.json|index\\.intl\\.json|index\\.sidecar\\.json|sidecar\\.json)$|^site/index\\.json$|^site/index\\.(en|ja|ko|ru)\\.json$|^site/index\\.html$|^site/style\\.css$|^site/app\\.js$|^site/a/'
           PUBLISH_MESSAGE: 'chore(crawl): refresh plugin index'
         run: |
           set -o pipefail
