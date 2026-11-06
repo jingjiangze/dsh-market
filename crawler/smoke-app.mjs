@@ -151,8 +151,9 @@ api.state.compat = 'all'
 api.state.favorites = false
 api.render()
 const cardHtml = element('list').innerHTML
-if (!/class=trust/.test(cardHtml)) problems.push('trust badge is missing from cards')
-if (!/class=grade/.test(cardHtml)) problems.push('install-grade badge is missing from cards')
+// The 未声明版本 / 目录收录 pills were removed by request: they appeared on nine of
+// ten cards and read as errors. The card must not carry them any more.
+if (/class=trust|未声明版本|目录收录/.test(cardHtml)) problems.push('the retired trust pill is still rendered')
 if (!/class=fav/.test(cardHtml)) problems.push('favorite button is missing from cards')
 const sorts = element('sort').innerHTML
 for (const key of ['data-sort="trend7"', 'data-sort="trend30"', 'data-sort="trend90"']) {
