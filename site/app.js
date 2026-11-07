@@ -64,8 +64,9 @@ const TRUST_LABEL = {
   'install-verified': '已验证安装',
 }
 const SORTS = [
-  // Combined heat first: stars blended with downloads (see crawler/score.mjs).
-  ['score', '🔥 热度'],
+  // Curation first: the official catalogue is a hand-picked allow-list, so "is this a
+  // pick" is a better first question than a blended popularity number nobody can see.
+  ['curated', '✦ 精选'],
   ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
   ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
 ]
@@ -92,6 +93,40 @@ function mirrorDefault() {
   if (saved && REGISTRIES[saved]) return saved
   return inChina() ? 'mirror' : 'npm'
 }
+// Light and dark are the same design with different tokens, so the toggle only sets
+// `data-theme` on <html> and CSS does the rest. The choice is remembered; a first visit
+// follows the system preference. Applied before the first render to avoid a flash.
+const THEME_KEY = 'dsh-market-theme'
+function preferredTheme() {
+  const saved = localStorage.getItem(THEME_KEY)
+  if (saved === 'light' || saved === 'dark') return saved
+  return window.matchMedia?.('(prefers-color-scheme: light)')?.matches ? 'light' : 'dark'
+}
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme
+  const button = document.querySelector('#theme')
+  if (!button) return
+  button.textContent = theme === 'light' ? '☾' : '☀'
+  button.setAttribute('aria-label', theme === 'light' ? '切到夜间模式' : '切到白天模式')
+  button.title = button.getAttribute('aria-label')
+}
+applyTheme(preferredTheme())
+function ensureThemeToggle() {
+  const row = document.querySelector('.row')
+  if (!row || row.querySelector('#theme')) return
+  const button = document.createElement('button')
+  button.id = 'theme'
+  button.className = 'dice theme'
+  button.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'
+    try { localStorage.setItem(THEME_KEY, next) } catch {}
+    applyTheme(next)
+  })
+  const meta = row.querySelector('#meta')
+  row.insertBefore(button, meta ?? null)
+  applyTheme(document.documentElement.dataset.theme ?? preferredTheme())
+}
+
 const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', mirror: mirrorDefault() }
 
 // ---- personal state: favorites and the installed set -------------------------
@@ -205,8 +240,8 @@ function byOrder(a, b) {
   // `score` used to fall through to the stars key, so the heat button produced the
   // exact same list as the stars button. Each sort now names its own key and falls
   // back to the other popularity figures before the name.
-  if (state.sort === 'score') {
-    return (b.sc ?? 0) - (a.sc ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  if (state.sort === 'curated') {
+    return (b.cu ?? 0) - (a.cu ?? 0) || (b.of ?? 0) - (a.of ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
   }
   if (state.sort === 'downloads') return (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
   return (b.s ?? 0) - (a.s ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
@@ -233,7 +268,9 @@ function card(entry) {
   // Four chips only: category, heat, stars, downloads. Version, author and date live
   // in the detail dialog; on the card they wrapped to a second line and buried the
   // numbers people actually scan for.
-  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.rg === 'git' ? '源码安装' : entry.rg === 'none' ? '未验证' : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
+  // Category, then the two numbers readers actually compare. The heat number is gone: it
+  // was a blend of stars and downloads that nothing on screen could justify.
+  const tags = [catTitle(entry.c), entry.rg === 'git' ? '源码安装' : entry.rg === 'none' ? '未验证' : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
@@ -242,7 +279,7 @@ function card(entry) {
   const grade = installGrade(entry)
   // Only the actionable grade stays on the card. The trust pill printed 未声明版本 /
   // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
-  const marks = grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : ''
+  const marks = (entry.of ? '<b class=pick>✦ 精选</b>' : '') + (grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : '')
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
   return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
@@ -276,6 +313,7 @@ function renderPersonal(pool) {
   // catalogue now opens straight into the category rail and the card grid.
   ensureQuizButton()
   ensureMirrorSelect()
+  ensureThemeToggle()
 }
 
 // Reads a DSH profile directory in the browser: walk for `node_modules`, then keep
@@ -371,8 +409,17 @@ function render() {
   renderFooter()
   const visible = pool.slice(0, state.limit)
   const more = pool.length > visible.length
+  // Only on the untouched view: a shelf of official picks is an opening suggestion, not
+  // a filter result, and it must never push the reader's own search results down.
+  const showPicks = !state.query && !state.favorites && state.category === 'all' && state.sort === 'curated'
+  const picks = showPicks
+    ? [...state.plugins].filter((entry) => entry.of).sort((x, y) => (y.cu ?? 0) - (x.cu ?? 0) || (y.dl ?? 0) - (x.dl ?? 0)).slice(0, 6)
+    : []
+  const picksHtml = picks.length
+    ? `<section class=picks><header><h3>✦ 官方精选</h3><span>来自官方人工清单，共 ${state.plugins.filter((entry) => entry.of).length} 个</span></header><div class=picks-row>${picks.map((entry) => `<button class=pick-card data-open="${esc(entry.n)}">${icon(entry)}<b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div></section>`
+    : ''
   $('list').innerHTML = pool.length
-    ? visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
+    ? picksHtml + visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
     : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
   // Infinite scroll: once the sentinel enters view, extend the list in place.
   if (more) {
@@ -423,12 +470,14 @@ function heroIcon(entry) {
 const ZH_SOURCE = { native: '包自带中文', override: '人工整理', catalog: '目录提供', detected: '作者原文', fallback: '暂用英文' }
 
 function detailHtml(entry) {
+  // Reading order, not data order: what it is, what version, who made it, how current,
+  // then the numbers, then the provenance. Everything a reader needs before installing
+  // sits above the fold of the dialog.
   const pairs = [
     ['类别', catTitle(entry.c)],
     ['版本', entry.v],
     ['作者', entry.a],
     ['发布', day(entry.p)],
-    ['热度', entry.sc != null ? `🔥 ${entry.sc}` : ''],
     ['星标', entry.s ? num(entry.s) : ''],
     ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
     ['DSH 版本', entry.eg],
@@ -451,10 +500,14 @@ function detailHtml(entry) {
   const position = state.visible.findIndex((item) => item.n === entry.n)
   const total = state.visible.length
   const updated = state.meta?.updatedAt ? day(Date.parse(state.meta.updatedAt) / 1000) : ''
-  return `<div class=dh>${heroIcon(entry)}<h3>${esc(titleOf(entry)) || esc(entry.n)}</h3></div>`
+  const chips = [
+    entry.of ? '<b class=pick>✦ 官方精选</b>' : '',
+    entry.rg === 'git' ? '<b class=src-chip>源码安装</b>' : entry.rg === 'mirror' ? '<b class=src-chip>镜像可用</b>' : '',
+  ].filter(Boolean).join('')
+  return `<div class=dh>${heroIcon(entry)}<div class=dh-text><h3>${esc(titleOf(entry)) || esc(entry.n)}</h3>${chips ? `<p class=dh-chips>${chips}</p>` : ''}</div></div>`
     + `<p class=lead>${esc(descOf(entry))}</p>`
-    + `<dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl>`
-    + `<p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p>`
+    + `<section class=facts><h4>安装信息</h4><dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl></section>`
+    + `<section class=install><h4>安装命令</h4><p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p></section>`
     + (keywords ? `<p class=kw>${keywords}</p>` : '')
     + (links.length ? `<p class=links>${links.map((url) => `<a href="${esc(url)}" target=_blank rel=noreferrer>${esc(url.replace(/^https?:\/\//, ''))}</a>`).join(' ')}</p>` : '')
     + (updated ? `<p class=stamp>目录更新于 ${esc(updated)}</p>` : '')
@@ -853,7 +906,7 @@ function runQuiz() {
   const filtered = query
     ? scored.filter((hit) => `${hit.entry.n} ${titleOf(hit.entry)} ${descOf(hit.entry)}`.toLowerCase().includes(query))
     : scored
-  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与热度排序：</p>` + filtered.slice(0, 12)
+  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与精选度排序：</p>` + filtered.slice(0, 12)
     .map((hit) => `<button class=rec-item data-open="${esc(hit.entry.n)}"><b>${esc(titleOf(hit.entry)) || esc(hit.entry.n)}</b><i>${esc(catTitle(hit.entry.c))} · ⇧${hit.entry.sc ?? '-'} · 命中 ${hit.matched}</i></button>`)
     .join('')
 }
