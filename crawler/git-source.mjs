@@ -125,6 +125,6 @@ async function worker() {
 }
 
 await Promise.all(Array.from({ length: CONCURRENCY }, worker))
-await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index, null, 2) + '\n')
+await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index) + '\n')
 await writeFile(CACHE_PATH, JSON.stringify(cache))
 console.log(`git-source: ${resolved} entries switched to git (${requests} repo lookups, ${failed} skipped, ${candidates.length} candidates)`)

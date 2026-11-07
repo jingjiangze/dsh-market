@@ -38,7 +38,10 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   dl: 10 + i * 11,
   l: ['src-official', i % 4 === 0 ? 'catalog-only' : 'src-npm'],
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
-  sc: 96 - (i % 40),
+  // Distinct, non-monotonic popularity so the heat and stars orders genuinely differ.
+  sc: 30 + ((i * 7) % 70),
+  s: 100 + ((i * 13) % 900),
+  dl: 50 + ((i * 29) % 400),
   // A real thumbnail so the `.hicon` path is exercised, not just the .dot fallback.
   i: 'data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 8 8%27%3E%3Crect width=%278%27 height=%278%27 fill=%27%234d6bfe%27/%3E%3C/svg%3E',
   u: [['finance', 'ui'], ['agents', 'automation'], ['knowledge', 'docs'], ['image', 'voice']][i % 4],
@@ -165,6 +168,7 @@ for (const vp of VIEWPORTS) {
       thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
       imgThumbs: document.querySelectorAll('.card img').length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
+      mirrorSelect: document.querySelector('#mirror')?.value ?? null,
       scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
       metaText: (document.getElementById('meta')?.textContent ?? '').slice(0, 80),
@@ -192,6 +196,7 @@ for (const vp of VIEWPORTS) {
   const fat = probe.thumbWidths.filter((width) => width > 64)
   if (fat.length) fail(`${vp.name}: card thumbnail width ${fat[0]}px, expected <= 64px`)
   if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
+  if (!probe.mirrorSelect) fail(`${vp.name}: the install-mirror picker is missing`)
   if (!probe.scoreSort) fail(`${vp.name}: the heat sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
   for (const asset of failedAssets) fail(`${vp.name}: asset failed — ${asset}`)
@@ -216,7 +221,36 @@ for (const vp of VIEWPORTS) {
     await firstCard.click()
     await page.waitForTimeout(700)
     await page.screenshot({ path: join(OUT, `${vp.name}-detail.png`) })
-    const simCount = await page.locator('.sim .rec-item').count()
+    // The heat button used to fall through to the stars key, so both produced the same
+    // list. Compare the first names under each sort. The clicks go through the DOM:
+    // the quiz dialog is modal, so a pointer click on the toolbar waits forever.
+    await page.evaluate(() => { const d = document.getElementById("dlg"); if (d && d.open) d.close() })
+    const orderUnder = async (mode) => {
+      await page.evaluate((sort) => document.querySelector('[data-sort="' + sort + '"]')?.click(), mode)
+      await page.waitForTimeout(300)
+      return page.$$eval(".card h2", (nodes) => nodes.slice(0, 6).map((n) => n.textContent.trim()))
+    }
+    const starsOrder = await orderUnder("stars")
+    const heatOrder = await orderUnder("score")
+    if (!starsOrder.length || !heatOrder.length) fail("desktop: no cards rendered after switching sort")
+    else if (starsOrder.join() === heatOrder.join()) fail("desktop: 热度 and 星标 produce the identical order")
+    // Reopen a card so the detail probes below have a dialog to read.
+    await page.evaluate(() => document.querySelector(".card")?.click())
+    await page.waitForTimeout(400)
+  const detailGrid = await page.evaluate(() => {
+    const dl = document.querySelector('#dlg dl')
+    if (!dl) return null
+    const labels = [...dl.querySelectorAll('dt')].map((n) => n.textContent.trim())
+    return { display: getComputedStyle(dl).display, columns: getComputedStyle(dl).gridTemplateColumns, hasHeat: labels.includes('热度') }
+  })
+  if (!detailGrid) fail('desktop: the detail dialog rendered no definition list')
+  else {
+    if (detailGrid.display !== 'grid') fail(`desktop: detail list display=${detailGrid.display}, expected grid`)
+    if (!detailGrid.hasHeat) fail('desktop: the detail dialog does not show a heat row')
+    const cmd = await page.evaluate(() => document.querySelector('#dlg .cmd code')?.textContent ?? '')
+    if (!/--registry=/.test(cmd)) fail(`desktop: the install command names no registry (got “${cmd}”)`)
+  }
+  const simCount = await page.locator('.sim .rec-item').count()
     if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
   }
   await context.close()

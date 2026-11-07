@@ -259,6 +259,21 @@ h1::before {
   border-color: var(--blue);
   font-weight: 600;
 }
+/* Install-mirror picker: same chunky control language as the other toolbar buttons. */
+#mirror {
+  height: 32px;
+  padding: 0 8px;
+  color: var(--text);
+  background: var(--plate-2);
+  border: 1px solid var(--line-2);
+  border-radius: 0;
+  font: 500 11.5px/1 var(--font-mono);
+  letter-spacing: .04em;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - var(--cut-sm)) 0, 100% var(--cut-sm), 100% 100%, 0 100%);
+}
+#mirror:hover { border-color: var(--blue); color: var(--blue-soft); }
+
 #sort select {
   height: 30px;
   padding: 0 8px;
@@ -577,6 +592,34 @@ dialog::backdrop { background: rgba(6, 7, 9, .84); backdrop-filter: blur(3px); }
   border-left: 2px solid var(--blue);
   font-size: 13px;
   line-height: 1.62;
+}
+
+/* The detail rows are a <dl>, not a <table>: give them a real two-column grid or the
+   default <dd> indent leaves every value floating 40px in from its label. */
+dialog dl {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+}
+dialog dt {
+  padding: 7px 10px;
+  color: var(--faint);
+  background: var(--plate-2);
+  border-bottom: 1px solid var(--line);
+  font: 500 11px/1.6 var(--font-mono);
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+dialog dd {
+  margin: 0;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 dialog table { width: 100%; margin: 0 0 14px; border-collapse: collapse; border: 1px solid var(--line); }

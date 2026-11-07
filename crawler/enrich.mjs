@@ -168,7 +168,7 @@ try {
   console.log(`enrich: downloads pass aborted (${error.message})`)
 }
 
-await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index, null, 2) + '\n')
+await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index) + '\n')
 await writeFile(cachePath, JSON.stringify(cache) + '\n')
 
 const starsNow = plugins.filter((p) => p.metadata?.sortKeys?.stars > 0).length

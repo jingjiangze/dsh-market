@@ -79,7 +79,20 @@ const GUIDE = {
   ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
 }
 
-const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all' }
+// Registries the reader can install from. The probe results carried by the browse chunks
+// (crawler/probe-npm.mjs) say which one actually answers for a given entry.
+const REGISTRIES = {
+  auto: { label: '自动', url: null },
+  mirror: { label: '国内镜像', url: 'https://registry.npmmirror.com' },
+  npm: { label: 'npm 官方', url: 'https://registry.npmjs.org' },
+  git: { label: 'GitHub 源码', url: null },
+}
+function mirrorDefault() {
+  const saved = localStorage.getItem('dsh-market-mirror')
+  if (saved && REGISTRIES[saved]) return saved
+  return inChina() ? 'mirror' : 'npm'
+}
+const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', mirror: mirrorDefault() }
 
 // ---- personal state: favorites and the installed set -------------------------
 // Everything stays in this browser (the site is static and runs no Worker).
@@ -189,8 +202,14 @@ const ZH_EN = { 记忆: 'memory', 模型: 'model', 界面: 'ui', 工具: 'tools'
 function byOrder(a, b) {
   if (state.sort === 'name') return a.n.localeCompare(b.n)
   if (state.sort === 'recent') return (b.p ?? 0) - (a.p ?? 0) || a.n.localeCompare(b.n)
-  const key = state.sort === 'downloads' ? 'dl' : 's'
-  return (b[key] ?? 0) - (a[key] ?? 0) || a.n.localeCompare(b.n)
+  // `score` used to fall through to the stars key, so the heat button produced the
+  // exact same list as the stars button. Each sort now names its own key and falls
+  // back to the other popularity figures before the name.
+  if (state.sort === 'score') {
+    return (b.sc ?? 0) - (a.sc ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  }
+  if (state.sort === 'downloads') return (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  return (b.s ?? 0) - (a.s ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
 }
 
 // Icon chain: the package icon, then the repository owner's avatar (developer),
@@ -214,14 +233,16 @@ function card(entry) {
   // Four chips only: category, heat, stars, downloads. Version, author and date live
   // in the detail dialog; on the card they wrapped to a second line and buried the
   // numbers people actually scan for.
-  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
+  const tags = [catTitle(entry.c), entry.sc != null ? `🔥 ${entry.sc}` : '', entry.rg === 'git' ? '源码安装' : entry.rg === 'none' ? '未验证' : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
   const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
   const own = [owned ? `<b class=own>已装 ${esc(installed[entry.n] ?? '')}</b>` : '', upgrade ? '<b class=up>可升级</b>' : ''].join('')
   const trust = trustOf(entry)
   const grade = installGrade(entry)
-  const marks = `<b class=trust t${trust.level}>${esc(trust.text)}</b><b class=grade g${grade.level}>${esc(grade.text)}</b>`
+  // Only the actionable grade stays on the card. The trust pill printed 未声明版本 /
+  // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
+  const marks = grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : ''
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
   return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
@@ -254,6 +275,7 @@ function renderPersonal(pool) {
   // Themed shelves (high score / popular / new / daily) were retired by request: the
   // catalogue now opens straight into the category rail and the card grid.
   ensureQuizButton()
+  ensureMirrorSelect()
 }
 
 // Reads a DSH profile directory in the browser: walk for `node_modules`, then keep
@@ -406,6 +428,7 @@ function detailHtml(entry) {
     ['版本', entry.v],
     ['作者', entry.a],
     ['发布', day(entry.p)],
+    ['热度', entry.sc != null ? `🔥 ${entry.sc}` : ''],
     ['星标', entry.s ? num(entry.s) : ''],
     ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
     ['DSH 版本', entry.eg],
@@ -416,7 +439,13 @@ function detailHtml(entry) {
     ['来源', badges(entry).join(' · ')],
     ['包名', entry.n],
   ].filter(([, value]) => value)
-  const install = `${entry.n}@${entry.v || ''}`
+  // A bare spec installs from whatever registry the client already uses, so the picked
+  // mirror is offered as an explicit flag rather than silently assumed. Entries whose
+  // probe result pins a mirror keep that mirror even when the reader chose 自动.
+  const mirror = REGISTRIES[state.mirror] ?? REGISTRIES.auto
+  const spec = `${entry.n}@${entry.v || ''}`
+  const registryUrl = mirror.url || (entry.rg === 'mirror' ? REGISTRIES.mirror.url : entry.rg === 'npm' ? REGISTRIES.npm.url : null)
+  const install = registryUrl ? `${spec} --registry=${registryUrl}` : spec
   const links = [entry.h, entry.r].filter(Boolean)
   const keywords = (entry.kw ?? []).map((word) => `<b>${esc(word)}</b>`).join('')
   const position = state.visible.findIndex((item) => item.n === entry.n)
@@ -556,6 +585,12 @@ function ensureStyles() {
 document.addEventListener('change', (event) => {
   const input = event.target
   // Compatibility dropdown lives in #sort and is re-created on every render.
+  if (input && input.id === 'mirror') {
+    state.mirror = input.value
+    try { localStorage.setItem('dsh-market-mirror', state.mirror) } catch {}
+    render()
+    return
+  }
   if (input && input.id === 'compat') {
     state.compat = input.value
     state.limit = 60
@@ -749,6 +784,26 @@ const UC = {
 }
 const QUIZ_MAX = 3
 const quizPicks = new Set()
+
+// The mirror choice is a toolbar control, not a hidden setting: it changes the install
+// command in every detail dialog, so the reader must be able to see and change it.
+function ensureMirrorSelect() {
+  const row = document.querySelector('.row')
+  if (!row || row.querySelector('#mirror')) return
+  const select = document.createElement('select')
+  select.id = 'mirror'
+  select.title = '安装镜像源'
+  for (const [id, registry] of Object.entries(REGISTRIES)) {
+    if (id === 'git') continue
+    const option = document.createElement('option')
+    option.value = id
+    option.textContent = registry.label
+    if (id === state.mirror) option.selected = true
+    select.appendChild(option)
+  }
+  const meta = row.querySelector('#meta')
+  row.insertBefore(select, meta ?? null)
+}
 
 function ensureQuizButton() {
   const row = document.querySelector('.row')

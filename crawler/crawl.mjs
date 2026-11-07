@@ -14,8 +14,9 @@ import { discoverFederated, discoverGitHub } from './sources.mjs'
 import { CATEGORIES, CATEGORY_GROUPS, categoryFor } from './taxonomy.mjs'
 import { applyTranslations } from './i18n.mjs'
 import { dedupeByRepo } from './dedupe.mjs'
-import { heatOf } from './score.mjs'
+import { heatOf, heatMaxima } from './score.mjs'
 import { usecasesOf, CATEGORY_USECASES } from './usecases.mjs'
+import { reconcileEnginesLabel } from './labels.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -717,8 +718,47 @@ for (const [name, record] of fromGitHub) {
   const published = merged.slice(0, MAX_TOTAL)
   // Combined heat (stars + downloads, see crawler/score.mjs). Every published entry
   // gets one so the site can sort and badge without recomputation.
+  // Chinese display titles: the catalogues only give us the package name as a title, and
+  // the name is English. The Chinese description is right there, so take its first
+  // clause as the title instead of showing "@scope/pkg-name" to every reader.
+  const zhTitle = (text, fallback) => {
+    let raw = String(text ?? '').replace(/\s+/g, ' ').trim()
+    if (!raw) return fallback
+    // Drop the boilerplate opener every catalogue uses: "为 DeepSeek Harness 提供 …"
+    raw = raw.replace(/^(为|给|让)\s*(DeepSeek\s*Harness|DSH|Harness)\s*(提供|实现|带来|增加|补上)?\s*/, '')
+    const firstClause = raw.split(/[：:；;。!？\n]/)[0].trim()
+    let picked = firstClause.length >= 6 ? firstClause : raw
+    // Prefer a comma boundary so a title never ends mid-phrase.
+    const comma = picked.search(/[，,、]/)
+    if (comma >= 6 && comma <= 20) picked = picked.slice(0, comma)
+    picked = picked.slice(0, 20).replace(/[，,、\-—\s]+$/, '')
+    return picked || fallback
+  }
   for (const plugin of published) {
-    const total = heatOf(plugin)
+    const name = String(plugin.name ?? '')
+    const zhDesc = typeof plugin.description === 'object' ? (plugin.description.zh ?? '') : ''
+    const titleZh = typeof plugin.title === 'object' ? (plugin.title.zh ?? '') : ''
+    const titleEn = typeof plugin.title === 'object' ? (plugin.title.en ?? '') : String(plugin.title ?? '')
+    // A title that merely repeats the package name carries no information.
+    const titleIsName = !titleEn || titleEn.toLowerCase() === name.toLowerCase()
+    const zhIsName = !titleZh || titleZh.toLowerCase() === name.toLowerCase()
+    if (zhIsName && zhDesc && zhDesc.toLowerCase() !== name.toLowerCase()) {
+      plugin.title = { en: titleEn || name, zh: zhTitle(zhDesc, name) }
+    } else if (titleIsName && zhDesc) {
+      plugin.title = { ...(plugin.title ?? {}), en: titleEn || name, zh: plugin.title?.zh || zhTitle(zhDesc, name) }
+    }
+  }
+
+  // Reconcile the no-engines label with what enrichment actually found. The catalogue
+  // row is stale by the time we publish: a plugin that declares engines must not keep a
+  // label claiming it declares nothing. The rule lives in labels.mjs because
+  // restore-alias.mjs merges rows and has to apply the same rule afterwards.
+  const enginesFixed = reconcileEnginesLabel(published)
+  if (enginesFixed) console.log(`reconciled no-engines on ${enginesFixed} entries`)
+
+  const maxima = heatMaxima(published)
+  for (const plugin of published) {
+    const total = heatOf(plugin, maxima)
     // Use-case tags: a source's own tags win; a catalogue without tags falls back to
     // its category so the quiz can still reach every entry.
     const existing = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:'))
@@ -812,7 +852,9 @@ for (const [name, record] of fromGitHub) {
   if (DRY) {
     console.log(`dry-run: would write ${published.length} plugins (${JSON.stringify(index).length} bytes)`)
   } else {
-    await writeFile(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n')
+    // Compact, matching the batch steps that rewrite this file; pretty-printing cost
+    // ~35% of the artifact and a 590k-line diff on every run.
+    await writeFile(join(OUT, 'index.json'), JSON.stringify(index) + '\n')
     await writeFile(join(OUT, 'index.sidecar.json'), JSON.stringify(sidecar, null, 2) + '\n')
     await writeFile(join(OUT, 'rejections.json'), JSON.stringify(rejections, null, 2) + '\n')
     // The merge job owns the catalogue and the cursor: a publish-only pass reads
