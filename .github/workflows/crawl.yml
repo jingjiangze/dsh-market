@@ -207,6 +207,11 @@ jobs:
           ICON_MAX_PER_RUN: '3000'
         run: node crawler/icons.mjs
 
+      - name: Publish the plugin-facing index
+        # Format 1 drops members it does not define, so the facts an on-demand loader needs
+        # (real install target, installability, curation) get their own document instead of
+        # being re-derived from strings.
+        run: node crawler/plugin-index.mjs
       - name: Build the browse chunks
         # The page reads a ~350 KB first chunk instead of the 11.5 MB format-1 document.
         env:
