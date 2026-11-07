@@ -1,0 +1,33 @@
+{
+  "name": "@local/dsh-lazy-plugins",
+  "version": "3.22.1",
+  "private": true,
+  "type": "module",
+  "description": "Load a plugin from the configured market index only when a task needs it, then release it.",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "lib/*.mjs",
+    "skills/**",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "CREDITS.md",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
