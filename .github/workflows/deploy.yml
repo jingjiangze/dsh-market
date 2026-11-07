@@ -27,6 +27,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for API quota
+        # A deployment needs ~10 API calls; a crawl in the same hour can leave none and
+        # configure-pages then fails with "rate limit exceeded for installation" even though
+        # the site is fine. Wait for the window instead of failing the deploy.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for attempt in $(seq 1 10); do
+            remaining=$(gh api rate_limit --jq '.resources.core.remaining' 2>/dev/null || echo 0)
+            echo "core quota remaining: ${remaining:-0} (attempt $attempt)"
+            if [ "${remaining:-0}" -ge 200 ]; then exit 0; fi
+            sleep 60
+          done
+          echo "::warning::deploying with a nearly exhausted API quota"
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
