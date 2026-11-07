@@ -33,7 +33,11 @@ const CN_LANGS = new Set((process.env.CN_REGISTRY_LANGS || 'zh').split(',').map(
 function sourceFor(version, lang) {
   const base = { type: version?.source?.type ?? 'npm' }
   if (base.type !== 'npm') return version?.source ?? base
-  const registry = CN_LANGS.has(lang) ? CN_REGISTRY : version?.source?.registry
+  // The mirror used to be written on every entry: "registry":"https://registry.npmmirror.com"
+  // is 45 bytes x 7.7k entries = 1.2 MB, the single largest field in the document, for a value
+  // the format already defaults (absent means "the installing client's own registry"). The
+  // website offers the mirror explicitly instead, and a client in China is configured for it.
+  const registry = version?.source?.registry && !CN_LANGS.has(lang) ? version.source.registry : null
   return registry ? { ...base, registry } : base
 }
 
@@ -107,8 +111,8 @@ for (const lang of LANGS) {
   // which matters because the client fetches this document uncompressed.
   // 28 characters still fits a full Chinese phrase and keeps the document under the size
   // that a 30 s client fetch can actually finish on a slow link.
-  const TITLE_MAX = 28
-  const DESC_MAX = 28
+  const TITLE_MAX = 20
+  const DESC_MAX = 20
   const text60 = (value, max) => {
     const raw = String(value ?? '')
     return raw.length > max ? raw.slice(0, max) + '…' : raw
