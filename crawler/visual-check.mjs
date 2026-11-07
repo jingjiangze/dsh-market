@@ -40,6 +40,9 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
   // Distinct, non-monotonic popularity so the heat and stars orders genuinely differ.
   sc: 30 + ((i * 7) % 70),
+  // Curation fields the page now renders: a shelf of official picks plus a mark on cards.
+  of: i < 8 ? 1 : 0,
+  cu: 40 + ((i * 11) % 60),
   s: 100 + ((i * 13) % 900),
   dl: 50 + ((i * 29) % 400),
   // A real thumbnail so the `.hicon` path is exercised, not just the .dot fallback.
@@ -164,7 +167,12 @@ for (const vp of VIEWPORTS) {
       overflowX: document.documentElement.scrollWidth - window.innerWidth,
       deadIdxButtons: document.querySelectorAll('[data-idx="index.cn"], [data-idx="index.intl"]').length,
       shelves: document.querySelectorAll('.rec-shelf').length,
+      // Heat was removed by request; the gate now enforces its absence instead of its presence.
       heatBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('🔥')).length,
+      themeToggle: Boolean(document.querySelector('#theme')),
+      theme: document.documentElement.dataset.theme ?? null,
+      picks: document.querySelectorAll('.picks .pick-card').length,
+      pickMarks: document.querySelectorAll('.card .pick').length,
       thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
       imgThumbs: document.querySelectorAll('.card img').length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
@@ -189,7 +197,10 @@ for (const vp of VIEWPORTS) {
   if (probe.overflowX > 1) fail(`${vp.name}: horizontal scroll by ${probe.overflowX}px`)
   if (probe.deadIdxButtons) fail(`${vp.name}: dead region-toggle buttons present`)
   if (probe.shelves > 0) fail(`${vp.name}: a retired recommendation shelf is still rendered`)
-  if (probe.heatBadges === 0) fail(`${vp.name}: no card shows a heat badge`)
+  if (probe.heatBadges !== 0) fail(`${vp.name}: ${probe.heatBadges} card(s) still show a heat badge`)
+  if (!probe.themeToggle) fail(`${vp.name}: the theme toggle is missing`)
+  if (!probe.theme) fail(`${vp.name}: no data-theme on <html>`)
+  if (probe.picks === 0) fail(`${vp.name}: the curated shelf rendered no picks`)
   // An unconstrained <img> is what broke the card layout once: icons stretched to the
   // card width and the description wrapped one character per line.
   if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)
@@ -231,7 +242,7 @@ for (const vp of VIEWPORTS) {
       return page.$$eval(".card h2", (nodes) => nodes.slice(0, 6).map((n) => n.textContent.trim()))
     }
     const starsOrder = await orderUnder("stars")
-    const heatOrder = await orderUnder("score")
+    const heatOrder = await orderUnder("curated")
     if (!starsOrder.length || !heatOrder.length) fail("desktop: no cards rendered after switching sort")
     else if (starsOrder.join() === heatOrder.join()) fail("desktop: 热度 and 星标 produce the identical order")
     // Reopen a card so the detail probes below have a dialog to read.
@@ -246,12 +257,30 @@ for (const vp of VIEWPORTS) {
   if (!detailGrid) fail('desktop: the detail dialog rendered no definition list')
   else {
     if (detailGrid.display !== 'grid') fail(`desktop: detail list display=${detailGrid.display}, expected grid`)
-    if (!detailGrid.hasHeat) fail('desktop: the detail dialog does not show a heat row')
+    if (detailGrid.hasHeat) fail('desktop: the detail dialog still shows a heat row')
+    const sections = await page.evaluate(() => ({
+      facts: Boolean(document.querySelector('#dlg .facts dl')),
+      install: Boolean(document.querySelector('#dlg .install .cmd')),
+    }))
+    if (!sections.facts) fail('desktop: the detail dialog has no facts section')
+    if (!sections.install) fail('desktop: the detail dialog has no install section')
     const cmd = await page.evaluate(() => document.querySelector('#dlg .cmd code')?.textContent ?? '')
     if (!/--registry=/.test(cmd)) fail(`desktop: the install command names no registry (got “${cmd}”)`)
   }
   const simCount = await page.locator('.sim .rec-item').count()
     if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
+  }
+  if (!problems.length) {
+    const lightBg = await page.evaluate(async () => {
+      document.querySelector('#theme').click()
+      await new Promise((resolve) => setTimeout(resolve, 120))
+      return {
+        theme: document.documentElement.dataset.theme,
+        bg: getComputedStyle(document.body).backgroundColor,
+      }
+    })
+    if (lightBg.theme !== 'light') fail(`desktop: the theme toggle did not switch to light (got ${lightBg.theme})`)
+    else if (!/^rgb\(2[0-9]{2}, 2[0-9]{2}, 2[0-9]{2}\)$/.test(lightBg.bg)) fail(`desktop: light theme background stayed dark (${lightBg.bg})`)
   }
   await context.close()
 }
