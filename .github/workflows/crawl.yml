@@ -172,6 +172,13 @@ jobs:
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
+      - name: Publish the descriptions sidecar
+        # The published language documents are metadata-only, so the Chinese
+        # one-line descriptions only exist in dist/index.json (8.8 MB). A client
+        # that wants the text must not download that: this writes name -> zh as its
+        # own document and mirrors it to site/, which is what GitHub Pages serves.
+        run: node crawler/emit-descriptions.mjs
+
       - name: Assemble the site
         run: |
           # Only the small, user-facing files are assembled here. index.json and the

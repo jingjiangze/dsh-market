@@ -28,7 +28,7 @@ const PATHS = (process.env.PUBLISH_PATHS || 'dist site data').split(/\s+/).filte
 // each one added ~12 MB to the history. The four non-Chinese language documents are
 // dataset-only for the same reason.
 const INCLUDE = new RegExp(process.env.PUBLISH_INCLUDE
-  || '^(site/(?!index\\.json$|sidecar\\.json$|index\\.(en|ja|ko|ru)\\.json$)|data/|dist/index\\.json$|dist/stats\\.json$)', '')
+  || '^(site/(?!index\\.json$|sidecar\\.json$|index\\.(en|ja|ko|ru)\\.json$)|data/|dist/index\\.json$|dist/stats\\.json$|dist/descriptions\\.zh\\.json$)', '')
 // Files that must never reach git even if a run writes them.
 const EXCLUDE = new RegExp(process.env.PUBLISH_EXCLUDE
   || '(^|/)(index\\.cn\\.json|index\\.intl\\.json|index\\.sidecar\\.json|sidecar\\.json)$|^site/index\\.json$|^site/index\\.(en|ja|ko|ru)\\.json$', '')
