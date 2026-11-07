@@ -5,11 +5,17 @@
 //   dist/browse/<n>.json    800 entries each, ordered by stars
 //
 //   node crawler/browse.mjs
+import { readFileSync } from 'node:fs'
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+// Registry probe results (crawler/probe-npm.mjs): lets every card say how it installs
+// and which mirror answers, instead of leaving the reader to guess.
+const PROBE_PATH = join(root, 'data', 'npm-probe.json')
+let PROBE = {}
+try { PROBE = JSON.parse(readFileSync(PROBE_PATH, 'utf8')) } catch { PROBE = {} }
 const CHUNK = Number(process.env.BROWSE_CHUNK || 800)
 const DESC_LIMIT = Number(process.env.BROWSE_DESC_LIMIT || 160)
 const MIN_PLUGINS = Number(process.env.BROWSE_MIN_PLUGINS || 500)
@@ -81,6 +87,18 @@ const plugins = rawPlugins.map((plugin) => {
   const ucIds = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:')).map((k) => String(k).slice(3))
   if (ucIds.length) entry.u = ucIds
   if (plugin.metadata?.sortKeys?.score != null) entry.sc = plugin.metadata.sortKeys.score
+  // How this entry installs: a commit-pinned git source, a mirror hit, npm proper, or
+  // nothing we could verify.
+  {
+    const source = version.source ?? {}
+    if (source.type === 'git' && /^[0-9a-f]{40}$/i.test(String(source.commit ?? ''))) entry.rg = 'git'
+    else {
+      const result = PROBE[plugin.name]
+      if (result?.npmmirror === 'ok') entry.rg = 'mirror'
+      else if (result?.npmjs === 'ok') entry.rg = 'npm'
+      else if (result) entry.rg = 'none'
+    }
+  }
   if (plugin.homepage) entry.h = plugin.homepage
   // Icon chain: dataset copy first, the origin as the fallback the browser uses if
   // that file is missing.
