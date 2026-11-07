@@ -248,6 +248,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install the real format-1 validator
+        # verify runs crawler/validate.mjs, which imports the real format package. Without
+        # this the gate fails on a missing module instead of reporting on the catalogue —
+        # exactly the failure the first split run produced.
+        run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
       - name: Take the built catalogue
         uses: actions/download-artifact@v4
         with:
