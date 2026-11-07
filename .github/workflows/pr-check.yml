@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   measure:
-    if: github.event_name != 'schedule'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -87,24 +87,49 @@ jobs:
           cat /tmp/comment.md
 
       - name: Publish the result on the PR
+        # Reporting is best-effort: the verdict already lives in the step summary, and a
+        # rate-limited comment must not turn a passing gate into a red run.
+        continue-on-error: true
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
         run: |
-          set -euo pipefail
           marker='<!-- pr-check -->'
           body_file=/tmp/comment.md
-          [ -f "$body_file" ] || echo 'pr-check did not run' > "$body_file"
-          { echo "$marker"; cat "$body_file"; } > /tmp/body.md
-          existing=$(gh api "repos/${{ github.repository }}/issues/$PR/comments" --paginate \
-            --jq "[.[] | select(.body | startswith(\"$marker\")) | .id] | last // empty")
-          if [ -n "${existing:-}" ]; then
-            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$existing" -F body=@/tmp/body.md >/dev/null
-          else
-            gh api -X POST "repos/${{ github.repository }}/issues/$PR/comments" -F body=@/tmp/body.md >/dev/null
-          fi
+          [ -f "$body_file" ] || echo "pr-check did not run" > "$body_file"
+          # jq builds the JSON payload, so the comment body needs no shell quoting.
+          { echo "$marker"; cat "$body_file"; } | jq -Rs '{body: .}' > /tmp/body.json
 
+          # The installation token is shared with the crawl and the publish step, so this
+          # write is the most likely thing in the workflow to hit a rate limit.
+          call() {
+            local method="$1" url="$2" attempt=1 out
+            while [ "$attempt" -le 4 ]; do
+              if out=$(gh api -X "$method" "$url" --input /tmp/body.json 2>&1); then
+                echo "pr-check: comment written"
+                return 0
+              fi
+              if printf '%s' "$out" | grep -qi "rate limit"; then
+                echo "pr-check: rate limited (attempt $attempt), backing off"
+                sleep $((attempt * 20))
+                attempt=$((attempt + 1))
+                continue
+              fi
+              echo "pr-check: comment failed: $out"
+              return 0
+            done
+            echo "pr-check: gave up writing the comment; the verdict is in the job summary"
+            return 0
+          }
+
+          existing=$(gh api "repos/${{ github.repository }}/issues/$PR/comments" --paginate \
+            --jq "[.[] | select(.body | startswith(\"$marker\")) | .id] | last // empty" 2>/dev/null || echo "")
+          if [ -n "${existing:-}" ]; then
+            call PATCH "repos/${{ github.repository }}/issues/comments/$existing" || true
+          else
+            call POST "repos/${{ github.repository }}/issues/$PR/comments" || true
+          fi
   nudge:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
