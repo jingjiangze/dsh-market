@@ -103,8 +103,11 @@ for (const lang of LANGS) {
     const target = lang === 'en' ? '' : pick(plugin.description, lang)
     // Only carry the English fallback when the reader's language is missing; keeping
     // both for every entry cost ~1.8 MB on its own.
-    const heat = Number(plugin.metadata?.sortKeys?.score ?? 0)
-    const meaningful = english && english.trim().toLowerCase() !== String(plugin.name).toLowerCase() && heat >= 10
+    // No heat gate. It looked harmless, but the score lives in metadata.sortKeys, which the
+    // batch steps (pin/restore-alias) rewrite: when it was absent every description was
+    // dropped and the published document became metadata-only (0 of 10,559 rows carried one).
+    // A gate that silently empties the field is worse than a slightly larger document.
+    const meaningful = Boolean(english) && english.trim().toLowerCase() !== String(plugin.name).toLowerCase()
     const description = !meaningful
       ? null
       : target && target !== english
