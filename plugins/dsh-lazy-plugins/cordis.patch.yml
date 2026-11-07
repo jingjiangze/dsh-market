@@ -1,0 +1,42 @@
+- insert:
+    - id: dsh-lazy-plugins
+      name: '@local/dsh-lazy-plugins'
+      config:
+        # 常驻（resident）不再靠手写名单：base bundle 结构性保护 + 本地使用分自动判定。
+        # 这里只留「显式覆盖」名单，通常为空。
+        # 默认激活方式：proxy = 当场可用且工具不进模型视野（前缀缓存不动）；now = 原生可见；session = 只装不启
+        defaultActivate: proxy
+        # 自动选取阈值（实测校准：31 条语料，40/1.3 精度 0.636 → 40/1.5 精度 0.80）
+        autoSelectScore: 40
+        autoSelectMargin: 1.5
+        # 打开后同族（name/title 共享核心词）也视为判定明确：recall 0.167→~0.6，精度 0.80→~0.72
+        autoSelectFamilyExempt: false
+        # 双语桥接词权重（0.4 实测最优：P 0.900 / top5 0.900；0.6/0.8 各放行一次误装）
+        bridgeWeight: 0.4
+        # 同分类软加权（0=关；0.3 实测 P 不变、覆盖率翻倍）
+        categoryBoost: 0.3
+        resident: []
+        halfLifeDays: 14
+        residentScore: 3
+        # 索引拉取：单次尝试只等首字节 5s，超时转下一个源；有磁盘缓存就先返回，
+        # 后台按条件请求热更新覆盖缓存（304 时 0 字节）。
+        fetchTimeoutMs: 3000
+        bodyTimeoutMs: 20000
+        refreshIntervalMs: 180000
+        dailyRefreshMs: 86400000
+        panelThrottleMs: 60000
+        # 镜像顺序：实测可用（raw.githubusercontent 本机不可达，gcore 过慢，均已剔除）
+        indexMirrors:
+          - https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/index.zh.json
+        # 描述表来源（仓库里的 site 文档仍带 description），一次拉取 12h 有效
+        descriptionSource: https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/index.zh.json
+        descriptionTtlMs: 43200000
+        descriptionSearch: true
+        # 装前可用性探测：命中时只问声明的 registry（1.5s），未命中才全量并行扫
+        verifyInstall: true
+        probeFastMs: 400
+        probeTimeoutMs: 6000
+        # 工具 schema 是否默认不进上下文（true 更省 token，但模型必须先发现这个工具）
+        deferLoading: false
+        # 索引磁盘缓存（跨进程复用；网络断开时旧副本仍可用）
+        diskCache: true

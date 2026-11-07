@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Session reader",
+    "description": "List other DSH sessions, search across them, and read a full conversation from the raw log. Read-only."
+  }
+}

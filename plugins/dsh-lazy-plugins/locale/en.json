@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "On-demand plugins",
+    "description": "Pulls a plugin from the online market only when a task needs it, then unloads or removes it again."
+  }
+}
