@@ -22,7 +22,11 @@ const CACHE = join(root, 'data', 'git-source-cache.json')
 const BATCH = Number(process.env.PIN_BATCH || 100)
 const CONCURRENCY = Number(process.env.PIN_CONCURRENCY || 3)
 const BUDGET_MS = Number(process.env.PIN_BUDGET_MS || 600000)
-const MAX_PINS = Number(process.env.PIN_MAX || 8000)
+const MAX_PINS = Number(process.env.PIN_MAX || 2500)
+// GraphQL returns rateLimit alongside the data, so the loop can stop well before the
+// token is dry and leave the REST quota the publish step needs.
+const RATE_FLOOR = Number(process.env.PIN_RATE_FLOOR || 900)
+let graphRemaining = null
 
 if (!TOKEN) { console.error('pin-missing: GITHUB_TOKEN is missing'); process.exit(1) }
 if (!existsSync(INDEX)) { console.error('pin-missing: dist/index.json is missing'); process.exit(1) }
@@ -67,7 +71,7 @@ for (const candidate of candidates) {
 }
 const keys = [...wanted.keys()].slice(0, MAX_PINS)
 
-const QUERY = (batch) => `query{${batch
+const QUERY = (batch) => `query{rateLimit{remaining}${batch
   .map((key, i) => {
     const [owner, repo] = key.split('/')
     return `r${i}:repository(owner:${JSON.stringify(owner)},name:${JSON.stringify(repo)}){defaultBranchRef{target{oid}}}`
@@ -84,6 +88,7 @@ async function resolveBatch(batch) {
   if (!res.ok) throw new Error(`graphql ${res.status}`)
   const json = await res.json()
   if (!json.data) throw new Error(json.errors?.[0]?.message ?? 'graphql without data')
+  if (typeof json.data.rateLimit?.remaining === "number") graphRemaining = json.data.rateLimit.remaining
   const now = Date.now()
   batch.forEach((key, i) => {
     const node = json.data[`r${i}`]
@@ -96,6 +101,10 @@ const started = Date.now()
 let done = 0
 let failed = 0
 for (let i = 0; i < keys.length; i += BATCH * CONCURRENCY) {
+  if (graphRemaining !== null && graphRemaining < RATE_FLOOR) {
+    console.log(`pin-missing: stopping with ${graphRemaining} GraphQL points left (floor ${RATE_FLOOR}); the rest is pinned next run`)
+    break
+  }
   if (Date.now() - started > BUDGET_MS) { console.log(`pin-missing: budget reached after ${i}/${keys.length}`); break }
   const slices = []
   for (let s = 0; s < CONCURRENCY; s++) {
