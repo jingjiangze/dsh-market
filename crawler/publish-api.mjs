@@ -42,7 +42,10 @@ if (!TOKEN && !DRY) {
 }
 
 async function api(path, options = {}) {
-  for (let attempt = 1; attempt <= 4; attempt++) {
+  let attempt = 0
+  let rateLimited = 0
+  for (;;) {
+    attempt++
     try {
       const res = await fetch(`${API}/repos/${REPO}${path}`, {
         ...options,
@@ -59,11 +62,24 @@ async function api(path, options = {}) {
       if (!res.ok) {
         const error = new Error(`${options.method ?? 'GET'} ${path} -> ${res.status} ${text.slice(0, 200)}`)
         error.status = res.status
+        error.body = text
+        error.retryAfter = Number(res.headers.get('retry-after') ?? 0)
         throw error
       }
       return text ? JSON.parse(text) : null
     } catch (error) {
-      if (attempt === 4) throw error
+      // The crawl spends 40 minutes before it gets here; a rate limit at the very end must
+      // cost a wait, not the whole run. The old backoff topped out at 3.2 s, which never
+      // outlives an installation rate limit.
+      const limited = (error.status === 403 || error.status === 429) && /rate limit|secondary rate|abuse/i.test(error.body ?? error.message ?? '')
+      if (limited && rateLimited < 6) {
+        rateLimited++
+        const waitMs = error.retryAfter > 0 ? Math.min(error.retryAfter * 1000, 300000) : Math.min(180000, 20000 * rateLimited)
+        console.log(`publish-api: rate limited on ${path}, waiting ${Math.round(waitMs / 1000)}s (${rateLimited}/6)`)
+        await new Promise((resolve) => setTimeout(resolve, waitMs))
+        continue
+      }
+      if (attempt >= 4) throw error
       await new Promise((resolve) => setTimeout(resolve, 800 * attempt))
     }
   }
