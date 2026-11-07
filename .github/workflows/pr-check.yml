@@ -98,8 +98,9 @@ jobs:
           marker='<!-- pr-check -->'
           body_file=/tmp/comment.md
           [ -f "$body_file" ] || echo "pr-check did not run" > "$body_file"
-          # jq builds the JSON payload, so the comment body needs no shell quoting.
-          { echo "$marker"; cat "$body_file"; } | jq -Rs '{body: .}' > /tmp/body.json
+          # The JSON payload is built with node (setup-node guarantees it) rather than jq,
+          # so the body needs no shell quoting and no extra runner dependency.
+          BODY_FILE="$body_file" MARKER="$marker" node -e 'const fs=require("fs");const mark=process.env.MARKER;const nl=String.fromCharCode(10);const body=fs.existsSync(process.env.BODY_FILE)?fs.readFileSync(process.env.BODY_FILE,"utf8"):"pr-check did not run";fs.writeFileSync("/tmp/body.json",JSON.stringify({body:mark+nl+body}))'
 
           # The installation token is shared with the crawl and the publish step, so this
           # write is the most likely thing in the workflow to hit a rate limit.
