@@ -48,7 +48,12 @@ const INSTALLABLE = (plugin) => {
   if (source.type === 'git') return /^[0-9a-f]{40}$/i.test(String(source.commit ?? ''))
   const result = probe[plugin.name]
   if (!result) return true // never probed: keep it, the site shows the caveat
-  return result.npmmirror === 'ok' || result.npmjs === 'ok'
+  if (result.npmmirror === 'ok' || result.npmjs === 'ok') return true
+  // Only a definitive "missing" from both registries is grounds to withhold. A timeout,
+  // a 429 or a 5xx says nothing about whether the package exists — and the crawl itself
+  // provokes them, because it spends the same quota.
+  const definitive = (value) => value === 'missing'
+  return !(definitive(result.npmmirror) && definitive(result.npmjs))
 }
 const plugins = index.plugins ?? []
 // This file copies `metadata.category` out of dist/index.json and never re-derives it
@@ -100,8 +105,10 @@ for (const lang of LANGS) {
   // Sized for the wire, not for humans: see the budget check at the end of this file.
   // 32 characters is still a full Chinese phrase and buys ~0.9 MB back at 15k entries,
   // which matters because the client fetches this document uncompressed.
-  const TITLE_MAX = 32
-  const DESC_MAX = 32
+  // 28 characters still fits a full Chinese phrase and keeps the document under the size
+  // that a 30 s client fetch can actually finish on a slow link.
+  const TITLE_MAX = 28
+  const DESC_MAX = 28
   const text60 = (value, max) => {
     const raw = String(value ?? '')
     return raw.length > max ? raw.slice(0, max) + '…' : raw
