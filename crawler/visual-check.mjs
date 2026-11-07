@@ -177,7 +177,7 @@ for (const vp of VIEWPORTS) {
       imgThumbs: document.querySelectorAll('.card img').length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
       mirrorSelect: document.querySelector('#mirror')?.value ?? null,
-      scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
+      scoreSort: Boolean(document.querySelector('[data-sort="curated"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
       metaText: (document.getElementById('meta')?.textContent ?? '').slice(0, 80),
       listText: (document.getElementById('list')?.textContent ?? '').slice(0, 120),
@@ -208,7 +208,7 @@ for (const vp of VIEWPORTS) {
   if (fat.length) fail(`${vp.name}: card thumbnail width ${fat[0]}px, expected <= 64px`)
   if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
   if (!probe.mirrorSelect) fail(`${vp.name}: the install-mirror picker is missing`)
-  if (!probe.scoreSort) fail(`${vp.name}: the heat sort is missing`)
+  if (!probe.scoreSort) fail(`${vp.name}: the curated sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
   for (const asset of failedAssets) fail(`${vp.name}: asset failed — ${asset}`)
 
