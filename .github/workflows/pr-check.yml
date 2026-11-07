@@ -74,6 +74,7 @@ jobs:
             run 'crawler selftest' node crawler/crawl.mjs --selftest
             run 'site smoke' node crawler/smoke-app.mjs
             run 'index validation' node crawler/validate.mjs --offline
+            run 'category gate' node crawler/category-gate.test.mjs
             echo
             if [ -f site/index.zh.json ]; then
               SIZE=$(stat -c%s site/index.zh.json)

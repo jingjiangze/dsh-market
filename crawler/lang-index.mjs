@@ -11,6 +11,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { applyTranslations } from './i18n.mjs'
+import { assertKnownCategories } from './category-gate.mjs'
 import { existsSync } from 'node:fs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -50,6 +51,12 @@ const INSTALLABLE = (plugin) => {
   return result.npmmirror === 'ok' || result.npmjs === 'ok'
 }
 const plugins = index.plugins ?? []
+// This file copies `metadata.category` out of dist/index.json and never re-derives it
+// (crawl.mjs owns that). So a stale dist republishes categories the taxonomy has since
+// replaced — which is exactly what shipped on 2026-11-07: 14 ids (work / data /
+// connect / …) that no leaf in taxonomy.mjs could render, published with every check
+// green. Fail the build instead.
+assertKnownCategories(plugins, 'dist/index.json')
 // The translate job writes strings into dist/index.json and the content-hash cache.
 // When this step is run standalone (translate.yml) the cache may contain newer
 // translations than the document; replay them so no language document loses text.
