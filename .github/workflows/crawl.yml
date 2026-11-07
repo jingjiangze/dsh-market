@@ -218,14 +218,6 @@ jobs:
         # yet (that is what left tier 1 answering 404).
         run: node crawler/assets.mjs
 
-      - name: Publish assets, browse data and icons to ModelScope
-        # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
-        # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
-        env:
-          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
-          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
-        run: node crawler/ms-upload.mjs
-
       - name: Validate before anything lands
         run: node crawler/validate.mjs --offline
 
@@ -256,7 +248,7 @@ jobs:
           # committed separately. Letting the crawl publish its own checkout of them
           # rewrote the shell to a stale hashed CSS and broke every new UI element
           # (un-styled recommendation rail, favorite buttons and trust badges).
-          PUBLISH_EXCLUDE: '(^|/)(index\.cn\.json|index\.intl\.json|index\.sidecar\.json|sidecar\.json)$|^site/index\.json$|^site/index\.(en|ja|ko|ru)\.json$|^site/index\.html$|^site/style\.css$|^site/app\.js$|^site/a/'
+          PUBLISH_EXCLUDE: '(^|/)(index\.cn\.json|index\.intl\.json|index\.sidecar\.json|sidecar\.json)$|^dist/index\.json$|^site/index\.json$|^site/index\.(en|ja|ko|ru)\.json$|^site/index\.html$|^site/style\.css$|^site/app\.js$|^site/a/'
           PUBLISH_MESSAGE: 'chore(crawl): refresh plugin index'
         run: |
           set -o pipefail
@@ -267,13 +259,18 @@ jobs:
             echo "committed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Trigger the deploy
-        # A commit written with the repository token does not start workflows on its
-        # own, so the deploy is dispatched explicitly.
-        if: steps.publish.outputs.committed == 'true'
+      - name: Publish assets, browse data and icons to ModelScope
+        # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
+        # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run deploy.yml --ref main
+          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
+          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
+        run: node crawler/ms-upload.mjs
+
+
+      # No deploy dispatch here: this workflow pushes to main, and deploy.yml runs on push
+      # for site/** and dist/**. Dispatching as well deployed twice per crawl and the
+      # concurrency group cancelled one of them.
 
       - name: Watchdog — revive a stalled translate job
         # The mirror of the watchdog in translate.yml: whichever schedule GitHub

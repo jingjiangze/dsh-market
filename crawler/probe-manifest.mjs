@@ -25,9 +25,11 @@ const TIMEOUT_MS = Number(process.env.MANIFEST_TIMEOUT_MS || 10000)
 const BUDGET_MS = Number(process.env.MANIFEST_BUDGET_MS || 480000)
 const TTL_DAYS = Number(process.env.MANIFEST_TTL_DAYS || 14)
 const LIMIT = Number(process.env.MANIFEST_LIMIT || 0)
+// Exact version, never "latest": the document publishes specific versions, and a range
+// copied from a newer release is simply wrong for the row it lands on.
 const REGISTRIES = [
-  (name) => `https://registry.npmmirror.com/${name.replace('/', '%2F')}/latest`,
-  (name) => `https://registry.npmjs.org/${name.replace('/', '%2F')}/latest`,
+  (name, version) => `https://registry.npmmirror.com/${name.replace('/', '%2F')}/${encodeURIComponent(version)}`,
+  (name, version) => `https://registry.npmjs.org/${name.replace('/', '%2F')}/${encodeURIComponent(version)}`,
 ]
 
 if (!existsSync(INDEX)) { console.error('probe-manifest: dist/index.json is missing'); process.exit(1) }
@@ -45,16 +47,22 @@ for (const plugin of plugins) {
   // A catalogue range is not authoritative: measured on dsh-ops the catalogue said
   // >=0.2.0-0 <0.3.0-0 while the package declares >=0.2.2-rc.1 <0.2.3-0. Fetch every npm
   // entry and let the manifest win.
-  if (fresh(cache[plugin.name])) continue
-  wanted.push(plugin.name)
+  const key = `${plugin.name}@${version.version ?? ''}`
+  if (!version.version) continue          // nothing to ask the registry for
+  if (fresh(cache[key])) continue
+  wanted.push(key)
 }
 const targets = LIMIT > 0 ? wanted.slice(0, LIMIT) : wanted
 console.log(`probe-manifest: ${wanted.length} npm entries without engines.dsh (${Object.keys(cache).length} cached)` + (LIMIT ? `, capped at ${targets.length}` : ''))
 
-async function manifestFor(name) {
-  for (const url of REGISTRIES) {
+async function manifestFor(key) {
+  const at = key.lastIndexOf('@')
+  const name = key.slice(0, at)
+  const version = key.slice(at + 1)
+  for (const makeUrl of REGISTRIES) {
+    const url = makeUrl(name, version)
     try {
-      const res = await fetch(url(name), { signal: AbortSignal.timeout(TIMEOUT_MS), headers: { 'user-agent': 'dsh-market-manifest' } })
+      const res = await fetch(url, { signal: AbortSignal.timeout(TIMEOUT_MS), headers: { 'user-agent': 'dsh-market-manifest' } })
       if (res.status === 404) continue
       if (!res.ok) continue
       const body = await res.json()
@@ -74,8 +82,8 @@ let done = 0
 async function worker() {
   while (cursor < targets.length) {
     if (Date.now() - started > BUDGET_MS) return
-    const name = targets[cursor++]
-    cache[name] = await manifestFor(name)
+    const key = targets[cursor++]
+    cache[key] = await manifestFor(key)
     done++
     if (done % 1000 === 0) console.log(`  fetched ${done}/${targets.length} (${((Date.now() - started) / 1000).toFixed(0)}s)`)
   }
@@ -89,7 +97,7 @@ let sized = 0
 for (const plugin of plugins) {
   const version = plugin.versions?.[0]
   if (!version) continue
-  const record = cache[plugin.name]
+  const record = cache[`${plugin.name}@${version.version ?? ''}`]
   if (record?.enginesDsh) {
     const previous = version.engines?.dsh
     if (previous !== record.enginesDsh) {
