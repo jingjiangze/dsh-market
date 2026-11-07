@@ -95,7 +95,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BINGLING_MIN_STARS: '0'
-          BINGLING_MAX_GIT_LOOKUPS: '3000'
+          BINGLING_MAX_GIT_LOOKUPS: '1500'
         run: node crawler/source-2bingling.mjs
 
       - name: Build the published index
@@ -163,7 +163,8 @@ jobs:
           PIN_BATCH: '100'
           PIN_CONCURRENCY: '3'
           PIN_BUDGET_MS: '600000'
-          PIN_MAX: '8000'
+          PIN_MAX: '2500'
+          PIN_RATE_FLOOR: '900'
         run: node crawler/pin-missing.mjs
 
       - name: Restore real package names
