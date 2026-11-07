@@ -69,6 +69,12 @@ if (process.env.MODELSCOPE_SKIP_DOCS !== '1') {
     const from = join(root, 'site', file)
     if (existsSync(from)) add(from, `web/${file}`)
   }
+  // The install-facts document: 41 KB, and the one thing a loader needs that format 1
+  // cannot carry. Mirrored here so a reader in China fetches it from tier 1 like the rest.
+  {
+    const from = join(root, 'dist', 'plugin-index.json')
+    if (existsSync(from)) add(from, 'web/plugin-index.json')
+  }
   for (const lang of LANGS) {
     const from = join(root, 'dist', `index.${lang}.json`)
     if (existsSync(from)) add(from, `web/index.${lang}.json`)
