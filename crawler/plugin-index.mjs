@@ -17,6 +17,11 @@
 // Duplicating the catalogue here cost 5.65 MB, and would have added that much to git history
 // on every crawl: the same bloat the 20 MB aggregate was removed for.
 //
+// Where a loader can read it (all three serve the same 41 KB document):
+//   https://dsh.jiangjiangze.icu/plugin-index.json                    brand domain, CN-friendly
+//   https://jingjiangze.github.io/dsh-market/plugin-index.json        GitHub Pages
+//   ModelScope dataset  web/plugin-index.json                         tier 1 for the site
+//
 //   node crawler/plugin-index.mjs      # writes site/plugin-index.json
 import { readFile, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
