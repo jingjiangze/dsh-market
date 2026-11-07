@@ -1,14 +1,21 @@
-// The plugin-facing index, separate from the format-1 document the client subscribes to.
+// The install-facts document, separate from the format-1 index.
 //
-// Why it exists: format 1 drops any member it does not define, so the facts an on-demand
-// plugin loader needs have nowhere to live in it — the real install target when a row was
-// renamed, whether a registry actually serves the package, and the curation/trust numbers.
-// `plugins/dsh-lazy-plugins` currently works around that: its ranking module collapses rows
-// by `installAs ?? name` and hides entries with `installable: false`, i.e. it re-derives
-// exactly these fields from strings.
+// Measured on the catalogue: of everything an on-demand loader wants, format 1 already
+// carries almost all of it — title, description, category, curated/trust sortKeys, engines,
+// version and source. The facts it cannot express are narrow:
 //
-// This publishes them once, in their own document, so the client's format stays untouched
-// and the loader stops guessing.
+//   * whether a registry actually serves the package (`installable`)
+//   * the real install target when a row's name was renamed (`installAs`) — currently zero
+//     exceptions, because crawler/restore-alias.mjs repairs the name instead of aliasing it
+//
+// So this is a DIFF, not a second copy of the catalogue: it lists the rows that are NOT
+// installable plus the ones the probe could not decide. A loader reads the format-1 document
+// it already has and treats every name absent from both lists as installable — that is
+// exactly the `installable: false` test plugins/dsh-lazy-plugins does today, except with real
+// data instead of a string guess.
+//
+// Duplicating the catalogue here cost 5.65 MB, and would have added that much to git history
+// on every crawl: the same bloat the 20 MB aggregate was removed for.
 //
 //   node crawler/plugin-index.mjs      # writes site/plugin-index.json
 import { readFile, writeFile } from 'node:fs/promises'
@@ -25,71 +32,38 @@ const index = JSON.parse(await readFile(INDEX, 'utf8'))
 const probe = existsSync(PROBE) ? JSON.parse(await readFile(PROBE, 'utf8')) : {}
 const plugins = index.plugins ?? []
 
-const text = (value) => {
-  if (typeof value === 'string') return value
-  return value?.zh ?? value?.en ?? ''
-}
+const notInstallable = []
+const unverified = []
 
-const resolveSource = (version) => {
-  const source = version?.source ?? {}
-  if (source.type === 'git') {
-    return {
-      type: 'git',
-      url: String(source.url ?? ''),
-      commit: String(source.commit ?? ''),
-      ...(source.path ? { path: source.path } : {}),
-    }
-  }
-  return { type: 'npm', ...(source.registry ? { registry: source.registry } : {}) }
-}
-
-const rows = []
-let installable = 0
 for (const plugin of plugins) {
   const version = plugin.versions?.[0] ?? {}
   const name = String(plugin.name ?? '')
   if (!name) continue
-  const source = resolveSource(version)
-  const result = probe[name]
-  // A pinned commit is installable by construction; an npm row is installable only when a
-  // registry answered. Entries with no probe are left as unknown rather than assumed good.
-  const known = source.type === 'git'
-    ? /^[0-9a-f]{40}$/i.test(source.commit)
-    : result
-      ? result.npmmirror === 'ok' || result.npmjs === 'ok'
-      : null
-  const title = text(plugin.title)
-  // The real install target. restore-alias renames rows to the package name, so this is
-  // normally identical; keeping the field tells the loader the two were checked.
-  const installAs = name
-  const row = {
-    name,
-    // Omitted when it equals the name — the loader reads `installAs ?? name`, so repeating
-    // the same string 15k times buys nothing.
-    ...(installAs !== name ? { installAs } : {}),
-    installable: known === true,
-    ...(known === null ? { unverified: true } : {}),
-    version: String(version.version ?? ''),
-    ...(title && title !== name ? { title } : {}),
-    description: text(plugin.description),
-    category: plugin.metadata?.category ?? 'other',
-    ...(typeof plugin.metadata?.sortKeys?.curated === 'number' ? { curated: plugin.metadata.sortKeys.curated } : {}),
-    ...(typeof plugin.metadata?.sortKeys?.trust === 'number' ? { trust: plugin.metadata.sortKeys.trust } : {}),
-    ...(version.engines?.dsh ? { engines: version.engines.dsh } : {}),
-    source,
+  const source = version.source ?? {}
+
+  if (source.type === 'git') {
+    if (!/^[0-9a-f]{40}$/i.test(String(source.commit ?? ''))) notInstallable.push(name)
+    continue
   }
-  if (row.installable) installable++
-  rows.push(row)
+
+  const result = probe[name]
+  if (!result) { unverified.push(name); continue }
+  if (result.npmmirror === 'ok' || result.npmjs === 'ok') continue
+  // Only a definitive miss from both registries disqualifies a row; a timeout or a 429 says
+  // nothing about whether the package exists, and the crawl itself provokes those.
+  if (result.npmmirror === 'missing' && result.npmjs === 'missing') notInstallable.push(name)
+  else unverified.push(name)
 }
 
 const document = {
-  format: 'dsh-plugin-index',
+  format: 'dsh-plugin-install-facts',
   schema: 1,
   generatedAt: new Date().toISOString(),
-  count: rows.length,
-  installable,
-  plugins: rows,
+  count: plugins.length,
+  // Absent from both lists = installable from the source the index states.
+  notInstallable,
+  unverified,
 }
-const text_ = JSON.stringify(document)
-for (const path of OUT) await writeFile(path, text_ + '\n')
-console.log(`plugin-index: ${rows.length} rows, ${installable} installable, ${(Buffer.byteLength(text_) / 1048576).toFixed(2)} MB`)
+const text = JSON.stringify(document)
+for (const path of OUT) await writeFile(path, text + '\n')
+console.log(`plugin-index: ${plugins.length} rows, ${notInstallable.length} not installable, ${unverified.length} unverified, ${(Buffer.byteLength(text) / 1024).toFixed(0)} KB`)
