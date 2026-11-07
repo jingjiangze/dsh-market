@@ -823,6 +823,7 @@ for (const [name, record] of fromGitHub) {
         'zh-fallback': { title: { en: 'Chinese pending', zh: '中文待补' } },
         'catalog-only': { title: { en: 'from catalog', zh: '仅目录收录' } },
         'no-engines': { title: { en: 'no engines.dsh', zh: '未声明版本' } },
+        'alias-of': { title: { en: 'renamed from an alias', zh: '别名已还原' } },
         // Popularity tiers, generated from the numbers the catalogs publish.
         'stars-hot': { title: { en: '★ 1k+', zh: '★ 1k+' } },
         'stars-mid': { title: { en: '★ 100+', zh: '★ 100+' } },
