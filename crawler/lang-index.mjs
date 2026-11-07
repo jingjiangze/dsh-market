@@ -134,7 +134,14 @@ for (const lang of LANGS) {
       }],
     }
   }
-  const slim = { ...full, plugins: publishable.map(slimPlugin) }
+  const generatedAt = new Date().toISOString()
+  const slim = {
+    ...full,
+    // Self-reported build time: the client caches this document on disk and needs
+    // something to expire against.
+    metadata: { ...(full.metadata ?? {}), generatedAt },
+    plugins: publishable.map(slimPlugin),
+  }
   // Dataset copy: compact, and projected exactly like the Pages copy. Indentation
   // alone used to cost ~35% of the payload and nothing reads these files by eye.
   const text = JSON.stringify({ ...full, plugins: publishable.map(slimPlugin) }) + '\n'
