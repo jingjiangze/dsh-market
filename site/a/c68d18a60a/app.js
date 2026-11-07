@@ -127,7 +127,7 @@ function ensureThemeToggle() {
   applyTheme(document.documentElement.dataset.theme ?? preferredTheme())
 }
 
-const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'stars', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', mirror: mirrorDefault() }
+const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'curated', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', mirror: mirrorDefault() }
 
 // ---- personal state: favorites and the installed set -------------------------
 // Everything stays in this browser (the site is static and runs no Worker).
