@@ -16,6 +16,7 @@ import { applyTranslations } from './i18n.mjs'
 import { dedupeByRepo } from './dedupe.mjs'
 import { heatOf, heatMaxima } from './score.mjs'
 import { usecasesOf, CATEGORY_USECASES } from './usecases.mjs'
+import { reconcileEnginesLabel } from './labels.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -750,18 +751,9 @@ for (const [name, record] of fromGitHub) {
 
   // Reconcile the no-engines label with what enrichment actually found. The catalogue
   // row is stale by the time we publish: a plugin that declares engines must not keep a
-  // label claiming it declares nothing.
-  let enginesFixed = 0
-  for (const plugin of published) {
-    const labels = new Set(plugin.metadata?.labels ?? [])
-    const declares = Boolean(plugin.versions?.[0]?.engines?.dsh)
-    const had = labels.has('no-engines')
-    if (declares && had) { labels.delete('no-engines'); enginesFixed++ }
-    else if (!declares && !had && (plugin.metadata?.labels ?? []).includes('catalog-only')) {
-      labels.add('no-engines'); enginesFixed++
-    }
-    plugin.metadata = { ...plugin.metadata, labels: [...labels] }
-  }
+  // label claiming it declares nothing. The rule lives in labels.mjs because
+  // restore-alias.mjs merges rows and has to apply the same rule afterwards.
+  const enginesFixed = reconcileEnginesLabel(published)
   if (enginesFixed) console.log(`reconciled no-engines on ${enginesFixed} entries`)
 
   const maxima = heatMaxima(published)
