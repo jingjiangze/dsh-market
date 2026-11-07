@@ -142,6 +142,27 @@ jobs:
           TRANSLATE_BUDGET_MS: '480000'
         run: node crawler/translate.mjs
 
+      - name: Probe the registry sources
+        # 54% of the catalogue claims an npm source that does not resolve anywhere; that is
+        # what makes the client's pre-install probe fail. Record the truth once per run.
+        env:
+          PROBE_CONCURRENCY: '40'
+          PROBE_TIMEOUT_MS: '8000'
+          PROBE_BUDGET_MS: '600000'
+          PROBE_TTL_DAYS: '14'
+        run: node crawler/probe-npm.mjs
+
+      - name: Pin commits for the entries npm never received
+        # Turns a row that claims a missing npm package into a commit-pinned git source:
+        # 100 repositories per GraphQL request, so the whole backlog fits in one run.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PIN_BATCH: '100'
+          PIN_CONCURRENCY: '3'
+          PIN_BUDGET_MS: '600000'
+          PIN_MAX: '8000'
+        run: node crawler/pin-missing.mjs
+
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
