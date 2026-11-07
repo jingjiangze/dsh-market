@@ -1,0 +1,133 @@
+name: pr-check
+
+# Every pull request against this repo gets measured instead of eyeballed.
+#
+# Another agent session opens PRs here regularly (index size, label correctness, alias
+# repair, sidecars). Reviewing them by hand each time is how a regression like "the
+# published document lost every description" slipped through: it looked like a feature.
+# This workflow runs the same gates `ci` runs, on the PR's merge result, and writes the
+# outcome into the PR itself.
+#
+# Report only. It never merges, never pushes, never edits the branch.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: '11 */6 * * *'   # nudge anything that has been open and unmeasured
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-check-${{ github.event.pull_request.number || 'sweep' }}
+  cancel-in-progress: true
+
+jobs:
+  measure:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The merge commit is what would land on main, so that is what gets gated.
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install the real format-1 validator
+        run: npm i --no-save @deepseek-ai/dsh-plugin-market-index@0.2.1-rc.5
+
+      - name: Gate the merge result
+        id: gate
+        run: |
+          set -o pipefail
+          {
+            echo '### pr-check'
+            echo
+            echo '| check | result |'
+            echo '|---|---|'
+            run() {
+              local name="$1"; shift
+              if "$@" >/tmp/out 2>&1; then
+                echo "| $name | ✅ |"
+              else
+                echo "| $name | ❌ |"
+                echo
+                echo "<details><summary>$name output</summary>"
+                echo
+                echo '```'
+                tail -30 /tmp/out
+                echo '```'
+                echo '</details>'
+                FAILED=1
+              fi
+            }
+            FAILED=0
+            run 'syntax (crawler)' bash -c 'for f in crawler/*.mjs; do node --check "$f" || exit 1; done'
+            run 'crawler selftest' node crawler/crawl.mjs --selftest
+            run 'site smoke' node crawler/smoke-app.mjs
+            run 'index validation' node crawler/validate.mjs --offline
+            echo
+            if [ -f site/index.zh.json ]; then
+              SIZE=$(stat -c%s site/index.zh.json)
+              ENTRIES=$(node -e 'const j=require("./site/index.zh.json");console.log(j.plugins.length)')
+              DESC=$(node -e 'const j=require("./site/index.zh.json");console.log(j.plugins.filter(p=>p.description&&(p.description.zh||p.description.en)).length)')
+              echo "Published document: **$ENTRIES** entries, **$((SIZE/1024)) KB**, **$DESC** with a description."
+              echo
+            fi
+            [ "$FAILED" = 0 ] && echo 'All gates passed.' || echo 'Gates failed — see the details above.'
+          } > /tmp/comment.md
+          cat /tmp/comment.md
+
+      - name: Publish the result on the PR
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          marker='<!-- pr-check -->'
+          body_file=/tmp/comment.md
+          [ -f "$body_file" ] || echo 'pr-check did not run' > "$body_file"
+          { echo "$marker"; cat "$body_file"; } > /tmp/body.md
+          existing=$(gh api "repos/${{ github.repository }}/issues/$PR/comments" --paginate \
+            --jq "[.[] | select(.body | startswith(\"$marker\")) | .id] | last // empty")
+          if [ -n "${existing:-}" ]; then
+            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/$existing" -F body=@/tmp/body.md >/dev/null
+          else
+            gh api -X POST "repos/${{ github.repository }}/issues/$PR/comments" -F body=@/tmp/body.md >/dev/null
+          fi
+
+  nudge:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Comment on PRs nobody measured
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Anything open for more than six hours without a pr-check comment is surfaced,
+          # because a PR that silently rots is how the catalogue regresses.
+          gh pr list --state open --json number,title,createdAt,comments --limit 50 \
+            | node -e '
+              const cutoff = Date.now() - 6 * 3600 * 1000
+              const rows = JSON.parse(require("fs").readFileSync(0, "utf8"))
+              const stale = rows.filter((pr) => Date.parse(pr.createdAt) < cutoff
+                && !(pr.comments ?? []).some((c) => (c.body ?? "").includes("<!-- pr-check -->")))
+              if (!stale.length) { console.log("no unmeasured PRs"); process.exit(0) }
+              for (const pr of stale) console.log(`  #${pr.number} ${pr.title}`)
+              require("fs").writeFileSync("/tmp/stale.txt", stale.map((pr) => `#${pr.number} ${pr.title}`).join("\n"))
+            '
+          if [ -s /tmp/stale.txt ]; then
+            gh issue create --title '[pr-check] unmeasured pull requests' \
+              --body "$(printf 'Open for more than six hours with no measured result:\n\n%s\n\nThe pr-check workflow comments automatically when a PR is opened or updated; this issue means the event was missed.\n' "$(cat /tmp/stale.txt)")" || true
+          fi
