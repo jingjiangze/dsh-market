@@ -155,6 +155,17 @@ jobs:
           PROBE_TTL_DAYS: '14'
         run: node crawler/probe-npm.mjs
 
+      - name: Fill engines.dsh from the package manifest
+        # A catalogue range can be stale (dsh-ops: catalogue said >=0.2.0-0, the package
+        # declares >=0.2.2-rc.1), which is how an install fails halfway with
+        # incompatible-version. The manifest is authoritative; the size it returns is what
+        # the site shows as 安装体积.
+        env:
+          MANIFEST_CONCURRENCY: '24'
+          MANIFEST_TIMEOUT_MS: '10000'
+          MANIFEST_BUDGET_MS: '480000'
+          MANIFEST_TTL_DAYS: '14'
+        run: node crawler/probe-manifest.mjs
       - name: Pin commits for the entries npm never received
         # Turns a row that claims a missing npm package into a commit-pinned git source:
         # 100 repositories per GraphQL request, so the whole backlog fits in one run.
