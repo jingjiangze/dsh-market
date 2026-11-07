@@ -66,6 +66,11 @@ jobs:
           cp -r site/a site-cf/a
           cp site/_headers site-cf/ 2>/dev/null || true
           cp site/stats.json site-cf/ 2>/dev/null || true
+          # The documents the comment above promises: without them this domain answered a
+          # 2 KB HTML fallback for index.zh.json and plugin-index.json, so a reader in China
+          # got the shell from here and had to fall back to Pages (40-88 s) for the data.
+          cp site/index.zh.json site-cf/ 2>/dev/null || true
+          cp site/plugin-index.json site-cf/ 2>/dev/null || true
           du -sh site-cf
       - uses: cloudflare/wrangler-action@v3
         # The brand domain mirrors GitHub Pages; it is not the source of truth.
