@@ -17,10 +17,28 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const API = 'https://api.github.com/repos/2BingLing/dsh-market/contents/data/plugins-lite.json?ref=master'
-const CACHE = join(root, 'data', '2bingling-cache.json')
-const COMMIT_CACHE = join(root, 'data', '2bingling-commits.json')
+// Overridable so the offline test can run against a temp directory instead of data/.
+const DATA = process.env.BINGLING_DATA_DIR || join(root, 'data')
+const CACHE = join(DATA, '2bingling-cache.json')
+const COMMIT_CACHE = join(DATA, '2bingling-commits.json')
 const MIN_STARS = Number(process.env.BINGLING_MIN_STARS || 1)
 const MAX_GIT_LOOKUPS = Number(process.env.BINGLING_MAX_GIT_LOOKUPS || 600)
+// The catalogue is an optional enrichment: when it is unreachable the crawl must still
+// publish (with the previous records file, which lives in git). Only an explicit
+// BINGLING_REQUIRED=1 turns an outage into a build failure.
+const REQUIRED = process.env.BINGLING_REQUIRED === '1'
+
+// One greppable line, then out. `reason` is what the log says in the parentheses, so
+// "why did the catalogue not contribute this run" is answerable from the build log.
+function skip(reason) {
+  const line = `2bingling: skipped (${reason}) — continuing without it`
+  if (REQUIRED) {
+    console.error(`${line}\n2bingling: BINGLING_REQUIRED=1, failing the build instead`)
+    process.exit(1)
+  }
+  console.warn(line)
+  process.exit(0)
+}
 
 const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || ''
 const headers = {
@@ -42,10 +60,25 @@ try {
   if (cached.generatedAt && cached.plugins) document = cached
 } catch { /* first run */ }
 if (!document) {
-  const res = await fetch(API, { headers: { ...headers, accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(120000) })
-  if (!res.ok) throw new Error(`2BingLing HTTP ${res.status}`)
-  document = JSON.parse(await res.text())
-  await writeFile(CACHE, JSON.stringify(document))
+  // 2026-11-07: this fetch started answering 403 to GitHub runners and, because it
+  // threw, took the whole publish chain down 20+ times in a row — the index stayed on
+  // a stale dist and every downstream gate kept passing. An unreachable enrichment
+  // source is a degraded run, not a failed build.
+  let res
+  try {
+    res = await fetch(API, { headers: { ...headers, accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(120000) })
+  } catch (error) {
+    const timedOut = error?.name === 'TimeoutError' || error?.name === 'AbortError'
+    skip(timedOut ? 'timeout' : `network error: ${String(error?.message ?? error).slice(0, 120)}`)
+  }
+  if (!res.ok) skip(`HTTP ${res.status}`)
+  try {
+    document = JSON.parse(await res.text())
+  } catch (error) {
+    skip(`unparseable document: ${String(error?.message ?? error).slice(0, 120)}`)
+  }
+  if (!Array.isArray(document?.plugins)) skip('unexpected document shape (no plugins[])')
+  try { await writeFile(CACHE, JSON.stringify(document)) } catch { /* a read-only data dir must not fail the run */ }
 }
 
 let commitCache = {}
@@ -64,7 +97,7 @@ async function commitFor(fullName, branch) {
 }
 
 const NPM_CONCURRENCY = Number(process.env.BINGLING_NPM_CONCURRENCY || 24)
-const NPM_CACHE = join(root, 'data', '2bingling-npm.json')
+const NPM_CACHE = join(DATA, '2bingling-npm.json')
 let npmCache = {}
 try { npmCache = JSON.parse(await readFile(NPM_CACHE, 'utf8')) } catch { /* first run */ }
 
@@ -162,7 +195,14 @@ for (const plugin of candidates) {
 }
 const out = [...byName.values()]
 
-const OUT = join(root, 'data', '2bingling-records.json')
+// Every name that is not on npm needs a GitHub commit lookup. A rate-limited or
+// unreachable api.github.com makes all of those fail silently, which would publish an
+// empty records file and silently drop the whole catalogue — worse than not running.
+if (candidates.length && !out.length) {
+  skip(`no installable records from ${candidates.length} candidates (GitHub API unavailable?)`)
+}
+
+const OUT = join(DATA, '2bingling-records.json')
 await writeFile(COMMIT_CACHE, JSON.stringify(commitCache))
 // Sets cannot be serialized; the caller only needs the plain records.
 await writeFile(OUT, JSON.stringify(out.map((record) => ({
