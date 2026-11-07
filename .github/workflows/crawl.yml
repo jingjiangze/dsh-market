@@ -62,12 +62,12 @@ jobs:
           path: dist/part-${{ matrix.shard }}.json
           retention-days: 1
 
-  merge:
+  build:
     needs: shard
     runs-on: ubuntu-latest
-    # A full run takes ~45-50 min (2BingLing npm probe ~6 min, icon mirror ~12 min,
-    # translate, browse chunks, dataset upload). 40 min killed every crawl right at
-    # the publish step and looked like an unexplained "cancelled" run.
+    # A full build takes ~35-40 min (2BingLing npm probe ~6 min, icon mirror ~12 min,
+    # translate, browse chunks). 40 min killed every crawl at the last step and looked
+    # like an unexplained "cancelled" run.
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -166,6 +166,7 @@ jobs:
           MANIFEST_BUDGET_MS: '480000'
           MANIFEST_TTL_DAYS: '14'
         run: node crawler/probe-manifest.mjs
+
       - name: Pin commits for the entries npm never received
         # Turns a row that claims a missing npm package into a commit-pinned git source:
         # 100 repositories per GraphQL request, so the whole backlog fits in one run.
@@ -218,6 +219,35 @@ jobs:
         # yet (that is what left tier 1 answering 404).
         run: node crawler/assets.mjs
 
+      - name: Hand the catalogue to the gates
+        # The gates and the publishers run in their own jobs so a failed publish can be
+        # retried without repeating 2BingLing adapt, enrich, translate and the icon mirror.
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog
+          retention-days: 3
+          path: |
+            dist
+            site
+            data
+
+  verify:
+    needs: build
+    runs-on: ubuntu-latest
+    # Gates only: no network writers, so this fails fast and cheap.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Take the built catalogue
+        uses: actions/download-artifact@v4
+        with:
+          name: catalog
+
       - name: Validate before anything lands
         run: node crawler/validate.mjs --offline
 
@@ -232,6 +262,39 @@ jobs:
           node crawler/smoke-app.mjs
           node crawler/validate.mjs
           node crawler/crawl.mjs --dry-run
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Take the built catalogue
+        uses: actions/download-artifact@v4
+        with:
+          name: catalog
+
+      - name: Publish assets, browse data and icons to ModelScope
+        # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
+        # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
+        env:
+          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
+          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
+        run: node crawler/ms-upload.mjs
+
+
+      # No deploy dispatch here: this workflow pushes to main, and deploy.yml runs on push
+      # for site/** and dist/**. Dispatching as well deployed twice per crawl and the
+      # concurrency group cancelled one of them.
+
+      # Required, not redundant: a push made with GITHUB_TOKEN does not trigger other
+      # workflows, so deploy.yml's push trigger never sees this commit. Removing this step
+      # once shipped a new catalogue without redeploying the site.
 
       - id: publish
         name: Publish through the GitHub Git Data API
@@ -259,23 +322,10 @@ jobs:
             echo "committed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish assets, browse data and icons to ModelScope
-        # 0.16-0.19 s per file from ModelScope against 7.4 s on jsDelivr, with
-        # Access-Control-Allow-Origin: * and a correct Content-Type per extension.
-        env:
-          MODELSCOPE_TOKEN: ${{ secrets.MODELSCOPE_TOKEN }}
-          MODELSCOPE_DATASET: jingjiangze/Anime-JPG
-        run: node crawler/ms-upload.mjs
-
-
-      # No deploy dispatch here: this workflow pushes to main, and deploy.yml runs on push
-      # for site/** and dist/**. Dispatching as well deployed twice per crawl and the
-      # concurrency group cancelled one of them.
-
-      # Required, not redundant: a push made with GITHUB_TOKEN does not trigger other
-      # workflows, so deploy.yml's push trigger never sees this commit. Removing this step
-      # once shipped a new catalogue without redeploying the site.
       - name: Trigger the deploy
+        # publish-api already reports whether it wrote a commit; skip the deploy when the
+        # catalogue is byte-identical, so an idle run does not redeploy anything.
+        if: steps.publish.outputs.committed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml --ref main
