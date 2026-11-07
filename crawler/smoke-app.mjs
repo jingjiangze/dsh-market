@@ -53,6 +53,7 @@ const document = {
   querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : null),
   createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, setAttribute() {}, addEventListener() {}, classList: { toggle() {}, add() {}, remove() {} } }),
   addEventListener() {},
+  documentElement: { dataset: {} },
   head: { appendChild() {} },
   body: { append() {} },
   styleSheets: [],
@@ -60,7 +61,7 @@ const document = {
 const localStorage = { getItem: () => null, setItem() {} }
 const navigator = { language: 'zh-CN', clipboard: { writeText: async () => {} } }
 const location = { origin: 'https://example.test', pathname: '/dsh-market/' }
-const fakeWindow = { __r: 0, addEventListener() {} }
+const fakeWindow = { __r: 0, addEventListener() {}, matchMedia: () => ({ matches: false }) }
 const fetchStub = async (url) => {
   const text = String(url)
   const body = text.endsWith('meta.json') ? META : text.endsWith('0.json') ? CHUNK : { at: new Date().toISOString() }
