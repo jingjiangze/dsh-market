@@ -120,3 +120,15 @@ jobs:
             queue crawl.yml
           fi
 
+      # translate rewrites site/index.zh.json, and its commit carries the same token, so
+      # the push trigger cannot fire. Deploy only when the served document changed.
+      - name: Trigger the deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          files=$(git show --name-only --format= HEAD | grep -c '^site/index.' || true)
+          if [ "${files:-0}" -gt 0 ]; then
+            gh workflow run deploy.yml --ref main
+          else
+            echo "no served document changed — not deploying"
+          fi

@@ -272,6 +272,14 @@ jobs:
       # for site/** and dist/**. Dispatching as well deployed twice per crawl and the
       # concurrency group cancelled one of them.
 
+      # Required, not redundant: a push made with GITHUB_TOKEN does not trigger other
+      # workflows, so deploy.yml's push trigger never sees this commit. Removing this step
+      # once shipped a new catalogue without redeploying the site.
+      - name: Trigger the deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
+
       - name: Watchdog — revive a stalled translate job
         # The mirror of the watchdog in translate.yml: whichever schedule GitHub
         # actually delivers revives the other one.
