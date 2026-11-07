@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22c1a4"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#g)" opacity="0.16"/>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="none" stroke="url(#g)" stroke-width="2.5"/>
+  <!-- three stacked conversation lines: "other sessions" -->
+  <rect x="14" y="17" width="26" height="4.5" rx="2.25" fill="url(#g)"/>
+  <rect x="14" y="26" width="20" height="4.5" rx="2.25" fill="url(#g)" opacity="0.75"/>
+  <rect x="14" y="35" width="23" height="4.5" rx="2.25" fill="url(#g)" opacity="0.5"/>
+  <!-- magnifier over the list: search across sessions -->
+  <circle cx="41" cy="41" r="9" fill="none" stroke="url(#g)" stroke-width="3"/>
+  <line x1="47.5" y1="47.5" x2="54" y2="54" stroke="url(#g)" stroke-width="3.4" stroke-linecap="round"/>
+</svg>

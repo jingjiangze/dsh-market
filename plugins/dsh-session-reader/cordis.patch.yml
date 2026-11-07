@@ -1,0 +1,4 @@
+- insert:
+    - id: dsh-session-reader
+      name: '@local/dsh-session-reader'
+      config: {}
