@@ -168,6 +168,7 @@ for (const vp of VIEWPORTS) {
       thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
       imgThumbs: document.querySelectorAll('.card img').length,
       quizButton: Boolean(document.querySelector('[data-quiz]')),
+      mirrorSelect: document.querySelector('#mirror')?.value ?? null,
       scoreSort: Boolean(document.querySelector('[data-sort="score"]')),
       emptyMeta: (document.getElementById('meta')?.textContent ?? '').includes('加载中'),
       metaText: (document.getElementById('meta')?.textContent ?? '').slice(0, 80),
@@ -195,6 +196,7 @@ for (const vp of VIEWPORTS) {
   const fat = probe.thumbWidths.filter((width) => width > 64)
   if (fat.length) fail(`${vp.name}: card thumbnail width ${fat[0]}px, expected <= 64px`)
   if (!probe.quizButton) fail(`${vp.name}: the quiz entry point is missing`)
+  if (!probe.mirrorSelect) fail(`${vp.name}: the install-mirror picker is missing`)
   if (!probe.scoreSort) fail(`${vp.name}: the heat sort is missing`)
   if (probe.emptyMeta) fail(`${vp.name}: #meta still says 加载中 — the catalogue never rendered`)
   for (const asset of failedAssets) fail(`${vp.name}: asset failed — ${asset}`)
@@ -245,6 +247,8 @@ for (const vp of VIEWPORTS) {
   else {
     if (detailGrid.display !== 'grid') fail(`desktop: detail list display=${detailGrid.display}, expected grid`)
     if (!detailGrid.hasHeat) fail('desktop: the detail dialog does not show a heat row')
+    const cmd = await page.evaluate(() => document.querySelector('#dlg .cmd code')?.textContent ?? '')
+    if (!/--registry=/.test(cmd)) fail(`desktop: the install command names no registry (got “${cmd}”)`)
   }
   const simCount = await page.locator('.sim .rec-item').count()
     if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
