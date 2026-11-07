@@ -259,6 +259,21 @@ h1::before {
   border-color: var(--blue);
   font-weight: 600;
 }
+/* Install-mirror picker: same chunky control language as the other toolbar buttons. */
+#mirror {
+  height: 32px;
+  padding: 0 8px;
+  color: var(--text);
+  background: var(--plate-2);
+  border: 1px solid var(--line-2);
+  border-radius: 0;
+  font: 500 11.5px/1 var(--font-mono);
+  letter-spacing: .04em;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - var(--cut-sm)) 0, 100% var(--cut-sm), 100% 100%, 0 100%);
+}
+#mirror:hover { border-color: var(--blue); color: var(--blue-soft); }
+
 #sort select {
   height: 30px;
   padding: 0 8px;
