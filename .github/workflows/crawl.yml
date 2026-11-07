@@ -13,8 +13,11 @@ permissions:
   contents: write
   actions: write
 
+# Own group, not a shared one: the other publisher holds a shared lock for ~50 of every
+# 60 minutes, and a second arrival cancels the earlier *pending* run. Conflicts are
+# handled inside crawler/publish-api.mjs, which re-reads the ref and retries.
 concurrency:
-  group: catalog-publish
+  group: crawl
   cancel-in-progress: false
 
 jobs:
