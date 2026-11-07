@@ -64,6 +64,8 @@ async function api(path, options = {}) {
         error.status = res.status
         error.body = text
         error.retryAfter = Number(res.headers.get('retry-after') ?? 0)
+        error.rateReset = Number(res.headers.get('x-ratelimit-reset') ?? 0)
+        error.rateRemaining = Number(res.headers.get('x-ratelimit-remaining') ?? NaN)
         throw error
       }
       return text ? JSON.parse(text) : null
@@ -74,7 +76,15 @@ async function api(path, options = {}) {
       const limited = (error.status === 403 || error.status === 429) && /rate limit|secondary rate|abuse/i.test(error.body ?? error.message ?? '')
       if (limited && rateLimited < 6) {
         rateLimited++
-        const waitMs = error.retryAfter > 0 ? Math.min(error.retryAfter * 1000, 300000) : Math.min(180000, 20000 * rateLimited)
+        // Prefer the reset instant GitHub reports: a quota that is spent does not clear in
+        // 20 s, and sleeping shorter just burns the retry budget. Capped at 12 minutes so a
+        // run cannot hang for an hour.
+        const untilResetMs = error.rateReset > 0 ? Math.max(0, error.rateReset * 1000 - Date.now() + 2000) : 0
+        const waitMs = error.retryAfter > 0
+          ? Math.min(error.retryAfter * 1000, 300000)
+          : untilResetMs > 0
+            ? Math.min(untilResetMs, 720000)
+            : Math.min(180000, 20000 * rateLimited)
         console.log(`publish-api: rate limited on ${path}, waiting ${Math.round(waitMs / 1000)}s (${rateLimited}/6)`)
         await new Promise((resolve) => setTimeout(resolve, waitMs))
         continue

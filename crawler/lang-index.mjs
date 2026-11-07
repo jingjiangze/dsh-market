@@ -11,6 +11,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { applyTranslations } from './i18n.mjs'
+import { assertKnownCategories } from './category-gate.mjs'
 import { existsSync } from 'node:fs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -50,6 +51,12 @@ const INSTALLABLE = (plugin) => {
   return result.npmmirror === 'ok' || result.npmjs === 'ok'
 }
 const plugins = index.plugins ?? []
+// This file copies `metadata.category` out of dist/index.json and never re-derives it
+// (crawl.mjs owns that). So a stale dist republishes categories the taxonomy has since
+// replaced — which is exactly what shipped on 2026-11-07: 14 ids (work / data /
+// connect / …) that no leaf in taxonomy.mjs could render, published with every check
+// green. Fail the build instead.
+assertKnownCategories(plugins, 'dist/index.json')
 // The translate job writes strings into dist/index.json and the content-hash cache.
 // When this step is run standalone (translate.yml) the cache may contain newer
 // translations than the document; replay them so no language document loses text.
@@ -91,12 +98,34 @@ for (const lang of LANGS) {
     })),
   }
   // Sized for the wire, not for humans: see the budget check at the end of this file.
-  const TITLE_MAX = 48
-  const DESC_MAX = 48
+  // 32 characters is still a full Chinese phrase and buys ~0.9 MB back at 15k entries,
+  // which matters because the client fetches this document uncompressed.
+  const TITLE_MAX = 32
+  const DESC_MAX = 32
   const text60 = (value, max) => {
     const raw = String(value ?? '')
     return raw.length > max ? raw.slice(0, max) + '…' : raw
   }
+  // Value labels, not build diagnostics: a client renders these as chips, so every id has
+  // to mean something to a reader. Each one is backed by a fact this build actually
+  // checked — nothing here claims an audit that did not happen.
+  // Only facts this build established. There is deliberately no "low risk" label: calling
+  // a plugin low-risk is a security verdict, and nothing here audits code. What a client
+  // can honestly know from this document is whether the install resolves, whether the
+  // source is pinned, and whether the catalogue that curates it vouches for it.
+  const CURATION_LABELS = {
+    official: { title: { en: 'Official pick', zh: '官方精选' } },
+    'install-verified': { title: { en: 'Install verified', zh: '安装已验证' } },
+    'source-pinned': { title: { en: 'Pinned source', zh: '源码已固定' } },
+    'declares-engines': { title: { en: 'Declares DSH range', zh: '声明兼容版本' } },
+  }
+  // Curation answers "should I look at this first", trust answers "is it safe to install".
+  // Both are 0..100 so a client can sort by them with the existing sortKeys mechanism.
+  const CURATION_SORT = {
+    curated: { title: { en: 'Curated', zh: '精选度' }, order: 'desc' },
+    trust: { title: { en: 'Trust', zh: '可信度' }, order: 'desc' },
+  }
+
   const slimPlugin = (plugin) => {
     const version = plugin.versions?.[0] ?? {}
     const english = pick(plugin.description, 'en')
@@ -124,11 +153,45 @@ for (const lang of LANGS) {
         return { title: { en: english, ...(local && local !== english ? { [lang]: local } : {}) } }
       })(),
       ...(description ? { description } : {}),
-      metadata: {
-        category: plugin.metadata?.category ?? 'other',
-        // Two labels: where it came from and whether it verified. The tier/score labels
-        // are the site's own ranking aids and mean nothing to DSH.
-      },
+      metadata: (() => {
+        const labels = new Set(plugin.metadata?.labels ?? [])
+        const sortKeys = plugin.metadata?.sortKeys ?? {}
+        const stars = Number(sortKeys.stars ?? 0)
+        const downloads = Number(sortKeys.downloads ?? 0)
+        const engines = Boolean(version.engines?.dsh)
+        // The probe is the measurement; the label is only what a catalogue claimed.
+        const probed = probe[plugin.name]
+        const verified = Boolean(probed) && (probed.npmmirror === 'ok' || probed.npmjs === 'ok')
+        const pinned = version.source?.type === 'git' && /^[0-9a-f]{40}$/i.test(String(version.source.commit ?? ''))
+        const official = labels.has('src-official')
+        const sources = [...labels].filter((l) => String(l).startsWith('src-')).length
+        const heat = Math.min(100, Math.round((Math.log10(1 + stars) / 3.8) * 55 + (Math.log10(1 + downloads) / 5) * 45))
+
+        // Curation: the official catalogue is itself the hand-picked allow-list (4.7k of
+        // 15k), so membership dominates; popularity breaks the ties.
+        const curated = Math.max(0, Math.min(100, Math.round(
+          (official ? 55 : 0) + heat * 0.25 + (verified ? 20 : 0),
+        )))
+        // "Trust" here is install confidence — how much of the install path this build was
+        // able to verify — not a judgement about the code. A registry hit is stronger than
+        // a commit pin only because it also proves the version was published.
+        const trust = Math.max(0, Math.min(100,
+          40 * (verified ? 1 : 0) + 30 * (pinned ? 1 : 0) + 20 * (engines ? 1 : 0)
+          + 10 * Math.min(2, sources),
+        ))
+
+        const out = new Set()
+        if (official) out.add('official')
+        if (verified) out.add('install-verified')
+        if (pinned) out.add('source-pinned')
+        if (engines) out.add('declares-engines')
+
+        return {
+          category: plugin.metadata?.category ?? 'other',
+          ...(out.size ? { labels: [...out] } : {}),
+          sortKeys: { curated, trust },
+        }
+      })(),
       versions: [{
         version: version.version ?? '',
         publishTimestamp: version.publishTimestamp ?? 0,
@@ -138,11 +201,18 @@ for (const lang of LANGS) {
     }
   }
   const generatedAt = new Date().toISOString()
+  // Every label and sort key used above must be declared here, or the format-1 validator
+  // rejects the document.
+  const slimMetadata = {
+    ...(full.metadata ?? {}),
+    labels: { ...(full.metadata?.labels ?? {}), ...CURATION_LABELS },
+    sortKeys: { ...(full.metadata?.sortKeys ?? {}), ...CURATION_SORT },
+  }
   const slim = {
     ...full,
     // Self-reported build time: the client caches this document on disk and needs
     // something to expire against.
-    metadata: { ...(full.metadata ?? {}), generatedAt },
+    metadata: { ...slimMetadata, generatedAt },
     plugins: publishable.map(slimPlugin),
   }
   // Dataset copy: compact, and projected exactly like the Pages copy. Indentation
