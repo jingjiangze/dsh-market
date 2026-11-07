@@ -10,6 +10,7 @@
 // resolve, is renamed to the base. If the base is already taken by another row, the two are
 // merged (the richer row survives, labels and popularity are unioned).
 import { readFile, writeFile } from 'node:fs/promises'
+import { reconcileEnginesLabel } from './labels.mjs'
 import { existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -101,9 +102,16 @@ for (const { plugin, base } of candidates) {
   renamed++
 }
 
-if (renamed || merged) {
-  index.plugins = plugins.filter((plugin) => !drop.has(plugin))
+index.plugins = plugins.filter((plugin) => !drop.has(plugin))
+// A merge unions both rows' labels but adopts the richer row's engines, so the pair can
+// end up contradicting itself: `no-engines` sitting next to a real `engines.dsh`
+// range, which validate.mjs rejects. Reconcile here — unconditionally, because an
+// earlier run may already have persisted the contradiction and this is the last writer
+// before the gate.
+const enginesFixed = reconcileEnginesLabel(index.plugins)
+if (renamed || merged || enginesFixed) {
   await writeFile(INDEX, JSON.stringify(index) + '\n')
   await writeFile(PROBE, JSON.stringify(probe) + '\n')
 }
+if (enginesFixed) console.log(`restore-alias: reconciled no-engines on ${enginesFixed} row(s)`)
 console.log(`restore-alias: renamed ${renamed}, merged ${merged} duplicate(s), dropped ${drop.size} row(s)`)
