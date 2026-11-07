@@ -38,6 +38,14 @@ jobs:
       - name: Smoke-test the rendered page against the real index
         run: node crawler/smoke-app.mjs
 
+      - name: Build the language documents
+        # The publication step the crawl runs. On 2026-11-07 main imported
+        # crawler/category-gate.mjs without shipping the module: every crawl died at this
+        # step while ci stayed green, because ci never executed it.
+        env:
+          CATEGORY_GATE: warn
+          LANG_INDEX_BUDGET_MB: '8'
+        run: node crawler/lang-index.mjs
       - name: Validate the published index
         run: node crawler/validate.mjs
 

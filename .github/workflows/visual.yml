@@ -10,7 +10,13 @@ on:
   push:
     branches: [main]
     paths:
-      - 'site/**'
+      # Only the shell: a crawl push rewrites site/index.zh.json and site/browse/** on
+      # every run, and spinning up Chromium to screenshot an unchanged page is pure waste.
+      - 'site/index.html'
+      - 'site/style.css'
+      - 'site/app.js'
+      - 'site/a/**'
+      - 'site/favicon.svg'
       - 'crawler/visual-check.mjs'
       - '.github/workflows/visual.yml'
 
