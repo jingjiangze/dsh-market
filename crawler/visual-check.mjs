@@ -271,16 +271,42 @@ for (const vp of VIEWPORTS) {
     if (simCount === 0) fail(`${vp.name}: the detail dialog shows no similar plugins`)
   }
   if (!problems.length) {
-    const lightBg = await page.evaluate(async () => {
-      document.querySelector('#theme').click()
-      await new Promise((resolve) => setTimeout(resolve, 120))
-      return {
-        theme: document.documentElement.dataset.theme,
+    // The page follows prefers-color-scheme on a first visit, and Playwright reports light
+    // by default, so the assertion must not assume which theme is showing — only that the
+    // toggle flips it, flips it back, and that each theme paints the right kind of surface.
+    const themes = await page.evaluate(async () => {
+      const read = () => ({
+        theme: document.documentElement.dataset.theme ?? null,
         bg: getComputedStyle(document.body).backgroundColor,
-      }
+      })
+      const button = document.querySelector('#theme')
+      if (!button) return null
+      const first = read()
+      button.click()
+      await new Promise((resolve) => setTimeout(resolve, 160))
+      const second = read()
+      button.click()
+      await new Promise((resolve) => setTimeout(resolve, 160))
+      const third = read()
+      return { first, second, third }
     })
-    if (lightBg.theme !== 'light') fail(`desktop: the theme toggle did not switch to light (got ${lightBg.theme})`)
-    else if (!/^rgb\(2[0-9]{2}, 2[0-9]{2}, 2[0-9]{2}\)$/.test(lightBg.bg)) fail(`desktop: light theme background stayed dark (${lightBg.bg})`)
+    if (!themes) fail('desktop: the theme toggle disappeared')
+    else {
+      const { first, second, third } = themes
+      if (second.theme === first.theme) fail(`desktop: the theme toggle did not change the theme (stayed ${first.theme})`)
+      if (third.theme !== first.theme) fail(`desktop: the theme toggle did not switch back (now ${third.theme})`)
+      const luminance = (color) => {
+        const parts = String(color).match(/\d+/g) ?? []
+        if (parts.length < 3) return null
+        return 0.299 * Number(parts[0]) + 0.587 * Number(parts[1]) + 0.114 * Number(parts[2])
+      }
+      const l1 = luminance(first.bg)
+      const l2 = luminance(second.bg)
+      if (l1 === null || l2 === null) fail(`desktop: unreadable background colour (${first.bg} / ${second.bg})`)
+      else if (Math.abs(l1 - l2) < 40) fail(`desktop: both themes painted the same surface (${first.bg} vs ${second.bg})`)
+      else if (first.theme === 'light' && l1 < 200) fail(`desktop: light theme background is not light (${first.bg})`)
+      else if (second.theme === 'light' && l2 < 200) fail(`desktop: light theme background is not light (${second.bg})`)
+    }
   }
   await context.close()
 }
