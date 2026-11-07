@@ -11,6 +11,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { applyTranslations } from './i18n.mjs'
+import { existsSync } from 'node:fs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
@@ -36,6 +37,18 @@ function sourceFor(version, lang) {
 }
 
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
+// Registry probe results (crawler/probe-npm.mjs). Absent cache = everything is treated as
+// unknown and published, so a fresh checkout without the cache still works.
+const PROBE = join(root, 'data', 'npm-probe.json')
+const probe = existsSync(PROBE) ? JSON.parse(await readFile(PROBE, 'utf8')) : {}
+const INSTALLABLE = (plugin) => {
+  const version = plugin.versions?.[0] ?? {}
+  const source = version.source ?? {}
+  if (source.type === 'git') return /^[0-9a-f]{40}$/i.test(String(source.commit ?? ''))
+  const result = probe[plugin.name]
+  if (!result) return true // never probed: keep it, the site shows the caveat
+  return result.npmmirror === 'ok' || result.npmjs === 'ok'
+}
 const plugins = index.plugins ?? []
 // The translate job writes strings into dist/index.json and the content-hash cache.
 // When this step is run standalone (translate.yml) the cache may contain newer
@@ -48,6 +61,10 @@ function localized(value, lang) {
   const target = pick(value, lang)
   return target && target !== english ? { en: english, [lang]: target } : { en: english }
 }
+
+const publishable = plugins.filter(INSTALLABLE)
+const withheld = plugins.length - publishable.length
+if (withheld) console.log(`lang-index: withheld ${withheld} entries whose registry source does not resolve (${plugins.length} -> ${publishable.length})`)
 
 const report = []
 const sizes = []
@@ -117,10 +134,10 @@ for (const lang of LANGS) {
       }],
     }
   }
-  const slim = { ...full, plugins: plugins.map(slimPlugin) }
+  const slim = { ...full, plugins: publishable.map(slimPlugin) }
   // Dataset copy: compact, and projected exactly like the Pages copy. Indentation
   // alone used to cost ~35% of the payload and nothing reads these files by eye.
-  const text = JSON.stringify({ ...full, plugins: full.plugins.map(slimPlugin) }) + '\n'
+  const text = JSON.stringify({ ...full, plugins: publishable.map(slimPlugin) }) + '\n'
   const slimText = JSON.stringify(slim) + '\n'
   await writeFile(join(root, 'dist', `index.${lang}.json`), text)
   // Only the Chinese document is committed for GitHub Pages: DSH subscribes to it
@@ -129,8 +146,8 @@ for (const lang of LANGS) {
   // nothing read them (the site itself renders from the browse chunks).
   if (SITE_LANGS.has(lang)) await writeFile(join(root, 'site', `index.${lang}.json`), slimText)
   sizes.push(Buffer.byteLength(slimText))
-  const translated = full.plugins.filter((plugin) => Object.keys(plugin.title ?? {}).length > 1).length
-  report.push(`${lang}: full ${(Buffer.byteLength(text) / 1048576).toFixed(2)} MB, slim ${(Buffer.byteLength(slimText) / 1048576).toFixed(2)} MB${SITE_LANGS.has(lang) ? ' (tracked)' : ''}, ${translated}/${plugins.length} localized`)
+  const translated = publishable.filter((plugin) => Object.keys(plugin.title ?? {}).length > 1).length
+  report.push(`${lang}: full ${(Buffer.byteLength(text) / 1048576).toFixed(2)} MB, slim ${(Buffer.byteLength(slimText) / 1048576).toFixed(2)} MB${SITE_LANGS.has(lang) ? ' (tracked)' : ''}, ${translated}/${publishable.length} localized`)
 }
 console.log(`lang-index: ${plugins.length} plugins -> ${LANGS.length} documents`)
 for (const line of report) console.log(`  ${line}`)

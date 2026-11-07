@@ -748,6 +748,22 @@ for (const [name, record] of fromGitHub) {
     }
   }
 
+  // Reconcile the no-engines label with what enrichment actually found. The catalogue
+  // row is stale by the time we publish: a plugin that declares engines must not keep a
+  // label claiming it declares nothing.
+  let enginesFixed = 0
+  for (const plugin of published) {
+    const labels = new Set(plugin.metadata?.labels ?? [])
+    const declares = Boolean(plugin.versions?.[0]?.engines?.dsh)
+    const had = labels.has('no-engines')
+    if (declares && had) { labels.delete('no-engines'); enginesFixed++ }
+    else if (!declares && !had && (plugin.metadata?.labels ?? []).includes('catalog-only')) {
+      labels.add('no-engines'); enginesFixed++
+    }
+    plugin.metadata = { ...plugin.metadata, labels: [...labels] }
+  }
+  if (enginesFixed) console.log(`reconciled no-engines on ${enginesFixed} entries`)
+
   const maxima = heatMaxima(published)
   for (const plugin of published) {
     const total = heatOf(plugin, maxima)
