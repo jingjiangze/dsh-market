@@ -17,7 +17,12 @@ import { fileURLToPath } from 'node:url'
 import { MAX_TEXT } from './i18n.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const TARGETS = (process.env.TRANSLATE_LANGS || 'ja,ko,ru').split(',').map((s) => s.trim()).filter(Boolean)
+const TARGETS = (process.env.TRANSLATE_LANGS || 'zh,ja,ko,ru').split(',').map((s) => s.trim()).filter(Boolean)
+// Titles are never translated into Chinese: most titles are the package name, and turning
+// "dsh-ops" into Chinese produces a name no search or install path can use. The crawl
+// derives a Chinese title from the Chinese description instead (see zhTitle in crawl.mjs).
+const TITLE_SKIP_LANGS = new Set(['zh'])
+const CJK = /[\u4e00-\u9fff]/
 const OFFLINE = process.argv.includes('--offline')
 const CONCURRENCY = Number(process.env.TRANSLATE_CONCURRENCY || 12)
 const BUDGET_MS = Number(process.env.TRANSLATE_BUDGET_MS || 6 * 60 * 1000)
@@ -87,6 +92,10 @@ for (const plugin of index.plugins ?? []) {
     if (!source) continue
     for (const lang of TARGETS) {
       if (value[lang]) continue
+      if (field === 'title' && TITLE_SKIP_LANGS.has(lang)) continue
+      // Some catalogues park a Chinese blurb under \`en\`; translating that "to Chinese"
+      // would launder a correct string through a translator for no reason.
+      if (lang === 'zh' && CJK.test(source)) continue
       tasks.push({ value, lang, source })
     }
   }
