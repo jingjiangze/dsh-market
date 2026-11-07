@@ -57,7 +57,10 @@ for (const plugin of plugins) {
   const slug = slugOf(plugin)
   if (!slug) continue
   const key = `${slug.owner}/${slug.repo}`
-  if (cache[key]?.commit) continue
+  // A cached pin is not an applied pin: dist/index.json is rebuilt from the catalogues on
+  // every crawl, so an entry that was pinned last run comes back as an npm source. Skipping
+  // it here meant the pin never reached the document and the entry was withheld as
+  // uninstallable — 5,349 entries lost on the 2026-11-07 run for exactly this reason.
   candidates.push({ plugin, version, slug, key })
 }
 console.log(`pin-missing: ${candidates.length} entries claim a missing npm package and can be pinned to a commit`)
@@ -65,11 +68,15 @@ if (!candidates.length) process.exit(0)
 
 const wanted = new Map()
 for (const candidate of candidates) {
+  // Cached keys still need to reach the document, but they need no request.
+  const cached = cache[candidate.key]?.commit
+  if (!cached && wanted.size >= MAX_PINS && !wanted.has(candidate.key)) continue
   if (!wanted.has(candidate.key)) wanted.set(candidate.key, [])
-  if (wanted.size >= MAX_PINS && !wanted.has(candidate.key)) continue
   wanted.get(candidate.key).push(candidate)
 }
-const keys = [...wanted.keys()].slice(0, MAX_PINS)
+// Resolve only what the cache does not already know.
+const keys = [...wanted.keys()].filter((key) => !cache[key]?.commit).slice(0, MAX_PINS)
+console.log(`pin-missing: ${wanted.size} entries need a git source, ${keys.length} need a request`)
 
 const QUERY = (batch) => `query{rateLimit{remaining}${batch
   .map((key, i) => {
