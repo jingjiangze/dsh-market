@@ -163,6 +163,12 @@ jobs:
           PIN_MAX: '8000'
         run: node crawler/pin-missing.mjs
 
+      - name: Restore real package names
+        # An older crawler disambiguated collisions by appending a counter, so 700+ rows
+        # carried names like dsh-fish-3 that no registry has. Rename them back and merge
+        # the duplicates they created.
+        run: node crawler/restore-alias.mjs
+
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
