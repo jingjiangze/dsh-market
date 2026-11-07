@@ -13,6 +13,7 @@
 //   node crawler/git-source.mjs --offline   # report only
 import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
+import { reserveReached } from './rate-budget.mjs'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -65,12 +66,15 @@ let cursor = 0
 let resolved = 0
 let failed = 0
 let requests = 0
+let reserveHit = false
 
 async function commitFor(slug) {
   const key = `${slug.owner}/${slug.repo}`
   const cached = cache[key]
   if (cached) return cached
   if (requests >= MAX_PER_RUN) return null
+  // Leave the publish step its quota.
+  if (reserveHit) return null
   requests++
   const res = await fetch(`https://api.github.com/repos/${key}`, {
     headers: {
@@ -80,6 +84,7 @@ async function commitFor(slug) {
     },
     signal: AbortSignal.timeout(15000),
   })
+  if (reserveReached(res)) reserveHit = true
   if (res.status === 403 || res.status === 429) throw new Error('rate-limited')
   if (!res.ok) {
     cache[key] = { commit: null, at: Date.now() }

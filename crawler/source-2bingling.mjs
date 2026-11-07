@@ -13,6 +13,7 @@
 // does not already know, so an existing (verified) entry is never replaced.
 import { readFile, writeFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
+import { reserveReached } from './rate-budget.mjs'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -47,8 +48,13 @@ const headers = {
   ...(token ? { authorization: `Bearer ${token}` } : {}),
 }
 
+let reserveHit = false
 async function gh(path) {
   const res = await fetch(`https://api.github.com${path}`, { headers, signal: AbortSignal.timeout(30000) })
+  if (reserveReached(res)) {
+    reserveHit = true
+    throw new Error('reserve reached')
+  }
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
   return res.json()
 }
@@ -85,6 +91,7 @@ let commitCache = {}
 try { commitCache = JSON.parse(await readFile(COMMIT_CACHE, 'utf8')) } catch { /* first run */ }
 
 async function commitFor(fullName, branch) {
+  if (reserveHit) return null
   const cached = commitCache[fullName]
   if (cached !== undefined) return cached
   try {
