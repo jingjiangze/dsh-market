@@ -41,10 +41,24 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          # One pending run per concurrency group: GitHub cancels the earlier pending
+          # run when a third arrives, which is how three crawls in a row were cancelled
+          # while translate held catalog-publish. Dispatch through this instead of
+          # calling `gh workflow run` directly.
+          queue() {
+          local wf="$1"
+          local busy
+          busy=$(gh run list --workflow "$wf" --limit 5 --json status --jq '[.[] | select(.status=="in_progress" or .status=="queued" or .status=="pending" or .status=="waiting")] | length' 2>/dev/null || echo 0)
+          if [ "${busy:-0}" -gt 0 ]; then
+          echo "$wf already running or queued — not dispatching"
+          return 0
+          fi
+          gh workflow run "$wf" --ref main
+          }
           last=$(gh run list --workflow crawl.yml --status success --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null || echo "")
           if [ -z "$last" ]; then
             echo "no successful crawl recorded — dispatching one"
-            gh workflow run crawl.yml --ref main
+            queue crawl.yml
             exit 0
           fi
           age_h=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 3600 ))
@@ -53,5 +67,5 @@ jobs:
           # kept re-dispatching a crawl while the previous one was still in flight.
           if [ "$age_h" -ge 4 ]; then
             echo "catalogue is stale — dispatching crawl"
-            gh workflow run crawl.yml --ref main
+            queue crawl.yml
           fi

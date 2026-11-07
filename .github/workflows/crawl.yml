@@ -142,6 +142,33 @@ jobs:
           TRANSLATE_BUDGET_MS: '480000'
         run: node crawler/translate.mjs
 
+      - name: Probe the registry sources
+        # 54% of the catalogue claims an npm source that does not resolve anywhere; that is
+        # what makes the client's pre-install probe fail. Record the truth once per run.
+        env:
+          PROBE_CONCURRENCY: '40'
+          PROBE_TIMEOUT_MS: '8000'
+          PROBE_BUDGET_MS: '600000'
+          PROBE_TTL_DAYS: '14'
+        run: node crawler/probe-npm.mjs
+
+      - name: Pin commits for the entries npm never received
+        # Turns a row that claims a missing npm package into a commit-pinned git source:
+        # 100 repositories per GraphQL request, so the whole backlog fits in one run.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PIN_BATCH: '100'
+          PIN_CONCURRENCY: '3'
+          PIN_BUDGET_MS: '600000'
+          PIN_MAX: '8000'
+        run: node crawler/pin-missing.mjs
+
+      - name: Restore real package names
+        # An older crawler disambiguated collisions by appending a counter, so 700+ rows
+        # carried names like dsh-fish-3 that no registry has. Rename them back and merge
+        # the duplicates they created.
+        run: node crawler/restore-alias.mjs
+
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 
@@ -240,15 +267,29 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          # One pending run per concurrency group: GitHub cancels the earlier pending
+          # run when a third arrives, which is how three crawls in a row were cancelled
+          # while translate held catalog-publish. Dispatch through this instead of
+          # calling `gh workflow run` directly.
+          queue() {
+          local wf="$1"
+          local busy
+          busy=$(gh run list --workflow "$wf" --limit 5 --json status --jq '[.[] | select(.status=="in_progress" or .status=="queued" or .status=="pending" or .status=="waiting")] | length' 2>/dev/null || echo 0)
+          if [ "${busy:-0}" -gt 0 ]; then
+          echo "$wf already running or queued — not dispatching"
+          return 0
+          fi
+          gh workflow run "$wf" --ref main
+          }
           last=$(gh run list --workflow translate.yml --status success --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null || echo "")
           if [ -z "$last" ]; then
             echo "no successful translate recorded — dispatching one"
-            gh workflow run translate.yml --ref main
+            queue translate.yml
             exit 0
           fi
           age_h=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 3600 ))
           echo "last successful translate: $last (${age_h}h ago)"
           if [ "$age_h" -ge 3 ]; then
             echo "translation backlog is stalling — dispatching translate"
-            gh workflow run translate.yml --ref main
+            queue translate.yml
           fi
