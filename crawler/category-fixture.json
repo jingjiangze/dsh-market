@@ -1,0 +1,2837 @@
+{
+ "note": "labels from _tmp/category-audit/REPORT.md §2; inputs are real catalogue entries",
+ "entries": [
+  {
+   "name": "dsh-mcd-mcp",
+   "want": "connect-mcp",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "mcdonald",
+    "mcp",
+    "工具集成",
+    "快捷操作",
+    "AI 助手",
+    "零配置"
+   ],
+   "text": "dsh-mcd-mcp 4KAForever11/dsh-mcd-mcp 把麦当劳中国官方 MCP(mcp.mcd.cn)接入 DSH。粘贴自己在官网生成的 Token 后，插件会握手并调用 tools/list，把远端全部工具自动注册成 DSH 原生工具(mcd_ 前缀)，官方增删工具无需改代码，重启即同步。另附 mcd_status、mcd_test、mcd_tool "
+  },
+  {
+   "name": "dsh-market-github",
+   "want": "eco-market",
+   "was": "enhance-tools",
+   "tags": [
+    "agent-harness",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "dsh-plugin",
+    "dsh-plugins",
+    "插件管理",
+    "快捷操作",
+    "工具集成"
+   ],
+   "text": "dsh-market-github dsh-market-github DeepSeek Harness 插件商城：启动页入口 + GitHub topic:dsh-plugin 实时搜索、一键安装/重启 · In-harness plugin market with real-time GitHub search "
+  },
+  {
+   "name": "dsh-tui-subagents",
+   "want": "agent-orchestration",
+   "was": "other",
+   "tags": [],
+   "text": "dsh-tui-subagents dsh-tui-subagents dsh TUI 子代理视图：列出活动子代理，跟踪其实时轨迹，并与可继续的子代理交互。 "
+  },
+  {
+   "name": "dsh-remote-retry-llm-plugin",
+   "want": "connect-remote",
+   "was": "enhance-tools",
+   "tags": [
+    "deep",
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh",
+    "dsh-bundle",
+    "dsh-plugin",
+    "dsh-plugins",
+    "工具集成",
+    "开发者体验",
+    "工作区管理",
+    "效率提升"
+   ],
+   "text": "dsh-remote-retry-llm-plugin dsh-remote-retry-llm-plugin dsh 插件，主要解决 remote 开发和 LLM 无限重试 "
+  },
+  {
+   "name": "dsh-snap",
+   "want": "media-vision",
+   "was": "enhance-tools",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "screenshot",
+    "windows",
+    "快捷操作",
+    "效率提升",
+    "交互体验",
+    "工具集成",
+    "移动端适配"
+   ],
+   "text": "dsh-snap dsh-snap Screenshot directly into the DeepSeek Harness chat composer - click, drag, attach. "
+  },
+  {
+   "name": "dsh-permissions",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "permissions",
+    "security",
+    "安全审查",
+    "插件管理",
+    "设置面板",
+    "开发者体验"
+   ],
+   "text": "dsh-permissions dsh-permissions DeepSeek Harness 的权限规则引擎，在宿主端拦截操作，并提供基于浏览器的可视化规则编辑器。 "
+  },
+  {
+   "name": "dsh-pet-live2d",
+   "want": "media-fun",
+   "was": "enhance-ui",
+   "tags": [
+    "cubism",
+    "deepseek-harness",
+    "desktop-pet",
+    "dsh",
+    "dsh-plugin",
+    "live2d",
+    "pixijs",
+    "桌宠",
+    "娱乐互动",
+    "主题",
+    "前端增强",
+    "可视化"
+   ],
+   "text": "dsh-pet-live2d A8Chann/dsh-pet-live2d#dsh-live2d-pet DSH Web GUI 的 Live2D 桌宠插件：可拖动、跟随鼠标、跟着会话状态换动作与表情，右键面板可换装 "
+  },
+  {
+   "name": "@ferii87/dsh-wallpaper",
+   "want": "enhance-ui",
+   "was": "media-vision",
+   "tags": [],
+   "text": "@ferii87/dsh-wallpaper @ferii-87/ferii-dsh-wallpaper 为 DeepSeek Harness Web 界面提供背景图片：图片由 Harness 主机保存，提供原图/清晰/平衡/柔和四档效果，并自动适配浅色/深色主题。 "
+  },
+  {
+   "name": "dsh-zh-hant-tw",
+   "want": "enhance-ui",
+   "was": "data-office",
+   "tags": [],
+   "text": "dsh-zh-hant-tw dsh-zh-hant-tw 为 DeepSeek Harness 添加台湾繁体中文（zh-TW）语言包，翻译界面文字。 "
+  },
+  {
+   "name": "dsh-chat-avatars",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "界面美化",
+    "前端增强",
+    "本地处理",
+    "快捷操作",
+    "设置面板"
+   ],
+   "text": "dsh-chat-avatars @BlackRasion/dsh-chat-avatars 为 DeepSeek Harness Web GUI 聊天消息添加头像，支持全局默认、按工作区覆盖、裁剪、动图头像、大图预览与拍一拍。 "
+  },
+  {
+   "name": "dsh-dracula-theme",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [],
+   "text": "dsh-dracula-theme ossFrankFrank/dsh-dracula-theme DSH Web GUI 的德古拉主题插件：经典暗色配色与 Soft 变体接入原生主题系统，一键切换并记住选择。 "
+  },
+  {
+   "name": "dsh-startup-moss-2",
+   "want": "enhance-ui",
+   "was": "other",
+   "tags": [],
+   "text": "dsh-startup-moss-2 @QIFANAI/dsh-startup-moss 为 DSH 提供 8.8 秒零点击启动动画：大鲸鱼背景 + Dune 仪表层 + 550W 核心，播完自动释放宿主。 "
+  },
+  {
+   "name": "dsh-capyreporter",
+   "want": "media-fun",
+   "was": "ops-monitor",
+   "tags": [
+    "capybara",
+    "deepseek-harness",
+    "desktop-pet",
+    "dsh",
+    "dsh-plugin",
+    "ui",
+    "状态监控",
+    "主题",
+    "娱乐互动",
+    "会话管理",
+    "工作区管理"
+   ],
+   "text": "dsh-capyreporter linkbag/dsh-capyreporter 为 DSH Web 打造的永远置顶的水豚任务播报宠物——透明悬浮气泡逐条播报运行轨迹、标明所属项目，任务完成时提醒正在别处忙碌的你。 "
+  },
+  {
+   "name": "dock-editor",
+   "want": "connect-files",
+   "was": "connect-im",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "editor",
+    "plugin",
+    "text",
+    "web-ui",
+    "工作区管理",
+    "效率提升",
+    "消息通知"
+   ],
+   "text": "dock-editor AKS1st/dock-editor dock 系列文本查看与编辑器：支持撤销重做、Ctrl+S 保存、未保存确认和二进制检测，作为 dock-files 的默认文本查看器。 "
+  },
+  {
+   "name": "dsh-self-memory",
+   "want": "enhance-memory",
+   "was": "enhance-session",
+   "tags": [
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh-plugin",
+    "dsh-plugins",
+    "会话管理",
+    "状态持久化",
+    "效率提升",
+    "AI 助手"
+   ],
+   "text": "dsh-self-memory dsh-self-memory DSH自记忆插件，结构化记录问题与解决方案，并在新会话中自动查录复用。 "
+  },
+  {
+   "name": "@dsh-external/dsh-session-pins",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [],
+   "text": "@dsh-external/dsh-session-pins dsh-session-pins 为 DeepSeek Harness 侧边栏添加常驻的置顶会话菜单，便于快速访问已固定的会话。 "
+  },
+  {
+   "name": "@lovstudio/dsh-inject-system-prompt",
+   "want": "agent-skills",
+   "was": "agent-skills",
+   "tags": [],
+   "text": "@lovstudio/dsh-inject-system-prompt dsh-inject-system-prompt 通过可配置的 bundle 向 DeepSeek Harness 代理注入额外的系统提示词段落。 "
+  },
+  {
+   "name": "@jackyoung022/dsh-session-canvas",
+   "want": "enhance-session",
+   "was": "media-vision",
+   "tags": [],
+   "text": "@jackyoung022/dsh-session-canvas dsh-session-canvas DSH Web 的多会话画布，可汇总、整理多个会话并跨会话继续对话。 "
+  },
+  {
+   "name": "dsh-ark-plan",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "ark",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "plugin",
+    "volcano",
+    "效率提升",
+    "模型配置",
+    "状态监控"
+   ],
+   "text": "dsh-ark-plan dsh-ark-plan Correctly activate DeepSeek v4 flash on the Volcano Ark plan API for DeepSeek Harness: default config injection (reasoningEfforts + effort=max) + ark_ "
+  },
+  {
+   "name": "@twinsearth/dsh-2xray",
+   "want": "connect-remote",
+   "was": "other",
+   "tags": [],
+   "text": "@twinsearth/dsh-2xray TwinsEarth/DSH-2Xray 为 DSH 提供 Xray 受管内核与分流：VLESS 导入、全局/国内直连/白名单路由、三卡片实时面板与自更新。 "
+  },
+  {
+   "name": "dsh_deepseekapi_quota",
+   "want": "enhance-usage",
+   "was": "ops-monitor",
+   "tags": [
+    "dsh-plugin",
+    "状态监控",
+    "效率提升",
+    "设置面板",
+    "可视化"
+   ],
+   "text": "dsh_deepseekapi_quota dsh_deepseekapi_quota 在 DeepSeek Harness WebUI 侧边栏显示 DeepSeek API 账户余额及高峰/闲时价格时段。 "
+  },
+  {
+   "name": "dsh-win-pwsh7",
+   "want": "connect-wsl",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "dsh-plugin",
+    "dsh-plugin-market",
+    "dsh-plugins",
+    "powershell",
+    "命令行工具",
+    "工具集成",
+    "零配置",
+    "移动端适配"
+   ],
+   "text": "dsh-win-pwsh7 xinspark/dsh-win-pwsh7 报告 DSH 的 pwsh 执行器实际运行的 PowerShell（只认启用中的行，带版本号的商店路径不会被推荐为 pin），并通过脚本点击商店页面或手动商店路径安装由商店管理的 PowerShell 7。只有实际执行器解析到 PowerShell 7+ 时才放行 pwsh 工具；检测到 dsh-o "
+  },
+  {
+   "name": "dsh-git-branch-plugin",
+   "want": "dev-git",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "dsh-git-branch-plugin @MYiYang/dsh-git-branch DSH Web plugin: the session's current Git branch in the composer, a local/remote branch table with checkout, and a read-only commit graph. "
+  },
+  {
+   "name": "dsh-pet-frieren",
+   "want": "media-fun",
+   "was": "media-vision",
+   "tags": [],
+   "text": "dsh-pet-frieren dsh-pet-frieren 为 DeepSeek Harness Web 图形界面添加一个 Q 版芙莉莲桌面宠物。 "
+  },
+  {
+   "name": "dsh-pr-inbox",
+   "want": "dev-git",
+   "was": "connect-files",
+   "tags": [],
+   "text": "dsh-pr-inbox @omdsh-dev/dsh-pr-inbox 在 DSH 侧边栏只读展示我提的、待我审的、我合并的 GitHub PR，绑定当前工作区仓库并复用本机 gh 登录。 "
+  },
+  {
+   "name": "i-am-yuike",
+   "want": "agent-skills",
+   "was": "agent-skills",
+   "tags": [],
+   "text": "i-am-yuike Tkingxiao/I-am-Yuike 通过自带插件去除 harness 前置与后置注入提示词，仅使用预设原生提示词运行，实现软破限与猫娘人格模拟：将猫娘 Yuike 预设幂等部署到 ~/.dsh/.agent-presets/yuike/，不覆盖已编辑的预设。 "
+  },
+  {
+   "name": "dsh-scheduler-3",
+   "want": "agent-workflow",
+   "was": "agent-workflow",
+   "tags": [],
+   "text": "dsh-scheduler-3 @LosEcher/dsh-scheduler DSH 调度插件：支持 cron、间隔和一次性任务，提供无头执行、运行台账、deliverTo 投递、熔断器和会话管理界面。 "
+  },
+  {
+   "name": "dsh-connect",
+   "want": "connect-im",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "model-provider",
+    "qoder",
+    "trae",
+    "workbuddy",
+    "模型配置",
+    "工具集成",
+    "状态监控",
+    "快捷操作",
+    "插件管理"
+   ],
+   "text": "dsh-connect IvanWu2015/dsh-connect#connect 把 DeepSeek Harness 会话接入飞书/Lark、Telegram 与钉钉：每个聊天绑定一个可续接的 DSH 会话，回复以卡片流式回传，任务结束时用一张结果卡汇报模型、token 用量、步数与耗时。提问与权限审批可直接在聊天里作答，各渠道凭据在 Web 设置面板中配置。 "
+  },
+  {
+   "name": "@chi-hong22/dsh-plan-spend",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "@chi-hong22/dsh-plan-spend @Chi-hong22/dsh-plan-spend DSH Web GUI 弹窗插件，展示已配置服务商的套餐花销：DeepSeek 余额与 OpenCode Go 5小时/7天/月度配额。 "
+  },
+  {
+   "name": "dsh-attention-center",
+   "want": "connect-im",
+   "was": "agent-workflow",
+   "tags": [
+    "attention",
+    "deepseek-harness",
+    "dsh-plugin",
+    "inquiry",
+    "ptc",
+    "run-code",
+    "工作流增强",
+    "会话管理",
+    "消息通知",
+    "AI 助手",
+    "运行时诊断"
+   ],
+   "text": "dsh-attention-center dsh-attention-center Sidebar inbox for DeepSeek Harness: finished work, approvals, and new questions, with system notifications when the platform allows them. "
+  },
+  {
+   "name": "dsh-flash-net-mon",
+   "want": "ops-monitor",
+   "was": "ops-monitor",
+   "tags": [
+    "dsh-plugin",
+    "状态监控",
+    "安全审查",
+    "证据链",
+    "消息通知",
+    "插件管理"
+   ],
+   "text": "dsh-flash-net-mon @tcgbp/dsh-flash-net-mon 为 dock-flash 提供网络监控、出站流量审计和网络告警能力。 "
+  },
+  {
+   "name": "@zhang-tod/dsh-win-notify",
+   "want": "connect-im",
+   "was": "connect-im",
+   "tags": [],
+   "text": "@zhang-tod/dsh-win-notify @zhang-tod/dsh-win-notify 为 DSH 提供 Windows 原生 Toast 通知，在智能体回合、子智能体或后台任务完成时提醒，点击可打开 Web UI。 "
+  },
+  {
+   "name": "dsh-nightwrite",
+   "want": "data-office",
+   "was": "agent-workflow",
+   "tags": [
+    "ai-writing",
+    "chinese",
+    "cordis",
+    "dsh",
+    "dsh-plugin",
+    "long-form-fiction",
+    "novel",
+    "workbench",
+    "AI 助手",
+    "工作流增强",
+    "AI 助手",
+    "工作区管理",
+    "状态持久化"
+   ],
+   "text": "dsh-nightwrite @qinyuan1017/dsh-nightwrite 长夜 · AI 主写的小说工作台 DSH 插件：驾驶舱 / 大纲 / 流水线 / 生产台 / 验收台 / 世界库 / 侦察 / 设置 "
+  },
+  {
+   "name": "dsh-eda-mcp",
+   "want": "connect-mcp",
+   "was": "enhance-tools",
+   "tags": [
+    "dsh-plugin",
+    "dsh-plugins",
+    "工具集成",
+    "AI 助手",
+    "插件管理",
+    "效率提升"
+   ],
+   "text": "dsh-eda-mcp @MCviseron/dsh-eda-mcp 通过 MCP 将 DeepSeek Harness 连接到嘉立创EDA专业版 / EasyEDA Pro，让 Agent 使用工具绘制原理图。 "
+  },
+  {
+   "name": "dsh-xiaozhushou",
+   "want": "agent-orchestration",
+   "was": "media-fun",
+   "tags": [
+    "ai-assistant",
+    "assistant",
+    "chinese",
+    "deepseek-harness",
+    "desktop-pet",
+    "dsh",
+    "dsh-plugin",
+    "productivity",
+    "task-management",
+    "todo",
+    "windows",
+    "AI 助手",
+    "效率提升",
+    "可视化",
+    "娱乐互动",
+    "移动端适配"
+   ],
+   "text": "dsh-xiaozhushou 小助手任务看板 dsh小助手：秘书 / CEO / 史官 三角色助手的 DeepSeek Harness 插件，带本地待办台账、定点提醒、共享任务板与看板娘浮窗 dsh dsh-plugin deepseek-harness assistant secretary todo reminder board"
+  },
+  {
+   "name": "dsh-media-gen-4",
+   "want": "media-vision",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "dsh-media-gen-4 @so16tm/dsh-media-gen 在 DSH 聊天中通过 OpenRouter 生成图片和视频，支持按会话选择模型、输入图片与后台视频任务。 "
+  },
+  {
+   "name": "dragonfly-chatbot",
+   "want": "data-search",
+   "was": "data-docs",
+   "tags": [],
+   "text": "dragonfly-chatbot @howpy/dragonfly_chatbot 搜索 Dragonfly 官方帮助文档和本地 Python 文件，为技术问题提供带引用的答案。 "
+  },
+  {
+   "name": "dsh-web-search-edge",
+   "want": "data-search",
+   "was": "data-docs",
+   "tags": [],
+   "text": "dsh-web-search-edge @ztc1522021381/dsh-web-search-edge 为 DeepSeek Harness 提供的免密钥 web_search 插件：通过 CDP 驱动任意 Chromium 浏览器渲染神马搜索，并以 HTTP 抓取必应结果，无需 API 密钥。 "
+  },
+  {
+   "name": "dsh-desktop-clock",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "desktop-clock",
+    "dsh",
+    "dsh-plugin",
+    "focus-timer",
+    "移动端适配",
+    "界面美化",
+    "效率提升",
+    "状态持久化"
+   ],
+   "text": "dsh-desktop-clock @skyline66/dsh-desktop-clock A draggable floating clock for the DeepSeek Harness Web GUI with analog and digital faces, a focus timer, four themes, and persistent placement. "
+  },
+  {
+   "name": "@code4lala/dsh-plugin-workspace-path",
+   "want": "enhance-ui",
+   "was": "connect-files",
+   "tags": [],
+   "text": "@code4lala/dsh-plugin-workspace-path dsh-plugin-workspace-path 在 DSH Web 侧边栏每个工作区标题下注入完整目录路径并自动换行，区分同名工作区，支持热加载及重命名排序后实时同步。 "
+  },
+  {
+   "name": "dsh-chrome-only",
+   "want": "connect-web",
+   "was": "connect-web",
+   "tags": [],
+   "text": "dsh-chrome-only @SeekAfterSeek/dsh-chrome-only 将所有 DeepSeek Harness 浏览器导航统一交给 Google Chrome，并通过守卫和提示规则确保 dsh web 不打开系统默认浏览器。 "
+  },
+  {
+   "name": "dsh-web-auth",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "dsh-plugin",
+    "安全审查",
+    "会话管理",
+    "前端增强",
+    "插件管理"
+   ],
+   "text": "dsh-web-auth dsh-web-auth 为经 frp/隧道暴露的 DSH Web 提供 loopback 反向代理鉴权门,通过 token 登录保护公网访问。 "
+  },
+  {
+   "name": "dsh-plugin-ctl",
+   "want": "eco-market",
+   "was": "enhance-settings",
+   "tags": [],
+   "text": "dsh-plugin-ctl dsh-plugin-ctl 在 DSH Web 设置中提供插件控制，通过“启动控制”标签页启动或停止 Cordis 加载器插件。 "
+  },
+  {
+   "name": "dsh-plugin-kindle-book",
+   "want": "data-docs",
+   "was": "connect-web",
+   "tags": [],
+   "text": "dsh-plugin-kindle-book @wanghs09/dsh-plugin-kindle-book 把网页新闻抓成 EPUB/AZW3：Web 界面粘贴链接即可编书，同时向 Agent 提供一个 kindle_book 工具。 "
+  },
+  {
+   "name": "dsh-live-3",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [],
+   "text": "dsh-live-3 @123caiji/dsh-live Live cockpit for DeepSeek Harness: what this session is doing right now, what needs you, what it costs (host projection + right-sidebar panel). "
+  },
+  {
+   "name": "@240xu/dsh-session-lazy-view",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [],
+   "text": "@240xu/dsh-session-lazy-view 240xu/dsh-session-lazy-view 只读会话惰性查看器：仅 stat 列出会话，再只解压尾部 Zstandard 帧查看最近事件；独立 /lazyview 面板支持搜索、统计和导出。需 Node.js 24+。 "
+  },
+  {
+   "name": "@liuyu-f/dsh-plugin-session-cascade-delete",
+   "want": "enhance-session",
+   "was": "connect-files",
+   "tags": [],
+   "text": "@liuyu-f/dsh-plugin-session-cascade-delete liuyu-f/dsh-plugin-session-cascade-delete 从界面删除会话（会话头部按钮或侧栏行菜单），或由 agent 调用 session_delete 工具：先停止并释放运行中的 Agent 与会话，再清理日志目录、投影缓存与工作区记账，级联删除它拥有的子代理会话（分叉分支不受影响）。 "
+  },
+  {
+   "name": "dsh-context-kit",
+   "want": "enhance-memory",
+   "was": "enhance-session",
+   "tags": [
+    "context-management",
+    "deepseek-harness",
+    "dsh",
+    "history-editor",
+    "plugin",
+    "会话管理",
+    "效率提升",
+    "状态持久化"
+   ],
+   "text": "dsh-context-kit dsh-context-kit DCP, Context Mode, Edit History, and CDSH bundle for DeepSeek Harness "
+  },
+  {
+   "name": "dsh-hme",
+   "want": "enhance-memory",
+   "was": "enhance-session",
+   "tags": [
+    "ai-agent",
+    "ai-memory",
+    "claude-code",
+    "deepseek-harness",
+    "dsh-plugin",
+    "会话管理",
+    "会话管理",
+    "AI 助手"
+   ],
+   "text": "dsh-hme dsh-hme Cross-session long-term memory: bounded core (USER.md global + MEMORY.md per-workspace, φ Fibonacci caps) + a tag-indexed, self-consolidating archive  "
+  },
+  {
+   "name": "dsh-codex-session-deletetool",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [
+    "codex-ui",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "session-management",
+    "会话管理",
+    "快捷操作",
+    "界面美化",
+    "效率提升"
+   ],
+   "text": "dsh-codex-session-deletetool dsh-codex-session-deletetool Real conversation delete for the Codex UI sidebar (DSH plugin): provides remote.workspaceRegistry.deleteSession so @michengai/dsh-codex-ui grows its o "
+  },
+  {
+   "name": "dsh-message-actions",
+   "want": "enhance-session",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "dsh-message-actions aijacko/dsh-message-actions 为对话消息添加撤回、删除、删至末尾、多选分享与导出，并提供每条回答的用量统计与 DeepSeek 余额费用统计。 "
+  },
+  {
+   "name": "dsh-rapid-ocr-ui",
+   "want": "media-vision",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "dsh-rapid-ocr-ui dsh-rapid-ocr-ui Local text-only OCR plugin for DeepSeek Harness: ocr_image tool extracts text from images locally — no vision model, no API key, no external upload. "
+  },
+  {
+   "name": "@tobewin/dsh-pet-companion",
+   "want": "media-fun",
+   "was": "media-vision",
+   "tags": [],
+   "text": "@tobewin/dsh-pet-companion DSH-Pet-Companion 为 DeepSeek Harness 提供一个桌面动态萌宠，在智能体长时间运行时显示可爱的宠物动画。 "
+  },
+  {
+   "name": "dsh-startup-animation",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "splash-screen",
+    "startup-animation",
+    "wallpaper",
+    "界面美化",
+    "设置面板",
+    "前端增强"
+   ],
+   "text": "dsh-startup-animation Startup Animation DSH 启动动画与动态背景插件：启动时全屏播放本地视频，由纯 CSS 保证按时自动消失，不会阻塞启动；持久背景视频层内置控制面板，可实时调节不透明度、开关与播放状态，设置自动持久化。无第三方依赖，跨平台。 dsh deepseek-harness plugin splash startup-animation video boot-splash wallpaper"
+  },
+  {
+   "name": "dsh-jimeng",
+   "want": "media-vision",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "image-generation",
+    "image-to-image",
+    "jimeng",
+    "plugin",
+    "seedream",
+    "text-to-image",
+    "volcengine-ark",
+    "AI 助手",
+    "工具集成",
+    "视觉理解",
+    "模型配置"
+   ],
+   "text": "dsh-jimeng dsh-jimeng Generate images from text or transform existing images using Jimeng (Seedream) via Volcengine Ark. "
+  },
+  {
+   "name": "dsh-vqa-agent",
+   "want": "media-vision",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "dsh-vqa-agent dsh-vqa-agent DSH 插件:vqa_ask 双模型视觉问答 —— 主模型提问 → 视觉模型看图回答,UI 实时展示 QA 过程,支持多模态视觉模型选择 "
+  },
+  {
+   "name": "dsh-plugin-novelai",
+   "want": "media-vision",
+   "was": "media-vision",
+   "tags": [],
+   "text": "dsh-plugin-novelai dsh-plugin-novelai NovelAI Diffusion V4.5 Full image generation for DeepSeek Harness (nai_generate_image tool) "
+  },
+  {
+   "name": "dsh-wsl-uia",
+   "want": "connect-wsl",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "windows",
+    "wsl",
+    "工具集成",
+    "状态监控",
+    "命令行工具"
+   ],
+   "text": "dsh-wsl-uia @173787247/dsh-wsl-uia 让 WSL 中的代理观察 Windows 界面：枚举顶层窗口并读取有界的 UI Automation 元素树。 "
+  },
+  {
+   "name": "@yyyzl/dsh-image-feedback",
+   "want": "media-vision",
+   "was": "media-vision",
+   "tags": [],
+   "text": "@yyyzl/dsh-image-feedback 图片反馈 ★ 0 │ 在原生侧栏标注图片，将原图、编号参考图和反馈发送到当前会话，保留输入草稿。迁移前需禁用旧版本地插件。 "
+  },
+  {
+   "name": "@local/dsh-image-describe",
+   "want": "media-vision",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "@local/dsh-image-describe dsh-image-describe DeepSeek Harness 宿主插件，为纯文本主模型提供 describe_image 工具，借助视觉模型提供商识别并描述图片内容。 "
+  },
+  {
+   "name": "dsh-glm-mode",
+   "want": "agent-skills",
+   "was": "enhance-models",
+   "tags": [
+    "agent-preset",
+    "dsh-plugin",
+    "glm",
+    "guard",
+    "loop-guard",
+    "zhipuai",
+    "模型配置",
+    "零配置",
+    "效率提升",
+    "状态监控"
+   ],
+   "text": "dsh-glm-mode hoyyang/dsh-glm-mode 为 zhipuai/glm-5.3-flash 调优的「GLM 模式」Agent 预设：PTC 程序化工具调用、思考死循环守卫与工具空转守卫双层防护（源自活体事故复盘）、GLM 专属自动压缩（75%/22%）。 "
+  },
+  {
+   "name": "dsh-magpie-connect",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "模型配置",
+    "插件管理",
+    "零配置",
+    "工具集成"
+   ],
+   "text": "dsh-magpie-connect bitxeno/dsh-magpie-connect 把 Magpie 网关的模型接入 DSH 选择器，支持模型显隐管理、图片输入与思考档位。 "
+  },
+  {
+   "name": "dsh-plugin-lmstudio",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "dsh-plugin-lmstudio dsh-plugin-lmstudio 将本地 LM Studio 模型接入 DeepSeek Harness 网页界面，作为聊天模型使用。 "
+  },
+  {
+   "name": "dsh-connect-modelscope-token-plan",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "dsh-plugin",
+    "模型配置",
+    "状态监控",
+    "成本控制",
+    "工具集成"
+   ],
+   "text": "dsh-connect-modelscope-token-plan eghrhegpe/dsh-connect-modelscope-token-plan 一键接入魔搭社区的语言、生图模型到 DSH（默认关），自动填入图片识别与上下文窗口；还可查看免费魔粒余额、跳转到模型信息页，记录本地调用计数、趋势、限流事件，输入框旁另有用量胶囊显示余额与今日本地调用次数。上述功能仅需填入 API key，不需要登录账号。 "
+  },
+  {
+   "name": "@dsh-plugins/dsh-llm-hub",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "@dsh-plugins/dsh-llm-hub webkubor/dsh-llm-hub 补上官方 pi-ai 适配器在模型页缺的那半：网关可达性与延迟探测、一键拉取网关模型目录并勾选写回配置、DeepSeek 余额与各家配额就地常驻、每个 provider 实际接入的协议与地址；模型下拉只列当前真能用的分组 —— key 失效、余额耗尽、配额用尽都会被摘掉，修好后自动恢复。 "
+  },
+  {
+   "name": "dsh-pet-plugin",
+   "want": "media-fun",
+   "was": "enhance-ui",
+   "tags": [
+    "desktop-pet",
+    "dsh",
+    "dsh-plugin",
+    "i18n",
+    "tts",
+    "桌宠",
+    "娱乐互动",
+    "界面美化",
+    "本地处理"
+   ],
+   "text": "dsh-pet-plugin @zuoyunlai/dsh-pet-plugin DSH 桌面伴侣插件：五只超写实立绘（表情 + 动作序列）、主动说话与神经音色、小输入框单聊（一次性模型调用，不进会话）。 dsh dsh-plugin desktop-pet pet tts companion"
+  },
+  {
+   "name": "dsh-session-title",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh-plugin",
+    "dsh-plugin-market",
+    "dsh-plugins",
+    "dsh-session",
+    "会话管理",
+    "工具集成",
+    "模型配置"
+   ],
+   "text": "dsh-session-title @ly6170/dsh-session-title 一个 DeepSeek Harness 插件，为模型提供按你自定义规则设置会话标题的工具。 "
+  },
+  {
+   "name": "dsh-llm-workbuddy",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "plugin",
+    "模型配置",
+    "工具集成",
+    "插件管理",
+    "AI 助手"
+   ],
+   "text": "dsh-llm-workbuddy dsh-llm-workbuddy 通过本地代理让 DSH 调用 WorkBuddy/CodeBuddy 的模型，无需 API key "
+  },
+  {
+   "name": "dsh-hcm",
+   "want": "agent-workflow",
+   "was": "agent-workflow",
+   "tags": [
+    "ai-agent",
+    "constraints",
+    "deepseek-harness",
+    "dsh",
+    "提示词注入",
+    "工作流增强",
+    "状态持久化",
+    "证据链",
+    "AI 助手"
+   ],
+   "text": "dsh-hcm dsh-hcm Hard Constraint Mode for DeepSeek Harness: user constraints become machine-checked boolean predicates sealed in an immutable ledger, re-injected every "
+  },
+  {
+   "name": "dsh-approval-gate",
+   "want": "ops-security",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "安全审查",
+    "命令行工具",
+    "工作流增强",
+    "工具集成"
+   ],
+   "text": "dsh-approval-gate moon09300731/dsh-approval-gate DeepSeek Harness 自动审批门控：Flash 预判不可回补操作，安全自动批准、危险转人工（fail-safe） "
+  },
+  {
+   "name": "@godv61/dsh-task-engine",
+   "want": "agent-workflow",
+   "was": "agent-skills",
+   "tags": [],
+   "text": "@godv61/dsh-task-engine godv61/dsh-task-engine 为 DeepSeek Harness 提供预设工程流程：dev_task 工具把阶段流转、产物、验证、审核与提交范围做成硬门禁，并带一个安装项目级与个人级技能和规则的工作台。 "
+  },
+  {
+   "name": "dsh-workflow-isolate",
+   "want": "agent-workflow",
+   "was": "ops-security",
+   "tags": [
+    "agent-orchestration",
+    "agentic-ai",
+    "deepseek-harness",
+    "dsh-plugin",
+    "quickjs",
+    "sandbox",
+    "typescript",
+    "webassembly",
+    "workflow-engine",
+    "任务编排",
+    "安全审查",
+    "效率提升",
+    "多智能体协作"
+   ],
+   "text": "dsh-workflow-isolate dsh-workflow-isolate Alternative WorkflowEngine provider for DSH 0.1.0-rc.7 that runs model-written orchestration in fresh QuickJS/WASM runtimes with a JSON-only host brid "
+  },
+  {
+   "name": "dsh-subagent-dispatch",
+   "want": "agent-orchestration",
+   "was": "agent-workflow",
+   "tags": [],
+   "text": "dsh-subagent-dispatch dsh-subagent-dispatch DeepSeek Harness plugin: workflow and run_workflow are two names for one implementation (same-name takeover, real redirect), per-run preset/effort, ba "
+  },
+  {
+   "name": "dsh-buddy-control",
+   "want": "agent-orchestration",
+   "was": "agent-orchestration",
+   "tags": [
+    "acceptance-testing",
+    "ai-agent",
+    "automation",
+    "codebuddy",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "workbuddy",
+    "多智能体协作",
+    "工作流增强",
+    "代码审查",
+    "多设备支持",
+    "效率提升"
+   ],
+   "text": "dsh-buddy-control dsh-buddy-control DSH 中控台：把活派给 CodeBuddy / WorkBuddy，自己验收，不合格打回同一会话返工；跨设备识别 + 一键部署。Supervised local-agent dispatch for DeepSeek Harness. "
+  },
+  {
+   "name": "touchstone-dsh",
+   "want": "dev-runtime",
+   "was": "agent-orchestration",
+   "tags": [
+    "ai-agents",
+    "ai-agents-framework",
+    "cordis",
+    "cordis-plugin",
+    "deepseek-harness",
+    "deepseek-harness-desktop",
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh",
+    "dsh-plugin",
+    "dsh-plugin-desktop",
+    "dsh-plugins",
+    "qa",
+    "test-automation",
+    "testing-automation",
+    "testing-framework",
+    "testing-tool",
+    "testing-tools",
+    "多智能体协作",
+    "工作流增强",
+    "AI 助手",
+    "工具集成",
+    "效率提升"
+   ],
+   "text": "touchstone-dsh touchstone-dsh Automated testing platform for DeepSeek Harness (dsh): case library, bug reports, per-project serial queue, dev board, built-in load testing. "
+  },
+  {
+   "name": "dsh-agent-control",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "session-management",
+    "会话管理",
+    "快捷操作",
+    "工作区管理",
+    "安全审查"
+   ],
+   "text": "dsh-agent-control @ventisyn/dsh-agent-control DSH 插件：通过统一的确认流程和一致的失败码，删除整个会话或单轮对话。 "
+  },
+  {
+   "name": "dsh-role-gate",
+   "want": "agent-orchestration",
+   "was": "enhance-session",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "会话管理",
+    "安全审查",
+    "工作流增强",
+    "设置面板"
+   ],
+   "text": "dsh-role-gate @lgqtime/dsh-role-gate 为 DSH 提供按会话的身份层：工具与技能白名单、多父级角色继承、动态切换及新会话选择器。 "
+  },
+  {
+   "name": "dsh-prompt-studio-2",
+   "want": "agent-skills",
+   "was": "dev-git",
+   "tags": [],
+   "text": "dsh-prompt-studio-2 @ElioChen240/dsh-prompt-studio 用于演进提示词与智能体预设的工作室，支持 Git 式版本管理、差异时间线、黄金测试台与一键回归评估。 "
+  },
+  {
+   "name": "dsh-skill-pack-security",
+   "want": "agent-skills",
+   "was": "ops-security",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "gate",
+    "plugin-vet",
+    "prompt-injection",
+    "security",
+    "security-audit",
+    "skill-pack",
+    "skills",
+    "supply-chain",
+    "supply-chain-security",
+    "安全审查",
+    "插件管理",
+    "内容创作",
+    "工具集成"
+   ],
+   "text": "dsh-skill-pack-security dsh-skill-pack-security DeepSeek Harness 安全审计技能包，提供密钥扫描、依赖审计、供应链审查、提示注入审查和审计编排 5 个 agent 技能，无运行时代码。 "
+  },
+  {
+   "name": "dsh-subagent-library",
+   "want": "agent-orchestration",
+   "was": "agent-orchestration",
+   "tags": [
+    "ai-agents",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "llm",
+    "multi-agent",
+    "subagent",
+    "subagents",
+    "typescript",
+    "多智能体协作",
+    "AI 助手",
+    "插件管理",
+    "效率提升"
+   ],
+   "text": "dsh-subagent-library MaRi23333/dsh-subagent-library DeepSeek Harness 具名子代理库插件：settings 驱动的角色名册，list_subagents / delegate 工具与设置页。Named subagent roster plugin for DeepSeek Harness. "
+  },
+  {
+   "name": "dsh-agent-bridge",
+   "want": "agent-orchestration",
+   "was": "enhance-tools",
+   "tags": [
+    "agent-bridge",
+    "ai-agent",
+    "ai-agents",
+    "claude-code",
+    "cli",
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "multi-agent",
+    "opencode",
+    "recipe",
+    "插件管理",
+    "工具集成",
+    "命令行工具",
+    "工作流增强",
+    "插件开发"
+   ],
+   "text": "dsh-agent-bridge @mike-sl-ig/dsh-agent-bridge 用于 DeepSeek Harness 的智能体桥接插件，支持 JSON 配方、跨平台启动器、配方向导、自检与注册表导入。 "
+  },
+  {
+   "name": "dsh-zh-thinking-2",
+   "want": "agent-skills",
+   "was": "enhance-models",
+   "tags": [],
+   "text": "dsh-zh-thinking-2 @programerror233/dsh-zh-thinking 注册常驻系统提示分区，强制 DeepSeek Harness 模型在所有会话、工作区与子代理中用简体中文思考与作答。 "
+  },
+  {
+   "name": "dsh-workbuddy-multi",
+   "want": "enhance-models",
+   "was": "ops-monitor",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "workbuddy",
+    "多设备支持",
+    "状态监控",
+    "快捷操作",
+    "插件管理",
+    "效率提升"
+   ],
+   "text": "dsh-workbuddy-multi @richardhxwang/dsh-workbuddy-multi 为 dsh-workbuddy-connect 增加多账号支持的伴侣插件，属于 DeepSeek Harness 生态。 "
+  },
+  {
+   "name": "dsh-providers-live-models",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh-plugin",
+    "model-catalog",
+    "openai-codex",
+    "opencode",
+    "opencode-go",
+    "opencode-zen",
+    "opendesign",
+    "subscription-usage",
+    "模型配置",
+    "工具集成",
+    "成本控制",
+    "设置面板"
+   ],
+   "text": "dsh-providers-live-models @Luca4Don3/dsh-providers-live-models 为 DeepSeek Harness 提供 OpenCode Go/Zen、OpenAI Codex 与 OpenDesign 的实时模型目录，含逐模型开关、登录和订阅额度。 "
+  },
+  {
+   "name": "balance-dsh",
+   "want": "enhance-usage",
+   "was": "ops-monitor",
+   "tags": [
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-harness-desktop",
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh-plugin",
+    "dsh-plugin-desktop",
+    "dsh-plugin-market",
+    "dsh-plugins",
+    "状态监控",
+    "成本控制",
+    "模型适配",
+    "主题"
+   ],
+   "text": "balance-dsh Rannist/balance-dsh 在侧边栏底部和输入框上方显示你的 DeepSeek 账户余额与当前会话 token 及费用消耗，支持高峰/空闲峰谷计费与子代理消耗统计。 "
+  },
+  {
+   "name": "dsh-ds-balance",
+   "want": "enhance-usage",
+   "was": "ops-monitor",
+   "tags": [
+    "agent-harness",
+    "ai",
+    "ai-agent",
+    "balance",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "monitoring",
+    "observability",
+    "plugin",
+    "sidebar",
+    "typescript",
+    "状态监控",
+    "设置面板",
+    "成本控制",
+    "模型配置"
+   ],
+   "text": "dsh-ds-balance DeepSeek 余额 DSH plugin: shows the DeepSeek account balance at the bottom of the sidebar, with a configuration card on the Plugins page. dsh deepseek-harness dsh-plugin deepseek balance usage"
+  },
+  {
+   "name": "tiered-compaction",
+   "want": "enhance-memory",
+   "was": "enhance-usage",
+   "tags": [
+    "context-compaction",
+    "context-management",
+    "cordis",
+    "cordis-plugin",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "llm",
+    "token-optimization",
+    "成本控制",
+    "会话管理",
+    "效率提升",
+    "状态持久化"
+   ],
+   "text": "tiered-compaction tiered-compaction DSH 分层上下文压缩插件：无损折叠 → 落盘 → 软压力 → 有损摘要四层管线，前三层零 LLM 成本，摘要预算预留杜绝截断。 "
+  },
+  {
+   "name": "@kidli1412/dsh-session-cost",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "@kidli1412/dsh-session-cost dsh-session-cost DSH web plugin: a status bar at the bottom of the conversation showing the estimated API cost of the current session (per-model token pricing, CNY) pl dsh deepseek-harness plugin cost token usage balance 费用"
+  },
+  {
+   "name": "dsh-go-balance",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "dsh-go-balance iamfromchangsha/dsh-go-balance 输入框工具行右侧的 OpenCode Go 余额胶囊：滚动/每周/每月配额剩余百分比（数据直接来自 Zen 用量接口），悬停查看明细，低余额自动变黄/变红。 "
+  },
+  {
+   "name": "dsh-plugin-opencode-usage",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "opencode",
+    "opencode-go",
+    "quota",
+    "subscription",
+    "usage",
+    "web-gui",
+    "web-ui",
+    "状态监控",
+    "可视化",
+    "成本控制",
+    "前端增强"
+   ],
+   "text": "dsh-plugin-opencode-usage dsh-plugin-opencode-usage OpenCode Go 用量百分比悬浮面板:在 DeepSeek Harness Web 会话窗口左下角显示滚动/每周/每月用量百分比与重置时间。 dsh dsh-plugin deepseek-harness cordis opencode usage quota web-ui"
+  },
+  {
+   "name": "@sligqoer/dsh-usage-stats",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "@sligqoer/dsh-usage-stats Jockjrop/dsh-usage-stats 在 DSH 桌面端看清每一次请求的 Token、费用与速度，按模型和供应商汇总花费，统一同一模型的不同名称，核对余额并比较模型实际表现。 "
+  },
+  {
+   "name": "dsh-auto-approval-frame",
+   "want": "ops-security",
+   "was": "agent-workflow",
+   "tags": [
+    "dsh-plugin",
+    "安全审查",
+    "证据链",
+    "工作流增强",
+    "成本控制",
+    "工具集成"
+   ],
+   "text": "dsh-auto-approval-frame flyhai/dsh-auto-approval-frame DSH 工具调用的审批框架：一张四档规则表（拒绝／问人／AI 评审／放行）按工具、命令、文件与网络作用面逐条匹配，之后是 AI 快评与深评、人工审批，并带哈希链审计台账和设置页。目标文件只查元数据、不打开文件正文；评审端看到的是命令、目标与裁剪后的写入内容，发出前先做敏感信息脱敏。 "
+  },
+  {
+   "name": "dsh-risk-guard",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [],
+   "text": "dsh-risk-guard shuxue6662-a11y/dsh-risk-guard 零打扰审计与保险丝拦截：静默记录每次工具调用并做纯规则风险评分（含累积加分、风险等级分布、归档保留期清理），只拦不可逆灾难（受保护路径删除、磁盘擦除、force push 到受保护分支/引用、凭据外发），/risk-guard 输出脱敏操作账单并支持 --since 时间过滤。 "
+  },
+  {
+   "name": "dsh-secret-scrub",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "llm-security",
+    "privacy",
+    "redaction",
+    "secret-scanning",
+    "安全审查",
+    "数据可视化",
+    "安全防护"
+   ],
+   "text": "dsh-secret-scrub jkt-check/dsh-secret-scrub 不可逆密钥脱敏守护：在访问密钥、Bearer 令牌、私钥块进入会话日志和模型请求之前，将其改写为 `[REDACTED:<category>]` 占位符。 "
+  },
+  {
+   "name": "@quill507/dsh-auto-approval-llm",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [],
+   "text": "@quill507/dsh-auto-approval-llm cuddly-guacamole/dsh-auto-approval-llm 为 DSH Auto 权限档提供 LLM 辅助自动审批：静态规则、LLM 复审、风险分档、人工倒计时兜底、熔断与文件级审计。 "
+  },
+  {
+   "name": "dsh-occlick",
+   "want": "connect-im",
+   "was": "connect-im",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "notifications",
+    "opencode",
+    "plugin",
+    "sound-effects",
+    "消息通知",
+    "交互体验",
+    "设置面板",
+    "工具集成"
+   ],
+   "text": "dsh-occlick @contraliz/dsh-occlick OpenCode notification sounds for DeepSeek Harness: separate pickers for turn finished, permission requested, and turn error. "
+  },
+  {
+   "name": "@michengai/dsh-skills-manager",
+   "want": "agent-skills",
+   "was": "ops-security",
+   "tags": [],
+   "text": "@michengai/dsh-skills-manager @michengai/dsh-skills-manager DSH Skills Manager — 在 DeepSeek Harness 中统一加载并安全管理本机 Agent Skills · Load and safely manage local Agent Skills in DSH deepseek-harness dsh dsh-plugin skill skills cordis"
+  },
+  {
+   "name": "dsh-plugin-pwsh7",
+   "want": "connect-wsl",
+   "was": "enhance-tools",
+   "tags": [
+    "dsh",
+    "dsh-plugin",
+    "powershell",
+    "windows",
+    "命令行工具",
+    "工具集成",
+    "零配置",
+    "开发者体验"
+   ],
+   "text": "dsh-plugin-pwsh7 PowerShell 7 执行路由 Windows DeepSeek Harness bundle that routes the pwsh tool to PowerShell 7, with a Settings page (install status, self-check, route switch, uninstall,  deepseek-harness dsh-plugin powershell powershell-7 pwsh windows shell sandbox"
+  },
+  {
+   "name": "dsh-completion-guard",
+   "want": "agent-workflow",
+   "was": "ops-security",
+   "tags": [],
+   "text": "dsh-completion-guard dsh-completion-guard A task-contract and completion-certification layer for DeepSeek Harness. deepseek-harness dsh-plugin task-contract completion-certification hooks typescript"
+  },
+  {
+   "name": "dsh-desktop-pet-naiwa",
+   "want": "media-fun",
+   "was": "media-vision",
+   "tags": [],
+   "text": "dsh-desktop-pet-naiwa dsh-desktop-pet-naiwa 桌宠-奶娃小时候 - A Windows desktop companion for DeepSeek Harness "
+  },
+  {
+   "name": "dsh-anime-guide",
+   "want": "media-fun",
+   "was": "media-fun",
+   "tags": [
+    "anime",
+    "bangumi",
+    "dsh",
+    "dsh-plugin",
+    "myanimelist",
+    "娱乐互动",
+    "工具集成",
+    "数据分析",
+    "效率提升"
+   ],
+   "text": "dsh-anime-guide dsh-anime-guide DeepSeek Harness 番剧插件：yuc 新番表 + 番库/Bangumi/MAL 评分榜，搜索推荐与国内外差异对照 "
+  },
+  {
+   "name": "@duke-dsh-plugins/dsh-whaleharbor-pet",
+   "want": "media-fun",
+   "was": "ops-security",
+   "tags": [],
+   "text": "@duke-dsh-plugins/dsh-whaleharbor-pet MoonlitDropOfBlood/dsh-whale-pet 鲸港 WhaleHarbor 大白鲸娘桌面窗宠：13 个 AI 生成零件以 CSS 纸片人方式驱动（呼吸、眨眼、呆毛摇摆、汗滴、蹦跳与抖动），八种状态实时反映 DSH 工作情况——空闲、忙碌、审批、提问、出错、庆祝、打盹、子代理分身——支持戳一戳、拖动、三档尺寸、托盘开关与气泡实时统计。需 Whal "
+  },
+  {
+   "name": "dsh-shenshen-companion",
+   "want": "media-fun",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "dsh-shenshen-companion proletari/shenshen-dsh-companion DSH 桌宠「深深」：跟随任务状态切换待机/敲键盘/思考/庆祝/失败，支持点击挥手、拖动左右奔跑，并保留 API 余额、本机用量记账、角色、气泡与音效设置。二创自 MeteorNOX/DeepSeek-Balance-Whale-Widget（dsh-whale-widget… "
+  },
+  {
+   "name": "dsh-client-ui-cat",
+   "want": "media-fun",
+   "was": "media-fun",
+   "tags": [],
+   "text": "dsh-client-ui-cat wuyad/dsh-client-ui-cat#cat-plugin 一只在 DeepSeek Harness 界面里游荡的小猫，沿文字边缘行走、打盹、瞬移、摔下台阶，还会拉粑粑等你清理。 "
+  },
+  {
+   "name": "@ssamurias/dsh-fish",
+   "want": "media-fun",
+   "was": "enhance-settings",
+   "tags": [],
+   "text": "@ssamurias/dsh-fish ssamurias/dsh-fish 在DSH里养一只大肥鱼宠物，你可以陪伴她长大。养成系体验，没有人格设置，通过你和她的互动学习成长。她可以自己刷B站，写日记，提取信息去问你，你的反馈决定了她成为什么样的人。通过事件流突破四个阶段、三道瓶颈，去积累「立场清单」，四个阶段完成后才会开始有立场。她的日记默认只给自己看，你在设置里打开就能读 "
+  },
+  {
+   "name": "kunpet-dsh",
+   "want": "media-fun",
+   "was": "media-vision",
+   "tags": [],
+   "text": "kunpet-dsh Yang-wudi/dsh-kun-like-pet#kunpet-dsh 住在 DSH Web 界面右下角的坤坤桌宠：随 Agent 状态切换动作，任务完成时播放「你干嘛~哎哟」。 "
+  },
+  {
+   "name": "dsh-fatfish-pet-xun209",
+   "want": "media-fun",
+   "was": "media-fun",
+   "tags": [
+    "deepseek-harness",
+    "desktop-pet",
+    "dsh",
+    "dsh-plugin",
+    "fatfish",
+    "whale",
+    "娱乐互动",
+    "桌宠",
+    "视觉理解",
+    "插件管理"
+   ],
+   "text": "dsh-fatfish-pet-xun209 dsh-fatfish-pet-xun209 DSH 大肥魚桌寵 · 勛 —— DeepSeek Harness 的大肥魚（鯨魚娘）桌寵。本機版修正：在 DSH 0.2.1-rc.5 上修好了桌面透明窗渲染不出角色的問題。角色形象為社群二創，美術 CC BY-NC-SA 4.0（禁商用）。 "
+  },
+  {
+   "name": "dsh-gpu-governor",
+   "want": "ops-monitor",
+   "was": "ops-monitor",
+   "tags": [
+    "dsh-plugin",
+    "gpu",
+    "monitoring",
+    "nvidia",
+    "powershell",
+    "vram",
+    "状态监控",
+    "可视化",
+    "运行时诊断",
+    "成本控制",
+    "快捷操作"
+   ],
+   "text": "dsh-gpu-governor dsh-gpu-governor GPU Radar: a DSH plugin that monitors GPU, VRAM and CPU, attributes VRAM per project and process, and offers budgets plus guarded pause/resume/kill. "
+  },
+  {
+   "name": "dsh-model-orchestrator",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "ai-agents",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "llm",
+    "model-routing",
+    "模型配置",
+    "成本控制",
+    "效率提升"
+   ],
+   "text": "dsh-model-orchestrator dsh-model-orchestrator DSH 插件：两级模型调度（先选模型、再选渠道；失败先换渠道再换模型），带偏好模式与实时渠道健康面板。与 dsh-our-free-model 配合使用（单向适配、非官方）：只读它写在本机的渠道账本作旁证，不改它、也不要求它为本插件做任何改动；两者零代码依赖，不装 OFM 也能完整路由。 "
+  },
+  {
+   "name": "dsh-ai-output-trust",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "agent-safety",
+    "ai-security",
+    "code-execution",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "guard",
+    "llm-security",
+    "owasp-llm",
+    "plugin",
+    "prompt-injection",
+    "security",
+    "安全审查",
+    "代码审查",
+    "运行时诊断"
+   ],
+   "text": "dsh-ai-output-trust dsh-ai-output-trust AI 输出信任边界：检查代码有没有直接执行 AI 输出（eval/shell/SQL/路径）。 "
+  },
+  {
+   "name": "harmony-plugin-market-runtime",
+   "want": "eco-market",
+   "was": "eco-market",
+   "tags": [],
+   "text": "harmony-plugin-market-runtime harmony-plugin-market-runtime HarmonyOS DSH plugin: provides the market's desktopProfiles/desktopPnpm contract backed by an in-process (worker-thread) pure-JS pnpm engine, so dsh-m "
+  },
+  {
+   "name": "dsh-w-custom-plugins",
+   "want": "eco-market",
+   "was": "eco-market",
+   "tags": [],
+   "text": "dsh-w-custom-plugins dsh-w-custom-plugins DeepSeek Harness plugin manager with enable/disable controls, safe archive installation, and online updates. "
+  },
+  {
+   "name": "dsh-environment-sync",
+   "want": "eco-market",
+   "was": "eco-market",
+   "tags": [
+    "dsh-plugin",
+    "插件管理",
+    "工作区管理",
+    "状态持久化",
+    "命令行工具"
+   ],
+   "text": "dsh-environment-sync dsh-environment-sync Open-source DSH environment synchronization and personal plugin management "
+  },
+  {
+   "name": "@weibaohui/experts-management",
+   "want": "agent-skills",
+   "was": "eco-market",
+   "tags": [],
+   "text": "@weibaohui/experts-management experts-management dsh 插件 · 专家管理：管理 WorkBuddy 兼容格式的专家与专家团队（plugin.json + Agent MD + 技能集），浏览/安装 50+ 内置专家市场；每个专家注册为「仅用户可调用」的技能，在对话输入框用 /expert-名称 即可以该专家的身份执行任务（宿主确定性注入角色定义 dsh deepseek-harness cordis plugin experts agents marketplace dsh-plugin"
+  },
+  {
+   "name": "dsh-project-skills-mng",
+   "want": "agent-skills",
+   "was": "eco-market",
+   "tags": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-bundle",
+    "dsh-plugin",
+    "plugin",
+    "skill-management",
+    "skills",
+    "插件管理",
+    "工作区管理",
+    "效率提升",
+    "开发者体验"
+   ],
+   "text": "dsh-project-skills-mng dsh-project-skills-mng DSH 插件：在右侧栏浏览、编辑与管理项目级 / 全局技能（project & global skills） "
+  },
+  {
+   "name": "@99galaxy/dsh-plugin-market",
+   "want": "eco-market",
+   "was": "eco-market",
+   "tags": [],
+   "text": "@99galaxy/dsh-plugin-market 99galaxy/dsh-plugin-market 从 DSH 左侧栏打开独立的插件市场页面，浏览 awesome-dsh-plugin 目录。支持按分类或安装状态筛选、按名称或简介搜索，以及按 Star、下载量、名称或收录时间排序；三个标签分别显示全部插件、已安装插件和可更新插件，并单独提示无法判断更新状态的数量。自动识别当前 Web 或桌面 pr "
+  },
+  {
+   "name": "@oxmumu3/dsh-plugin-finder",
+   "want": "eco-market",
+   "was": "enhance-session",
+   "tags": [],
+   "text": "@oxmumu3/dsh-plugin-finder oxmumu3/dsh-plugin-finder 从用户目标匹配社区插件并阅读作者资料，形成插件方案，在同一工作台衔接安装和任务执行，保存历史与反馈。 "
+  },
+  {
+   "name": "@lazyra/dsh-session-trash",
+   "want": "enhance-session",
+   "was": "connect-files",
+   "tags": [],
+   "text": "@lazyra/dsh-session-trash @lazyra/dsh-session-trash Recoverable session deletion for DeepSeek Harness: move sessions to a trash folder, restore them from a UI page, and purge automatically after 7 days. deepseek-harness dsh cordis plugin session trash recycle-bin restore"
+  },
+  {
+   "name": "dsh-hide-workspace",
+   "want": "connect-files",
+   "was": "enhance-ui",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "hide-workspace",
+    "sidebar",
+    "workspace",
+    "工作区管理",
+    "界面美化",
+    "快捷操作",
+    "状态持久化"
+   ],
+   "text": "dsh-hide-workspace dsh-hide-workspace Hide workspaces you do not need right now from the DeepSeek Harness sidebar, without deleting them. Three-state filter, Ctrl+H, undo. Display-only. "
+  },
+  {
+   "name": "dsh-whale-game",
+   "want": "media-fun",
+   "was": "media-fun",
+   "tags": [
+    "agent-game",
+    "ai-playground",
+    "cordis",
+    "deepseek-harness",
+    "dsh-plugin",
+    "launcher",
+    "typescript",
+    "whale-arcade",
+    "娱乐互动",
+    "快捷操作",
+    "本地处理",
+    "交互体验"
+   ],
+   "text": "dsh-whale-game @Treasure-hub-agent/dsh-whale-game DeepSeek Harness 插件 · 大肥鱼游戏厅：一键起停本地 AI 游乐场，和你的 Agent 开一桌 "
+  },
+  {
+   "name": "dsh2server",
+   "want": "connect-remote",
+   "was": "connect-files",
+   "tags": [
+    "a2s",
+    "a2s-ecosystem",
+    "agent-bridge",
+    "deepseek",
+    "deepseek-api",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "http-api",
+    "javascript",
+    "php",
+    "remote-agent",
+    "server-actions",
+    "websocket",
+    "插件管理",
+    "工作区管理",
+    "状态监控",
+    "会话管理",
+    "工作区管理"
+   ],
+   "text": "dsh2server dsh2server DeepSeek Harness bridge/plugin for A2S with remote sessions, workspaces, approvals, tasks, and resilient reconnects. "
+  },
+  {
+   "name": "dsh-move-to-workspace",
+   "want": "connect-files",
+   "was": "enhance-session",
+   "tags": [
+    "conversation",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "move",
+    "session",
+    "workflow-automation",
+    "workspace",
+    "工作区管理",
+    "会话管理",
+    "工作流增强",
+    "快捷操作"
+   ],
+   "text": "dsh-move-to-workspace 会话迁移与整理 Move a DeepSeek Harness conversation into another workspace: copies the transcript into a new session bound to the target folder, archives the origina dsh dsh-plugin deepseek-harness workspace conversation session move"
+  },
+  {
+   "name": "dsh-remote-agent",
+   "want": "connect-remote",
+   "was": "agent-orchestration",
+   "tags": [
+    "agent",
+    "ai-agent",
+    "ai-agents",
+    "cordis",
+    "cordis-plugin",
+    "deepseek-harness",
+    "developer-tools",
+    "distributed",
+    "dsh",
+    "dsh-plugin",
+    "llm",
+    "multi-agent",
+    "remote-agent",
+    "remote-development",
+    "remote-execution",
+    "self-hosted",
+    "task-automation",
+    "zero-dependency",
+    "多智能体协作",
+    "多设备支持",
+    "工作流增强",
+    "状态持久化"
+   ],
+   "text": "dsh-remote-agent zbzbhs/dsh-remote-agent 把另一台电脑变成你的远程 Agent 同事：副机本地跑自己的 DSH 与完整 Agent 循环，所以链路断开时任务照常继续、模型凭证也永不离开那台机器。主机用 8 个 remote_* 工具派活，只收回 handoff 摘要与产物清单，成品按需拉取——中间产物留在副机。配对码接入，direct 或  "
+  },
+  {
+   "name": "dsh-relay-fast",
+   "want": "connect-remote",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "dsh-relay-fast dsh-relay-fast DSH relay plugin: reasoning-effort autofill, /models sync, capability-aware Fast toggle | DSH 中转站思考等级与 Fast 开关插件 "
+  },
+  {
+   "name": "@shiqyka/dsh-ssh-workspace",
+   "want": "connect-remote",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "@shiqyka/dsh-ssh-workspace siqyka/dsh-ssh-workspace 通过SSH方式，将远程主机的文件夹当成DSH的工作区，可以在本地DSH控制远程主机工作目录，不需要手动同步、不需要挂载驱动、不需要装任何第三方文件系统 "
+  },
+  {
+   "name": "@goodandready/dsh-remote-workspace",
+   "want": "connect-remote",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "@goodandready/dsh-remote-workspace GooDAnDReaDY/dsh-remote-workspace 支持冲突感知镜像同步、端口转发和原生 Web UI 的 SSH/SFTP 远程工作区。 "
+  },
+  {
+   "name": "quicktui-dsh",
+   "want": "connect-remote",
+   "was": "enhance-tools",
+   "tags": [
+    "dsh-plugin",
+    "quicktui",
+    "工具集成",
+    "会话管理",
+    "状态监控",
+    "消息通知",
+    "零配置"
+   ],
+   "text": "quicktui-dsh dualface/quicktui-dsh 在 dsh 插件页配置 QuickTUI：在 macOS 与 Linux 上安装 QuickTUI server，扫码配对手机 App，并接入 dsh 会话，让 App 能查看会话、回应审批与提问、发送提示词、中断回合。 "
+  },
+  {
+   "name": "dsh-rfiles",
+   "want": "connect-files",
+   "was": "connect-files",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "remote",
+    "文件管理",
+    "工作区管理",
+    "会话管理",
+    "多设备支持",
+    "效率提升"
+   ],
+   "text": "dsh-rfiles Aperops/dsh-rfiles 为 DSH Web GUI 增加带进度与续传的分块上传，以及工作区文件与会话日志 ZIP 的原生下载；通过配对远程链接访问的会话同样可用。 "
+  },
+  {
+   "name": "@twinsearth/w2m-dsh-plugin",
+   "want": "connect-remote",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "@twinsearth/w2m-dsh-plugin TwinsEarth/dsh-windows2macos 一条指令同时下发给所有在线的 Windows 与 macOS 机器，可跨网络跨区域：零依赖中继只通过出站连接与各机通信（Tailscale 内网、公网 VPS + TLS、或隧道），各机在各自的项目副本上执行，结果连同 commit、工作区指纹与命令哈希一并回传，因此\"环境不一致\"会被判为… "
+  },
+  {
+   "name": "deepseek-harness-zhipu_plan_tools",
+   "want": "enhance-models",
+   "was": "enhance-tools",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "工具集成",
+    "模型配置",
+    "AI 助手",
+    "插件管理"
+   ],
+   "text": "deepseek-harness-zhipu_plan_tools magian1127/deepseek-harness-zhipu_plan_tools 智谱（GLM Coding Plan）三件套以原生 provider 与工具接入：内置 web_search / web_fetch 后端切换为智谱联网搜索与网页 Markdown 读取，可选注册 github_search_doc / github_get_repo_structure /… "
+  },
+  {
+   "name": "dsh-prompt-setting",
+   "want": "agent-skills",
+   "was": "enhance-settings",
+   "tags": [
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh",
+    "dsh-plugin",
+    "dsh-plugins",
+    "设置面板",
+    "模型适配",
+    "数据分析",
+    "会话管理"
+   ],
+   "text": "dsh-prompt-setting zangxx66/dsh-prompt-setting#dsh-prompt-setting DeepSeek Harness 默认 System Prompt 管理插件：在 Web GUI「设置」里浏览、检索并覆盖最终装配进每轮会话的系统提示词 "
+  },
+  {
+   "name": "dsh-browser-cdp",
+   "want": "connect-web",
+   "was": "enhance-tools",
+   "tags": [
+    "agent-browser",
+    "ai-agent",
+    "browser-automation",
+    "cdp",
+    "chrome-devtools-protocol",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-bundle",
+    "dsh-plugin",
+    "headless-browser",
+    "plugin",
+    "screencast",
+    "typescript",
+    "工具集成",
+    "可视化",
+    "视觉理解",
+    "AI 助手"
+   ],
+   "text": "dsh-browser-cdp drscrewdriver/dsh-browser-cdp 看得见的 Agent 浏览器（CDP 接入）：30+ bcdp_* 工具，实时观察窗支持直接点击/滚动/中文输入，点选元素以 @\"picks/*.json\" 引用投进输入框，人机验证提醒；DSH 0.1.5/0.1.7/0.2.0 宿主各有一条对应版本线。 "
+  },
+  {
+   "name": "@iasiv5/dsh-obmc-web",
+   "want": "connect-web",
+   "was": "connect-web",
+   "tags": [],
+   "text": "@iasiv5/dsh-obmc-web OpenBMC Console（BMC 控制台） ★ 1 │ 在 DSH 设置里经 SSH 转发的同源代理打开 OpenBMC 网页控制台，BMC IP 变化时自动重新连接。需要能访问 BMC 的 SSH 跳板机。 "
+  },
+  {
+   "name": "dsh-file-upload",
+   "want": "connect-files",
+   "was": "enhance-tools",
+   "tags": [
+    "clipboard",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "file-upload",
+    "工作区管理",
+    "效率提升",
+    "命令行工具",
+    "快捷操作"
+   ],
+   "text": "dsh-file-upload HongMing-Huang/dsh-file-upload DeepSeek Harness (dsh) file-message plugin: Claude-style drag-and-drop / paperclip upload, content sniffing, document-to-Markdown via Microsoft MarkIt "
+  },
+  {
+   "name": "dsh-web-kimi",
+   "want": "connect-web",
+   "was": "enhance-models",
+   "tags": [
+    "deepseek",
+    "dsh",
+    "dsh-plugin",
+    "fetch-provider",
+    "kimi",
+    "moonshot",
+    "web-search",
+    "模型配置",
+    "效率提升",
+    "零配置",
+    "工作流增强"
+   ],
+   "text": "dsh-web-kimi kenny2077/dsh-web-kimi 为 DeepSeek Harness 提供 Kimi Coding 的网页搜索与网页抓取双提供方——一把 coding 计划密钥同时接入 ctx.web 的两条链路（/v1/search 与 /v1/fetch），设置卡片经凭据服务保存密钥，并回退读取 Kimi CLI 配置，安装即用。 "
+  },
+  {
+   "name": "@linxin666/dsh-client-ui-browser-view",
+   "want": "connect-web",
+   "was": "connect-web",
+   "tags": [],
+   "text": "@linxin666/dsh-client-ui-browser-view @linxin666/dsh-client-ui-browser-view Right-docked live browser view for the DSH Web GUI: a CDP-driven Chromium the agent operates, a screencast panel the user watches, and screenshots att "
+  },
+  {
+   "name": "dsh-preset-categorizer",
+   "want": "agent-skills",
+   "was": "connect-mcp",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "mcp",
+    "preset",
+    "skills",
+    "插件管理",
+    "工具集成",
+    "工作流增强",
+    "零配置"
+   ],
+   "text": "dsh-preset-categorizer dsh-preset-categorizer Categorize plugins, MCP servers and skills into DeepSeek Harness agent presets. "
+  },
+  {
+   "name": "dsh-packycode-api",
+   "want": "enhance-models",
+   "was": "enhance-models",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "llm",
+    "packyapi",
+    "packycode",
+    "模型适配",
+    "多账号",
+    "成本控制",
+    "状态监控"
+   ],
+   "text": "dsh-packycode-api PackyCode API 用 PackyCode 的 Key：多协议路由、轮换与余额显示 "
+  },
+  {
+   "name": "dsh-websocket2http",
+   "want": "connect-mcp",
+   "was": "connect-mcp",
+   "tags": [],
+   "text": "dsh-websocket2http @wlyzqm/DSH-WebSocket2HTTP 魔改DSH链路传输协议层从Websocket到HTTP，解决部分网络环境无法使用Websocket的问题。 "
+  },
+  {
+   "name": "dsh-md-render",
+   "want": "data-docs",
+   "was": "data-docs",
+   "tags": [],
+   "text": "dsh-md-render baosfeng/my-dsh-plugins#dsh-md-render DSH（DeepSeek Harness）插件与技能集合仓库：插件独立版本、GitHub Release 发布（插件与技能清单见仓库 README） "
+  },
+  {
+   "name": "dsh-jot",
+   "want": "data-office",
+   "was": "data-docs",
+   "tags": [
+    "agent-tools",
+    "deepseek-harness",
+    "desktop",
+    "document-editor",
+    "dsh-plugin",
+    "local-first",
+    "markdown",
+    "note-taking",
+    "notes",
+    "pdf",
+    "productivity",
+    "rich-text",
+    "todo",
+    "typescript",
+    "AI 助手",
+    "AI 助手",
+    "效率提升",
+    "AI 助手",
+    "多智能体协作"
+   ],
+   "text": "dsh-jot Jot Human-editable notes, todos and documents for DeepSeek Harness, with search, tables, attachments, export and optional agent collaboration. dsh-plugin deepseek-harness jot notes note-taking todo checklist rich-text"
+  },
+  {
+   "name": "@vlln/dsh-navbar",
+   "want": "enhance-ui",
+   "was": "data-docs",
+   "tags": [],
+   "text": "@vlln/dsh-navbar dsh-navbar 对话节点导航条——user 消息快速跳转（自渲染 DOM，官方 client 通道） "
+  },
+  {
+   "name": "dsh-markdown-preview",
+   "want": "data-docs",
+   "was": "enhance-settings",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "katex",
+    "markdown",
+    "markdown-preview",
+    "前端增强",
+    "效率提升",
+    "零配置",
+    "零配置"
+   ],
+   "text": "dsh-markdown-preview GitHubJiKe/dsh-markdown-preview 产物文件聊天内预览：点击产物 chip 直接在对话中渲染 Markdown（宿主侧 markdown-it + highlight.js 代码高亮）、图片或纯文本，系统应用打开与在文件夹中显示仍一键可达。 "
+  },
+  {
+   "name": "dsh-session-norms",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [
+    "conversation-view",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "transcript",
+    "会话管理",
+    "可视化",
+    "效率提升",
+    "主题",
+    "快捷操作"
+   ],
+   "text": "dsh-session-norms 会话规范视图 ★ 0 │ 把当前会话按轮次展开，显示用户消息、助手回复和工具调用，并提供统计与复制 Markdown。只读且仅支持 Web；作者验证环境为 DSH 0.2.2-alpha.2。 "
+  },
+  {
+   "name": "dsh-mermaid",
+   "want": "data-docs",
+   "was": "enhance-ui",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "diagram",
+    "dsh",
+    "dsh-plugin",
+    "markdown",
+    "mermaid",
+    "plugin",
+    "可视化",
+    "前端增强",
+    "工具集成",
+    "零配置"
+   ],
+   "text": "dsh-mermaid MrmoLabs/dsh-mermaid 将 Mermaid 代码围栏渲染为 SVG 图表，支持流式输出、图形/代码切换、全屏缩放与拖拽、SVG 导出，以及内置的同源运行时。 "
+  },
+  {
+   "name": "dsh-memj",
+   "want": "enhance-memory",
+   "was": "agent-workflow",
+   "tags": [
+    "ai-memory",
+    "ai-memory-system",
+    "dsh-plugin",
+    "dsh-plugins",
+    "memory",
+    "systemone",
+    "状态持久化",
+    "AI 助手",
+    "工作流增强",
+    "插件开发",
+    "模型配置"
+   ],
+   "text": "dsh-memj @jojoman2024/dsh-memj 以「封面 + 正文」组织知识的 DSH 记忆插件：封面只写在项目级 handoff 文档里（唯一源头），正文独立落盘成文档；封面按项目 → 主题 → 全局三层聚合。库在 ~/.dsh-memj/，拷一个目录即迁移。 dsh-plugin deepseek-harness memory handoff knowledge"
+  },
+  {
+   "name": "dsh-remote-settings-compat",
+   "want": "enhance-settings",
+   "was": "enhance-settings",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "remote-access",
+    "设置面板",
+    "安全审查",
+    "网络代理",
+    "工具集成"
+   ],
+   "text": "dsh-remote-settings-compat dsh-remote-settings-compat Remote settings compatibility plugin for DeepSeek Harness "
+  },
+  {
+   "name": "dsh-app-restart",
+   "want": "enhance-settings",
+   "was": "enhance-settings",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "设置面板",
+    "快捷操作",
+    "效率提升",
+    "开发者体验"
+   ],
+   "text": "dsh-app-restart dsh-app-restart DeepSeek Harness desktop plugin: restart the whole application from Settings (graceful quit + automatic relaunch) "
+  },
+  {
+   "name": "dsh-ai-cursor",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "ai-cursor",
+    "cordis",
+    "dsh",
+    "dsh-plugin",
+    "windows-overlay",
+    "AI 助手",
+    "交互体验",
+    "界面美化",
+    "可视化",
+    "设置面板"
+   ],
+   "text": "dsh-ai-cursor dsh-ai-cursor AI 鼠标 (AI cursor) for DeepSeek Harness — a click-through second cursor plus a floating, collapsible control panel with opacity, colour, size, badge an "
+  },
+  {
+   "name": "dsh-config-sync-xk",
+   "want": "enhance-settings",
+   "was": "enhance-settings",
+   "tags": [
+    "config-sync",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "github",
+    "nutstore",
+    "profile-sync",
+    "webdav",
+    "多设备支持",
+    "状态持久化",
+    "设置面板",
+    "安全审查",
+    "文件管理"
+   ],
+   "text": "dsh-config-sync-xk dsh-config-sync-xk Sync a DeepSeek Harness profile configuration across devices through Nutstore WebDAV or GitHub: per-file hash merge, conflict copies, optional AES-256 "
+  },
+  {
+   "name": "dsh-profile-switcher",
+   "want": "enhance-settings",
+   "was": "enhance-settings",
+   "tags": [
+    "cordis",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "electron",
+    "plugin",
+    "profile-switcher",
+    "webview",
+    "设置面板",
+    "快捷操作",
+    "工作区管理",
+    "前端增强"
+   ],
+   "text": "dsh-profile-switcher dsh-profile-switcher Switch DeepSeek Harness profiles from the sidebar and embed another profile's full Web UI in the current window. "
+  },
+  {
+   "name": "dsh-codex-model-effort-selector",
+   "want": "enhance-models",
+   "was": "enhance-settings",
+   "tags": [
+    "codex",
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "模型适配",
+    "设置面板",
+    "主题",
+    "快捷操作"
+   ],
+   "text": "dsh-codex-model-effort-selector dsh-codex-model-effort-selector Codex desktop style model + reasoning-effort selector for DeepSeek Harness "
+  },
+  {
+   "name": "dsh-default-model",
+   "want": "enhance-models",
+   "was": "enhance-settings",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "模型适配",
+    "设置面板",
+    "状态持久化",
+    "零配置"
+   ],
+   "text": "dsh-default-model @LFELKEEA/dsh-default-model Pin the DeepSeek Harness default model from settings — new chats, restarts and in-chat model switches leave it alone. "
+  },
+  {
+   "name": "dsh-starlight-background",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "dsh-plugin",
+    "starlight",
+    "界面美化",
+    "可视化",
+    "交互体验",
+    "设置面板"
+   ],
+   "text": "dsh-starlight-background @Darcy79/dsh-starlight-background A starlight ocean backdrop for DeepSeek Harness: animated illustration, glass composer, gear settings and reasoning-linked meteors. "
+  },
+  {
+   "name": "dsh-typewriter-blip",
+   "want": "media-voice",
+   "was": "enhance-ui",
+   "tags": [
+    "audio",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "web-audio",
+    "娱乐互动",
+    "前端增强",
+    "零配置",
+    "界面美化"
+   ],
+   "text": "dsh-typewriter-blip nsswkj/dsh-typewriter-blip 把流式输出的助手回复变成短促音效：按可调的最小间隔逐字发声，只对回复正文发声，窗口最小化、被遮挡或切到后台标签页时照常发声。内置两种音色，也可自调波形，或载入音频文件当音色。 "
+  },
+  {
+   "name": "dsh-any-audio",
+   "want": "media-voice",
+   "was": "media-voice",
+   "tags": [],
+   "text": "dsh-any-audio cloudoyx/any-audio 五个工具做 agent 音频：anyaudio_music 从本地 SoundFont 离线渲染音符级乐谱，anyaudio_sfx 提供 52 条 SoundFont 音效预设与 15 种程序化生成器，anyaudio_tts 走 Edge 或 MiMo 配音，anyaudio_mix… "
+  },
+  {
+   "name": "dsh-minecraft-theme",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "minecraft",
+    "theme",
+    "界面美化",
+    "娱乐互动",
+    "零配置"
+   ],
+   "text": "dsh-minecraft-theme dsh-minecraft-theme Minecraft-style theme for the dsh web GUI: blocky pixel components, photo wallpapers with local upload, bundled Minecraft UI sound samples (with synth dsh dsh-plugin minecraft theme pixel-ui wallpaper"
+  },
+  {
+   "name": "dsh-funasr-voice",
+   "want": "media-voice",
+   "was": "enhance-ui",
+   "tags": [
+    "dsh-plugin",
+    "dsh-plugins",
+    "效率提升",
+    "桌宠",
+    "前端增强",
+    "零配置"
+   ],
+   "text": "dsh-funasr-voice fenglin-ai/dsh-funasr-voice DSH Web 本地离线语音输入：麦克风经本地 FunASR（SenseVoiceSmall）识别后填入输入框，支持一键安装，全程离线。 "
+  },
+  {
+   "name": "dsh-ximalaya",
+   "want": "media-voice",
+   "was": "data-search",
+   "tags": [
+    "audio-player",
+    "dsh-plugin",
+    "podcast",
+    "ximalaya",
+    "音频播放",
+    "播客",
+    "搜索",
+    "桌宠",
+    "AI 助手"
+   ],
+   "text": "dsh-ximalaya jerryqx/dsh-ximalaya 在 DSH Web 界面收听喜马拉雅播客/有声书：搜索专辑、分页浏览曲目，播放条支持上下集/进度/音量/倍速；扫码登录后「我的」页可看收藏的声音（点击即播）、我的订阅（带最新一集提示）与关注的主播（含其公开专辑）；Host 端音频流代理支持 Range 拖动，并注册 `ximalaya_play`  "
+  },
+  {
+   "name": "dsh-voice-alert",
+   "want": "media-voice",
+   "was": "connect-im",
+   "tags": [
+    "alert",
+    "cordis",
+    "cordis-plugin",
+    "deepseek-harness",
+    "desktop",
+    "dsh",
+    "notification",
+    "plugin",
+    "sound",
+    "tauri",
+    "消息通知",
+    "效率提升",
+    "设置面板",
+    "状态监控"
+   ],
+   "text": "dsh-voice-alert loyalchiiina/dsh-voice-alert 每个 turn 结束自动播报完成、出错时播失败提示（用户中断默认不播，子代理会话默认跳过，均可配置）。三种提醒方式：语音、音效、关闭。默认「音效」内置 20 个音效（提醒 10 + 大自然 10），每个音效可指定给完成/失败/审批事件并单独试听，零配置、不需要任何 API Key 与音频文件；语音走 "
+  },
+  {
+   "name": "dsh-meeting-room",
+   "want": "media-voice",
+   "was": "agent-orchestration",
+   "tags": [
+    "agent-collaboration",
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "llm",
+    "meeting-room",
+    "multi-agent",
+    "多智能体协作",
+    "会话管理",
+    "文件管理",
+    "工作流增强",
+    "AI 助手"
+   ],
+   "text": "dsh-meeting-room kekydream/dsh-meeting-room 会议记录插件：一个会话对应一场会议，本机离线转写与发言人分离；要点、工作安排、手写笔记、复盘与月度评分都在面板里完成。可导出 SRT／Markdown／Word，也能打成「会议工程包」（zip）在另一台 dsh 导入；已确认的工作安排按设置一键推送到钉钉／企业微信。识别模型可更换（支持从本地文件导入 "
+  },
+  {
+   "name": "dsh-voice-realtime",
+   "want": "media-voice",
+   "was": "media-voice",
+   "tags": [],
+   "text": "dsh-voice-realtime NMDwhy66154/dsh-voice-realtime 在 DeepSeek Harness 输入框里做实时语音转文字：边说话边显示识别结果，说完点完成自动插入光标处，可切换麦克风，本地 sherpa-onnx 推理、音频不出本机。 "
+  },
+  {
+   "name": "dsh-review-squad",
+   "want": "dev-git",
+   "was": "dev-git",
+   "tags": [
+    "code-review",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "dsh-plugin",
+    "dsh-plugins",
+    "代码审查",
+    "多智能体协作",
+    "效率提升",
+    "开发流程"
+   ],
+   "text": "dsh-review-squad luomeii/dsh-review-squad 通过 /review 命令或 code_review 工具并行派出只读评审员子代理小队（安全、正确性、测试、风格，各自可指定不同模型），并汇总为按严重度分组的结构化评审报告。 "
+  },
+  {
+   "name": "@linxin666/dsh-win-bash",
+   "want": "connect-wsl",
+   "was": "dev-git",
+   "tags": [],
+   "text": "@linxin666/dsh-win-bash @linxin666/dsh-win-bash Pinned private bash for Windows x64 DSH sessions: one persistent bash process per session behind the win_bash tool, carrying a digested Git for Window "
+  },
+  {
+   "name": "@feng0531/dsh-code-review",
+   "want": "dev-git",
+   "was": "ops-security",
+   "tags": [],
+   "text": "@feng0531/dsh-code-review f-e-n-g-0531/dsh-code-review 复用当前 DSH Agent 模型只读审查 Git 与 SVN 变更，支持变更预览、显式上下文及经审批的模型请求。 "
+  },
+  {
+   "name": "@weibaohui/dsh-git-server",
+   "want": "dev-git",
+   "was": "connect-im",
+   "tags": [],
+   "text": "@weibaohui/dsh-git-server weibaohui/dsh-git-server Git 服务器：内嵌 ts-gogs（Gogs 的 TypeScript 平替），独立端口跑完整 Git 服务（HTTP clone/push、网页端、issue/PR/wiki），可复用 user-management 的用户名密码，设置页一键启停。 "
+  },
+  {
+   "name": "@stardustlc/dsh-review",
+   "want": "dev-git",
+   "was": "dev-git",
+   "tags": [],
+   "text": "@stardustlc/dsh-review STARDUSTLC666/dsh-review 绑定代码快照的多智能体 Git 审阅，支持独立复核、多数投票、问题处置追踪和 AI 审阅门禁。 "
+  },
+  {
+   "name": "@whybebabo/dsh-file-review-tab",
+   "want": "dev-git",
+   "was": "connect-files",
+   "tags": [],
+   "text": "@whybebabo/dsh-file-review-tab whybebabo/dsh-file-review-tab 侧边栏「文件审查」标签页：按轮次列出本会话改动文件、展开行级 diff 并支持撤销，对话尾部同步显示同款审查卡片。需另装 dsh-better-sidebar。是 Lzh3070/dsh-file-review-tab 的 DSH 0.2.x 移植版，不要与原版同装。 "
+  },
+  {
+   "name": "dsh-liang-backdrop",
+   "want": "enhance-ui",
+   "was": "dev-git",
+   "tags": [],
+   "text": "dsh-liang-backdrop 梁系背景 ★ 1 │ 在 DSH 中放置可拖拽的人物背景和控制面板，调整六段等级、尺寸与浓度。设置保存在 localStorage，人物图片首次使用时从上游 GitHub 下载并缓存在本机。 "
+  },
+  {
+   "name": "dsh-usage-summary",
+   "want": "enhance-usage",
+   "was": "data-analysis",
+   "tags": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-plugins",
+    "状态监控",
+    "数据分析",
+    "成本控制",
+    "会话管理",
+    "可视化"
+   ],
+   "text": "dsh-usage-summary dsh-usage-summary deepseek harness token usage summary "
+  },
+  {
+   "name": "dsh-status-dashboard",
+   "want": "ops-monitor",
+   "was": "media-vision",
+   "tags": [],
+   "text": "dsh-status-dashboard dsh-status-dashboard DeepSeek 运行与热度仪表盘：DSH 标题栏状态按钮，四套皮肤、固定 10 条话题与公开声量聚合。 "
+  },
+  {
+   "name": "dsh-plugin-session-insights",
+   "want": "enhance-usage",
+   "was": "data-analysis",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "数据分析",
+    "成本控制",
+    "状态监控",
+    "AI 助手",
+    "命令行工具"
+   ],
+   "text": "dsh-plugin-session-insights dsh-plugin-session-insights dsh plugin: cross-session activity stats from per-call token records - daily trend, priciest sessions, model mix, CSV export (/insights /insights-expo "
+  },
+  {
+   "name": "dsh-session-dashboard",
+   "want": "enhance-usage",
+   "was": "enhance-session",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "kanban",
+    "running-sessions",
+    "session-dashboard",
+    "task-board",
+    "会话管理",
+    "快捷操作",
+    "可视化",
+    "效率提升",
+    "状态监控"
+   ],
+   "text": "dsh-session-dashboard dsh-session-dashboard DeepSeek Harness session stats dashboard: token usage, cost, composition, ranking and runtime health. "
+  },
+  {
+   "name": "huahua-helmd",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "knowledge-base",
+    "pentest",
+    "security",
+    "安全审查",
+    "数据分析",
+    "设置面板",
+    "运行时诊断"
+   ],
+   "text": "huahua-helmd huahua-helmd DSH 宿主插件：随身安全知识库（362 篇）+ H-CoT 设置 + 健康自检 | Security knowledge base plugin for DeepSeek Harness "
+  },
+  {
+   "name": "ai-search-dsh",
+   "want": "data-search",
+   "was": "data-analysis",
+   "tags": [
+    "ai-search",
+    "ai-search-module",
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-harness-plugin",
+    "deepseek-harness-plugins",
+    "dsh",
+    "dsh-plugin",
+    "dsh-plugins",
+    "工具集成",
+    "AI 助手",
+    "数据分析",
+    "视觉理解",
+    "数据分析"
+   ],
+   "text": "ai-search-dsh ai-search-dsh ai-search-dsh "
+  },
+  {
+   "name": "dsh-wsl-workspace-picker",
+   "want": "connect-wsl",
+   "was": "connect-wsl",
+   "tags": [],
+   "text": "dsh-wsl-workspace-picker WilliamShi666/dsh-wsl-workspace-picker Web UI 增强版工作区目录选择器：WSL 下 /mnt Windows 盘符一键直达、完整面包屑层级与常显路径输入框。 "
+  },
+  {
+   "name": "dsh-wsl-folder",
+   "want": "connect-wsl",
+   "was": "connect-wsl",
+   "tags": [],
+   "text": "dsh-wsl-folder LyuYuxin/dsh-wsl-folder 在侧栏的「添加工作区」按钮里把 WSL 目录加成 DSH 工作区：选发行版、浏览目录后以 \\\\wsl.localhost 路径注册；该工作区的侧栏终端开在发行版里，agent 也能正常写入其中的文件。需 Windows 10/11 并已安装 WSL。 "
+  },
+  {
+   "name": "dsh-desktop-autostart",
+   "want": "enhance-settings",
+   "was": "ops-security",
+   "tags": [],
+   "text": "dsh-desktop-autostart QiYunqv-jxd/dsh-desktop-autostart 给 DeepSeek Harness 桌面版加一个登录自启开关：只管理用户启动文件夹里的一个快捷方式，不写注册表、不需要管理员权限、不额外常驻进程。 "
+  },
+  {
+   "name": "dsh-wsl-sidebar",
+   "want": "connect-wsl",
+   "was": "connect-wsl",
+   "tags": [],
+   "text": "dsh-wsl-sidebar Wang1462604987/dsh-wsl-sidebar 用于 Harness 的 WSL 控制台：管理发行版、以表单编辑 .wslconfig 与 wsl.conf，并用自带的 wslx-* 工具在任意发行版内执行命令、读写文件、运行长驻进程。 "
+  },
+  {
+   "name": "dsh-win-toolkit",
+   "want": "connect-wsl",
+   "was": "enhance-tools",
+   "tags": [
+    "clipboard",
+    "deepseek-harness",
+    "dsh-plugin",
+    "native-tools",
+    "notification",
+    "powershell",
+    "windows",
+    "工具集成",
+    "消息通知",
+    "命令行工具",
+    "效率提升",
+    "安全审查"
+   ],
+   "text": "dsh-win-toolkit Edge-Echo/dsh-win-toolkit 面向 DSH agent 的 Windows 原生工具：剪贴板读写、系统通知、hosts 文件查看与网络诊断，均返回结构化数据（带 UI 卡片），底层为防注入的 PowerShell。 "
+  },
+  {
+   "name": "dsh-wsl-bridge",
+   "want": "connect-wsl",
+   "was": "enhance-tools",
+   "tags": [
+    "dsh-plugin",
+    "工作区管理",
+    "命令行工具",
+    "开发者体验",
+    "工具集成"
+   ],
+   "text": "dsh-wsl-bridge TGWgulugu/dsh-wsl-bridge 在当前 WSL 发行版里运行持久 bash 以及 Linux 路径的文件与搜索工具。新建对话选中 WSL 后，从该发行版的文件夹里指定工作区，且不会在发行版内安装任何东西。 "
+  },
+  {
+   "name": "@hwfee/dsh-git-bash",
+   "want": "connect-wsl",
+   "was": "connect-wsl",
+   "tags": [],
+   "text": "@hwfee/dsh-git-bash @hwfee/dsh-git-bash DeepSeek Harness 的 Git Bash 默认 shell：把 Windows 上的默认命令解释器从 PowerShell 换成 Git Bash，并暴露一个 run_shell 工具。自动从 git --exec-path 定位 Git Bash（WSL 的 bash 不算），找不到 "
+  },
+  {
+   "name": "dsh-watcher",
+   "want": "ops-monitor",
+   "was": "data-analysis",
+   "tags": [
+    "cost-estimation",
+    "deepseek-harness",
+    "dsh-plugin",
+    "observability",
+    "profiling",
+    "react",
+    "session-visualization",
+    "token-usage",
+    "typescript",
+    "可视化",
+    "状态监控",
+    "成本控制",
+    "数据分析",
+    "会话管理"
+   ],
+   "text": "dsh-watcher aa2246740/dsh-watcher 只读会话工作路径观察器：收起轮次看阶段数、执行数、耗时与 tok/s，展开看并行分支、工具结果与供应商可见推理。 "
+  },
+  {
+   "name": "dsh-agent-preset-switcher",
+   "want": "agent-skills",
+   "was": "agent-skills",
+   "tags": [],
+   "text": "dsh-agent-preset-switcher dsh-agent-preset-switcher 在运行中的 DSH 会话内热切换 agent 预设（工作模式），无需重启会话。 "
+  },
+  {
+   "name": "dsh-safemode-profile",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "dsh",
+    "dsh-bundle",
+    "dsh-plugin",
+    "dsh-plugin-desktop",
+    "dsh-plugins",
+    "安全审查",
+    "插件管理",
+    "命令行工具",
+    "状态监控"
+   ],
+   "text": "dsh-safemode-profile jinsiyu/dsh-safemode-profile dsh安全模式插件，通过构建空白profile实现零第三方插件启动。 "
+  },
+  {
+   "name": "dsh-input-prediction",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "autocomplete",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "效率提升",
+    "AI 助手",
+    "前端增强",
+    "快捷操作"
+   ],
+   "text": "dsh-input-prediction @fishcg/dsh-input-prediction DSH 输入预测插件：在输入框里用灰字续写你可能要发的下一句（Tab 接受），每轮回复后再给 1–3 条可一键发送的建议。 dsh dsh-plugin deepseek-harness input-prediction autocomplete composer"
+  },
+  {
+   "name": "@yangluo-2021/dsh-restart-button",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [],
+   "text": "@yangluo-2021/dsh-restart-button @Yangluo-2021/dsh-restart-button DSH 右上角常驻重启按钮：优雅重启 DeepSeek Harness 桌面端，有任务在跑时才确认。 "
+  },
+  {
+   "name": "dsh-chime",
+   "want": "connect-im",
+   "was": "connect-im",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "notification",
+    "plugin",
+    "sound",
+    "消息通知",
+    "效率提升",
+    "零配置",
+    "状态监控"
+   ],
+   "text": "dsh-chime xiaxingtianxia2-glitch/dsh-chime 为 DeepSeek Harness 复刻 opencode 的任务完成提示音，完成、提问、计划待审、出错四种场景播放原始音效，零外部依赖。 "
+  },
+  {
+   "name": "dsh-quote-annotate",
+   "want": "enhance-session",
+   "was": "enhance-ui",
+   "tags": [
+    "annotation",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "quote",
+    "交互体验",
+    "效率提升",
+    "前端增强",
+    "快捷操作"
+   ],
+   "text": "dsh-quote-annotate dsh-quote-annotate DSH 会话中选中文字后添加批注，生成引用锚点 chip，点击可跳回原文、悬停显示原文。 "
+  },
+  {
+   "name": "dsh-import-agents",
+   "want": "agent-orchestration",
+   "was": "enhance-tools",
+   "tags": [
+    "ai-agents",
+    "claude-code",
+    "codex",
+    "deepseek-harness",
+    "developer-tools",
+    "dsh",
+    "dsh-plugin",
+    "opencode",
+    "pi-coding-agent",
+    "plugin",
+    "session-import",
+    "session-migration",
+    "会话导入",
+    "智能体迁移",
+    "一键同步",
+    "命令行工具"
+   ],
+   "text": "dsh-import-agents dsh-import-agents Import pi / opencode / codex / claude-code sessions, chat history, and agents into DeepSeek Harness — one-click Sync button, slash commands, session-s "
+  },
+  {
+   "name": "dsh-session-rescue",
+   "want": "enhance-session",
+   "was": "ops-monitor",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "session-recovery",
+    "会话管理",
+    "状态监控",
+    "效率提升",
+    "状态持久化"
+   ],
+   "text": "dsh-session-rescue @1622352030/dsh-session-rescue DeepSeek Harness 会话卡死看门狗：就地释放挂起的回合，无需重启应用。 "
+  },
+  {
+   "name": "dsh-status-bar",
+   "want": "enhance-ui",
+   "was": "ops-monitor",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "status-bar",
+    "statusbar",
+    "状态监控",
+    "可视化",
+    "成本控制",
+    "效率提升",
+    "前端增强"
+   ],
+   "text": "dsh-status-bar dsh-status-bar 为DeepSeek Harness Web GUI提供实时状态栏，显示实时活动和事件驱动的成就摘要，并支持可展开的详细报告。 "
+  },
+  {
+   "name": "dsh-live2d-widget",
+   "want": "media-fun",
+   "was": "enhance-ui",
+   "tags": [
+    "dsh-plugin",
+    "dsh-plugin-market",
+    "dsh-plugins",
+    "桌宠",
+    "界面美化",
+    "前端增强",
+    "零配置"
+   ],
+   "text": "dsh-live2d-widget @xieluyang912/dsh-live2d-widget 为 DeepSeek Harness 网页聊天界面添加一只可爱的 Live2D 桌宠角色。 "
+  },
+  {
+   "name": "dsh-think-budget",
+   "want": "enhance-models",
+   "was": "ops-monitor",
+   "tags": [
+    "ai-agent",
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "reasoning",
+    "效率提升",
+    "状态监控",
+    "AI 助手"
+   ],
+   "text": "dsh-think-budget @superSizzzz/dsh-think-budget DeepSeek Harness 插件：为单步思考设定字数预算，连续若干步没有可见结论时强制先给结论再继续。 "
+  },
+  {
+   "name": "dsh-plugin-deepsearch",
+   "want": "data-search",
+   "was": "enhance-settings",
+   "tags": [],
+   "text": "dsh-plugin-deepsearch SeaViod/dsh-plugin-deepsearch 给 DSH 内置 web_search 加一个开关：在 DeepSeek Search API（/v1/tools/search）与默认账号搜索之间切换，失败自动回退，并带设置页与侧栏开关。 "
+  },
+  {
+   "name": "dsh-tool-invoice",
+   "want": "data-office",
+   "was": "enhance-tools",
+   "tags": [],
+   "text": "dsh-tool-invoice yuehancn/dsh-tool-invoice 从文本中提取发票号码、日期、购销方、税号与金额/税额/合计，并验算「金额 + 税额 = 价税合计」是否成立，对不上就报出来。 "
+  },
+  {
+   "name": "dsh-deepseek-chat-8",
+   "want": "connect-web",
+   "was": "connect-web",
+   "tags": [],
+   "text": "dsh-deepseek-chat-8 @Lumos0121/dsh-deepseek-chat DSH 桌面侧边栏插件，可在侧边栏或系统浏览器中打开 chat.deepseek.com，并把对话读回当前会话。 "
+  },
+  {
+   "name": "dsh-park-notes",
+   "want": "enhance-memory",
+   "was": "enhance-session",
+   "tags": [
+    "dsh-plugin",
+    "效率提升",
+    "快捷操作",
+    "会话管理",
+    "状态持久化"
+   ],
+   "text": "dsh-park-notes dsh-park-notes 在AI输出时随手记录想法到便签，稍后一键加入对话，不打断当前交流。 "
+  },
+  {
+   "name": "dsh-welcome-back",
+   "want": "enhance-session",
+   "was": "enhance-session",
+   "tags": [
+    "dsh-plugin",
+    "会话管理",
+    "消息通知",
+    "效率提升",
+    "状态持久化"
+   ],
+   "text": "dsh-welcome-back @oopsdoes/dsh-welcome-back 在可配置的空闲时间后，欢迎用户回到当天活跃的会话中。 "
+  },
+  {
+   "name": "@cassius0924/dsh-medals",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [],
+   "text": "@cassius0924/dsh-medals @Cassius0924/dsh-medals 根据本机 DSH 会话的 token 用量颁发 25 枚可旋转查看的 3D 奖牌，并陈列在奖牌馆中。 "
+  },
+  {
+   "name": "dsh-notify-linux",
+   "want": "connect-im",
+   "was": "connect-im",
+   "tags": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "gnome",
+    "linux",
+    "notifications",
+    "消息通知",
+    "效率提升",
+    "状态监控",
+    "零配置"
+   ],
+   "text": "dsh-notify-linux @Wlaeg/dsh-notify-linux DSH 插件：任务完成、需要选择或需要批准时，发送 Linux 桌面通知并播放提示音。 "
+  },
+  {
+   "name": "dsh-user-code-block",
+   "want": "enhance-ui",
+   "was": "enhance-ui",
+   "tags": [
+    "chat-ui",
+    "code-block",
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-harness-desktop",
+    "dsh",
+    "dsh-desktop",
+    "dsh-plugin",
+    "syntax-highlighting",
+    "前端增强",
+    "交互体验",
+    "界面美化",
+    "零配置"
+   ],
+   "text": "dsh-user-code-block @VictorKozachek/dsh-user-code-block Syntax highlighting, copy button and monochrome mode for code blocks in DeepSeek Harness Desktop (DSH) chat user messages. No dependencies, no build s "
+  },
+  {
+   "name": "@hjj345345/dsh-sm-version-display",
+   "want": "eco-market",
+   "was": "dev-git",
+   "tags": [],
+   "text": "@hjj345345/dsh-sm-version-display hjj345/dsh-sm-version-display 在侧边栏显示已安装的 DeepSeek Harness 版本，检查 npm 与 GitHub Releases 更新，并提供手动或确认后执行的更新命令。 "
+  },
+  {
+   "name": "dsh-ai-saas-deal-finder",
+   "want": "data-search",
+   "was": "enhance-tools",
+   "tags": [
+    "ai-saas",
+    "deal-finder",
+    "dsh",
+    "dsh-plugin",
+    "效率提升",
+    "AI 助手",
+    "工具集成"
+   ],
+   "text": "dsh-ai-saas-deal-finder dsh-ai-saas-deal-finder 根据地区、资格、支付方式、税费和服务政策，查找最便宜的合法AI/SaaS购买选项。 "
+  },
+  {
+   "name": "dsh-remote-access-proxy",
+   "want": "ops-security",
+   "was": "ops-security",
+   "tags": [
+    "authentication",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "remote-access",
+    "reverse-proxy",
+    "安全审查",
+    "设置面板",
+    "工具集成"
+   ],
+   "text": "dsh-remote-access-proxy @citydirector/dsh-remote-access-proxy 通过随机路径、HttpOnly Cookie 网关、启动令牌桥接和设置卡片，保障 DSH Web GUI 的远程访问安全。 "
+  },
+  {
+   "name": "news-plugin",
+   "want": "data-search",
+   "was": "other",
+   "tags": [],
+   "text": "news-plugin @xuxinxinpro/dsh-news-plugin 一个 DeepSeek Harness 插件，一键获取今日全国新闻热搜，生成每日新闻简报。 "
+  },
+  {
+   "name": "dsh-ds-whale",
+   "want": "enhance-usage",
+   "was": "enhance-usage",
+   "tags": [
+    "balance",
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "plugin-market",
+    "usage",
+    "whale",
+    "widget",
+    "状态监控",
+    "成本控制",
+    "桌宠",
+    "可视化",
+    "前端增强"
+   ],
+   "text": "dsh-ds-whale @Iceseas/dsh-ds-whale DeepSeek 余额/用量小鲸鱼挂件（DSH Web UI 插件）：余额、官网口径今日用量、每轮消耗拟人播报、峰谷定价倒计时、四状态立绘，中英双语。 "
+  },
+  {
+   "name": "dsh-milestone-guard",
+   "want": "agent-workflow",
+   "was": "dev-runtime",
+   "tags": [
+    "cordis",
+    "deepseek-harness",
+    "dsh-plugin",
+    "开发者体验",
+    "工作流增强",
+    "AI 助手",
+    "开发者体验"
+   ],
+   "text": "dsh-milestone-guard xt765/dsh-milestone-guard 阶段性结论软强制守卫：常驻注入系统提示词规范，并在模型调用工具漏发可见结论时自动附加软强制纠偏提醒，支持 Web 设置表单。 "
+  },
+  {
+   "name": "@statedock/dsh-plugin",
+   "want": "agent-workflow",
+   "was": "connect-remote",
+   "tags": [],
+   "text": "@statedock/dsh-plugin statedock/statedock-plugins#deepseek-harness 通过 StateDock Remote MCP 提供共享计划、上下文恢复与进度更新 Skills，不执行任务或调度 Agent；适配 Harness 0.2.0-rc.2。 "
+  },
+  {
+   "name": "dsh-click",
+   "want": "enhance-tools",
+   "was": "enhance-tools",
+   "tags": [
+    "ai-agent",
+    "ai-agents",
+    "computer-use",
+    "cordis",
+    "deepseek",
+    "deepseek-harness",
+    "desktop-control",
+    "developer-tools",
+    "dsh",
+    "dsh-plugin",
+    "screen-reader",
+    "uiautomation",
+    "windows-automation",
+    "workflow-automation",
+    "浏览器自动化",
+    "工具集成",
+    "AI 助手",
+    "安全审查",
+    "快捷操作"
+   ],
+   "text": "dsh-click 桌面控制工具 Cross-platform native desktop control tools for DeepSeek Harness (Windows first): screen_shot, screen_read (accessibility tree + pixel description for dsh dsh-plugin deepseek-harness deepseek cordis computer-use windows-automation uiautomation"
+  }
+ ]
+}
