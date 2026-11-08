@@ -279,7 +279,7 @@ function card(entry) {
   const grade = installGrade(entry)
   // Only the actionable grade stays on the card. The trust pill printed 未声明版本 /
   // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
-  const marks = (entry.of ? '<b class=pick>✦ 精选</b>' : '') + (grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : '')
+  const marks = (entry.of ? '<b class=pick>✦ 官方精选</b>' : '') + (grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : '')
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
   return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
@@ -413,10 +413,10 @@ function render() {
   // a filter result, and it must never push the reader's own search results down.
   const showPicks = !state.query && !state.favorites && state.category === 'all' && state.sort === 'curated'
   const picks = showPicks
-    ? [...state.plugins].filter((entry) => entry.of).sort((x, y) => (y.cu ?? 0) - (x.cu ?? 0) || (y.dl ?? 0) - (x.dl ?? 0)).slice(0, 6)
+    ? [...state.plugins].filter((entry) => (entry.cu ?? 0) > 0).sort((x, y) => (y.cu ?? 0) - (x.cu ?? 0) || (y.dl ?? 0) - (x.dl ?? 0)).slice(0, 6)
     : []
   const picksHtml = picks.length
-    ? `<section class=picks><header><h3>✦ 官方精选</h3><span>来自官方人工清单，共 ${state.plugins.filter((entry) => entry.of).length} 个</span></header><div class=picks-row>${picks.map((entry) => `<button class=pick-card data-open="${esc(entry.n)}">${icon(entry)}<b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div></section>`
+    ? `<section class=picks><header><h3>✦ 精选推荐</h3><span>综合多目录收录、星标与下载、更新时效、可安装性与官方收录五项</span></header><div class=picks-row>${picks.map((entry) => `<button class=pick-card data-open="${esc(entry.n)}">${icon(entry)}<b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div></section>`
     : ''
   $('list').innerHTML = pool.length
     ? picksHtml + visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')

@@ -8,6 +8,7 @@
 import { readFileSync } from 'node:fs'
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
+import { curationOf, labelsOf } from './curation.mjs'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -31,6 +32,9 @@ const trim = (text) => String(text ?? '').replace(/\s+/g, ' ').trim().slice(0, D
 //      1200x630 white canvas that reads as a broken image once loaded
 //   3. the developer's avatar (`g`, the account that owns the repository)
 //   4. the CSS dot, when none of the above exists
+// Only absolute URLs are usable in an <img src> that is rendered from another origin.
+const absoluteUrl = (value) => (typeof value === 'string' && /^https?:\/\//i.test(value) ? value : null)
+
 function repoParts(repoUrl) {
   const match = String(repoUrl ?? '').match(/github\.com[/:]([^/]+)\/([^/#?]+)/i)
   return match ? { owner: match[1], repo: match[2].replace(/\.git$/i, '') } : null
@@ -87,6 +91,14 @@ const plugins = rawPlugins.map((plugin) => {
   const ucIds = (plugin.metadata?.keywords ?? []).filter((k) => String(k).startsWith('uc:')).map((k) => String(k).slice(3))
   if (ucIds.length) entry.u = ucIds
   if (plugin.metadata?.sortKeys?.score != null) entry.sc = plugin.metadata.sortKeys.score
+  // Curation, from the one definition in crawler/curation.mjs. `of` marks a hand-picked entry
+  // (the shelf and the ✦ badge key off it); `cu` is the five-axis score, so the page and the
+  // DSH document rank identically.
+  {
+    const score = curationOf(plugin)
+    entry.cu = score.curated
+    if (labelsOf(plugin).has('src-official')) entry.of = 1
+  }
   // How this entry installs: a commit-pinned git source, a mirror hit, npm proper, or
   // nothing we could verify.
   {
@@ -102,12 +114,15 @@ const plugins = rawPlugins.map((plugin) => {
   if (plugin.homepage) entry.h = plugin.homepage
   // Icon chain: dataset copy first, the origin as the fallback the browser uses if
   // that file is missing.
-  if (plugin.icon) {
-    entry.i = mirrored(plugin.icon) ?? plugin.icon
-    if (entry.i !== plugin.icon) entry.ib = plugin.icon
+  const packageIcon = absoluteUrl(plugin.icon)
+  if (packageIcon) {
+    entry.i = mirrored(packageIcon) ?? packageIcon
+    if (entry.i !== packageIcon) entry.ib = packageIcon
   } else {
     const parts = repoParts(plugin.repository?.url)
     if (parts) {
+      // A relative package icon is not usable, but the owner's avatar always is, so the
+      // chain still has something to show instead of falling straight to the dot.
       const avatar = `https://github.com/${parts.owner}.png?size=48`
       entry.g = mirrored(avatar) ?? avatar
       if (entry.g !== avatar) entry.gb = avatar
@@ -186,6 +201,9 @@ const meta = {
 }
 await writeFile(join(OUT, 'meta.json'), JSON.stringify(meta))
 
+const nonAbsolute = plugins.filter((entry) => [entry.i, entry.ib, entry.g, entry.gb]
+  .some((value) => typeof value === 'string' && value && !/^https?:\/\//i.test(value))).length
+if (nonAbsolute) console.warn(`browse: ${nonAbsolute} entr${nonAbsolute === 1 ? 'y' : 'ies'} still carry a non-absolute artwork URL`)
 const withIcon = plugins.filter((entry) => entry.i).length
 const withAvatar = plugins.filter((entry) => !entry.i && entry.g).length
 console.log(`browse: ${plugins.length} plugins in ${chunks.length} chunks, first ${(chunks[0].bytes / 1024).toFixed(0)} KB, total ${(chunks.reduce((sum, c) => sum + c.bytes, 0) / 1048576).toFixed(2)} MB (full index ${(Buffer.byteLength(JSON.stringify(index)) / 1048576).toFixed(2)} MB)`)

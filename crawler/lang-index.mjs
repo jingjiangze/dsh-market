@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url'
 import { applyTranslations } from './i18n.mjs'
 import { assertKnownCategories } from './category-gate.mjs'
 import { existsSync } from 'node:fs'
+import { curationOf, curationLabelsFor, CURATION_LABELS, CURATION_SORT } from './curation.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
@@ -124,18 +125,6 @@ for (const lang of LANGS) {
   // a plugin low-risk is a security verdict, and nothing here audits code. What a client
   // can honestly know from this document is whether the install resolves, whether the
   // source is pinned, and whether the catalogue that curates it vouches for it.
-  const CURATION_LABELS = {
-    official: { title: { en: 'Official pick', zh: '官方精选' } },
-    'install-verified': { title: { en: 'Install verified', zh: '安装已验证' } },
-    'source-pinned': { title: { en: 'Pinned source', zh: '源码已固定' } },
-    'declares-engines': { title: { en: 'Declares DSH range', zh: '声明兼容版本' } },
-  }
-  // Curation answers "should I look at this first", trust answers "is it safe to install".
-  // Both are 0..100 so a client can sort by them with the existing sortKeys mechanism.
-  const CURATION_SORT = {
-    curated: { title: { en: 'Curated', zh: '精选度' }, order: 'desc' },
-    trust: { title: { en: 'Trust', zh: '可信度' }, order: 'desc' },
-  }
 
   const slimPlugin = (plugin) => {
     const version = plugin.versions?.[0] ?? {}
@@ -165,42 +154,15 @@ for (const lang of LANGS) {
       })(),
       ...(description ? { description } : {}),
       metadata: (() => {
-        const labels = new Set(plugin.metadata?.labels ?? [])
-        const sortKeys = plugin.metadata?.sortKeys ?? {}
-        const stars = Number(sortKeys.stars ?? 0)
-        const downloads = Number(sortKeys.downloads ?? 0)
-        const engines = Boolean(version.engines?.dsh)
-        // The probe is the measurement; the label is only what a catalogue claimed.
+        // Scoring lives in crawler/curation.mjs so the document DSH reads and the page a
+        // reader sees are computed from one definition, not two copies of the same formula.
         const probed = probe[plugin.name]
-        const verified = Boolean(probed) && (probed.npmmirror === 'ok' || probed.npmjs === 'ok')
-        const pinned = version.source?.type === 'git' && /^[0-9a-f]{40}$/i.test(String(version.source.commit ?? ''))
-        const official = labels.has('src-official')
-        const sources = [...labels].filter((l) => String(l).startsWith('src-')).length
-        const heat = Math.min(100, Math.round((Math.log10(1 + stars) / 3.8) * 55 + (Math.log10(1 + downloads) / 5) * 45))
-
-        // Curation: the official catalogue is itself the hand-picked allow-list (4.7k of
-        // 15k), so membership dominates; popularity breaks the ties.
-        const curated = Math.max(0, Math.min(100, Math.round(
-          (official ? 55 : 0) + heat * 0.25 + (verified ? 20 : 0),
-        )))
-        // "Trust" here is install confidence — how much of the install path this build was
-        // able to verify — not a judgement about the code. A registry hit is stronger than
-        // a commit pin only because it also proves the version was published.
-        const trust = Math.max(0, Math.min(100,
-          40 * (verified ? 1 : 0) + 30 * (pinned ? 1 : 0) + 20 * (engines ? 1 : 0)
-          + 10 * Math.min(2, sources),
-        ))
-
-        const out = new Set()
-        if (official) out.add('official')
-        if (verified) out.add('install-verified')
-        if (pinned) out.add('source-pinned')
-        if (engines) out.add('declares-engines')
-
+        const score = curationOf(plugin, { probeEntry: probed })
+        const labels = curationLabelsFor(plugin, probed)
         return {
           category: plugin.metadata?.category ?? 'other',
-          ...(out.size ? { labels: [...out] } : {}),
-          sortKeys: { curated, trust },
+          ...(labels.length ? { labels } : {}),
+          sortKeys: { curated: score.curated, trust: score.trust },
         }
       })(),
       versions: [{
