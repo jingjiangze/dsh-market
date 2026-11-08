@@ -29,6 +29,21 @@ const SOURCES = [
 const NPM_NAME = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u
 const looksInstalable = (name) => NPM_NAME.test(name) && name.length <= 214
 
+// A row's installable package is not always its `name`: several catalogues list a repository
+// and put the npm specs in `packages.targets[]`. Read both, the way the crawler does.
+function namesOf(row) {
+  const out = new Set()
+  const direct = String(row?.name ?? row?.package ?? '').toLowerCase()
+  if (looksInstalable(direct)) out.add(direct)
+  for (const target of row?.packages?.targets ?? []) {
+    const spec = String(target?.source ?? target?.install ?? '').trim()
+    const bare = spec.startsWith('npm:') ? spec.slice(4) : spec
+    const hit = /^((?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*)(?:@.+)?$/u.exec(bare)
+    if (hit && looksInstalable(hit[1])) out.add(hit[1].toLowerCase())
+  }
+  return [...out]
+}
+
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const have = new Set((index.plugins ?? []).map((p) => String(p.name ?? '').toLowerCase()))
 console.log(`sync: local build carries ${have.size} names`)
@@ -50,11 +65,10 @@ for (const [name, url] of SOURCES) {
   const doc = await fetchJson(url)
   if (!doc) { console.log(`sync: ${name.padEnd(9)} unreachable — not measured`); continue }
   const rows = doc.plugins ?? doc.entries ?? []
-  const raw = rows.map((r) => String(r.name ?? r.package ?? '').toLowerCase()).filter(Boolean)
-  // Both sides filtered the same way, so the delta is real:
-  const names = raw.filter(looksInstalable)
+  // Both sides read the installable package the same way, so the delta is real:
+  const names = [...new Set(rows.flatMap(namesOf))]
   const missing = names.filter((n) => !have.has(n))
-  const rejected = raw.length - names.length
+  const rejected = rows.length - names.length
   worst = Math.max(worst, missing.length)
   const pct = names.length ? ((missing.length / names.length) * 100).toFixed(1) : '0.0'
   console.log(`sync: ${name.padEnd(9)} (${rejected} upstream rows are not installable names)`)
