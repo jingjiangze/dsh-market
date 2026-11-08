@@ -7,10 +7,14 @@ name: domain-smoke
 # profile. Every job here installs into a throwaway DSH_HOME, checks that the profile declared
 # the dependency and that the package ships a bundle patch, then removes it again.
 #
-# Three triggers with different costs:
-#   pull_request  a 3-package canary: proves the pipeline works before merge, ~2 minutes
-#   schedule      the full nightly pass (~40 installs, 5-20 min), commits the verdicts
-#   manual        a scoped run (per_domain / limit / only) for debugging
+# No pnpm pin of our own: `dsh plugin` forwards to pnpm in the profile directory, so the runner
+# needs pnpm on PATH — measured in the first CI run, without it the canary dies with
+# "spawn pnpm ENOENT" (exit 127) before a single package is touched.
+#
+# Triggers, cheapest first:
+#   pull_request  3-package canary (~3 min): proves the pipeline before merge
+#   schedule      full nightly pass (~40 installs), commits the verdicts
+#   manual        a scoped run (per_domain / limit / only)
 on:
   pull_request:
     paths:
@@ -53,9 +57,15 @@ jobs:
         with:
           node-version: 24
 
+      - name: Install pnpm
+        # `dsh plugin` runs pnpm inside the profile; the runner image does not ship it.
+        run: |
+          npm i -g pnpm@11
+          pnpm --version
+
       - name: Install the harness CLI
         run: |
-          npm i -g @deepseek-ai/dsh@0.2.2-rc.1
+          npm i -g @deepseek-ai/dsh@0.2.2-rc.1 --allow-scripts=@deepseek-ai/dsh-subprocess-local,koffi,node-pty,@google/genai,protobufjs || npm i -g @deepseek-ai/dsh@0.2.2-rc.1
           dsh --version || true
 
       - name: Canary — the CLI can manage a throwaway profile
@@ -100,9 +110,14 @@ jobs:
         with:
           node-version: 24
 
+      - name: Install pnpm
+        run: |
+          npm i -g pnpm@11
+          pnpm --version
+
       - name: Install the harness CLI
         run: |
-          npm i -g @deepseek-ai/dsh@0.2.2-rc.1
+          npm i -g @deepseek-ai/dsh@0.2.2-rc.1 --allow-scripts=@deepseek-ai/dsh-subprocess-local,koffi,node-pty,@google/genai,protobufjs || npm i -g @deepseek-ai/dsh@0.2.2-rc.1
           dsh --version || true
 
       - name: Canary — the CLI can manage a throwaway profile
