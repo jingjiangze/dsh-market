@@ -47,7 +47,7 @@ async function getJSON(url) {
 
 const textOf = (value) => (typeof value === 'string' ? value : value?.zh || value?.en || '')
 
-function npmNameFromTarget(target) {
+export function npmNameFromTarget(target) {
   const spec = String(target?.source ?? target?.install ?? '').trim()
   const bare = spec.startsWith('npm:') ? spec.slice(4) : spec
   if (!bare || /^(github|git|url|file|link):/i.test(bare) || /^https?:/i.test(bare)) return null
