@@ -66,7 +66,7 @@ const TRUST_LABEL = {
 const SORTS = [
   // Curation first: the official catalogue is a hand-picked allow-list, so "is this a
   // pick" is a better first question than a blended popularity number nobody can see.
-  ['curated', '✦ 精选'],
+  ['curated', '精选推荐'],
   ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
   ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
 ]
@@ -411,15 +411,8 @@ function render() {
   const more = pool.length > visible.length
   // Only on the untouched view: a shelf of official picks is an opening suggestion, not
   // a filter result, and it must never push the reader's own search results down.
-  const showPicks = !state.query && !state.favorites && state.category === 'all' && state.sort === 'curated'
-  const picks = showPicks
-    ? [...state.plugins].filter((entry) => (entry.cu ?? 0) > 0).sort((x, y) => (y.cu ?? 0) - (x.cu ?? 0) || (y.dl ?? 0) - (x.dl ?? 0)).slice(0, 6)
-    : []
-  const picksHtml = picks.length
-    ? `<section class=picks><header><h3>✦ 精选推荐</h3><span>综合多目录收录、星标与下载、更新时效、可安装性与官方收录五项</span></header><div class=picks-row>${picks.map((entry) => `<button class=pick-card data-open="${esc(entry.n)}">${icon(entry)}<b>${esc(titleOf(entry)) || esc(entry.n)}</b><i>${esc(catTitle(entry.c))}</i></button>`).join('')}</div></section>`
-    : ''
   $('list').innerHTML = pool.length
-    ? picksHtml + visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
+    ? visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
     : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
   // Infinite scroll: once the sentinel enters view, extend the list in place.
   if (more) {

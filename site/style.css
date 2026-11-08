@@ -898,62 +898,6 @@ footer {
 }
 
 /* ── curated shelf ────────────────────────────────────────────────────── */
-.picks {
-  grid-column: 1 / -1;   /* #list is a grid: the shelf spans it instead of taking one cell */
-  margin: 0 0 4px;
-  padding: 14px 16px 16px;
-  background: var(--plate);
-  border: 1px solid var(--line);
-  position: relative;
-}
-.picks::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: repeating-linear-gradient(-45deg, var(--amber) 0 5px, transparent 5px 10px);
-}
-.picks header {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 0 0 12px;
-  /* Undo the page header: no sticky band, no veil, no bottom rule. */
-  position: static;
-  padding: 0;
-  border: 0;
-  z-index: auto;
-  background: none;
-  backdrop-filter: none;
-}
-.picks header h3 { margin: 0; font: 600 13px/1 var(--font-mono); letter-spacing: .1em; color: var(--amber-soft); }
-.picks header span { font: 400 11.5px/1.5 var(--font-body); color: var(--faint); }
-.picks-row {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  padding-bottom: 2px;
-}
-.pick-card { flex: 0 0 208px; }
-.pick-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 11px;
-  text-align: left;
-  color: var(--text);
-  background: var(--plate-2);
-  border: 1px solid var(--line);
-  border-radius: 0;
-  cursor: pointer;
-  transition: border-color .16s var(--ease), background .16s var(--ease), transform .16s var(--ease);
-}
-.pick-card:hover { border-color: var(--amber); background: var(--plate-3); transform: translateY(-2px); }
-.pick-card b { display: block; font: 500 13px/1.45 var(--font-body); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 128px; }
-.pick-card i { display: block; font: 400 11px/1.4 var(--font-mono); font-style: normal; color: var(--faint); }
-.pick-card .hicon { width: 34px; height: 34px; }
 
 /* ── detail dialog: sections instead of one long list ─────────────────── */
 #dlg .dh { display: flex; align-items: flex-start; gap: 13px; }
@@ -989,19 +933,12 @@ footer {
 /* Stagger only the first screenful; later cards appear on scroll and must not crawl. */
 .card { animation: rise .22s var(--ease) both; }
 .card:nth-child(-n+12) { animation-delay: calc(var(--i, 0) * 1ms); }
-.picks { animation: glow-in .3s var(--ease) both; }
-.pick-card { animation: rise .24s var(--ease) both; }
-.pick-card:nth-child(2) { animation-delay: .03s; }
-.pick-card:nth-child(3) { animation-delay: .06s; }
-.pick-card:nth-child(4) { animation-delay: .09s; }
-.pick-card:nth-child(5) { animation-delay: .12s; }
-.pick-card:nth-child(6) { animation-delay: .15s; }
 dialog[open] { animation: pop .2s var(--ease) both; }
 dialog[open]::backdrop { animation: glow-in .2s var(--ease) both; }
 
 /* Respect the reader's system setting: no movement, no stagger, no hover lift. */
 @media (prefers-reduced-motion: reduce) {
-  .card, .pick-card, .picks, dialog[open], dialog[open]::backdrop { animation: none !important; }
-  .card, .pick-card, #theme, .src, .chip, .ghost, .dice { transition: none !important; }
-  .card:hover, .pick-card:hover { transform: none !important; }
+  .card, dialog[open], dialog[open]::backdrop { animation: none !important; }
+  .card, #theme, .src, .chip, .ghost, .dice { transition: none !important; }
+  .card:hover { transform: none !important; }
 }
