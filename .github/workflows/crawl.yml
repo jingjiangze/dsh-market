@@ -8,6 +8,11 @@ on:
   schedule:
     - cron: '17 */3 * * *'   # every three hours, at :17
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run even if a crawl already succeeded recently'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -21,7 +26,47 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      proceed: ${{ steps.check.outputs.proceed }}
+    steps:
+      - id: check
+        name: Decide whether this run is needed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT: ${{ github.event_name }}
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          set -euo pipefail
+          # Scheduled runs are the cadence itself; they always proceed.
+          if [ "${EVENT}" != "workflow_dispatch" ] || [ "${FORCE}" = "true" ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            echo "proceeding (${EVENT:-schedule}, force=${FORCE:-false})"
+            exit 0
+          fi
+          last=$(gh run list --workflow crawl.yml --status success --limit 1 \
+            --json createdAt --jq '.[0].createdAt // empty' 2>/dev/null || echo "")
+          if [ -z "$last" ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            echo "no successful crawl on record — proceeding"
+            exit 0
+          fi
+          age=$(( ( $(date -u +%s) - $(date -u -d "$last" +%s) ) / 60 ))
+          echo "last successful crawl: $last (${age} min ago)"
+          # 90 minutes: a crawl needs ~40, the cron runs every 180. Inside that window a manual
+          # dispatch would republish almost the same catalogue.
+          if [ "$age" -lt 90 ]; then
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::skipping — a crawl succeeded ${age} min ago (pass force=true to override)"
+          else
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          fi
+
   shard:
+    needs: guard
+    if: needs.guard.outputs.proceed == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -340,6 +385,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml --ref main
 
+      - name: Validate the landed commit
+        # The publish step commits with the installation token, and those pushes do not start
+        # other workflows, so nothing would ever check the tree that just landed. Dispatch ci
+        # against it: this catches a publish that wrote the wrong files, not just wrong data.
+        if: steps.publish.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run ci.yml --ref main
       - name: Watchdog — revive a stalled translate job
         # The mirror of the watchdog in translate.yml: whichever schedule GitHub
         # actually delivers revives the other one.
