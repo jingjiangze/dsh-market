@@ -24,6 +24,11 @@ const SOURCES = [
   ['mydsh', process.env.MYDSH_INDEX || 'https://www.mydsh.xyz/market/index.json'],
 ]
 
+// npm's own rule for a publishable name, matching crawler/sources.mjs and the format-1
+// validator: lowercase, URL-safe, optionally scoped.
+const NPM_NAME = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u
+const looksInstalable = (name) => NPM_NAME.test(name) && name.length <= 214
+
 const index = JSON.parse(await readFile(join(root, 'dist', 'index.json'), 'utf8'))
 const have = new Set((index.plugins ?? []).map((p) => String(p.name ?? '').toLowerCase()))
 console.log(`sync: local build carries ${have.size} names`)
@@ -45,10 +50,14 @@ for (const [name, url] of SOURCES) {
   const doc = await fetchJson(url)
   if (!doc) { console.log(`sync: ${name.padEnd(9)} unreachable — not measured`); continue }
   const rows = doc.plugins ?? doc.entries ?? []
-  const names = rows.map((r) => String(r.name ?? r.package ?? '').toLowerCase()).filter(Boolean)
+  const raw = rows.map((r) => String(r.name ?? r.package ?? '').toLowerCase()).filter(Boolean)
+  // Both sides filtered the same way, so the delta is real:
+  const names = raw.filter(looksInstalable)
   const missing = names.filter((n) => !have.has(n))
+  const rejected = raw.length - names.length
   worst = Math.max(worst, missing.length)
   const pct = names.length ? ((missing.length / names.length) * 100).toFixed(1) : '0.0'
+  console.log(`sync: ${name.padEnd(9)} (${rejected} upstream rows are not installable names)`)
   console.log(`sync: ${name.padEnd(9)} upstream ${String(names.length).padStart(6)} · missing here ${String(missing.length).padStart(5)} (${pct}%)`
     + (missing.length ? ` e.g. ${missing.slice(0, 3).join(', ')}` : ''))
 }
