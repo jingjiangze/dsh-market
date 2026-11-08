@@ -84,16 +84,22 @@ const stop = () => OFFLINE || Date.now() - started > BUDGET_MS || attempted >= M
 // One queue, a fixed worker pool: the previous version awaited each call inside
 // the loop, so "concurrency" was never actually used.
 const tasks = []
-for (const plugin of index.plugins ?? []) {
-  for (const field of ['title', 'description']) {
-    const value = plugin[field]
-    if (!value || typeof value !== 'object') continue
-    const source = text(value).slice(0, MAX_TEXT)
-    if (!source) continue
-    for (const lang of TARGETS) {
-      if (value[lang]) continue
+// Language-major: finish zh before starting ja. With ~18k strings per language and a 45-minute
+// budget, a plugin-major queue would leave every language a fifth done instead of one done.
+for (const lang of TARGETS) {
+  for (const plugin of index.plugins ?? []) {
+    for (const field of ['title', 'description']) {
+      const value = plugin[field]
+      if (!value || typeof value !== 'object') continue
+      const source = text(value).slice(0, MAX_TEXT)
+      if (!source) continue
+      // A value identical to the source is not a translation. The crawler used to pre-fill
+      // zh with the English text, which made this loop skip exactly the entries that needed
+      // work — fixing it in crawl.mjs only helps future builds, so treat the existing
+      // copies as missing too.
+      if (value[lang] && value[lang] !== source) continue
       if (field === 'title' && TITLE_SKIP_LANGS.has(lang)) continue
-      // Some catalogues park a Chinese blurb under \`en\`; translating that "to Chinese"
+      // Some catalogues park a Chinese blurb under `en`; translating that "to Chinese"
       // would launder a correct string through a translator for no reason.
       if (lang === 'zh' && CJK.test(source)) continue
       tasks.push({ value, lang, source })
