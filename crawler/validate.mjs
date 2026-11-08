@@ -61,6 +61,8 @@ if (parsed) {
   const declaredLabels = new Set(Object.keys(parsed.metadata.labels))
   const seen = new Set()
   const categoryUse = new Map()
+  let titled = 0
+  let described = 0
   for (const plugin of parsed.plugins) {
     if (seen.has(plugin.name)) fail('duplicate plugin', plugin.name)
     seen.add(plugin.name)
@@ -80,15 +82,24 @@ if (parsed) {
     else categoryUse.set(category, (categoryUse.get(category) || 0) + 1)
     for (const field of ['title', 'description']) {
       const value = plugin[field]
-      if (!value || typeof value !== 'object' || !value.en || !value.zh) {
-        fail('bilingual text', `${plugin.name} ${field}`)
+      // Format 1: every localized text needs a non-empty `en`. A missing `zh` is a
+      // translation backlog item, not a defect — demanding it here is what made the crawler
+      // fake `zh = en`, which in turn blocked the translator from ever seeing those entries.
+      if (!value || typeof value !== 'object' || !value.en) {
+        fail('bilingual text', `${plugin.name} ${field} has no en`)
+      } else if (value.zh !== undefined && (!value.zh || typeof value.zh !== 'string')) {
+        fail('bilingual text', `${plugin.name} ${field} has an empty zh`)
       }
     }
+    if (plugin.title?.zh) titled += 1
+    if (plugin.description?.zh) described += 1
     for (const label of plugin.metadata.labels ?? []) {
       if (!declaredLabels.has(label)) fail('undeclared label', `${plugin.name} -> ${label}`)
     }
   }
   note('categories', [...categoryUse].sort((a, b) => b[1] - a[1]).map(([id, n]) => `${id}:${n}`).join(' '))
+  const total = parsed.plugins.length || 1
+  note('i18n', `zh title ${titled}/${parsed.plugins.length} (${Math.round((titled / total) * 100)}%), zh description ${described}/${parsed.plugins.length} (${Math.round((described / total) * 100)}%)`)
 }
 
 // 2. what is deployed must be what was validated
