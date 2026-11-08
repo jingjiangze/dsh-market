@@ -177,6 +177,12 @@ for (const vp of VIEWPORTS) {
       // full row, and the trend windows live behind one menu.
       // Where the first card starts is the blunt usability metric: chrome that pushes it down
       // is chrome the reader has to scroll past every visit.
+      // A card must announce that it opens something, and the install row must explain itself
+      // when nothing is installed.
+      cardRole: document.querySelector('.card')?.getAttribute('role') ?? null,
+      cardChevron: document.querySelectorAll('.card .go').length,
+      installHint: Boolean(document.querySelector('.ins-hint')),
+      installImportFolded: (() => { const d = document.querySelector('.ins-more'); return d ? !d.open : null })(),
       firstCardTop: (() => {
         const card = document.querySelector('.card')
         return card ? Math.round(card.getBoundingClientRect().top) : null
@@ -232,6 +238,10 @@ for (const vp of VIEWPORTS) {
   const cardTopLimit = vp.name === 'mobile' ? 760 : 520
   if (probe.firstCardTop === null) fail(`${vp.name}: no card was rendered`)
   else if (probe.firstCardTop > cardTopLimit) fail(`${vp.name}: the first card starts at ${probe.firstCardTop}px, limit ${cardTopLimit}px`)
+  if (probe.cardRole !== 'button') fail(`${vp.name}: cards do not expose role=button (got ${probe.cardRole})`)
+  if (probe.cardChevron !== probe.cardCount) fail(`${vp.name}: ${probe.cardChevron} chevrons for ${probe.cardCount} cards`)
+  if (!probe.installHint) fail(`${vp.name}: the install row does not explain itself when nothing is installed`)
+  if (probe.installImportFolded !== true) fail(`${vp.name}: the JSON import is not folded behind a disclosure`)
   // An unconstrained <img> is what broke the card layout once: icons stretched to the
   // card width and the description wrapped one character per line.
   if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)

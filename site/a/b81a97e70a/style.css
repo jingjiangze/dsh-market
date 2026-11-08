@@ -915,6 +915,66 @@ footer {
   box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
 }
 
+/* ── install row, explained ─────────────────────────────────────────────── */
+.ins-more { display: inline-block; position: relative; }
+.ins-more > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0 8px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--faint);
+  border: 1px dashed var(--line-2);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: .04em;
+}
+.ins-more > summary::-webkit-details-marker { display: none; }
+.ins-more[open] > summary { color: var(--text); border-color: var(--blue); }
+.ins-more > .ins-btn { margin-top: 6px; }
+.ins-hint {
+  flex: 1 1 100%;
+  color: var(--faint);
+  font: 400 11.5px/1.6 var(--font-body);
+}
+
+/* ── load progress ──────────────────────────────────────────────────────── */
+#loadbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  height: 18px;
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: .05em;
+  color: var(--faint);
+}
+#loadbar i {
+  position: absolute;
+  inset: auto auto 0 0;
+  height: 2px;
+  width: 0;
+  background: var(--blue);
+  transition: width .3s var(--ease);
+}
+#loadbar span { position: relative; }
+
+/* ── a card is a button ─────────────────────────────────────────────────── */
+.card .go {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translate(-4px, -50%);
+  font: 400 16px/1 var(--font-mono);
+  color: var(--blue-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .16s var(--ease), transform .16s var(--ease);
+}
+.card:hover .go, .card:focus-visible .go { opacity: 1; transform: translate(0, -50%); }
+.card:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+
 /* ── light theme ──────────────────────────────────────────────────────────
  * Same geometry, same single accent. Only the surface tokens change, so nothing has to
  * be duplicated per component and no rule can drift between the two themes. */

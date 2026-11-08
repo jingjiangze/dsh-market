@@ -281,7 +281,9 @@ function card(entry) {
   // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
   const marks = (entry.of ? '<b class=pick>✦ 官方精选</b>' : '') + (grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : '')
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
-  return `<article class=card data-open="${esc(entry.n)}" tabindex=0>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
+  // A card is a button: the chevron makes that visible on hover, and aria tells a screen
+  // reader the same thing the cursor does.
+  return `<article class=card data-open="${esc(entry.n)}" tabindex=0 role=button aria-label="查看 ${esc(titleOf(entry)) || esc(entry.n)} 详情"><b class=go aria-hidden=true>›</b>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
 }
 
 // The personal layer: what this browser says about the catalogue (votes) and what is
@@ -304,10 +306,13 @@ function renderPersonal(pool) {
     const row = document.querySelector('.row')
     row?.parentElement?.insertBefore(bar, row.nextSibling)
   }
+  // Nothing installed yet: the row is an invitation, not a status line. The explanation only
+  // shows in that state so it does not become permanent furniture.
+  const empty = ownedNames.length === 0
   bar.innerHTML = `<span class=ins-stat>已装 <b>${ownedNames.length}</b>${upgradable ? ` · <b class=up>${upgradable}</b> 可升级` : ''}${unknown ? ` · <b>${unknown}</b> 未收录` : ''}</span>
     <button class=ins-btn data-scan>扫描已安装</button>
-    <button class=ins-btn data-import-input>导入 JSON</button>
-    <input type=file id=importFile accept="application/json,.json" hidden>`
+    <details class=ins-more><summary>其他方式</summary><button class=ins-btn data-import-input>导入已装清单</button><input type=file id=importFile accept="application/json,.json" hidden></details>
+    ${empty ? '<span class=ins-hint>读取本机已装插件，用来标出「已装」和可升级项；不扫描也能正常浏览。</span>' : ''}`
 
   // Themed shelves (high score / popular / new / daily) were retired by request: the
   // catalogue now opens straight into the category rail and the card grid.
@@ -414,6 +419,7 @@ function render() {
   $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
   renderPersonal(pool)
+  renderProgress()
   renderFooter()
   const visible = pool.slice(0, state.limit)
   const more = pool.length > visible.length
@@ -440,6 +446,25 @@ function render() {
 
 // Footer states what the catalogue actually contains, because "10,995 plugins" says
 // nothing about how many carry stars, downloads or a translation.
+// 13k entries arrive in chunks; "已载入 N/M" in 11px type is not feedback. A thin bar under
+// the toolbar answers "is it still working" without a spinner.
+function renderProgress() {
+  const total = state.meta?.total ?? 0
+  const loaded = state.plugins.length
+  let bar = document.querySelector('#loadbar')
+  if (!total || loaded >= total) { bar?.remove(); return }
+  if (!bar) {
+    bar = document.createElement('div')
+    bar.id = 'loadbar'
+    bar.innerHTML = '<i></i><span></span>'
+    const hero = document.querySelector('.hero')
+    hero?.parentElement?.insertBefore(bar, hero.nextSibling)
+  }
+  const pct = Math.max(2, Math.min(100, Math.round((loaded / total) * 100)))
+  bar.firstChild.style.width = pct + '%'
+  bar.lastChild.textContent = `载入中 ${loaded.toLocaleString()} / ${total.toLocaleString()}`
+}
+
 function renderFooter() {
   const footer = document.querySelector?.('body > footer')
   const items = state.plugins
