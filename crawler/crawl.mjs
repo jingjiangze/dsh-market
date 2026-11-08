@@ -184,8 +184,10 @@ function satisfies(version, range) {
 }
 
 function localized(text) {
-  // format 1 requires an English fallback in every language map.
-  return { en: text, zh: text }
+  // format 1 requires an English fallback in every language map. It does NOT require a
+  // Chinese one: faking zh = en both misreports the document and blocks translation, which
+  // skips any language that already holds a value.
+  return { en: text }
 }
 
 // ------------------------------------------------------------------ taxonomy
@@ -520,8 +522,8 @@ for (const [name, record] of fromGitHub) {
         const publishTs = Math.floor(Date.parse(pack.time[version]) / 1000) || 0
         plugins.push({
           name,
-          title: { en: enTitle, zh: zh.title || enTitle },
-          description: { en: enDescription, zh: zh.description || enDescription },
+          title: { en: enTitle, ...(zh.title ? { zh: zh.title } : {}) },
+          description: { en: enDescription, ...(zh.description ? { zh: zh.description } : {}) },
           ...(iconPath ? { icon: `https://cdn.jsdelivr.net/npm/${name}@${version}/${iconPath}` } : {}),
           ...(typeof man.author === 'string'
             ? { author: man.author.replace(/\s*<[^>]*>/, '') }
@@ -651,8 +653,8 @@ for (const [name, record] of fromGitHub) {
       ])
       slimEntries.push({
         name: record.name,
-        title: { en: titleEn, zh: record.title?.zh || titleEn },
-        description: { en: descEn, zh: descZh || descEn },
+        title: { en: titleEn, ...(record.title?.zh ? { zh: record.title.zh } : {}) },
+        description: { en: descEn, ...(descZh ? { zh: descZh } : {}) },
         ...(record.hintIcon ? { icon: record.hintIcon } : {}),
         // Keep the repository: the enrich step turns it into stars, a reader needs
         // somewhere to look at the source, and repository-level dedupe groups on it.
