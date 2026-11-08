@@ -59,7 +59,8 @@ jobs:
           set -euo pipefail
           FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch --force --index-filter '
             git rm -r --cached --ignore-unmatch \
-              dist/index.json dist/index.sidecar.json dist/index.cn.json dist/index.intl.json \
+              dist/index.sidecar.json dist/index.cn.json dist/index.intl.json \
+              dist/index.en.json dist/index.ja.json dist/index.ko.json dist/index.ru.json dist/index.zh.json \
               site/index.json site/sidecar.json \
               site/index.en.json site/index.ja.json site/index.ko.json site/index.ru.json
           ' --prune-empty -- --all
@@ -83,9 +84,11 @@ jobs:
           for path in site/index.html site/index.zh.json site/app.js site/style.css .github/workflows/crawl.yml; do
             if git cat-file -e "HEAD:$path"; then echo "ok      $path"; else echo "::error::missing $path"; exit 1; fi
           done
-          for path in site/index.json dist/index.json site/sidecar.json; do
+          for path in site/index.json site/sidecar.json dist/index.zh.json dist/index.ja.json; do
             if git cat-file -e "HEAD:$path" 2>/dev/null; then echo "::error::still tracked $path"; exit 1; else echo "dropped $path"; fi
           done
+          # dist/index.json must SURVIVE: ci runs crawler/lang-index.mjs against it.
+          if git cat-file -e "HEAD:dist/index.json"; then echo "kept    dist/index.json"; else echo "::error::dist/index.json is gone and ci needs it"; exit 1; fi
 
       - name: Back up the old tip and force-push the rewritten history
         if: inputs.apply == 'true'
