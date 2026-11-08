@@ -421,7 +421,7 @@ h1::before {
   width: 44px;
   height: 44px;
   object-fit: cover;
-  background: var(--bg);
+  background: var(--plate-3);
   border: 1px solid var(--line-2);
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
 }
