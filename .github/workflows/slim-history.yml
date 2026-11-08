@@ -90,19 +90,6 @@ jobs:
               site/index.en.json site/index.ja.json site/index.ko.json site/index.ru.json
           ' --prune-empty -- --all
 
-      - name: Expire the old objects and repack
-        run: |
-          set -euo pipefail
-          rm -rf .git/refs/original
-          git reflog expire --expire=now --all
-          git gc --prune=now --aggressive
-          echo "--- after ---"
-          du -sh .git
-          git count-objects -vH
-          echo "commits: $(git rev-list --count HEAD)"
-          echo "tracked index/stats files:"
-          git ls-files | grep -E 'index|stats' || true
-
       - name: Verify the rewritten tree still has what the site needs
         run: |
           set -euo pipefail
@@ -126,3 +113,16 @@ jobs:
           git push --force origin "$OLD:refs/heads/pre-slim"
           git push --force origin "HEAD:refs/heads/main"
           echo "pushed; pre-slim holds the previous history"
+      - name: Expire the old objects and repack
+        run: |
+          set -euo pipefail
+          rm -rf .git/refs/original
+          git reflog expire --expire=now --all
+          git gc --prune=now --aggressive
+          echo "--- after ---"
+          du -sh .git
+          git count-objects -vH
+          echo "commits: $(git rev-list --count HEAD)"
+          echo "tracked index/stats files:"
+          git ls-files | grep -E 'index|stats' || true
+
