@@ -113,7 +113,7 @@ jobs:
           if git cat-file -e "HEAD:dist/index.json"; then echo "kept    dist/index.json"; else echo "::error::dist/index.json is gone and ci needs it"; exit 1; fi
 
       - name: Back up the old tip and force-push the rewritten history
-        if: inputs.apply == 'true'
+        if: github.event.inputs.apply == 'true' || inputs.apply == 'true' || inputs.apply == true
         run: |
           set -euo pipefail
           NEW=$(git rev-parse HEAD)
