@@ -42,6 +42,9 @@ jobs:
           echo "commits: $(git rev-list --count HEAD)"
           du -sh .git
           git count-objects -vH
+          # Remember the pre-rewrite tip: filter-branch --all rewrites origin/main as well,
+          # so it cannot be read back later.
+          echo "OLD_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
       - name: Normalise the working tree
         # filter-branch refuses to run on a dirty tree, and a fresh checkout can look
@@ -117,8 +120,7 @@ jobs:
         run: |
           set -euo pipefail
           NEW=$(git rev-parse HEAD)
-          # The old tip is still reachable through the remote-tracking ref we cloned.
-          OLD=$(git rev-parse origin/main)
+          OLD="${OLD_SHA:?}"
           echo "old=$OLD new=$NEW"
           if [ "$OLD" = "$NEW" ]; then echo "nothing was rewritten"; exit 0; fi
           git push --force origin "$OLD:refs/heads/pre-slim"
