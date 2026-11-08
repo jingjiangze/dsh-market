@@ -230,6 +230,14 @@ jobs:
         # the duplicates they created.
         run: node crawler/restore-alias.mjs
 
+      - name: Report how far behind the sources we are
+        # Per-source counts cannot measure sync (a name seen by two catalogues is counted
+        # once), so this compares names. Never fails the build: a small gap between a
+        # 3-hourly crawl and continuous upstream publishing is the normal state.
+        continue-on-error: true
+        env:
+          SYNC_TIMEOUT_MS: '120000'
+        run: node crawler/sync-report.mjs
       - name: Derive the Chinese titles
         # After the other languages and the alias merge, not inside crawl.mjs: a title can
         # only be taken from Chinese text that already exists, and translate.mjs fills most
