@@ -1,7 +1,12 @@
 name: deploy
 
-# Publishes main to both endpoints. Only runs after a change landed on main —
-# normally a merged crawl PR — so nothing is published that `ci` has not tested.
+# Publishes main to both endpoints.
+#
+# The push trigger below only fires for commits pushed with a user credential. The crawler
+# commits with the installation token, and GitHub suppresses workflow runs for those pushes,
+# so crawl.yml dispatches this workflow explicitly after publishing. Do not remove that
+# dispatch on the assumption that the push trigger covers it — it does not (that mistake
+# once shipped a new catalogue without redeploying the site).
 on:
   push:
     branches: [main]
