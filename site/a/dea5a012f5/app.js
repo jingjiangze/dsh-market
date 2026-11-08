@@ -313,6 +313,7 @@ function renderPersonal(pool) {
   // catalogue now opens straight into the category rail and the card grid.
   ensureQuizButton()
   ensureMirrorSelect()
+  ensureSetupDisclosure()
   ensureThemeToggle()
 }
 
@@ -396,10 +397,17 @@ function render() {
   try {
     document.querySelector('.chip[aria-pressed]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
   } catch {}
-  const buttons = SORTS.map(([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`).join('')
+  // Eleven controls in one row is a wall. The trend windows are a second-order question
+  // ("what changed recently"), so they live one click away; the four orderings a reader
+  // actually switches between stay visible.
+  const TREND = new Set(['trend7', 'trend30', 'trend90'])
+  const button = ([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`
+  const buttons = SORTS.filter(([id]) => !TREND.has(id)).map(button).join('')
+  const trendButtons = SORTS.filter(([id]) => TREND.has(id)).map(button).join('')
+  const trendOpen = TREND.has(state.sort) ? ' open' : ''
   const favButton = `<button class=dice data-fav-toggle aria-pressed="${state.favorites}">★ 收藏${favorites.size ? ` ${favorites.size}` : ''}</button>`
   const compatButton = `<select id=compat aria-label="DSH 版本兼容"><option value=all>兼容：全部</option><option value=0.2${state.compat === '0.2' ? ' selected' : ''}>0.2.x</option><option value=0.1${state.compat === '0.1' ? ' selected' : ''}>0.1.x</option></select>`
-  $('sort').innerHTML = `<span class=sorts>${buttons}</span>${compatButton}${favButton}<button class=dice data-random>🎲 随机</button>`
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details>${compatButton}${favButton}<button class=dice data-random>🎲 随机</button>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
@@ -833,6 +841,23 @@ const quizPicks = new Set()
 
 // The mirror choice is a toolbar control, not a hidden setting: it changes the install
 // command in every detail dialog, so the reader must be able to see and change it.
+// Everything a *subscriber* needs — the index URL, the copy button and the per-language
+// document switch — is folded into one disclosure. It is not removed: the site's other job is
+// telling DSH where to point. It just no longer occupies the first screen.
+function ensureSetupDisclosure() {
+  const hero = document.querySelector('.hero')
+  if (!hero || hero.querySelector('.setup')) return
+  const seg = hero.querySelector('.seg')
+  const src = hero.querySelector('.src')
+  if (!seg || !src) return
+  const details = document.createElement('details')
+  details.className = 'setup'
+  const summary = document.createElement('summary')
+  summary.innerHTML = '<span>索引源与语言</span><i></i>'
+  details.append(summary, seg, src)
+  hero.insertBefore(details, hero.firstChild)
+}
+
 function ensureMirrorSelect() {
   const row = document.querySelector('.row')
   if (!row || row.querySelector('#mirror')) return

@@ -173,6 +173,17 @@ for (const vp of VIEWPORTS) {
       theme: document.documentElement.dataset.theme ?? null,
       // The shelf was removed: 精选推荐 is an ordering, not a fixed five-item block.
       pickMarks: document.querySelectorAll('.card .pick').length,
+      // Usability invariants: the subscription block is folded away by default, search owns a
+      // full row, and the trend windows live behind one menu.
+      setupClosed: (() => { const d = document.querySelector('.setup'); return d ? !d.open : null })(),
+      setupInFirstScreen: (() => { const d = document.querySelector('.setup'); return d ? d.getBoundingClientRect().top < 400 : null })(),
+      searchWidthRatio: (() => {
+        const q = document.querySelector('#q')
+        if (!q) return 0
+        return Math.round((q.getBoundingClientRect().width / document.documentElement.clientWidth) * 100)
+      })(),
+      primarySorts: [...document.querySelectorAll('#sort > .sorts [data-sort]')].length,
+      trendSortsInMenu: document.querySelectorAll('.more-sorts [data-sort]').length,
       curatedSortLabel: [...document.querySelectorAll('[data-sort]')].map((b) => b.textContent.trim()).find((t) => t.includes('精选')) ?? null,
       pickMarks: document.querySelectorAll('.card .pick').length,
       thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
@@ -205,6 +216,12 @@ for (const vp of VIEWPORTS) {
   if (probe.pickMarks === 0) fail(`${vp.name}: no card carries the 官方精选 badge`)
   if (probe.curatedSortLabel !== '精选推荐') fail(`${vp.name}: the curated ranking is labelled "${probe.curatedSortLabel}", expected 精选推荐`)
   if (await page.locator('.picks').count()) fail(`${vp.name}: the removed curated shelf is still rendered`)
+  if (probe.setupClosed !== true) fail(`${vp.name}: the subscription block is not collapsed by default`)
+  if (!probe.setupInFirstScreen) fail(`${vp.name}: the subscription block is below the first screen`)
+  // Search must own most of a row: it is the primary way into a 13k catalogue.
+  if (probe.searchWidthRatio < 60) fail(`${vp.name}: the search field is only ${probe.searchWidthRatio}% of the viewport wide`)
+  if (probe.primarySorts === 0 || probe.primarySorts > 6) fail(`${vp.name}: ${probe.primarySorts} sort buttons visible, expected 4-6`)
+  if (probe.trendSortsInMenu !== 3) fail(`${vp.name}: ${probe.trendSortsInMenu} trend sorts in the menu, expected 3`)
   // An unconstrained <img> is what broke the card layout once: icons stretched to the
   // card width and the description wrapped one character per line.
   if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)
