@@ -268,6 +268,11 @@ jobs:
         # registries carry English tags per package; this writes the ones for names this
         # catalogue already has into a small document of their own.
         run: node crawler/plugin-tags.mjs
+      - name: Domain library
+        # One document per need, derived from the catalogue's own taxonomy and curation, so an
+        # on-demand loader can answer "which plugin does video editing here" without a search
+        # round-trip. A new category becomes a new domain with no code change.
+        run: node crawler/plugin-domains.mjs
       - name: Build the browse chunks
         # The page reads a ~350 KB first chunk instead of the 11.5 MB format-1 document.
         env:
