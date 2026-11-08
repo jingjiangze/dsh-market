@@ -263,6 +263,11 @@ jobs:
         # (real install target, installability, curation) get their own document instead of
         # being re-derived from strings.
         run: node crawler/plugin-index.mjs
+      - name: Community tags
+        # English tags for rows whose description is Chinese, so a need phrased in English
+        # can still match. Bounded: only names this catalogue already has, and a fixed
+        # number of tags per name, written to their own document.
+        run: node crawler/plugin-tags.mjs
       - name: Build the browse chunks
         # The page reads a ~350 KB first chunk instead of the 11.5 MB format-1 document.
         env:
