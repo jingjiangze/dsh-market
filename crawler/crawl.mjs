@@ -731,6 +731,9 @@ for (const [name, record] of fromGitHub) {
   // clause as the title instead of showing "@scope/pkg-name" to every reader.
   const zhTitle = (text, fallback) => {
     let raw = String(text ?? '').replace(/\s+/g, ' ').trim()
+    // Some catalogues prefix the blurb with their own figures ("★ 912 │ 限制 Mnemon 记忆…"),
+    // which would become the title. Strip that decoration before taking a clause.
+    raw = raw.replace(/^[★☆↓↑\s\d.,kKmM]+[│|·•]+\s*/, '').trim()
     if (!raw) return fallback
     // Drop the boilerplate opener every catalogue uses: "为 DeepSeek Harness 提供 …"
     raw = raw.replace(/^(为|给|让)\s*(DeepSeek\s*Harness|DSH|Harness)\s*(提供|实现|带来|增加|补上)?\s*/, '')
@@ -739,12 +742,20 @@ for (const [name, record] of fromGitHub) {
     // Prefer a comma boundary so a title never ends mid-phrase.
     const comma = picked.search(/[，,、]/)
     if (comma >= 6 && comma <= 20) picked = picked.slice(0, comma)
-    picked = picked.slice(0, 20).replace(/[，,、\-—\s]+$/, '')
+    picked = picked.slice(0, 20)
+    // Never end on a half word: "用本地 GP" reads as broken, "用本地" does not.
+    picked = picked.replace(/[A-Za-z0-9]+$/, '').replace(/[，,、\-—\s…]+$|\.{2,}$/, '')
     return picked || fallback
   }
+  const CJK_TEXT = /[\u4e00-\u9fff]/
   for (const plugin of published) {
     const name = String(plugin.name ?? '')
-    const zhDesc = typeof plugin.description === 'object' ? (plugin.description.zh ?? '') : ''
+    const descField = plugin.description
+    const zhRaw = typeof descField === 'object' ? (descField.zh ?? '') : ''
+    const enRaw = typeof descField === 'object' ? (descField.en ?? '') : (typeof descField === 'string' ? descField : '')
+    // Most catalogues park their Chinese blurb under `en`. A title in Chinese must come from
+    // Chinese text, so take `zh` when it is Chinese and fall back to `en` when that is.
+    const zhDesc = CJK_TEXT.test(zhRaw) ? zhRaw : CJK_TEXT.test(enRaw) ? enRaw : ''
     const titleZh = typeof plugin.title === 'object' ? (plugin.title.zh ?? '') : ''
     const titleEn = typeof plugin.title === 'object' ? (plugin.title.en ?? '') : String(plugin.title ?? '')
     // A title that merely repeats the package name carries no information.
