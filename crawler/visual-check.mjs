@@ -40,7 +40,7 @@ const FIXTURE = Array.from({ length: 48 }, (_, i) => ({
   // Practical score + use-case ids, so the score badge and the quiz are exercised.
   // Distinct, non-monotonic popularity so the heat and stars orders genuinely differ.
   sc: 30 + ((i * 7) % 70),
-  // Curation fields the page now renders: a shelf of official picks plus a mark on cards.
+  // Curation fields the page renders: a mark on official picks.
   of: i < 8 ? 1 : 0,
   cu: 40 + ((i * 11) % 60),
   s: 100 + ((i * 13) % 900),
@@ -171,7 +171,9 @@ for (const vp of VIEWPORTS) {
       heatBadges: [...document.querySelectorAll('.card .meta span')].filter((el) => el.textContent.trim().startsWith('🔥')).length,
       themeToggle: Boolean(document.querySelector('#theme')),
       theme: document.documentElement.dataset.theme ?? null,
-      picks: document.querySelectorAll('.picks .pick-card').length,
+      // The shelf was removed: 精选推荐 is an ordering, not a fixed five-item block.
+      pickMarks: document.querySelectorAll('.card .pick').length,
+      curatedSortLabel: [...document.querySelectorAll('[data-sort]')].map((b) => b.textContent.trim()).find((t) => t.includes('精选')) ?? null,
       pickMarks: document.querySelectorAll('.card .pick').length,
       thumbWidths: [...document.querySelectorAll('.card img')].slice(0, 8).map((el) => Math.round(el.getBoundingClientRect().width)),
       imgThumbs: document.querySelectorAll('.card img').length,
@@ -200,7 +202,9 @@ for (const vp of VIEWPORTS) {
   if (probe.heatBadges !== 0) fail(`${vp.name}: ${probe.heatBadges} card(s) still show a heat badge`)
   if (!probe.themeToggle) fail(`${vp.name}: the theme toggle is missing`)
   if (!probe.theme) fail(`${vp.name}: no data-theme on <html>`)
-  if (probe.picks === 0) fail(`${vp.name}: the curated shelf rendered no picks`)
+  if (probe.pickMarks === 0) fail(`${vp.name}: no card carries the 官方精选 badge`)
+  if (probe.curatedSortLabel !== '精选推荐') fail(`${vp.name}: the curated ranking is labelled "${probe.curatedSortLabel}", expected 精选推荐`)
+  if (await page.locator('.picks').count()) fail(`${vp.name}: the removed curated shelf is still rendered`)
   // An unconstrained <img> is what broke the card layout once: icons stretched to the
   // card width and the description wrapped one character per line.
   if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)
