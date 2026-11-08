@@ -748,6 +748,9 @@ for (const [name, record] of fromGitHub) {
     return picked || fallback
   }
   const CJK_TEXT = /[\u4e00-\u9fff]/
+  let zhSource = 0      // entries whose description carries Chinese at this point
+  let zhDerived = 0     // entries that gained a Chinese title here
+  let zhSkipped = 0     // entries with Chinese text but no title, for the reason printed below
   for (const plugin of published) {
     const name = String(plugin.name ?? '')
     const descField = plugin.description
@@ -761,10 +764,17 @@ for (const [name, record] of fromGitHub) {
     // A title that merely repeats the package name carries no information.
     const titleIsName = !titleEn || titleEn.toLowerCase() === name.toLowerCase()
     const zhIsName = !titleZh || titleZh.toLowerCase() === name.toLowerCase()
+    if (zhDesc) zhSource++
+    const derived = zhTitle(zhDesc, name)
+    const derivedOk = Boolean(zhDesc) && Boolean(derived) && derived !== name && CJK_TEXT.test(derived)
     if (zhIsName && zhDesc && zhDesc.toLowerCase() !== name.toLowerCase()) {
-      plugin.title = { en: titleEn || name, zh: zhTitle(zhDesc, name) }
+      plugin.title = { en: titleEn || name, zh: derivedOk ? derived : name }
+      if (derivedOk) zhDerived++
     } else if (titleIsName && zhDesc) {
-      plugin.title = { ...(plugin.title ?? {}), en: titleEn || name, zh: plugin.title?.zh || zhTitle(zhDesc, name) }
+      plugin.title = { ...(plugin.title ?? {}), en: titleEn || name, zh: plugin.title?.zh || (derivedOk ? derived : name) }
+      if (derivedOk) zhDerived++
+    } else if (zhDesc && !derivedOk) {
+      zhSkipped++
     }
   }
 
@@ -772,6 +782,8 @@ for (const [name, record] of fromGitHub) {
   // row is stale by the time we publish: a plugin that declares engines must not keep a
   // label claiming it declares nothing. The rule lives in labels.mjs because
   // restore-alias.mjs merges rows and has to apply the same rule afterwards.
+  console.log(`chinese titles: ${zhSource} entries carry Chinese text, ${zhDerived} titles derived, ${zhSkipped} could not be`)
+
   const enginesFixed = reconcileEnginesLabel(published)
   if (enginesFixed) console.log(`reconciled no-engines on ${enginesFixed} entries`)
 
