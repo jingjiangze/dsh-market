@@ -45,14 +45,24 @@ jobs:
 
       - name: Normalise the working tree
         # filter-branch refuses to run on a dirty tree, and a fresh checkout can look
-        # dirty here (line-ending normalisation from the repository's .gitattributes).
+        # dirty here: .gitattributes normalises line endings, so the index disagrees with
+        # the working tree even right after `git reset --hard` and the rewrite aborts with
+        # "Cannot rewrite branches: You have unstaged changes". Dropping the index and
+        # rebuilding it with autocrlf off makes the tree genuinely clean.
         run: |
-          echo "--- before ---"
-          git status --porcelain | head -20
+          git config core.autocrlf false
+          git config core.eol lf
+          git rm -r --cached . >/dev/null
           git reset --hard HEAD
-          echo "--- after ---"
+          git update-index -q --refresh || true
+          echo "--- status after normalisation ---"
           git status --porcelain | head -20
-          echo "(empty above means clean)"
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::tree is still dirty; the rewrite would abort"
+            git status --porcelain | head -20
+            exit 1
+          fi
+          echo "(clean)"
 
       - name: Drop the derived documents from every commit
         run: |
