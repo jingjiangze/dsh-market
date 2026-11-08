@@ -718,6 +718,12 @@ for (const [name, record] of fromGitHub) {
   if (deduped.dropped) console.log(`deduplicated ${deduped.dropped} alias entry(ies) sharing a repository (${named.length} -> ${merged.length})`)
   for (const m of deduped.mergedRepos.slice(0, 5)) console.log(`  alias: ${m.aliases.join(', ')} -> ${m.winner} (${m.repo})`)
   const published = merged.slice(0, MAX_TOTAL)
+  // The hourly translate job writes into data/i18n-cache.json. Replaying it here is what
+  // keeps those strings after this run rebuilds the index from shard parts — and it has to
+  // happen BEFORE the title derivation below, or a translated Chinese description can never
+  // become a Chinese title. (The final index replays the cache again on its own copies.)
+  await applyTranslations(published)
+
   // Combined heat (stars + downloads, see crawler/score.mjs). Every published entry
   // gets one so the site can sort and badge without recomputation.
   // Chinese display titles: the catalogues only give us the package name as a title, and
@@ -840,10 +846,6 @@ for (const [name, record] of fromGitHub) {
     plugins: published.map(({ _sidecar, ...rest }) => ({ ...rest })),
   }
 
-  // The hourly translate job writes into data/i18n-cache.json. Replaying it here is
-  // what keeps those strings after this run rebuilds the index from shard parts;
-  // without it every crawl silently reset translation coverage to ~5%.
-  await applyTranslations(index.plugins)
 
   // The domestic/international split documents were retired: a reader picks a
   // language document instead (crawler/lang-index.mjs), and one link per language
