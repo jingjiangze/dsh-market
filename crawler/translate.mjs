@@ -125,6 +125,30 @@ for (const plugin of index.plugins ?? []) {
 
 if (!OFFLINE) {
   await writeFile(join(root, 'dist', 'index.json'), JSON.stringify(index) + '\n')
+  // Drop entries no current string can reach. Only languages this run manages are pruned,
+  // so a temporarily narrowed TRANSLATE_LANGS cannot throw other languages away.
+  {
+    const live = new Set()
+    for (const plugin of index.plugins ?? []) {
+      for (const field of ['title', 'description']) {
+        const value = plugin[field]
+        if (!value || typeof value !== 'object') continue
+        const source = text(value).slice(0, MAX_TEXT)
+        if (!source) continue
+        for (const lang of TARGETS) live.add(keyOf(lang, source))
+      }
+    }
+    const managed = new Set(TARGETS)
+    let pruned = 0
+    for (const key of Object.keys(cache)) {
+      if (!managed.has(key.split(':')[0])) continue
+      if (live.has(key)) continue
+      delete cache[key]
+      pruned++
+    }
+    if (pruned) console.log(`i18n cache: pruned ${pruned} unreachable entr${pruned === 1 ? 'y' : 'ies'} (${Object.keys(cache).length} left)`)
+  }
+
   await writeFile(cachePath, JSON.stringify(cache) + '\n')
 }
 const left = tasks.length - cursor
