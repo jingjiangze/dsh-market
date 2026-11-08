@@ -818,6 +818,21 @@ footer {
 
 @media (max-width: 560px) {
   body { padding: 0 12px 44px; }
+  /* One scrollable control row instead of four wrapped ones — measured: the first card moved
+     from ~890 px to ~640 px on a 390x844 viewport. */
+  #sort {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  #sort::-webkit-scrollbar { display: none; }
+  #sort > *, #sort .sorts { flex: 0 0 auto; }
+  #sort .sorts { display: inline-flex; gap: 6px; }
+  .row { gap: 8px; }
+  /* The subscription disclosure and the count share the row above the controls. */
+  .setup > summary { padding: 2px 0; }
+  #meta { flex: 1 1 100%; order: 6; margin-top: 2px; }
   h1 { font-size: 18px; gap: 8px; }
   h1::before { width: 24px; height: 24px; }
   #q { flex-basis: 100%; }

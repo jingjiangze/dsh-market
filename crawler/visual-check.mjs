@@ -175,6 +175,12 @@ for (const vp of VIEWPORTS) {
       pickMarks: document.querySelectorAll('.card .pick').length,
       // Usability invariants: the subscription block is folded away by default, search owns a
       // full row, and the trend windows live behind one menu.
+      // Where the first card starts is the blunt usability metric: chrome that pushes it down
+      // is chrome the reader has to scroll past every visit.
+      firstCardTop: (() => {
+        const card = document.querySelector('.card')
+        return card ? Math.round(card.getBoundingClientRect().top) : null
+      })(),
       setupClosed: (() => { const d = document.querySelector('.setup'); return d ? !d.open : null })(),
       setupInFirstScreen: (() => { const d = document.querySelector('.setup'); return d ? d.getBoundingClientRect().top < 400 : null })(),
       searchWidthRatio: (() => {
@@ -222,6 +228,10 @@ for (const vp of VIEWPORTS) {
   if (probe.searchWidthRatio < 60) fail(`${vp.name}: the search field is only ${probe.searchWidthRatio}% of the viewport wide`)
   if (probe.primarySorts === 0 || probe.primarySorts > 6) fail(`${vp.name}: ${probe.primarySorts} sort buttons visible, expected 4-6`)
   if (probe.trendSortsInMenu !== 3) fail(`${vp.name}: ${probe.trendSortsInMenu} trend sorts in the menu, expected 3`)
+  // Mobile had four wrapped control rows; the limit keeps a regression from creeping back.
+  const cardTopLimit = vp.name === 'mobile' ? 760 : 520
+  if (probe.firstCardTop === null) fail(`${vp.name}: no card was rendered`)
+  else if (probe.firstCardTop > cardTopLimit) fail(`${vp.name}: the first card starts at ${probe.firstCardTop}px, limit ${cardTopLimit}px`)
   // An unconstrained <img> is what broke the card layout once: icons stretched to the
   // card width and the description wrapped one character per line.
   if (probe.imgThumbs === 0) fail(`${vp.name}: the fixture rendered no card thumbnails`)
