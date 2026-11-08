@@ -230,6 +230,12 @@ jobs:
         # the duplicates they created.
         run: node crawler/restore-alias.mjs
 
+      - name: Derive the Chinese titles
+        # After the other languages and the alias merge, not inside crawl.mjs: a title can
+        # only be taken from Chinese text that already exists, and translate.mjs fills most
+        # of it later than crawl.mjs runs. When this lived in crawl.mjs, 8,907 entries with
+        # Chinese descriptions kept an English title.
+        run: node crawler/titles.mjs
       - name: Build one index per language
         run: node crawler/lang-index.mjs
 

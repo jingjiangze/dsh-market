@@ -747,42 +747,10 @@ for (const [name, record] of fromGitHub) {
     picked = picked.replace(/[A-Za-z0-9]+$/, '').replace(/[，,、\-—\s…]+$|\.{2,}$/, '')
     return picked || fallback
   }
-  const CJK_TEXT = /[\u4e00-\u9fff]/
-  let zhSource = 0      // entries whose description carries Chinese at this point
-  let zhDerived = 0     // entries that gained a Chinese title here
-  let zhSkipped = 0     // entries with Chinese text but no title, for the reason printed below
-  for (const plugin of published) {
-    const name = String(plugin.name ?? '')
-    const descField = plugin.description
-    const zhRaw = typeof descField === 'object' ? (descField.zh ?? '') : ''
-    const enRaw = typeof descField === 'object' ? (descField.en ?? '') : (typeof descField === 'string' ? descField : '')
-    // Most catalogues park their Chinese blurb under `en`. A title in Chinese must come from
-    // Chinese text, so take `zh` when it is Chinese and fall back to `en` when that is.
-    const zhDesc = CJK_TEXT.test(zhRaw) ? zhRaw : CJK_TEXT.test(enRaw) ? enRaw : ''
-    const titleZh = typeof plugin.title === 'object' ? (plugin.title.zh ?? '') : ''
-    const titleEn = typeof plugin.title === 'object' ? (plugin.title.en ?? '') : String(plugin.title ?? '')
-    // A title that merely repeats the package name carries no information.
-    const titleIsName = !titleEn || titleEn.toLowerCase() === name.toLowerCase()
-    const zhIsName = !titleZh || titleZh.toLowerCase() === name.toLowerCase()
-    if (zhDesc) zhSource++
-    const derived = zhTitle(zhDesc, name)
-    const derivedOk = Boolean(zhDesc) && Boolean(derived) && derived !== name && CJK_TEXT.test(derived)
-    if (zhIsName && zhDesc && zhDesc.toLowerCase() !== name.toLowerCase()) {
-      plugin.title = { en: titleEn || name, zh: derivedOk ? derived : name }
-      if (derivedOk) zhDerived++
-    } else if (titleIsName && zhDesc) {
-      plugin.title = { ...(plugin.title ?? {}), en: titleEn || name, zh: plugin.title?.zh || (derivedOk ? derived : name) }
-      if (derivedOk) zhDerived++
-    } else if (zhDesc && !derivedOk) {
-      zhSkipped++
-    }
-  }
+  // Chinese display titles are derived by crawler/titles.mjs, which the workflow runs AFTER
+  // the other languages are filled in: a title can only be taken from Chinese text that
+  // exists at that moment, and translate.mjs fills most of it later than this file runs.
 
-  // Reconcile the no-engines label with what enrichment actually found. The catalogue
-  // row is stale by the time we publish: a plugin that declares engines must not keep a
-  // label claiming it declares nothing. The rule lives in labels.mjs because
-  // restore-alias.mjs merges rows and has to apply the same rule afterwards.
-  console.log(`chinese titles: ${zhSource} entries carry Chinese text, ${zhDerived} titles derived, ${zhSkipped} could not be`)
 
   const enginesFixed = reconcileEnginesLabel(published)
   if (enginesFixed) console.log(`reconciled no-engines on ${enginesFixed} entries`)
