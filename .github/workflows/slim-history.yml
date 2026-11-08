@@ -58,8 +58,20 @@ jobs:
           echo "--- status after normalisation ---"
           git status --porcelain | head -20
           if [ -n "$(git status --porcelain)" ]; then
-            echo "::error::tree is still dirty; the rewrite would abort"
+            echo "rewriting the remaining files from their blobs so the tree matches HEAD"
+            git status --porcelain | awk '{print $2}' | while IFS= read -r f; do
+              [ -n "$f" ] || continue
+              if git cat-file -e "HEAD:$f" 2>/dev/null; then
+                mkdir -p "$(dirname "$f")"
+                git cat-file blob "HEAD:$f" > "$f"
+              fi
+            done
+            git update-index -q --refresh || true
+            echo "--- status after blob restore ---"
             git status --porcelain | head -20
+          fi
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::tree is still dirty; the rewrite would abort"
             exit 1
           fi
           echo "(clean)"
