@@ -29,6 +29,7 @@ if (!INDEX) {
 
 const FACTS = [join(root, 'site', 'plugin-index.json'), join(root, 'dist', 'plugin-index.json')].find((p) => existsSync(p))
 const TAGS = [join(root, 'site', 'plugin-tags.json'), join(root, 'dist', 'plugin-tags.json')].find((p) => existsSync(p))
+const SMOKE_FILE = join(root, 'data', 'plugin-smoke.json')
 const OUT = [join(root, 'dist', 'plugin-domains.json'), join(root, 'site', 'plugin-domains.json')]
 
 const RUNTIME = process.env.PLUGIN_DOMAINS_RUNTIME || '0.2.2-rc.1'
@@ -141,7 +142,12 @@ const installableOf = (name) => {
   return facts.plugins?.find?.((row) => row.name === name)?.installable
 }
 
-const filters = { notInstallable: 0, engines: 0, placeholder: 0, noCategory: 0 }
+const smoke = existsSync(SMOKE_FILE) ? await readJson(SMOKE_FILE, null) : null
+const smokeResults = smoke?.results ?? {}
+// A smoke verdict older than the index it was measured against is not evidence either.
+const smokeFresh = Boolean(smoke?.generatedAt) && Date.now() - Date.parse(smoke.generatedAt) < 14 * 86400000
+
+const filters = { notInstallable: 0, engines: 0, placeholder: 0, noCategory: 0, smokeFailed: 0 }
 const byCategory = new Map()
 
 for (const plugin of index.plugins ?? []) {
@@ -153,6 +159,8 @@ for (const plugin of index.plugins ?? []) {
   if (installableOf(name) === false) { filters.notInstallable += 1; continue }
   if (version.engines?.dsh && !satisfiesEngines(RUNTIME, version.engines.dsh)) { filters.engines += 1; continue }
   if (String(version.version ?? '').startsWith('0.0.0')) { filters.placeholder += 1; continue }
+  const smokeRow = smokeFresh ? smokeResults[name] : undefined
+  if (smokeRow && smokeRow.tier === 'smoke-failed') { filters.smokeFailed += 1; continue }
   const list = byCategory.get(category) ?? []
   list.push({
     name,
@@ -198,7 +206,10 @@ for (const [category, rows] of [...byCategory.entries()].sort((a, b) => b[1].len
       source: row.source,
       engines: row.engines,
       tags: row.tags,
-      tier: row.verified ? 'facts+install-verified' : 'facts',
+      tier: smokeFresh && smokeResults[row.name]?.tier === 'smoke'
+        ? 'smoke'
+        : row.verified ? 'facts+install-verified' : 'facts',
+      smoke: smokeFresh && smokeResults[row.name] ? { ok: smokeResults[row.name].tier === 'smoke', ms: smokeResults[row.name].ms } : undefined,
       curated: row.curated,
       trust: row.trust,
     })),
@@ -240,8 +251,11 @@ const document = {
   schema: 2,
   generatedAt: new Date().toISOString(),
   runtime: RUNTIME,
-  method: 'domain = the index category (no hand-written list); candidate = index row + install-facts installable + engines.dsh admits runtime + not a 0.0.0 placeholder; ordered by the catalogue\'s own curation (install-verified, curated, trust)',
+  method: 'domain = the index category (no hand-written list); candidate = index row + install-facts installable + engines.dsh admits runtime + not a 0.0.0 placeholder + (when data/plugin-smoke.json is fresh) not a failed install; ordered by the catalogue\'s own curation (install-verified, curated, trust)',
   filters,
+  smoke: smokeFresh
+    ? { generatedAt: smoke.generatedAt, tested: smoke.tested, ok: smoke.ok, failed: smoke.failed }
+    : { state: smoke ? 'stale-or-unreadable' : 'absent' },
   count: domains.length,
   domains,
 }
