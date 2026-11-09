@@ -975,6 +975,19 @@ footer {
 .card:hover .go, .card:focus-visible .go { opacity: 1; transform: translate(0, -50%); }
 .card:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 
+.src-alt {
+  margin-left: 8px;
+  height: 30px;
+  padding: 0 10px;
+  color: var(--dim);
+  background: transparent;
+  border: 1px dashed var(--line-2);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+.src-alt:hover { color: var(--text); border-color: var(--blue); }
+
 /* ── light theme ──────────────────────────────────────────────────────────
  * Same geometry, same single accent. Only the surface tokens change, so nothing has to
  * be duplicated per component and no rule can drift between the two themes. */

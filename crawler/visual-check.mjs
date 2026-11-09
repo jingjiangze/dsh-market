@@ -179,6 +179,10 @@ for (const vp of VIEWPORTS) {
       // is chrome the reader has to scroll past every visit.
       // A card must announce that it opens something, and the install row must explain itself
       // when nothing is installed.
+      // The subscription link and its fallback: the site tries three hosts for data, so the
+      // link a reader copies should name a host that exists and offer the other one.
+      indexSource: document.querySelector("#src")?.textContent?.trim() ?? null,
+      indexAlternate: document.querySelector("#srcalt")?.dataset?.copy ?? null,
       cardRole: document.querySelector('.card')?.getAttribute('role') ?? null,
       cardChevron: document.querySelectorAll('.card .go').length,
       installHint: Boolean(document.querySelector('.ins-hint')),
@@ -238,6 +242,8 @@ for (const vp of VIEWPORTS) {
   const cardTopLimit = vp.name === 'mobile' ? 760 : 520
   if (probe.firstCardTop === null) fail(`${vp.name}: no card was rendered`)
   else if (probe.firstCardTop > cardTopLimit) fail(`${vp.name}: the first card starts at ${probe.firstCardTop}px, limit ${cardTopLimit}px`)
+  if (!/^https:\/\/(jingjiangze\.github\.io\/dsh-market|dsh\.jiangjiangze\.icu)\/index\.(zh|en|ja|ko|ru)\.json$/.test(probe.indexSource ?? '')) fail(`${vp.name}: the subscription link is "${probe.indexSource}", not a known host`)
+  if (!probe.indexAlternate) fail(`${vp.name}: no fallback subscription source is offered`)
   if (probe.cardRole !== 'button') fail(`${vp.name}: cards do not expose role=button (got ${probe.cardRole})`)
   if (probe.cardChevron !== probe.cardCount) fail(`${vp.name}: ${probe.cardChevron} chevrons for ${probe.cardCount} cards`)
   if (!probe.installHint) fail(`${vp.name}: the install row does not explain itself when nothing is installed`)
