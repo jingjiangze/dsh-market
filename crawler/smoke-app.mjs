@@ -33,6 +33,7 @@ function element(id) {
     elements.set(id, {
       id, textContent: '', innerHTML: '', value: '', dataset: {}, open: false, placeholder: '',
       addEventListener() {}, focus() {}, remove() {},
+      querySelector: () => null, querySelectorAll: () => [], insertBefore() {}, appendChild() {},
       showModal() { this.open = true }, close() { this.open = false },
     })
   }
@@ -51,7 +52,7 @@ const document = {
   getElementById: (id) => element(id),
   querySelectorAll: () => [],
   querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : null),
-  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, remove() {}, setAttribute() {}, addEventListener() {}, classList: { toggle() {}, add() {}, remove() {} } }),
+  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, remove() {}, setAttribute() {}, addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], insertBefore() {}, appendChild() {}, classList: { toggle() {}, add() {}, remove() {} } }),
   addEventListener() {},
   documentElement: { dataset: {} },
   head: { appendChild() {} },

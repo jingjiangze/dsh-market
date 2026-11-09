@@ -236,7 +236,9 @@ for (const vp of VIEWPORTS) {
   if (probe.curatedSortLabel !== '精选推荐') fail(`${vp.name}: the curated ranking is labelled "${probe.curatedSortLabel}", expected 精选推荐`)
   if (await page.locator('.picks').count()) fail(`${vp.name}: the removed curated shelf is still rendered`)
   if (probe.setupClosed !== true) fail(`${vp.name}: the subscription block is not collapsed by default`)
-  if (!probe.setupInFirstScreen) fail(`${vp.name}: the subscription block is below the first screen`)
+  // The subscription block moved into the overflow menu; what matters now is that the menu
+  // exists and starts closed, so the toolbar stays one row.
+  if (probe.overflowClosed !== true) fail(`${vp.name}: the overflow menu is not collapsed by default`)
   // Search must own most of a row: it is the primary way into a 13k catalogue.
   if (probe.searchWidthRatio < 60) fail(`${vp.name}: the search field is only ${probe.searchWidthRatio}% of the viewport wide`)
   if (probe.primarySorts === 0 || probe.primarySorts > 6) fail(`${vp.name}: ${probe.primarySorts} sort buttons visible, expected 4-6`)

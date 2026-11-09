@@ -343,6 +343,7 @@ function renderPersonal(pool) {
   ensureQuizButton()
   ensureMirrorSelect()
   ensureSetupDisclosure()
+  ensureOverflowMenu()
   ensureThemeToggle()
 }
 
@@ -436,9 +437,13 @@ function render() {
   const buttons = SORTS.filter(([id]) => !TREND.has(id)).map(button).join('')
   const trendButtons = SORTS.filter(([id]) => TREND.has(id)).map(button).join('')
   const trendOpen = TREND.has(state.sort) ? ' open' : ''
-  const favButton = `<button class=dice data-fav-toggle aria-pressed="${state.favorites}">★ 收藏${favorites.size ? ` ${favorites.size}` : ''}</button>`
-  const compatButton = `<select id=compat aria-label="DSH 版本兼容"><option value=all>兼容：全部</option><option value=0.2${state.compat === '0.2' ? ' selected' : ''}>0.2.x</option><option value=0.1${state.compat === '0.1' ? ' selected' : ''}>0.1.x</option></select>`
-  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details>${compatButton}${favButton}<button class=dice data-random>🎲 随机</button>`
+  // Everything that is not an ordering lives behind one glyph. The template owns the menu so
+  // the controls exist in the markup (and the smoke test can see them); ensureOverflowMenu
+  // only relocates the ones other helpers create.
+  const compatButton = `<label class=menu-row>兼容 <select id=compat><option value=all>全部</option><option value=0.2${state.compat === '0.2' ? ' selected' : ''}>0.2.x</option><option value=0.1${state.compat === '0.1' ? ' selected' : ''}>0.1.x</option></select></label>`
+  const favButton = `<button class=menu-row data-fav-toggle aria-pressed="${state.favorites}">★ 收藏${favorites.size ? ` ${favorites.size}` : ''}</button>`
+  const menuExtras = compatButton + favButton + '<button class=menu-row data-random>🎲 随机一个</button>'
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details><details class=overflow><summary aria-label=更多设置><span>⋯</span></summary><div class=menu>${menuExtras}</div></details>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
@@ -925,6 +930,29 @@ function ensureSetupDisclosure() {
   summary.innerHTML = '<span>索引源与语言</span><i></i>'
   details.append(summary, seg, src)
   hero.insertBefore(details, hero.firstChild)
+}
+
+// The toolbar had grown to thirteen controls in two rows plus an install bar and a hint:
+// tutorial, quiz, mirror, theme, five sorts, a trend menu, compatibility, favourites, random.
+// That is a wall before the first card. Everything except the orderings and the count moves
+// here — still one click away, no longer the first thing a reader has to read.
+function ensureOverflowMenu() {
+  const sort = $('sort')
+  const menu = sort && sort.querySelector('.overflow .menu')
+  if (!menu) return
+  // Helpers elsewhere create these; they belong in the menu, not in the toolbar.
+  const move = (el) => { if (el && el.parentNode !== menu) menu.appendChild(el) }
+  move(document.querySelector('.setup'))
+  move(document.querySelector('#mirror'))
+  move(document.querySelector('[data-guide]'))
+  move(document.querySelector('[data-quiz]'))
+  move($('ins'))
+  // The theme toggle stays in the toolbar: one glyph, switched often.
+  const theme = document.querySelector('#theme')
+  if (theme && theme.parentNode !== sort) {
+    const overflow = sort.querySelector('.overflow')
+    sort.insertBefore(theme, overflow ?? null)
+  }
 }
 
 function ensureMirrorSelect() {

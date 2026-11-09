@@ -988,6 +988,63 @@ footer {
 }
 .src-alt:hover { color: var(--text); border-color: var(--blue); }
 
+/* ── the overflow menu ──────────────────────────────────────────────────────
+ * The toolbar used to carry thirteen controls in two rows. Everything that is not an
+ * ordering now lives behind one glyph. */
+.overflow { position: relative; display: inline-block; }
+.overflow > summary {
+  list-style: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dim);
+  background: var(--plate-2);
+  border: 1px solid var(--line-2);
+  font: 600 15px/1 var(--font-mono);
+  letter-spacing: .08em;
+}
+.overflow > summary::-webkit-details-marker { display: none; }
+.overflow > summary:hover { color: var(--text); border-color: var(--blue); }
+.overflow[open] > summary { color: var(--blue-soft); border-color: var(--blue); }
+.overflow .menu {
+  position: absolute;
+  right: 0;
+  top: 36px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(248px, calc(100vw - 32px));
+  padding: 10px;
+  background: var(--plate);
+  border: 1px solid var(--line-2);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .45);
+}
+.overflow .menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 9px;
+  color: var(--text);
+  background: var(--plate-2);
+  border: 1px solid var(--line);
+  font: 500 12px/1.35 var(--font-mono);
+  letter-spacing: .03em;
+  text-align: left;
+  cursor: pointer;
+}
+.overflow .menu-row:hover { border-color: var(--blue); color: var(--blue-soft); }
+.overflow .menu .ins { width: 100%; margin: 0; flex-direction: column; align-items: stretch; }
+.overflow .menu .setup { width: 100%; margin: 0; }
+.overflow .menu .src { margin: 0; }
+.overflow .menu .seg { margin: 0 0 4px; }
+.overflow .menu select { width: 100%; }
+
 /* ── light theme ──────────────────────────────────────────────────────────
  * Same geometry, same single accent. Only the surface tokens change, so nothing has to
  * be duplicated per component and no rule can drift between the two themes. */
