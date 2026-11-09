@@ -206,9 +206,20 @@ function extra(entry, lang) {
   return hit ? { title: hit[1], desc: hit[2] } : null
 }
 const titleOf = (entry) => (state.lang === 'en' ? (entry.e || entry.t) : (extra(entry, state.lang)?.title || entry.t))
+// A description is a string. One catalogue row shipped its blurb as an ARRAY of score
+// figures, which String() turned into "★ 5,899,★ 5,899,…" and the detail dialog showed that
+// as the summary. Coerce here as well as in the crawler: a chunk already in a reader's cache
+// must not be able to render a figure dump as prose.
+const asProse = (value) => {
+  const raw = Array.isArray(value)
+    ? value.find((part) => typeof part === 'string' && part.trim()) ?? ''
+    : typeof value === 'string' ? value : ''
+  const glyphs = (raw.match(/[★☆↓↑🔒⭐]/g) ?? []).length
+  return glyphs >= 2 || /^[★☆↓↑🔒⭐]/.test(raw) ? '' : raw
+}
 const descOf = (entry) => {
-  if (state.lang === 'en') return entry.de || entry.d
-  return extra(entry, state.lang)?.desc || entry.d || entry.de
+  const preferred = state.lang === 'en' ? (entry.de || entry.d) : (extra(entry, state.lang)?.desc || entry.d || entry.de)
+  return asProse(preferred) || asProse(entry.d) || asProse(entry.de)
 }
 const catTitle = (id) => {
   const value = state.meta?.categories?.[id]?.title
