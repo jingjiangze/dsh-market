@@ -596,7 +596,12 @@ function guideHtml() {
 }
 
 function openDetail(name) {
-  const entry = state.plugins.find((item) => item.n === name)
+  // A card was rendered from state.visible, so it must always resolve: falling back to the
+  // visible list keeps a click from silently doing nothing if the two lists ever diverge.
+  const entry = state.plugins.find((item) => item.n === name) ?? state.visible.find((item) => item.n === name)
+  // Visible for the visual gate: a click that does nothing is otherwise indistinguishable
+  // from a click that was never delivered.
+  window.__openTrace = { name, found: Boolean(entry), plugins: state.plugins.length, visible: state.visible.length }
   if (!entry) return
   state.open = name
   state.guide = false
