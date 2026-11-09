@@ -283,6 +283,34 @@ for (const vp of VIEWPORTS) {
     await page.screenshot({ path: join(OUT, 'desktop-quiz.png') })
     await page.keyboard.press('Escape')
     await page.evaluate(() => { const m = document.querySelector('#overflow'); if (m) m.open = false })
+
+    // Category selection has to be observable, not just wired.
+    const beforeCat = await page.evaluate(() => ({
+      cards: document.querySelectorAll('.card').length,
+      meta: document.getElementById('meta')?.textContent ?? '',
+      chips: document.querySelectorAll('#cats .chip').length,
+    }))
+    const target = await page.evaluate(() => {
+      const chips = [...document.querySelectorAll('#cats .chip')].filter((c) => c.dataset.cat !== 'all')
+      if (!chips.length) return null
+      const chip = chips[0]
+      chip.click()
+      return chip.dataset.cat
+    })
+    await page.waitForTimeout(250)
+    const afterCat = await page.evaluate((cat) => ({
+      cards: document.querySelectorAll('.card').length,
+      meta: document.getElementById('meta')?.textContent ?? '',
+      pressed: document.querySelector('#cats .chip[aria-pressed=true]')?.dataset?.cat ?? null,
+      cat,
+    }), target)
+    if (!target) fail('desktop: the category rail rendered no selectable chip')
+    else if (afterCat.pressed !== target) fail(`desktop: clicking category ${target} did not press that chip (pressed=${afterCat.pressed})`)
+    else if (!afterCat.meta.includes(target) && afterCat.meta === beforeCat.meta) fail('desktop: the header still reads the same after picking a category')
+    else if (afterCat.cards === 0) fail(`desktop: category ${target} rendered no cards`)
+    // Back to everything, so the later assertions see the full catalogue.
+    await page.evaluate(() => document.querySelector('#cats .chip[data-cat=all]')?.click())
+    await page.waitForTimeout(200)
     await page.waitForTimeout(300)
   }
   const firstCard = await page.$('.card')

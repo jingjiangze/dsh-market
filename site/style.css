@@ -336,7 +336,9 @@ h1::before {
   padding-right: 2px;
 }
 
-/* Arknights-style section bracket: [ DSH 优化 ] */
+/* Arknights-style section bracket, now a working disclosure: the brackets stay as the visual
+   marker, but the whole row collapses its group. */
+.grpbox { display: block; }
 .grp {
   display: flex;
   align-items: center;
@@ -346,10 +348,14 @@ h1::before {
   font: 600 10px/1 var(--font-mono);
   letter-spacing: .16em;
   text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
 }
-.grp::before { content: "["; color: var(--blue); }
-.grp::after { content: "]"; color: var(--blue); }
-.grp:first-child { margin-top: 0; }
+.grp::-webkit-details-marker { display: none; }
+.grp:hover { color: var(--text); }
+.grp::after { content: "▾"; margin-left: auto; color: var(--faint); font-size: 9px; transition: transform .16s var(--ease); }
+.grpbox:not([open]) > .grp::after { transform: rotate(-90deg); }
+.grpbox:first-child > .grp { margin-top: 0; }
 
 .chip {
   display: flex;
@@ -367,7 +373,9 @@ h1::before {
   cursor: pointer;
   transition: color .14s var(--ease), background .14s var(--ease), border-color .14s var(--ease);
 }
-.chip b { color: var(--faint); font: 500 10.5px/1 var(--font-mono); }
+/* The count element is <i>, not <b>: styling the wrong tag left the numbers at body size,
+   which is most of why the rail read as noise rather than a list of numbers. */
+.chip i { color: var(--faint); font: 500 10.5px/1 var(--font-mono); font-style: normal; }
 .chip:hover { color: var(--text); background: var(--plate); border-left-color: var(--line-2); }
 .chip[aria-pressed=true] {
   color: #fff;
