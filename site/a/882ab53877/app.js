@@ -1,0 +1,1119 @@
+// Browsing layer for the DSH plugin index.
+//
+// Data: `browse/meta.json` + `browse/<n>.json` chunks (800 compact entries each),
+// fetched through three tiers with an 8 s timeout each — ModelScope dataset first,
+// jsDelivr second, GitHub Pages last. The 11.5 MB format-1 document is what DSH
+// itself reads; the page never downloads it.
+const LANGS = ['zh', 'en', 'ja', 'ko', 'ru']
+const LANG_LABEL = { zh: '中文', en: 'EN', ja: '日本語', ko: '한국어', ru: 'Русский' }
+const PLACEHOLDER = {
+  zh: '搜索插件 / 作者 / 关键词',
+  en: 'Search plugins, authors, keywords',
+  ja: 'プラグイン・作者・キーワードを検索',
+  ko: '플러그인 · 작성자 · 키워드 검색',
+  ru: 'Поиск плагинов, авторов, ключевых слов',
+}
+// Subscription links are two-dimensional: region × language.
+//   国内源 (ModelScope dataset, fast inside China, unreachable abroad)
+//   国外源 (GitHub Pages, reachable everywhere)
+// Each language has one document in each region, so a reader who wants Japanese can
+// subscribe to exactly the Japanese catalogue that their network can download.
+const DATASET = 'https://modelscope.cn/datasets/jingjiangze/Anime-JPG/resolve/master/web'
+const PAGES = 'https://jingjiangze.github.io/dsh-market'
+const IDX_LABEL = { zh: '中文', en: 'English', ja: '日本語', ko: '한국어', ru: 'Русский' }
+
+function inChina() {
+  const tz = String(Intl.DateTimeFormat().resolvedOptions().timeZone ?? '')
+  const lang = String(navigator.language ?? '').toLowerCase()
+  return /Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Hong_Kong|Macau|Taipei)$/.test(tz) || lang.startsWith('zh')
+}
+
+const BRAND = 'https://dsh.jiangjiangze.icu'
+
+// The data path below tries three hosts; the subscription link used to name one. Both of the
+// first two serve identical bytes now, and the brand host is Cloudflare — the fastest of them
+// from China, which is exactly who reads the Chinese document. Pages keeps every other
+// language, because the deploy only copies index.zh.json to the brand host.
+function indexUrl(lang = state.copyTarget) {
+  // The dataset answers 302 to its CDN and DSH rejects redirects, so it can never be a
+  // subscription target no matter how fast it is.
+  if (lang === 'zh' && inChina()) return `${BRAND}/index.zh.json`
+  return `${PAGES}/index.${lang}.json`
+}
+
+// The other host for the same document, offered under the copy button: a reader whose
+// network blocks one of them should not have to guess that the other exists.
+function alternateIndexUrl(lang = state.copyTarget) {
+  if (lang !== 'zh') return null
+  return inChina() ? `${PAGES}/index.zh.json` : `${BRAND}/index.zh.json`
+}
+
+// Data comes from the dataset first in every region. It is the only host that
+// actually carries `browse/`: Pages and jsDelivr both 404 on that path because the
+// chunks are a build product that is never committed. The old region-ordered list
+// started with Pages abroad, so a reader outside China burned two dead tiers and
+// then failed outright — the "索引加载失败：Failed to fetch" screen. Dataset first,
+// Pages last as the blocked-network hop.
+function tiersFor() {
+  return [`${DATASET}/browse`, `${PAGES}/browse`, 'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/browse']
+}
+const SRC_LABEL = {
+  'src-npm': 'npm', 'src-dshso': 'dsh.so', 'src-awesome': 'awesome',
+  'src-mydsh': 'mydsh', 'src-polang': '开放市场', 'src-official': '官方精选',
+  'src-2bingling': '2BingLing', 'src-github': 'GitHub',
+}
+const TRUST_LABEL = {
+  'trust-readme-verified': 'README 核对',
+  'trust-repo-fallback': '仓库固定',
+  'zh-fallback': '中文待补',
+  'catalog-only': '仅目录',
+  'no-engines': '未声明版本',
+  // popularity tiers published by the crawler
+  'stars-hot': '★ 1k+',
+  'stars-mid': '★ 100+',
+  'stars-new': '★ <100',
+  'dl-hot': '↓ 1k+',
+  'dl-mid': '↓ 100+',
+  'install-verified': '已验证安装',
+}
+const SORTS = [
+  // Curation first: the official catalogue is a hand-picked allow-list, so "is this a
+  // pick" is a better first question than a blended popularity number nobody can see.
+  ['curated', '精选推荐'],
+  ['stars', '★ 星标'], ['downloads', '↓ 下载'], ['recent', '◷ 最新'], ['name', 'A-Z'],
+  ['trend7', '↗ 7 天'], ['trend30', '↗ 30 天'], ['trend90', '↗ 90 天'],
+]
+const TIMEOUT = 8000
+
+const GUIDE = {
+  zh: ['打开 DSH 的「插件」页，切到「发现」。', '点右上角的设置，把下面这条索引源粘进去。', '保存后回到「发现」，插件列表会自动刷新。'],
+  en: ['Open Plugins in DSH and switch to Discover.', 'In the settings there, paste the index URL below.', 'Go back to Discover; the list refreshes by itself.'],
+  ja: ['DSH の「プラグイン」→「発見」を開きます。', '右上の設定に下の索引 URL を貼り付けます。', '「発見」に戻ると一覧が更新されます。'],
+  ko: ['DSH의 플러그인 → 발견을 엽니다.', '오른쪽 위 설정에 아래 인덱스 주소를 붙여 넣습니다.', '발견으로 돌아오면 목록이 갱신됩니다.'],
+  ru: ['Откройте «Плагины» → «Обзор» в DSH.', 'В настройках вставьте адрес индекса ниже.', 'Вернитесь в «Обзор» — список обновится.'],
+}
+
+// Registries the reader can install from. The probe results carried by the browse chunks
+// (crawler/probe-npm.mjs) say which one actually answers for a given entry.
+const REGISTRIES = {
+  auto: { label: '自动', url: null },
+  mirror: { label: '国内镜像', url: 'https://registry.npmmirror.com' },
+  npm: { label: 'npm 官方', url: 'https://registry.npmjs.org' },
+  git: { label: 'GitHub 源码', url: null },
+}
+function mirrorDefault() {
+  const saved = localStorage.getItem('dsh-market-mirror')
+  if (saved && REGISTRIES[saved]) return saved
+  return inChina() ? 'mirror' : 'npm'
+}
+// Light and dark are the same design with different tokens, so the toggle only sets
+// `data-theme` on <html> and CSS does the rest. The choice is remembered; a first visit
+// follows the system preference. Applied before the first render to avoid a flash.
+const THEME_KEY = 'dsh-market-theme'
+function preferredTheme() {
+  const saved = localStorage.getItem(THEME_KEY)
+  if (saved === 'light' || saved === 'dark') return saved
+  return window.matchMedia?.('(prefers-color-scheme: light)')?.matches ? 'light' : 'dark'
+}
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme
+  const button = document.querySelector('#theme')
+  if (!button) return
+  button.textContent = theme === 'light' ? '☾' : '☀'
+  button.setAttribute('aria-label', theme === 'light' ? '切到夜间模式' : '切到白天模式')
+  button.title = button.getAttribute('aria-label')
+}
+applyTheme(preferredTheme())
+function ensureThemeToggle() {
+  const row = document.querySelector('.row')
+  if (!row || row.querySelector('#theme')) return
+  const button = document.createElement('button')
+  button.id = 'theme'
+  button.className = 'dice theme'
+  button.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'
+    try { localStorage.setItem(THEME_KEY, next) } catch {}
+    applyTheme(next)
+  })
+  const meta = row.querySelector('#meta')
+  row.insertBefore(button, meta ?? null)
+  applyTheme(document.documentElement.dataset.theme ?? preferredTheme())
+}
+
+const state = { lang: 'zh', copyTarget: 'zh', query: '', category: 'all', limit: 60, sort: 'curated', meta: null, plugins: [], tier: Number(localStorage.getItem('dsh-market-tier') ?? -1), open: null, visible: [], guide: false, favorites: false, compat: 'all', mirror: mirrorDefault() }
+
+// ---- personal state: favorites and the installed set -------------------------
+// Everything stays in this browser (the site is static and runs no Worker).
+const FAV_KEY = 'dsh-market-favorites'
+const INSTALLED_KEY = 'dsh-market-installed'
+const readStore = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback } catch { return fallback } }
+const favorites = new Set(Array.isArray(readStore(FAV_KEY, [])) ? readStore(FAV_KEY, []) : [])
+const installed = readStore(INSTALLED_KEY, {})
+const saveFavorites = () => { try { localStorage.setItem(FAV_KEY, JSON.stringify([...favorites])) } catch {} }
+const saveInstalled = () => { try { localStorage.setItem(INSTALLED_KEY, JSON.stringify(installed)) } catch {} }
+const isFavorite = (name) => favorites.has(name)
+const isInstalled = (name) => Object.prototype.hasOwnProperty.call(installed, name)
+
+// Trust / install-readiness, derived only from fields the crawler already ships.
+// 0 = verified npm entry, 1 = catalog-only (install target came from a catalogue),
+// 2 = no engines.dsh declared, 3 = git-pinned (installable, but from a commit).
+function trustOf(entry) {
+  const labels = entry.l ?? []
+  if (labels.includes('no-engines')) return { level: 2, text: '⛔ 未声明版本' }
+  if (labels.includes('catalog-only')) return { level: 1, text: '⚠️ 目录收录' }
+  if (entry.src === 'git') return { level: 3, text: '◆ Git 固定' }
+  return { level: 0, text: '✅ 已验证' }
+}
+
+// Three-level pre-flight, mirroring the "installable / risky / manual" grading used
+// by dsh-plugin-workshop: it needs no backend because every signal is in the index.
+function installGrade(entry) {
+  const labels = entry.l ?? []
+  if (labels.includes('no-engines') || !entry.eg) return { level: 2, text: '建议手动' }
+  if (labels.includes('catalog-only') || entry.src === 'git') return { level: 1, text: '有风险' }
+  return { level: 0, text: '可直接安装' }
+}
+
+// Whether an entry claims to work with the chosen DSH runtime. We only have the
+// declared range (e.g. ">=0.2.0-0 <0.3.0"); compare against the leading version.
+function compatWith(entry, runtime) {
+  if (!runtime || runtime === 'all') return true
+  if (!entry.eg) return false
+  const m = String(entry.eg).match(/(\d+)\.(\d+)\.(\d+)/)
+  if (!m) return true
+  const r = runtime.match(/(\d+)\.(\d+)/)
+  if (!r) return true
+  const major = Number(m[1]), minor = Number(m[2])
+  const rMajor = Number(r[1]), rMinor = Number(r[2])
+  // A range starting at X.Y accepts that minor line and newer majors; anything
+  // clearly older is filtered out. This is deliberately conservative.
+  return rMajor > major || (rMajor === major && rMinor >= minor)
+}
+
+const TRENDING_DAYS = { trend7: 7, trend30: 30, trend90: 90 }
+const dayMs = 86400000
+const nowMs = () => Date.now()
+
+
+
+const $ = (id) => document.getElementById(id)
+const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
+const day = (seconds) => (seconds ? new Date(seconds * 1000).toISOString().slice(0, 10) : '')
+const num = (value) => (value >= 1000 ? `${(value / 1000).toFixed(value >= 10000 ? 0 : 1)}k` : String(value))
+
+function extra(entry, lang) {
+  const hit = (entry.x ?? []).find((row) => row[0] === lang)
+  return hit ? { title: hit[1], desc: hit[2] } : null
+}
+const titleOf = (entry) => (state.lang === 'en' ? (entry.e || entry.t) : (extra(entry, state.lang)?.title || entry.t))
+// A description is a string. One catalogue row shipped its blurb as an ARRAY of score
+// figures, which String() turned into "★ 5,899,★ 5,899,…" and the detail dialog showed that
+// as the summary. Coerce here as well as in the crawler: a chunk already in a reader's cache
+// must not be able to render a figure dump as prose.
+const asProse = (value) => {
+  const raw = Array.isArray(value)
+    ? value.find((part) => typeof part === 'string' && part.trim()) ?? ''
+    : typeof value === 'string' ? value : ''
+  const glyphs = (raw.match(/[★☆↓↑🔒⭐]/g) ?? []).length
+  return glyphs >= 2 || /^[★☆↓↑🔒⭐]/.test(raw) ? '' : raw
+}
+const descOf = (entry) => {
+  const preferred = state.lang === 'en' ? (entry.de || entry.d) : (extra(entry, state.lang)?.desc || entry.d || entry.de)
+  return asProse(preferred) || asProse(entry.d) || asProse(entry.de)
+}
+const catTitle = (id) => {
+  const value = state.meta?.categories?.[id]?.title
+  return (typeof value === 'string' ? value : value?.[state.lang] ?? value?.en) ?? id
+}
+// Only labels that add something the card does not already say are rendered here.
+// The `tags` line carries the exact star/download numbers, so a "★ 1k+" tier pill
+// beside "★ 63" is noise, and "未声明版本"/"仅目录" repeat the trust pill right
+// before them — together they put six overlapping pills on every card.
+const BADGE_SKIP = new Set([
+  'catalog-only', 'no-engines', 'zh-fallback', 'install-verified',
+  'stars-hot', 'stars-mid', 'stars-new', 'dl-hot', 'dl-mid',
+])
+const badges = (entry) => [...new Set(entry.l ?? [])]
+  .filter((label) => !BADGE_SKIP.has(label))
+  .map((label) => SRC_LABEL[label] ?? TRUST_LABEL[label] ?? null)
+  .filter(Boolean)
+  .slice(0, 2)
+
+function matches(entry) {
+  if (state.favorites && !isFavorite(entry.n)) return false
+  if (state.category !== 'all' && entry.c !== state.category) return false
+  if (!compatWith(entry, state.compat)) return false
+  const windowDays = TRENDING_DAYS[state.sort]
+  if (windowDays) {
+    const age = (nowMs() - (entry.p ?? 0) * 1000) / dayMs
+    if (age < 0 || age > windowDays) return false
+  }
+  const q = state.query.trim().toLowerCase()
+  if (!q) return true
+  // Small Chinese→English synonym table: searching 记忆 should also hit "memory".
+  const words = q.split(/\s+/).map((word) => ZH_EN[word] ?? word)
+  const haystack = [entry.n, entry.t, entry.e, entry.d, entry.de, entry.a ?? '', ...(entry.x ?? []).flat()].join(' ').toLowerCase()
+  return words.every((word) => haystack.includes(word))
+}
+
+const ZH_EN = { 记忆: 'memory', 模型: 'model', 界面: 'ui', 工具: 'tools', 主题: 'theme', 皮肤: 'skin', 搜索: 'search', 数据: 'data', 连接: 'connect', 办公: 'work', 运维: 'ops', 开发: 'dev', 智能体: 'agent', 媒体: 'media', 性能: 'perf', 优化: 'enhance', 安全: 'security', 翻译: 'translate', 快捷键: 'shortcut' }
+
+function byOrder(a, b) {
+  if (state.sort === 'name') return a.n.localeCompare(b.n)
+  if (state.sort === 'recent') return (b.p ?? 0) - (a.p ?? 0) || a.n.localeCompare(b.n)
+  // `score` used to fall through to the stars key, so the heat button produced the
+  // exact same list as the stars button. Each sort now names its own key and falls
+  // back to the other popularity figures before the name.
+  if (state.sort === 'curated') {
+    return (b.cu ?? 0) - (a.cu ?? 0) || (b.of ?? 0) - (a.of ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
+  }
+  if (state.sort === 'downloads') return (b.dl ?? 0) - (a.dl ?? 0) || (b.s ?? 0) - (a.s ?? 0) || a.n.localeCompare(b.n)
+  return (b.s ?? 0) - (a.s ?? 0) || (b.dl ?? 0) - (a.dl ?? 0) || a.n.localeCompare(b.n)
+}
+
+// Icon chain: the package icon, then the repository owner's avatar (developer),
+// then the CSS dot. `onerror` swaps down the chain without extra requests.
+// One helper for both views: try each URL in order, and when the chain runs out
+// swap the <img> for the CSS dot — an <img> with no valid source shows the
+// browser's broken-image box, which is exactly what a wrong avatar looked like.
+function imgChain(chain, attributes) {
+  const urls = chain.filter(Boolean)
+  if (!urls.length) return ''
+  return `<img ${attributes} src="${esc(urls[0])}" data-chain="${esc(urls.slice(1).join('|'))}" onerror="var c=this.dataset.chain;if(!c){this.outerHTML='<i class=dot></i>';return}var p=c.split('|');this.dataset.chain=p.slice(1).join('|');this.src=p[0]">`
+}
+
+function icon(entry) {
+  // `class=hicon` is what sizes the thumbnail; a bare <img> expands to its intrinsic
+  // width and the card text ends up wrapping character by character.
+  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'class=hicon loading=lazy') || '<i class=dot></i>'
+}
+
+function card(entry) {
+  // A card answers three questions and stops: what is it, what does it do, how used is it.
+  //   × the category chip   — redundant inside a category view, and it pushed the numbers
+  //                           onto a second line
+  //   × 源码安装 / 可直接安装  — a source/grade pill on nearly every row reads as noise;
+  //                           both live in the detail dialog where they can be explained
+  //   × ✦ 官方精选 文字      — kept as a single glyph so the mark survives without a badge row
+  // What is left is one line of numbers, which is what a reader scans for.
+  const numbers = [entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean).join(' · ')
+  const owned = isInstalled(entry.n)
+  const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
+  const own = [
+    owned ? `<span class=own>已装 ${esc(installed[entry.n] ?? '')}</span>` : '',
+    upgrade ? '<span class=up>可升级</span>' : '',
+  ].join('')
+  const pick = entry.of ? '<b class=pick title="官方精选" aria-label="官方精选">✦</b>' : ''
+  const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
+  // A card is a button: the chevron makes that visible on hover, and aria tells a screen
+  // reader the same thing the cursor does.
+  return `<article class=card data-open="${esc(entry.n)}" tabindex=0 role=button aria-label="查看 ${esc(titleOf(entry)) || esc(entry.n)} 详情"><b class=go aria-hidden=true>›</b>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}${pick}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${numbers}${own}</p>${fav}</div></article>`
+}
+
+// The personal layer: what this browser says about the catalogue (votes) and what is
+// actually installed (a directory scan or an imported file). It renders two strips
+// above the list — a status bar and a "for you" rail — and both stay hidden until the
+// reader has given at least one signal, so a first visit looks exactly as before.
+function renderPersonal(pool) {
+  const ownedNames = Object.keys(installed)
+  const upgradable = ownedNames.filter((name) => {
+    const entry = state.plugins.find((item) => item.n === name)
+    return entry && entry.v && String(installed[name]) !== String(entry.v)
+  }).length
+  const unknown = ownedNames.filter((name) => !state.plugins.some((item) => item.n === name)).length
+
+  let bar = document.getElementById('ins')
+  if (!bar) {
+    bar = document.createElement('div')
+    bar.id = 'ins'
+    bar.className = 'ins'
+    const row = document.querySelector('.row')
+    row?.parentElement?.insertBefore(bar, row.nextSibling)
+  }
+  // Nothing installed yet: the row is an invitation, not a status line. The explanation only
+  // shows in that state so it does not become permanent furniture.
+  const empty = ownedNames.length === 0
+  bar.innerHTML = `<span class=ins-stat>已装 <b>${ownedNames.length}</b>${upgradable ? ` · <b class=up>${upgradable}</b> 可升级` : ''}${unknown ? ` · <b>${unknown}</b> 未收录` : ''}</span>
+    <button class=ins-btn data-scan>扫描已安装</button>
+    <details class=ins-more><summary>其他方式</summary><button class=ins-btn data-import-input>导入已装清单</button><input type=file id=importFile accept="application/json,.json" hidden></details>
+    ${empty ? '<span class=ins-hint>读取本机已装插件，用来标出「已装」和可升级项；不扫描也能正常浏览。</span>' : ''}`
+
+  // Themed shelves (high score / popular / new / daily) were retired by request: the
+  // catalogue now opens straight into the category rail and the card grid.
+  ensureQuizButton()
+  ensureMirrorSelect()
+  ensureSetupDisclosure()
+  ensureOverflowMenu()
+  ensureThemeToggle()
+}
+
+// Reads a DSH profile directory in the browser: walk for `node_modules`, then keep
+// the packages whose package.json carries a dsh section or a dsh keyword. Chrome and
+// Edge expose showDirectoryPicker; other browsers use the JSON import instead.
+async function scanInstalled() {
+  if (!window.showDirectoryPicker) {
+    alert('这个浏览器不支持直接读取目录，请用「导入 JSON」。')
+    return null
+  }
+  const root = await window.showDirectoryPicker({ id: 'dsh-profile', mode: 'read' })
+  const found = {}
+  const readPackage = async (dirHandle, fallbackName) => {
+    try {
+      const file = await dirHandle.getFileHandle('package.json')
+      const pkg = JSON.parse(await (await file.getFile()).text())
+      const words = Array.isArray(pkg.keywords) ? pkg.keywords.map((word) => String(word).toLowerCase()) : []
+      const isDsh = Boolean(pkg.dsh) || words.includes('dsh-plugin') || words.some((word) => word.startsWith('dsh-'))
+      if (isDsh) found[pkg.name || fallbackName] = pkg.version || ''
+    } catch { /* not a package */ }
+  }
+  const readModules = async (modules) => {
+    for await (const [name, handle] of modules.entries()) {
+      if (handle.kind !== 'directory') continue
+      if (name.startsWith('@')) {
+        for await (const [scoped, scopedHandle] of handle.entries()) {
+          if (scopedHandle.kind === 'directory') await readPackage(scopedHandle, `${name}/${scoped}`)
+        }
+      } else {
+        await readPackage(handle, name)
+      }
+    }
+  }
+  const walk = async (dir, depth) => {
+    if (depth > 5) return
+    for await (const [name, handle] of dir.entries()) {
+      if (handle.kind !== 'directory' || name.startsWith('.')) continue
+      if (name === 'node_modules') { await readModules(handle); continue }
+      await walk(handle, depth + 1)
+    }
+  }
+  await walk(root, 0)
+  return found
+}
+
+function render() {
+  if (!state.meta) return
+  const pool = state.plugins.filter(matches).sort(byOrder)
+  state.visible = pool
+  const counts = new Map()
+  for (const entry of state.plugins) counts.set(entry.c, (counts.get(entry.c) ?? 0) + 1)
+  const chip = (id, label, count) => `<button class=chip data-cat="${esc(id)}"${state.category === id ? ' aria-pressed=true' : ''}><span>${esc(label)}</span><i>${count}</i></button>`
+  // The header reports the catalogue total, not what happens to be in memory:
+  // chunks load progressively, and "1,500" looked like the whole catalogue.
+  const total = state.meta.total ?? state.plugins.length
+  const parts = [chip('all', IDX_LABEL[state.copyTarget], total)]
+  // Fold the leaf ids into rails by their prefix: enhance-* -> DSH 优化,
+  // agent-* -> 智能体, data-*/media-* -> 内容, connect-* -> 连接,
+  // dev-*/*-security -> 开发与安全, eco-*/other -> 生态.
+  const GROUP_LABEL = { enhance: 'DSH 优化', agent: '智能体与工作流', content: '内容与数据', connect: '连接与运行环境', dev: '开发与安全', eco: '生态与资源', unfilter: '破甲与解锁' }
+  const RAIL_OF = { data: 'content', media: 'content', ops: 'dev' }
+  const groupOf = (id) => {
+    const head = RAIL_OF[id.split('-')[0]] ?? id.split('-')[0]
+    return GROUP_LABEL[head] ? head : 'eco'
+  }
+  // 破甲 sits last, after the ordinary ecosystem group: it is a deliberate destination, not
+  // something a reader should meet while scanning the catalogue.
+  const RAIL_ORDER = ['enhance', 'agent', 'content', 'connect', 'dev', 'eco', 'unfilter']
+  const railRank = (rail) => (RAIL_ORDER.indexOf(rail) === -1 ? RAIL_ORDER.length : RAIL_ORDER.indexOf(rail))
+  const orderedIds = Object.keys(state.meta.categories ?? {})
+    .map((id, index) => ({ id, index, rail: groupOf(id) }))
+    .sort((a, b) => railRank(a.rail) - railRank(b.rail) || a.index - b.index)
+    .map((item) => item.id)
+  // Group headers are disclosures, not dead labels. `[ DSH 优化 ]` looked like something to
+  // click and did nothing, which is most of why the rail felt unresponsive; a summary that
+  // collapses its group is both an affordance that works and a way to shorten a 31-row list.
+  const byRail = new Map()
+  for (const id of orderedIds) {
+    const rail = groupOf(id)
+    if (!byRail.has(rail)) byRail.set(rail, [])
+    byRail.get(rail).push(chip(id, catTitle(id), counts.get(id) ?? 0))
+  }
+  const groupsHtml = [...byRail.entries()]
+    .map(([rail, chips]) => `<details class=grpbox open><summary class=grp>${GROUP_LABEL[rail]}</summary>${chips.join('')}</details>`)
+    .join('')
+  $('cats').innerHTML = parts.join('') + groupsHtml
+  // On a phone the rail is a horizontal strip: keep the selected chip in view.
+  try {
+    document.querySelector('.chip[aria-pressed]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
+  } catch {}
+  // Eleven controls in one row is a wall. The trend windows are a second-order question
+  // ("what changed recently"), so they live one click away; the four orderings a reader
+  // actually switches between stay visible.
+  const TREND = new Set(['trend7', 'trend30', 'trend90'])
+  const button = ([id, label]) => `<button data-sort="${id}"${state.sort === id ? ' aria-pressed=true' : ''}>${label}</button>`
+  const buttons = SORTS.filter(([id]) => !TREND.has(id)).map(button).join('')
+  const trendButtons = SORTS.filter(([id]) => TREND.has(id)).map(button).join('')
+  const trendOpen = TREND.has(state.sort) ? ' open' : ''
+  // Everything that is not an ordering lives behind one glyph. The template owns the menu so
+  // the controls exist in the markup (and the smoke test can see them); ensureOverflowMenu
+  // only relocates the ones other helpers create.
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details>`
+  const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
+  const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
+  const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
+  // The progress bar carries "载入中 N / M" while chunks stream in, so repeating it here was
+  // the same number twice in the same row. The active category rides along instead: clicking
+  // a chip used to change only a thin left border, which read as "the click did nothing".
+  const scopeLabel = state.category === 'all' ? '' : ` · ${catTitle(state.category)}`
+  $('meta').textContent = `${total.toLocaleString()} 个插件${scopeLabel}${scope}${partial}`
+  $('src').textContent = indexUrl(state.copyTarget)
+  // The other host for the same document. A reader whose network blocks one of the two
+  // should not have to guess: the data path already falls back between three hosts, this
+  // gives the subscription link the same courtesy.
+  {
+    const alternate = alternateIndexUrl(state.copyTarget)
+    const bar = document.querySelector(".src")
+    let altButton = document.getElementById("srcalt")
+    if (alternate && bar) {
+      if (!altButton) {
+        altButton = document.createElement("button")
+        altButton.id = "srcalt"
+        altButton.className = "src-alt"
+        bar.appendChild(altButton)
+      }
+      altButton.textContent = inChina() ? "备用源 · GitHub" : "备用源 · 品牌域名"
+      altButton.dataset.copy = alternate
+    } else altButton?.remove()
+  }
+  renderPersonal(pool)
+  renderProgress()
+  renderFooter()
+  const visible = pool.slice(0, state.limit)
+  const more = pool.length > visible.length
+  // Only on the untouched view: a shelf of official picks is an opening suggestion, not
+  // a filter result, and it must never push the reader's own search results down.
+  $('list').innerHTML = pool.length
+    ? visible.map(card).join('') + (more ? `<button class=more data-more>再显示 ${Math.min(120, pool.length - visible.length)} 个（共 ${pool.length}）</button>` : '')
+    : `<p class=empty>${state.plugins.length ? '没有匹配的插件' : '加载中…'}</p>`
+  // Infinite scroll: once the sentinel enters view, extend the list in place.
+  if (more) {
+    const sentinel = document.querySelector('[data-more]')
+    if (sentinel && window.IntersectionObserver && !sentinel.dataset.watched) {
+      sentinel.dataset.watched = '1'
+      const observer = new IntersectionObserver((rows) => {
+        if (!rows.some((row) => row.isIntersecting)) return
+        observer.disconnect()
+        state.limit += 120
+        render()
+      }, { rootMargin: '600px' })
+      observer.observe(sentinel)
+    }
+  }
+}
+
+// Footer states what the catalogue actually contains, because "10,995 plugins" says
+// nothing about how many carry stars, downloads or a translation.
+// 13k entries arrive in chunks; "已载入 N/M" in 11px type is not feedback. A thin bar under
+// the toolbar answers "is it still working" without a spinner.
+function renderProgress() {
+  const total = state.meta?.total ?? 0
+  const loaded = state.plugins.length
+  let bar = document.querySelector('#loadbar')
+  if (!total || loaded >= total) { bar?.remove(); return }
+  if (!bar) {
+    bar = document.createElement('div')
+    bar.id = 'loadbar'
+    bar.innerHTML = '<i></i><span></span>'
+    const hero = document.querySelector('.hero')
+    hero?.parentElement?.insertBefore(bar, hero.nextSibling)
+  }
+  const pct = Math.max(2, Math.min(100, Math.round((loaded / total) * 100)))
+  bar.firstChild.style.width = pct + '%'
+  bar.lastChild.textContent = `载入中 ${loaded.toLocaleString()} / ${total.toLocaleString()}`
+}
+
+function renderFooter() {
+  const footer = document.querySelector?.('body > footer')
+  const items = state.plugins
+  if (!footer || !items.length) return
+  const withStars = items.filter((entry) => entry.s > 0).length
+  const withDownloads = items.filter((entry) => entry.dl > 0).length
+  const translated = items.filter((entry) => (entry.x ?? []).length > 0).length
+  const categories = Object.keys(state.meta?.categories ?? {}).length
+  const pct = (value) => `${Math.round((value / items.length) * 100)}%`
+  const updated = state.meta?.updatedAt ? day(Date.parse(state.meta.updatedAt) / 1000) : ''
+  const parts = [
+    `收录 ${items.length}`,
+    `${categories} 个分类`,
+    `星标 ${withStars}（${pct(withStars)}）`,
+    `下载量 ${withDownloads}（${pct(withDownloads)}）`,
+    `多语言 ${translated}（${pct(translated)}）`,
+    updated ? `更新 ${updated}` : '',
+    '交流 QQ：1689170897',
+  ].filter(Boolean)
+  footer.innerHTML = parts.map((text) => `<span>${esc(text)}</span>`).join('<i>·</i>')
+}
+
+// The detail view shows a larger icon and walks the full chain the reader asked
+// for: package icon → the project's GitHub artwork → the developer's avatar.
+function heroIcon(entry) {
+  return imgChain([entry.i, entry.ib, entry.g, entry.gb], 'class=hicon')
+}
+
+const ZH_SOURCE = { native: '包自带中文', override: '人工整理', catalog: '目录提供', detected: '作者原文', fallback: '暂用英文' }
+
+function detailHtml(entry) {
+  // Reading order, not data order: what it is, what version, who made it, how current,
+  // then the numbers, then the provenance. Everything a reader needs before installing
+  // sits above the fold of the dialog.
+  const pairs = [
+    ['类别', catTitle(entry.c)],
+    ['版本', entry.v],
+    ['作者', entry.a],
+    ['发布', day(entry.p)],
+    ['星标', entry.s ? num(entry.s) : ''],
+    ['下载', entry.dl ? `↓ ${num(entry.dl)}` : ''],
+    ['DSH 版本', entry.eg],
+    ['安装体积', entry.sz ? `${entry.sz} MB` : ''],
+    ['中文来源', ZH_SOURCE[entry.zh] ?? ''],
+    ['收录位数', entry.on ? `${entry.on} 个目录` : ''],
+    ['校验', entry.dg ? `完整性✓${entry.at ? ' 签名✓' : ''}` : ''],
+    ['来源', badges(entry).join(' · ')],
+    ['包名', entry.n],
+  ].filter(([, value]) => value)
+  // A bare spec installs from whatever registry the client already uses, so the picked
+  // mirror is offered as an explicit flag rather than silently assumed. Entries whose
+  // probe result pins a mirror keep that mirror even when the reader chose 自动.
+  const mirror = REGISTRIES[state.mirror] ?? REGISTRIES.auto
+  const spec = `${entry.n}@${entry.v || ''}`
+  const registryUrl = mirror.url || (entry.rg === 'mirror' ? REGISTRIES.mirror.url : entry.rg === 'npm' ? REGISTRIES.npm.url : null)
+  const install = registryUrl ? `${spec} --registry=${registryUrl}` : spec
+  const links = [entry.h, entry.r].filter(Boolean)
+  const keywords = (entry.kw ?? []).map((word) => `<b>${esc(word)}</b>`).join('')
+  const position = state.visible.findIndex((item) => item.n === entry.n)
+  const total = state.visible.length
+  const updated = state.meta?.updatedAt ? day(Date.parse(state.meta.updatedAt) / 1000) : ''
+  const chips = [
+    entry.of ? '<b class=pick>✦ 官方精选</b>' : '',
+    entry.rg === 'git' ? '<b class=src-chip>源码安装</b>' : entry.rg === 'mirror' ? '<b class=src-chip>镜像可用</b>' : '',
+  ].filter(Boolean).join('')
+  return `<div class=dh>${heroIcon(entry)}<div class=dh-text><h3>${esc(titleOf(entry)) || esc(entry.n)}</h3>${chips ? `<p class=dh-chips>${chips}</p>` : ''}</div></div>`
+    + `<p class=lead>${esc(descOf(entry))}</p>`
+    + `<section class=facts><h4>安装信息</h4><dl>${pairs.map(([key, value]) => `<dt>${esc(key)}</dt><dd>${esc(value)}</dd>`).join('')}</dl></section>`
+    + `<section class=install><h4>安装命令</h4><p class=cmd><code>${esc(install)}</code><button data-copy="${esc(install)}">复制安装</button></p></section>`
+    + (keywords ? `<p class=kw>${keywords}</p>` : '')
+    + (links.length ? `<p class=links>${links.map((url) => `<a href="${esc(url)}" target=_blank rel=noreferrer>${esc(url.replace(/^https?:\/\//, ''))}</a>`).join(' ')}</p>` : '')
+    + (updated ? `<p class=stamp>目录更新于 ${esc(updated)}</p>` : '')
+    + `<div class=nav><button data-prev${position <= 0 ? ' disabled' : ''}>← 上一个</button><span>${position >= 0 ? position + 1 : '?'} / ${total}</span><button data-next${position < 0 || position + 1 >= total ? ' disabled' : ''}>下一个 →</button></div>`
+}
+
+function guideHtml() {
+  const steps = (GUIDE[state.lang] ?? GUIDE.zh).map((text, index) => `<li><b>${index + 1}</b>${esc(text)}</li>`).join('')
+  const url = indexUrl(state.copyTarget)
+  return `<h3>接入教程</h3><ol class=guide>${steps}</ol>`
+    + `<p class=cmd><code>${esc(url)}</code><button data-copy="${esc(url)}">复制索引源</button></p>`
+}
+
+function openDetail(name) {
+  // A card was rendered from state.visible, so it must always resolve: falling back to the
+  // visible list keeps a click from silently doing nothing if the two lists ever diverge.
+  const entry = state.plugins.find((item) => item.n === name) ?? state.visible.find((item) => item.n === name)
+  // Visible for the visual gate: a click that does nothing is otherwise indistinguishable
+  // from a click that was never delivered.
+  window.__openTrace = { name, found: Boolean(entry), plugins: state.plugins.length, visible: state.visible.length }
+  if (!entry) return
+  state.open = name
+  state.guide = false
+  $('dlg').innerHTML = detailHtml(entry) + similarHtml(entry)
+  if (!$('dlg').open) $('dlg').showModal()
+}
+
+function openGuide() {
+  state.guide = true
+  $('dlg').innerHTML = guideHtml()
+  if (!$('dlg').open) $('dlg').showModal()
+}
+
+function withTimeout(url) {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), TIMEOUT)
+  return fetch(url, { signal: controller.signal, cache: 'no-cache' })
+    .then((res) => {
+      if (!res.ok) throw new Error(`${res.status}`)
+      return res.json()
+    })
+    .finally(() => clearTimeout(timer))
+}
+
+// Try each tier in order; the first one that answers wins and is remembered.
+async function fetchTiered(path) {
+  const tiers = tiersFor()
+  const order = state.tier >= 0
+    ? [state.tier, ...[...tiers.keys()]].filter((value, index, all) => all.indexOf(value) === index)
+    : [...tiers.keys()]
+  let lastError = null
+  for (const index of order) {
+    try {
+      const body = await withTimeout(`${tiers[index]}/${path}`)
+      state.tier = index
+      // Remember which mirror worked, so the next visit starts there instead of
+      // paying the dataset timeout from abroad.
+      try { localStorage.setItem('dsh-market-tier', String(index)) } catch {}
+      return body
+    } catch (error) {
+      lastError = error
+    }
+  }
+  throw lastError ?? new Error('no source')
+}
+
+// The whole catalogue is ~7 MB across ~44 chunks. The first chunk paints at once,
+// then every remaining chunk is pulled six at a time so the list, the search and the
+// counts all end up covering the full catalogue instead of a partial slice.
+const PARALLEL_CHUNKS = 6
+
+async function loadIndex() {
+  try {
+    state.meta = await fetchTiered('meta.json')
+    state.plugins = []
+    state.loaded = 0
+    const chunks = state.meta.chunks ?? []
+    if (!chunks.length) return render()
+
+    const first = await fetchTiered(chunks[0]).catch(() => null)
+    if (first) {
+      state.plugins.push(...first)
+      state.loaded = 1
+      render()
+    }
+
+    let cursor = 1
+    const worker = async () => {
+      while (cursor < chunks.length) {
+        const chunk = chunks[cursor++]
+        const slice = await fetchTiered(chunk).catch(() => null)
+        if (!slice) {
+          state.failed = true
+          return
+        }
+        state.plugins.push(...slice)
+        state.loaded++
+        // Re-render in batches: 44 renders of 10k cards would jank the page.
+        if (state.loaded % 4 === 0) render()
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(PARALLEL_CHUNKS, chunks.length - 1 || 1) }, worker))
+    render()
+  } catch (error) {
+    $('list').innerHTML = `<p class=empty>索引加载失败：${esc(error.message)}</p>`
+  }
+}
+
+// The stylesheet is loaded from the dataset too; if that file never applied, fall
+// back through the same tiers (jsDelivr, then GitHub Pages) without blocking paint.
+//
+// Probe the *effect*, not the element: a 404'd <link> stays in document.styleSheets
+// with its href intact, so the old `href.includes('/a/')` test reported "applied"
+// for a stylesheet that never loaded. The page then stayed completely unstyled
+// while this function did nothing — exactly the regression that shipped when the
+// dataset was missing the shell's hash directory.
+function ensureStyles() {
+  const probe = (getComputedStyle(document.documentElement).getPropertyValue('--bg') || '').trim()
+  if (probe) return
+  const fallbacks = [
+    'https://cdn.jsdelivr.net/gh/jingjiangze/dsh-market@main/site/style.css',
+    'https://jingjiangze.github.io/dsh-market/style.css',
+  ]
+  for (const href of fallbacks) {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = href
+    document.head.appendChild(link)
+  }
+}
+
+// Import a scan produced elsewhere (any browser, or the PowerShell one-liner).
+document.addEventListener('change', (event) => {
+  const input = event.target
+  // Compatibility dropdown lives in #sort and is re-created on every render.
+  if (input && input.id === 'mirror') {
+    state.mirror = input.value
+    try { localStorage.setItem('dsh-market-mirror', state.mirror) } catch {}
+    render()
+    return
+  }
+  if (input && input.id === 'compat') {
+    state.compat = input.value
+    state.limit = 60
+    render()
+    return
+  }
+  if (!input || input.id !== 'importFile' || !input.files?.length) return
+  input.files[0].text()
+    .then((text) => {
+      const data = JSON.parse(text)
+      const pairs = Array.isArray(data) ? Object.fromEntries(data.map((name) => [String(name), ''])) : data
+      for (const [name, version] of Object.entries(pairs)) installed[name] = String(version ?? '')
+      saveInstalled()
+      render()
+    })
+    .catch((error) => alert(`导入失败：${error.message}`))
+})
+
+document.addEventListener('click', (event) => {
+  if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
+  // Opening an entry outranks every other handler: a card or a similar-row is only ever
+  // clicked because the reader wants that entry.
+  const favButton = event.target.closest('[data-fav]')
+  const openTarget = event.target.closest('[data-open]')
+  if (openTarget) { openDetail(openTarget.dataset.open); return }
+
+  if (favButton) {
+    event.stopPropagation()
+    const name = favButton.dataset.fav
+    if (favorites.has(name)) favorites.delete(name)
+    else favorites.add(name)
+    saveFavorites()
+    render()
+    return
+  }
+  const favToggle = event.target.closest('[data-fav-toggle]')
+  if (favToggle) { state.favorites = !state.favorites; state.limit = 60; render(); return }
+
+  const scanButton = event.target.closest('[data-scan]')
+  if (scanButton) {
+    scanButton.disabled = true
+    scanButton.textContent = '扫描中…'
+    scanInstalled()
+      .then((found) => {
+        if (!found) return
+        Object.assign(installed, found)
+        saveInstalled()
+        render()
+      })
+      .catch((error) => alert(`扫描失败：${error.message}`))
+      .finally(() => { scanButton.disabled = false; scanButton.textContent = '扫描已安装' })
+    return
+  }
+  const importButton = event.target.closest('[data-import-input]')
+  if (importButton) { document.getElementById('importFile')?.click(); return }
+  const idxButton = event.target.closest('[data-idx]')
+  if (idxButton) {
+    for (const button of document.querySelectorAll('[data-idx]')) button.removeAttribute('aria-pressed')
+    idxButton.setAttribute('aria-pressed', 'true')
+    state.copyTarget = idxButton.dataset.idx
+    // Picking a language source also switches the interface language: that is what
+    // a reader who clicked "日本語" expects, and it keeps the copied link in sync
+    // with what they are looking at.
+    if (LANGS.includes(state.copyTarget)) {
+      state.lang = state.copyTarget
+      localStorage.setItem('dsh-market-lang', state.lang)
+      chrome()
+    }
+    render()
+    return
+  }
+  if (event.target.closest('[data-guide]')) { openGuide(); return }
+  const sortButton = event.target.closest('[data-sort]')
+  if (sortButton) { state.sort = sortButton.dataset.sort; state.limit = 60; render(); return }
+  if (event.target.closest('[data-random]')) {
+    if (!state.visible.length) return
+    openDetail(state.visible[Math.floor(Math.random() * state.visible.length)].n)
+    return
+  }
+  const step = event.target.closest('[data-next],[data-prev]')
+  if (step) {
+    const position = state.visible.findIndex((item) => item.n === state.open)
+    if (position < 0) return
+    const next = state.visible[event.target.closest('[data-next]') ? position + 1 : position - 1]
+    if (next) openDetail(next.n)
+    return
+  }
+  const chip = event.target.closest('[data-cat]')
+  if (chip) { state.category = chip.dataset.cat; state.limit = 60; render(); return }
+  const more = event.target.closest('[data-more]')
+  if (more) {
+    state.limit += 120
+    render()
+    return
+  }
+  const copy = event.target.closest('[data-copy]')
+  if (copy) {
+    navigator.clipboard?.writeText(copy.dataset.copy).then(() => flash(copy, '已复制'))
+    return
+  }
+  // Clicking the source row copies it (the whole row is the button).
+  if (event.target.closest('.src')) {
+    navigator.clipboard?.writeText(indexUrl(state.copyTarget)).then(() => flash($('copy'), '已复制'))
+    return
+  }
+})
+
+function flash(element, text) {
+  const before = element.textContent
+  element.textContent = text
+  setTimeout(() => { element.textContent = before }, 1200)
+}
+
+$('list').addEventListener('keydown', (event) => {
+  const card = event.target.closest('[data-open]')
+  if (card && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openDetail(card.dataset.open) }
+})
+$('q').addEventListener('input', (event) => { state.query = event.target.value; state.limit = 60; render() })
+$('lang').addEventListener('change', (event) => {
+  state.lang = event.target.value
+  localStorage.setItem('dsh-market-lang', state.lang)
+  // Switching the interface language also switches the index link, so the copied
+  // URL always matches the language on screen.
+  if (LANGS.includes(state.lang)) state.copyTarget = state.lang
+  chrome()
+  render()
+  if ($('dlg').open) (state.guide ? openGuide() : state.open && openDetail(state.open))
+})
+document.addEventListener('keydown', (event) => {
+  if (event.key === '/' && document.activeElement !== $('q')) { event.preventDefault(); $('q').focus(); return }
+  // Escape dismisses the overflow menu the same way it dismisses the dialog. An open menu
+  // covers the first row of cards, so leaving it open trapped every later pointer click.
+  if (event.key === 'Escape') {
+    const menu = document.querySelector('#overflow')
+    if (menu && menu.open) menu.open = false
+  }
+})
+
+function chrome() {
+  $('lang').innerHTML = LANGS.map((lang) => `<option value=${lang}>${LANG_LABEL[lang]}</option>`).join('')
+  $('lang').value = state.lang
+  $('q').placeholder = PLACEHOLDER[state.lang] ?? PLACEHOLDER.en
+  // One button per language: the subscription link is always the GitHub Pages copy.
+  const seg = document.querySelector?.('.seg')
+  if (seg) {
+    const langs = LANGS
+      .map((lang) => `<button data-idx="${lang}"${state.copyTarget === lang ? ' aria-pressed=true' : ''}>${IDX_LABEL[lang]}</button>`)
+      .join('')
+    seg.innerHTML = langs
+  }
+}
+
+const saved = localStorage.getItem('dsh-market-lang')
+if (LANGS.includes(saved)) state.lang = saved
+else if (!String(navigator.language ?? '').toLowerCase().startsWith('zh')) state.lang = 'en'
+chrome()
+loadIndex()
+// 1.2 s is enough for the dataset copy to apply; abroad it 404s immediately, so
+// the fallback sheet lands before the reader notices unstyled text.
+setTimeout(ensureStyles, 1200)
+
+// Back-to-top for phones: the list runs to 10k entries once every chunk is loaded.
+const toTop = document.createElement('button')
+toTop.className = 'totop'
+toTop.type = 'button'
+toTop.textContent = '↑'
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+document.body.append(toTop)
+window.addEventListener('scroll', () => toTop.classList.toggle('on', window.scrollY > 700), { passive: true })
+
+
+
+// Steam's "more like this": the detail dialog ends with the nearest neighbours the
+// crawl precomputed (see the similar pass in crawler/browse.mjs).
+function similarHtml(entry) {
+  const names = entry.sim ?? []
+  if (!names.length) return ''
+  const items = names
+    .map((name) => state.plugins.find((item) => item.n === name))
+    .filter(Boolean)
+    .slice(0, 6)
+  if (!items.length) return ''
+  return `<div class=sim><h4>相似插件</h4><div class=sim-row>${items.map((item) => `<button class=rec-item data-open="${esc(item.n)}"><b>${esc(titleOf(item)) || esc(item.n)}</b><i>${esc(catTitle(item.c))}${item.sc != null ? ` · ⇧${item.sc}` : ''}</i></button>`).join('')}</div></div>`
+}
+
+// ── "你想用 DSH 做什么？" — the quiz dsh.market ships, on static data ──────────
+// The reader picks up to three use cases; results are ranked by how many picks an
+// entry matches, then by its practical score. Every entry carries use-case ids in
+// `u` (see crawler/usecases.mjs); entries without them simply never match.
+const UC = {
+  finance: '记账与财务', 'finance-market': '行情与投资', subtitle: '字幕与转写', translate: '翻译与多语言',
+  files: '文件与网盘', browse: '浏览器与抓取', knowledge: '搜索与知识库', analysis: '数据分析',
+  image: '图像与视觉', video: '视频', voice: '语音与音频', code: '代码与评审', cli: '终端与命令',
+  agents: '智能体与编排', automation: '工作流与自动化', prompts: '提示词与技能', memory: '记忆与上下文',
+  models: '模型接入', billing: '用量与成本', notify: '通知与推送', email: '邮件', calendar: '日程与待办',
+  writing: '笔记与写作', docs: '表格与文档', ui: '界面与主题', settings: '设置与配置', monitor: '监控与诊断',
+  security: '安全与权限', market: '插件市场', 'plugin-dev': '插件开发', mcp: 'MCP 与协议', session: '会话与消息', remote: '远程与内网',
+  mobile: '手机与移动端', fun: '娱乐与彩蛋', pet: '桌宠与挂件',
+}
+const QUIZ_MAX = 3
+const quizPicks = new Set()
+
+// The mirror choice is a toolbar control, not a hidden setting: it changes the install
+// command in every detail dialog, so the reader must be able to see and change it.
+// Everything a *subscriber* needs — the index URL, the copy button and the per-language
+// document switch — is folded into one disclosure. It is not removed: the site's other job is
+// telling DSH where to point. It just no longer occupies the first screen.
+function ensureSetupDisclosure() {
+  const hero = document.querySelector('.hero')
+  if (!hero || hero.querySelector('.setup')) return
+  const seg = hero.querySelector('.seg')
+  const src = hero.querySelector('.src')
+  if (!seg || !src) return
+  const details = document.createElement('details')
+  details.className = 'setup'
+  const summary = document.createElement('summary')
+  summary.innerHTML = '<span>索引源与语言</span><i></i>'
+  details.append(summary, seg, src)
+  hero.insertBefore(details, hero.firstChild)
+}
+
+// The toolbar had grown to thirteen controls in two rows plus an install bar and a hint:
+// tutorial, quiz, mirror, theme, five sorts, a trend menu, compatibility, favourites, random.
+// That is a wall before the first card. Everything except the orderings and the count moves
+// here — still one click away, no longer the first thing a reader has to read.
+function ensureOverflowMenu() {
+  // A stable home: the toolbar template is rebuilt every render, so anything parked inside it
+  // used to be destroyed — which is what made `$('src')` null and stopped the page.
+  const row = document.querySelector('.row')
+  if (!row) return
+  let details = document.querySelector('#overflow')
+  if (!details) {
+    details = document.createElement('details')
+    details.id = 'overflow'
+    details.className = 'overflow'
+    const summary = document.createElement('summary')
+    summary.setAttribute('aria-label', '更多设置')
+    summary.textContent = '⋯'
+    const menu = document.createElement('div')
+    menu.className = 'menu'
+
+    const compatLabel = document.createElement('label')
+    compatLabel.className = 'menu-row'
+    compatLabel.textContent = '兼容 '
+    const compat = document.createElement('select')
+    compat.id = 'compat'
+    for (const [value, label] of [['all', '全部'], ['0.2', '0.2.x'], ['0.1', '0.1.x']]) {
+      const option = document.createElement('option')
+      option.value = value
+      option.textContent = label
+      compat.appendChild(option)
+    }
+    compatLabel.appendChild(compat)
+
+    const fav = document.createElement('button')
+    fav.id = 'favToggle'
+    fav.className = 'menu-row'
+    fav.dataset.favToggle = ''
+    fav.textContent = '★ 收藏'
+
+    const random = document.createElement('button')
+    random.id = 'randomPick'
+    random.className = 'menu-row'
+    random.dataset.random = ''
+    random.textContent = '🎲 随机一个'
+
+    menu.appendChild(compatLabel)
+    menu.appendChild(fav)
+    menu.appendChild(random)
+    details.appendChild(summary)
+    details.appendChild(menu)
+    row.appendChild(details)
+  }
+  const menu = details.querySelector('.menu')
+  if (!menu) return
+  const compat = menu.querySelector('#compat')
+  if (compat && compat.value !== state.compat) compat.value = state.compat
+  const fav = menu.querySelector('[data-fav-toggle]')
+  if (fav) {
+    fav.setAttribute('aria-pressed', String(state.favorites))
+    fav.textContent = `★ 收藏${favorites.size ? ` ${favorites.size}` : ''}`
+  }
+  const move = (el) => { if (el && el.parentNode !== menu) menu.appendChild(el) }
+  move(document.querySelector('.setup'))
+  move(document.querySelector('[data-guide]'))
+  move(document.querySelector('#mirror'))
+  move(document.querySelector('[data-quiz]'))
+  move(document.querySelector('#ins'))
+  move(document.querySelector('#theme'))
+}
+
+function ensureMirrorSelect() {
+  const row = menuSlot()
+  if (!row || row.querySelector('#mirror')) return
+  const select = document.createElement('select')
+  select.id = 'mirror'
+  select.title = '安装镜像源'
+  for (const [id, registry] of Object.entries(REGISTRIES)) {
+    if (id === 'git') continue
+    const option = document.createElement('option')
+    option.value = id
+    option.textContent = registry.label
+    if (id === state.mirror) option.selected = true
+    select.appendChild(option)
+  }
+  const meta = row.querySelector('#meta')
+  row.insertBefore(select, meta ?? null)
+}
+
+// Where a secondary control belongs: the overflow menu when it exists, the toolbar otherwise.
+function menuSlot() {
+  return document.querySelector('#sort .overflow .menu') ?? document.querySelector('.row')
+}
+
+function ensureQuizButton() {
+  if (document.querySelector('[data-quiz]')) return
+  const slot = menuSlot()
+  if (!slot) return
+  const button = document.createElement('button')
+  button.className = 'menu-row'
+  button.dataset.quiz = ''
+  button.textContent = '🎯 帮我选'
+  slot.appendChild(button)
+}
+
+function quizHtml() {
+  const total = state.meta?.total ?? state.plugins.length
+  const tags = Object.entries(UC)
+    .map(([id, label]) => {
+      const on = quizPicks.has(id)
+      const full = !on && quizPicks.size >= QUIZ_MAX
+      return `<button class=quiz-chip data-quiz-tag="${id}" aria-pressed="${on}" ${full ? 'disabled' : ''}>${esc(label)}</button>`
+    }).join('')
+  return `<div class=quiz>
+    <h3>你想用 DSH 做什么？</h3>
+    <p class=quiz-lead>选 2–3 个你需要的功能，我们从 ${total} 个插件里帮你筛出最合适的。</p>
+    <div class=quiz-count>已选 <b>${quizPicks.size}</b> / ${QUIZ_MAX}</div>
+    <div class=quiz-tags>${tags}</div>
+    <div class=quiz-results id=quizResults></div>
+  </div>`
+}
+
+function runQuiz() {
+  const box = document.getElementById('quizResults')
+  if (!box) return
+  if (!quizPicks.size) { box.innerHTML = '<p class=quiz-lead>先选 1 个功能看看。</p>'; return }
+  const scored = state.plugins
+    .map((entry) => {
+      const ids = entry.u ?? []
+      let matched = 0
+      for (const pick of quizPicks) if (ids.includes(pick)) matched++
+      return { entry, matched }
+    })
+    .filter((hit) => hit.matched > 0)
+    .sort((a, b) => b.matched - a.matched || (b.entry.sc ?? 0) - (a.entry.sc ?? 0))
+  if (!scored.length) {
+    box.innerHTML = '<p class=quiz-lead>没有匹配的插件，换一个功能试试。</p>'
+    return
+  }
+  const query = (document.getElementById('quizQ')?.value ?? '').trim().toLowerCase()
+  const filtered = query
+    ? scored.filter((hit) => `${hit.entry.n} ${titleOf(hit.entry)} ${descOf(hit.entry)}`.toLowerCase().includes(query))
+    : scored
+  box.innerHTML = `<p class=quiz-lead>匹配 ${filtered.length} 个，按匹配度与精选度排序：</p>` + filtered.slice(0, 12)
+    .map((hit) => `<button class=rec-item data-open="${esc(hit.entry.n)}"><b>${esc(titleOf(hit.entry)) || esc(hit.entry.n)}</b><i>${esc(catTitle(hit.entry.c))} · ⇧${hit.entry.sc ?? '-'} · 命中 ${hit.matched}</i></button>`)
+    .join('')
+}
+
+function openQuiz() {
+  state.quiz = true
+  $('dlg').innerHTML = quizHtml()
+  if (!$('dlg').open) $('dlg').showModal()
+  runQuiz()
+}
+
+document.addEventListener('click', (event) => {
+  if (event.target.closest('[data-quiz]')) { openQuiz(); return }
+  const chip = event.target.closest('[data-quiz-tag]')
+  if (chip) {
+    const id = chip.dataset.quizTag
+    if (quizPicks.has(id)) quizPicks.delete(id)
+    else if (quizPicks.size < QUIZ_MAX) quizPicks.add(id)
+    $('dlg').innerHTML = quizHtml()
+    runQuiz()
+  }
+})
