@@ -300,6 +300,16 @@ for (const vp of VIEWPORTS) {
     if (!starsOrder.length || !heatOrder.length) fail("desktop: no cards rendered after switching sort")
     else if (starsOrder.join() === heatOrder.join()) fail("desktop: 热度 and 星标 produce the identical order")
     // Reopen a card so the detail probes below have a dialog to read.
+    // Capture-phase listener, installed before the click: proves whether the event reaches
+    // the document at all, which separates "the handler is broken" from "nothing was clicked".
+    await page.evaluate(() => {
+      window.__probe = { clicks: 0, target: null, closestOpen: null }
+      document.addEventListener('click', (e) => {
+        window.__probe.clicks += 1
+        window.__probe.target = `${e.target.tagName}.${String(e.target.className || '')}`.slice(0, 60)
+        window.__probe.closestOpen = e.target.closest?.('[data-open]')?.dataset?.open ?? null
+      }, true)
+    })
     await page.evaluate(() => document.querySelector(".card")?.click())
     await page.waitForTimeout(400)
   // Diagnostic: when the dialog looks empty, the useful facts are whether it opened at all
@@ -315,6 +325,8 @@ for (const vp of VIEWPORTS) {
       hasSim: Boolean(d && d.querySelector('.sim')),
       cards: document.querySelectorAll('.card').length,
       openAttr: document.querySelector('.card')?.dataset?.open ?? null,
+      clickProbe: window.__probe ?? null,
+      dlgHead: document.getElementById('dlg')?.innerHTML.slice(0, 100) ?? null,
     }
   })
   report.push({ viewport: 'dialog-diag', ...dialogDiag })
