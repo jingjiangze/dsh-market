@@ -250,8 +250,9 @@ h1::before {
 /* Orderings on the left, the count pushed to the far right: two groups instead of one long
    line of controls with a number stuck on the end. */
 #sort { order: 1; }
+#overflow { order: 2; }
 #meta {
-  order: 2;
+  order: 3;
   margin-left: auto;
   text-align: right;
   white-space: nowrap;
