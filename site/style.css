@@ -72,7 +72,7 @@ a:hover { color: var(--blue); text-decoration: underline; text-underline-offset:
 *::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 0; }
 
 /* ── angled corner helper (Arknights cut) ────────────────────────────────── */
-.card, .hero, .src, dialog, .quiz-chip, .rec-item, .ins-btn, .ghost, #copy,
+.card, .src, dialog, .quiz-chip, .rec-item, .ins-btn, .ghost, #copy,
 #sort button, .nav button, #q, #lang, .chip, .more {
   clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
 }
