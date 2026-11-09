@@ -240,15 +240,23 @@ h1::before {
 .ghost[data-quiz] { color: var(--amber-soft); border-color: rgba(245, 166, 35, .45); background: var(--amber-dim); }
 .ghost[data-quiz]:hover { color: var(--bg); background: var(--amber); border-color: var(--amber); }
 
-.row { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-
-#meta {
-  order: 4;
-  flex: 1 1 auto;
-  color: var(--dim);
-  font: 500 12.5px/1.5 var(--font-mono);
-  letter-spacing: .03em;
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
+/* Orderings on the left, the count pushed to the far right: two groups instead of one long
+   line of controls with a number stuck on the end. */
+#sort { order: 1; }
+#meta {
+  order: 2;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
 
 
 #sort { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
@@ -1044,6 +1052,9 @@ footer {
 .overflow .menu .src { margin: 0; }
 .overflow .menu .seg { margin: 0 0 4px; }
 .overflow .menu select { width: 100%; }
+/* Anything relocated into the menu reads as one full-width row. */
+.overflow .menu > *, .overflow .menu .ghost, .overflow .menu .ins-btn { width: 100%; }
+.overflow .menu .ghost { justify-content: flex-start; }
 
 /* ── light theme ──────────────────────────────────────────────────────────
  * Same geometry, same single accent. Only the surface tokens change, so nothing has to

@@ -40,6 +40,8 @@ function element(id) {
   return elements.get(id)
 }
 const footerElement = { innerHTML: '' }
+// The overflow menu hangs off .row; the stub has to answer for it or the menu is never built.
+const rowElement = { children: [], appendChild(child) { this.children.push(child) }, insertBefore(child) { this.children.push(child) }, querySelector: () => null }
 const segElement = {
   children: [],
   querySelector(selector) {
@@ -51,8 +53,19 @@ const document = {
   activeElement: null,
   getElementById: (id) => element(id),
   querySelectorAll: () => [],
-  querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : null),
-  createElement: (tag) => ({ tag, dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, remove() {}, setAttribute() {}, addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], insertBefore() {}, appendChild() {}, classList: { toggle() {}, add() {}, remove() {} } }),
+  querySelector: (selector) => (selector === '.seg' ? segElement : selector === 'body > footer' ? footerElement : selector === '.row' ? rowElement : null),
+  createElement: (tag) => {
+    const el = { tag, id: '', dataset: {}, textContent: '', rel: '', href: '', type: '', src: '', className: '', append() {}, remove() {}, setAttribute() {}, addEventListener() {}, querySelector: () => null, querySelectorAll: () => [], insertBefore() {}, appendChild() {}, classList: { toggle() {}, add() {}, remove() {} } }
+    // Controls are built with createElement now, so the stub has to register them the way
+    // getElementById would: on id assignment.
+    return new Proxy(el, {
+      set(target, prop, value) {
+        target[prop] = value
+        if (prop === 'id' && value) elements.set(value, target)
+        return true
+      },
+    })
+  },
   addEventListener() {},
   documentElement: { dataset: {} },
   head: { appendChild() {} },
@@ -87,7 +100,7 @@ if (cards === 0) problems.push('no plugin card rendered')
 if (!meta.includes(String(META.total))) problems.push(`header does not show the total: ${JSON.stringify(meta)}`)
 if (!list.includes('data-open=')) problems.push('cards are not clickable')
 for (const key of ['stars', 'downloads', 'recent']) if (!sortHtml.includes(`data-sort="${key}"`)) problems.push(`sort switch missing (${key})`)
-if (!/data-random/.test(sortHtml)) problems.push('random pick button missing')
+if (!elements.has('randomPick')) problems.push('random pick button missing')
 if (!/class=grp/.test(cats)) problems.push('category rail is not grouped under DSH 优化')
 
 // Stars sort: the highest-star entry must come first.
@@ -161,8 +174,8 @@ const sorts = element('sort').innerHTML
 for (const key of ['data-sort="trend7"', 'data-sort="trend30"', 'data-sort="trend90"']) {
   if (!sorts.includes(key)) problems.push(`trending sort ${key} is missing`)
 }
-if (!/id=compat/.test(sorts)) problems.push('compatibility dropdown is missing')
-if (!/data-fav-toggle/.test(sorts)) problems.push('favorites filter is missing')
+if (!elements.has('compat')) problems.push('compatibility dropdown is missing')
+if (!elements.has('favToggle')) problems.push('favorites filter is missing')
 
 // Favorites are a bookmark, not a vote: adding one and enabling the filter leaves
 // exactly that card, and the count appears on the toggle.

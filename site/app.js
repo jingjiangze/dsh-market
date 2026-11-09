@@ -440,14 +440,13 @@ function render() {
   // Everything that is not an ordering lives behind one glyph. The template owns the menu so
   // the controls exist in the markup (and the smoke test can see them); ensureOverflowMenu
   // only relocates the ones other helpers create.
-  const compatButton = `<label class=menu-row>兼容 <select id=compat><option value=all>全部</option><option value=0.2${state.compat === '0.2' ? ' selected' : ''}>0.2.x</option><option value=0.1${state.compat === '0.1' ? ' selected' : ''}>0.1.x</option></select></label>`
-  const favButton = `<button class=menu-row data-fav-toggle aria-pressed="${state.favorites}">★ 收藏${favorites.size ? ` ${favorites.size}` : ''}</button>`
-  const menuExtras = compatButton + favButton + '<button class=menu-row data-random>🎲 随机一个</button>'
-  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details><details class=overflow><summary aria-label=更多设置><span>⋯</span></summary><div class=menu>${menuExtras}</div></details>`
+  $('sort').innerHTML = `<span class=sorts>${buttons}</span><details class=more-sorts${trendOpen}><summary>近期</summary><span class=sorts>${trendButtons}</span></details>`
   const scope = pool.length === state.plugins.length ? '' : ` · 筛出 ${pool.length}`
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
-  $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
+  // The progress bar carries "载入中 N / M" while chunks stream in, so repeating it here was
+  // the same number twice in the same row.
+  $('meta').textContent = `${total.toLocaleString()} 个插件${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
   // The other host for the same document. A reader whose network blocks one of the two
   // should not have to guess: the data path already falls back between three hosts, this
@@ -740,7 +739,6 @@ document.addEventListener('change', (event) => {
 document.addEventListener('click', (event) => {
   if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
 
-  const favButton = event.target.closest('[data-fav]')
   if (favButton) {
     event.stopPropagation()
     const name = favButton.dataset.fav
@@ -937,22 +935,69 @@ function ensureSetupDisclosure() {
 // That is a wall before the first card. Everything except the orderings and the count moves
 // here — still one click away, no longer the first thing a reader has to read.
 function ensureOverflowMenu() {
-  const sort = $('sort')
-  const menu = sort && sort.querySelector('.overflow .menu')
+  // A stable home: the toolbar template is rebuilt every render, so anything parked inside it
+  // used to be destroyed — which is what made `$('src')` null and stopped the page.
+  const row = document.querySelector('.row')
+  if (!row) return
+  let details = document.querySelector('#overflow')
+  if (!details) {
+    details = document.createElement('details')
+    details.id = 'overflow'
+    details.className = 'overflow'
+    const summary = document.createElement('summary')
+    summary.setAttribute('aria-label', '更多设置')
+    summary.textContent = '⋯'
+    const menu = document.createElement('div')
+    menu.className = 'menu'
+
+    const compatLabel = document.createElement('label')
+    compatLabel.className = 'menu-row'
+    compatLabel.textContent = '兼容 '
+    const compat = document.createElement('select')
+    compat.id = 'compat'
+    for (const [value, label] of [['all', '全部'], ['0.2', '0.2.x'], ['0.1', '0.1.x']]) {
+      const option = document.createElement('option')
+      option.value = value
+      option.textContent = label
+      compat.appendChild(option)
+    }
+    compatLabel.appendChild(compat)
+
+    const fav = document.createElement('button')
+    fav.id = 'favToggle'
+    fav.className = 'menu-row'
+    fav.dataset.favToggle = ''
+    fav.textContent = '★ 收藏'
+
+    const random = document.createElement('button')
+    random.id = 'randomPick'
+    random.className = 'menu-row'
+    random.dataset.random = ''
+    random.textContent = '🎲 随机一个'
+
+    menu.appendChild(compatLabel)
+    menu.appendChild(fav)
+    menu.appendChild(random)
+    details.appendChild(summary)
+    details.appendChild(menu)
+    row.appendChild(details)
+  }
+  const menu = details.querySelector('.menu')
   if (!menu) return
-  // Helpers elsewhere create these; they belong in the menu, not in the toolbar.
+  const compat = menu.querySelector('#compat')
+  if (compat && compat.value !== state.compat) compat.value = state.compat
+  const fav = menu.querySelector('[data-fav-toggle]')
+  if (fav) {
+    fav.setAttribute('aria-pressed', String(state.favorites))
+    fav.textContent = `★ 收藏${favorites.size ? ` ${favorites.size}` : ''}`
+  }
   const move = (el) => { if (el && el.parentNode !== menu) menu.appendChild(el) }
   move(document.querySelector('.setup'))
-  move(document.querySelector('#mirror'))
   move(document.querySelector('[data-guide]'))
+  move(document.querySelector('#mirror'))
   move(document.querySelector('[data-quiz]'))
-  move($('ins'))
-  // The theme toggle stays in the toolbar: one glyph, switched often.
-  const theme = document.querySelector('#theme')
-  if (theme && theme.parentNode !== sort) {
-    const overflow = sort.querySelector('.overflow')
-    sort.insertBefore(theme, overflow ?? null)
-  }
+  move(document.querySelector('#ins'))
+  move(document.querySelector('#theme'))
 }
 
 function ensureMirrorSelect() {
