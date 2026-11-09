@@ -326,6 +326,7 @@ for (const vp of VIEWPORTS) {
       cards: document.querySelectorAll('.card').length,
       openAttr: document.querySelector('.card')?.dataset?.open ?? null,
       clickProbe: window.__probe ?? null,
+      openTrace: window.__openTrace ?? null,
       dlgHead: document.getElementById('dlg')?.innerHTML.slice(0, 100) ?? null,
     }
   })
