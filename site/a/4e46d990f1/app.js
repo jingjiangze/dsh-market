@@ -956,7 +956,7 @@ function ensureOverflowMenu() {
 }
 
 function ensureMirrorSelect() {
-  const row = document.querySelector('.row')
+  const row = menuSlot()
   if (!row || row.querySelector('#mirror')) return
   const select = document.createElement('select')
   select.id = 'mirror'
@@ -973,14 +973,20 @@ function ensureMirrorSelect() {
   row.insertBefore(select, meta ?? null)
 }
 
+// Where a secondary control belongs: the overflow menu when it exists, the toolbar otherwise.
+function menuSlot() {
+  return document.querySelector('#sort .overflow .menu') ?? document.querySelector('.row')
+}
+
 function ensureQuizButton() {
-  const row = document.querySelector('.row')
-  if (!row || row.querySelector('[data-quiz]')) return
+  if (document.querySelector('[data-quiz]')) return
+  const slot = menuSlot()
+  if (!slot) return
   const button = document.createElement('button')
-  button.className = 'ghost'
+  button.className = 'menu-row'
   button.dataset.quiz = ''
   button.textContent = '🎯 帮我选'
-  row.insertBefore(button, row.querySelector('#meta') ?? null)
+  slot.appendChild(button)
 }
 
 function quizHtml() {
