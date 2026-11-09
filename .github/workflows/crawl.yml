@@ -246,6 +246,11 @@ jobs:
         run: node crawler/titles.mjs
       - name: Build one index per language
         run: node crawler/lang-index.mjs
+      - name: Publish the untruncated descriptions
+        # The index keeps descriptions at 20 characters so every reader's first fetch stays
+        # small. Retrieval needs the full sentence, so it gets its own document instead of a
+        # bigger index for everyone.
+        run: node crawler/plugin-descriptions.mjs
 
       - name: Assemble the site
         run: |
