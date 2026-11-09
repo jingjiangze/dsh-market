@@ -282,6 +282,7 @@ for (const vp of VIEWPORTS) {
     if (results === 0) fail('desktop: the quiz returned no results for a picked use case')
     await page.screenshot({ path: join(OUT, 'desktop-quiz.png') })
     await page.keyboard.press('Escape')
+    await page.evaluate(() => { const m = document.querySelector('#overflow'); if (m) m.open = false })
     await page.waitForTimeout(300)
   }
   const firstCard = await page.$('.card')

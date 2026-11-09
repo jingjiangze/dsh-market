@@ -852,7 +852,13 @@ $('lang').addEventListener('change', (event) => {
   if ($('dlg').open) (state.guide ? openGuide() : state.open && openDetail(state.open))
 })
 document.addEventListener('keydown', (event) => {
-  if (event.key === '/' && document.activeElement !== $('q')) { event.preventDefault(); $('q').focus() }
+  if (event.key === '/' && document.activeElement !== $('q')) { event.preventDefault(); $('q').focus(); return }
+  // Escape dismisses the overflow menu the same way it dismisses the dialog. An open menu
+  // covers the first row of cards, so leaving it open trapped every later pointer click.
+  if (event.key === 'Escape') {
+    const menu = document.querySelector('#overflow')
+    if (menu && menu.open) menu.open = false
+  }
 })
 
 function chrome() {
