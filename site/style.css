@@ -260,7 +260,7 @@ h1::before {
 
 
 
-#sort { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+#sort { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 #sort button {
   padding: 6px 10px;
   color: var(--dim);
