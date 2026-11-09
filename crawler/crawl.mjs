@@ -525,9 +525,16 @@ for (const [name, record] of fromGitHub) {
           title: { en: enTitle, ...(zh.title ? { zh: zh.title } : {}) },
           description: { en: enDescription, ...(zh.description ? { zh: zh.description } : {}) },
           ...(iconPath ? { icon: `https://cdn.jsdelivr.net/npm/${name}@${version}/${iconPath}` } : {}),
-          ...(typeof man.author === 'string'
-            ? { author: man.author.replace(/\s*<[^>]*>/, '') }
-            : man.author?.name ? { author: String(man.author.name) } : {}),
+          // The format-1 validator requires a non-whitespace author. Stripping only the first
+          // "<mail@host>" left "Name " or, for an address-only value, "": that is what failed
+          // the 2026-11-09 01:23 crawl with
+          // "$.plugins[917].author must be a string with a non-whitespace character".
+          // Strip every tag, collapse whitespace, and omit the field when nothing is left.
+          ...(() => {
+            const raw = typeof man.author === 'string' ? man.author : (man.author?.name ?? '')
+            const clean = String(raw).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+            return clean ? { author: clean } : {}
+          })(),
           ...(homeUrl ? { homepage: homeUrl } : {}),
           ...(repoUrl ? { repository: { url: repoUrl } } : {}),
           metadata: {
