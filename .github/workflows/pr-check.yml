@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # The merge commit is what would land on main, so that is what gets gated.
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
