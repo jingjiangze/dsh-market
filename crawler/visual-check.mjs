@@ -194,6 +194,7 @@ for (const vp of VIEWPORTS) {
         const card = document.querySelector('.card')
         return card ? Math.round(card.getBoundingClientRect().top) : null
       })(),
+      overflowClosed: (() => { const d = document.querySelector("#overflow"); return d ? !d.open : null })(),
       setupClosed: (() => { const d = document.querySelector('.setup'); return d ? !d.open : null })(),
       setupInFirstScreen: (() => { const d = document.querySelector('.setup'); return d ? d.getBoundingClientRect().top < 400 : null })(),
       searchWidthRatio: (() => {
@@ -270,7 +271,7 @@ for (const vp of VIEWPORTS) {
   await page.screenshot({ path: join(OUT, `${vp.name}-top.png`) })
   await page.screenshot({ path: join(OUT, `${vp.name}-full.png`), fullPage: true })
   if (vp.name === 'desktop') {
-    await page.evaluate(() => { const m = document.querySelector('#sort .overflow'); if (m) m.open = true })
+    await page.evaluate(() => { const m = document.querySelector('#overflow'); if (m) m.open = true })
     await page.waitForTimeout(120)
     await page.click('[data-quiz]')
     await page.waitForTimeout(400)
