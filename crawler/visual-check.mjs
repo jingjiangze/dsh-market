@@ -181,6 +181,9 @@ for (const vp of VIEWPORTS) {
       // when nothing is installed.
       // The subscription link and its fallback: the site tries three hosts for data, so the
       // link a reader copies should name a host that exists and offer the other one.
+      // The summary a reader actually reads. A field that arrives as an array of score figures
+      // must never reach this paragraph.
+      leadText: document.querySelector("#dlg .lead")?.textContent?.trim() ?? null,
       indexSource: document.querySelector("#src")?.textContent?.trim() ?? null,
       indexAlternate: document.querySelector("#srcalt")?.dataset?.copy ?? null,
       cardRole: document.querySelector('.card')?.getAttribute('role') ?? null,
@@ -243,6 +246,9 @@ for (const vp of VIEWPORTS) {
   if (probe.firstCardTop === null) fail(`${vp.name}: no card was rendered`)
   else if (probe.firstCardTop > cardTopLimit) fail(`${vp.name}: the first card starts at ${probe.firstCardTop}px, limit ${cardTopLimit}px`)
   if (!/^https:\/\/(jingjiangze\.github\.io\/dsh-market|dsh\.jiangjiangze\.icu)\/index\.(zh|en|ja|ko|ru)\.json$/.test(probe.indexSource ?? '')) fail(`${vp.name}: the subscription link is "${probe.indexSource}", not a known host`)
+  if (!probe.leadText) fail(`${vp.name}: the detail dialog shows no description`)
+  else if (/^[★☆↓↑🔒⭐]/.test(probe.leadText) || (probe.leadText.match(/[★☆↓↑🔒⭐]/g) ?? []).length >= 2) fail(`${vp.name}: the detail description is a figure dump: ${probe.leadText.slice(0, 60)}`)
+  else if (probe.leadText.length < 12) fail(`${vp.name}: the detail description is only ${probe.leadText.length} characters`)
   if (!probe.indexAlternate) fail(`${vp.name}: no fallback subscription source is offered`)
   if (probe.cardRole !== 'button') fail(`${vp.name}: cards do not expose role=button (got ${probe.cardRole})`)
   if (probe.cardChevron !== probe.cardCount) fail(`${vp.name}: ${probe.cardChevron} chevrons for ${probe.cardCount} cards`)

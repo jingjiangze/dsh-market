@@ -18,12 +18,28 @@ const PROBE_PATH = join(root, 'data', 'npm-probe.json')
 let PROBE = {}
 try { PROBE = JSON.parse(readFileSync(PROBE_PATH, 'utf8')) } catch { PROBE = {} }
 const CHUNK = Number(process.env.BROWSE_CHUNK || 800)
-const DESC_LIMIT = Number(process.env.BROWSE_DESC_LIMIT || 160)
+const DESC_LIMIT = Number(process.env.BROWSE_DESC_LIMIT || 400)
 const MIN_PLUGINS = Number(process.env.BROWSE_MIN_PLUGINS || 500)
 const FORCE = process.env.BROWSE_FORCE === '1' || process.argv.includes('--force')
 const OUT = join(root, 'dist', 'browse')
 
-const pick = (value, lang) => (typeof value === 'string' ? value : (value?.[lang] ?? ''))
+const asText = (value) => {
+  const raw = (() => {
+    if (typeof value === 'string') return value
+    // A structured description's FIRST bullet is its lead. Joining them is what produced
+    // "★ 5,899 ★ 5,899 ★ 5,884 …" in the detail dialog.
+    if (Array.isArray(value)) return value.find((part) => typeof part === 'string' && part.trim()) ?? ''
+    if (value && typeof value === 'object') {
+      for (const key of ['zh', 'en']) if (typeof value[key] === 'string') return value[key]
+    }
+    return ''
+  })()
+  // Last line of defence: anything that is a run of score figures is not a description.
+  const metrics = (raw.match(/[★☆↓↑🔒⭐]/g) ?? []).length
+  // A blurb never starts with a score glyph; when it does, the field held figures.
+  return metrics >= 2 || /^[★☆↓↑🔒⭐]/.test(raw) ? "" : raw
+}
+const pick = (value, lang) => (typeof value === 'string' ? value : asText(value?.[lang]))
 const trim = (text) => String(text ?? '').replace(/\s+/g, ' ').trim().slice(0, DESC_LIMIT)
 
 // Icon chain the reader asked for:
