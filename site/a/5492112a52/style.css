@@ -338,11 +338,11 @@ h1::before {
 
 /* Arknights-style section bracket, now a working disclosure: the brackets stay as the visual
    marker, but the whole row collapses its group. */
-.grpbox { display: block; }
+.grpbox { display: block; position: relative; }
 .grp {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: block;
+  position: relative;
+  padding-right: 14px;
   margin: 15px 0 6px;
   color: var(--faint);
   font: 600 10px/1 var(--font-mono);
@@ -353,8 +353,17 @@ h1::before {
 }
 .grp::-webkit-details-marker { display: none; }
 .grp:hover { color: var(--text); }
-.grp::after { content: "▾"; margin-left: auto; color: var(--faint); font-size: 9px; transition: transform .16s var(--ease); }
-.grpbox:not([open]) > .grp::after { transform: rotate(-90deg); }
+.grp::after {
+  content: "▾";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--faint);
+  font-size: 9px;
+  transition: transform .16s var(--ease);
+}
+.grpbox:not([open]) > .grp::after { transform: translateY(-50%) rotate(-90deg); }
 .grpbox:first-child > .grp { margin-top: 0; }
 
 .chip {

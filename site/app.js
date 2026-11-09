@@ -400,7 +400,8 @@ function render() {
   // The header reports the catalogue total, not what happens to be in memory:
   // chunks load progressively, and "1,500" looked like the whole catalogue.
   const total = state.meta.total ?? state.plugins.length
-  const parts = [chip('all', IDX_LABEL[state.copyTarget], total)]
+  // "全部" is a scope, not a language: the first rail row used to read "中文 48".
+  const parts = [chip('all', '全部', total)]
   // Fold the leaf ids into rails by their prefix: enhance-* -> DSH 优化,
   // agent-* -> 智能体, data-*/media-* -> 内容, connect-* -> 连接,
   // dev-*/*-security -> 开发与安全, eco-*/other -> 生态.
