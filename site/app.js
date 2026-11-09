@@ -289,25 +289,25 @@ function icon(entry) {
 }
 
 function card(entry) {
-  // Four chips only: category, heat, stars, downloads. Version, author and date live
-  // in the detail dialog; on the card they wrapped to a second line and buried the
-  // numbers people actually scan for.
-  // Category, then the two numbers readers actually compare. The heat number is gone: it
-  // was a blend of stars and downloads that nothing on screen could justify.
-  const tags = [catTitle(entry.c), entry.rg === 'git' ? '源码安装' : entry.rg === 'none' ? '未验证' : '', entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean)
-  const extraTags = badges(entry).map((label) => `<b>${esc(label)}</b>`).join('')
+  // A card answers three questions and stops: what is it, what does it do, how used is it.
+  //   × the category chip   — redundant inside a category view, and it pushed the numbers
+  //                           onto a second line
+  //   × 源码安装 / 可直接安装  — a source/grade pill on nearly every row reads as noise;
+  //                           both live in the detail dialog where they can be explained
+  //   × ✦ 官方精选 文字      — kept as a single glyph so the mark survives without a badge row
+  // What is left is one line of numbers, which is what a reader scans for.
+  const numbers = [entry.s ? `★ ${num(entry.s)}` : '', entry.dl ? `↓ ${num(entry.dl)}` : ''].filter(Boolean).join(' · ')
   const owned = isInstalled(entry.n)
   const upgrade = owned && installed[entry.n] && entry.v && String(installed[entry.n]) !== String(entry.v)
-  const own = [owned ? `<b class=own>已装 ${esc(installed[entry.n] ?? '')}</b>` : '', upgrade ? '<b class=up>可升级</b>' : ''].join('')
-  const trust = trustOf(entry)
-  const grade = installGrade(entry)
-  // Only the actionable grade stays on the card. The trust pill printed 未声明版本 /
-  // 目录收录 on nine of ten entries, which read as an error rather than a plugin.
-  const marks = (entry.of ? '<b class=pick>✦ 官方精选</b>' : '') + (grade.level < 2 ? `<b class=grade g${grade.level}>${esc(grade.text)}</b>` : '')
+  const own = [
+    owned ? `<span class=own>已装 ${esc(installed[entry.n] ?? '')}</span>` : '',
+    upgrade ? '<span class=up>可升级</span>' : '',
+  ].join('')
+  const pick = entry.of ? '<b class=pick title="官方精选" aria-label="官方精选">✦</b>' : ''
   const fav = `<button class=fav data-fav="${esc(entry.n)}" aria-pressed="${isFavorite(entry.n)}" title="收藏">${isFavorite(entry.n) ? '★' : '☆'}</button>`
   // A card is a button: the chevron makes that visible on hover, and aria tells a screen
   // reader the same thing the cursor does.
-  return `<article class=card data-open="${esc(entry.n)}" tabindex=0 role=button aria-label="查看 ${esc(titleOf(entry)) || esc(entry.n)} 详情"><b class=go aria-hidden=true>›</b>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${tags.map((tag) => `<span>${esc(tag)}</span>`).join('')}</p>${extraTags || own || marks ? `<p class=badges>${marks}${extraTags}${own}</p>` : ''}${fav}</div></article>`
+  return `<article class=card data-open="${esc(entry.n)}" tabindex=0 role=button aria-label="查看 ${esc(titleOf(entry)) || esc(entry.n)} 详情"><b class=go aria-hidden=true>›</b>${icon(entry)}<div class=body><h2>${esc(titleOf(entry)) || esc(entry.n)}${pick}</h2><p class=desc>${esc(descOf(entry))}</p><p class=meta>${numbers}${own}</p>${fav}</div></article>`
 }
 
 // The personal layer: what this browser says about the catalogue (votes) and what is
@@ -418,13 +418,19 @@ function render() {
     .map((id, index) => ({ id, index, rail: groupOf(id) }))
     .sort((a, b) => railRank(a.rail) - railRank(b.rail) || a.index - b.index)
     .map((item) => item.id)
-  let group = null
+  // Group headers are disclosures, not dead labels. `[ DSH 优化 ]` looked like something to
+  // click and did nothing, which is most of why the rail felt unresponsive; a summary that
+  // collapses its group is both an affordance that works and a way to shorten a 31-row list.
+  const byRail = new Map()
   for (const id of orderedIds) {
     const rail = groupOf(id)
-    if (rail !== group) { parts.push(`<div class=grp>${GROUP_LABEL[rail]}</div>`); group = rail }
-    parts.push(chip(id, catTitle(id), counts.get(id) ?? 0))
+    if (!byRail.has(rail)) byRail.set(rail, [])
+    byRail.get(rail).push(chip(id, catTitle(id), counts.get(id) ?? 0))
   }
-  $('cats').innerHTML = parts.join('')
+  const groupsHtml = [...byRail.entries()]
+    .map(([rail, chips]) => `<details class=grpbox open><summary class=grp>${GROUP_LABEL[rail]}</summary>${chips.join('')}</details>`)
+    .join('')
+  $('cats').innerHTML = parts.join('') + groupsHtml
   // On a phone the rail is a horizontal strip: keep the selected chip in view.
   try {
     document.querySelector('.chip[aria-pressed]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
@@ -445,8 +451,10 @@ function render() {
   const loaded = state.plugins.length < total ? ` · 已载入 ${state.plugins.length}/${total}` : ''
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
   // The progress bar carries "载入中 N / M" while chunks stream in, so repeating it here was
-  // the same number twice in the same row.
-  $('meta').textContent = `${total.toLocaleString()} 个插件${scope}${partial}`
+  // the same number twice in the same row. The active category rides along instead: clicking
+  // a chip used to change only a thin left border, which read as "the click did nothing".
+  const scopeLabel = state.category === 'all' ? '' : ` · ${catTitle(state.category)}`
+  $('meta').textContent = `${total.toLocaleString()} 个插件${scopeLabel}${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
   // The other host for the same document. A reader whose network blocks one of the two
   // should not have to guess: the data path already falls back between three hosts, this
