@@ -28,11 +28,24 @@ function inChina() {
   return /Asia\/(Shanghai|Chongqing|Harbin|Urumqi|Hong_Kong|Macau|Taipei)$/.test(tz) || lang.startsWith('zh')
 }
 
+const BRAND = 'https://dsh.jiangjiangze.icu'
+
+// The data path below tries three hosts; the subscription link used to name one. Both of the
+// first two serve identical bytes now, and the brand host is Cloudflare — the fastest of them
+// from China, which is exactly who reads the Chinese document. Pages keeps every other
+// language, because the deploy only copies index.zh.json to the brand host.
 function indexUrl(lang = state.copyTarget) {
-  // One source only. The ModelScope dataset answers 302 to its CDN and DSH rejects
-  // redirects, so a dataset link is a link nobody can subscribe to; GitHub Pages
-  // serves the same document directly (gzip, ~1.2 MB, ~2 s from China).
+  // The dataset answers 302 to its CDN and DSH rejects redirects, so it can never be a
+  // subscription target no matter how fast it is.
+  if (lang === 'zh' && inChina()) return `${BRAND}/index.zh.json`
   return `${PAGES}/index.${lang}.json`
+}
+
+// The other host for the same document, offered under the copy button: a reader whose
+// network blocks one of them should not have to guess that the other exists.
+function alternateIndexUrl(lang = state.copyTarget) {
+  if (lang !== 'zh') return null
+  return inChina() ? `${PAGES}/index.zh.json` : `${BRAND}/index.zh.json`
 }
 
 // Data comes from the dataset first in every region. It is the only host that
@@ -420,6 +433,24 @@ function render() {
   const partial = state.tier > 0 ? ` · 备用源 ${state.tier}` : ''
   $('meta').textContent = `${total} 个插件${loaded}${scope}${partial}`
   $('src').textContent = indexUrl(state.copyTarget)
+  // The other host for the same document. A reader whose network blocks one of the two
+  // should not have to guess: the data path already falls back between three hosts, this
+  // gives the subscription link the same courtesy.
+  {
+    const alternate = alternateIndexUrl(state.copyTarget)
+    const bar = document.querySelector(".src")
+    let altButton = document.getElementById("srcalt")
+    if (alternate && bar) {
+      if (!altButton) {
+        altButton = document.createElement("button")
+        altButton.id = "srcalt"
+        altButton.className = "src-alt"
+        bar.appendChild(altButton)
+      }
+      altButton.textContent = inChina() ? "备用源 · GitHub" : "备用源 · 品牌域名"
+      altButton.dataset.copy = alternate
+    } else altButton?.remove()
+  }
   renderPersonal(pool)
   renderProgress()
   renderFooter()
