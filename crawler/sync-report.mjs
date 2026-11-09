@@ -30,12 +30,19 @@ const NPM_NAME = /^(?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/u
 const looksInstalable = (name) => NPM_NAME.test(name) && name.length <= 214
 
 // A row's installable package is not always its `name`: several catalogues list a repository
-// and put the npm specs in `packages.targets[]`. Read both, the way the crawler does.
+// and put the npm specs in `packages.targets[]`. When targets exist they ARE the answer — the
+// crawler ignores `name` for those rows, and so must this report or it double-counts. That is
+// what kept mydsh at a phantom 78%: `name` held repository names like `rea` and `superpowers`,
+// which happen to look like valid npm names but are not what the build installs.
 function namesOf(row) {
   const out = new Set()
-  const direct = String(row?.name ?? row?.package ?? '').toLowerCase()
-  if (looksInstalable(direct)) out.add(direct)
-  for (const target of row?.packages?.targets ?? []) {
+  const targets = row?.packages?.targets ?? []
+  if (targets.length === 0) {
+    const direct = String(row?.name ?? row?.package ?? '').toLowerCase()
+    if (looksInstalable(direct)) out.add(direct)
+    return [...out]
+  }
+  for (const target of targets) {
     const spec = String(target?.source ?? target?.install ?? '').trim()
     const bare = spec.startsWith('npm:') ? spec.slice(4) : spec
     const hit = /^((?:@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*)(?:@.+)?$/u.exec(bare)
