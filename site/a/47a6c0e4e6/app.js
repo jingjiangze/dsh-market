@@ -379,13 +379,15 @@ function render() {
   // Fold the leaf ids into rails by their prefix: enhance-* -> DSH 优化,
   // agent-* -> 智能体, data-*/media-* -> 内容, connect-* -> 连接,
   // dev-*/*-security -> 开发与安全, eco-*/other -> 生态.
-  const GROUP_LABEL = { enhance: 'DSH 优化', agent: '智能体与工作流', content: '内容与数据', connect: '连接与运行环境', dev: '开发与安全', eco: '生态与资源' }
+  const GROUP_LABEL = { enhance: 'DSH 优化', agent: '智能体与工作流', content: '内容与数据', connect: '连接与运行环境', dev: '开发与安全', eco: '生态与资源', unfilter: '破甲与解锁' }
   const RAIL_OF = { data: 'content', media: 'content', ops: 'dev' }
   const groupOf = (id) => {
     const head = RAIL_OF[id.split('-')[0]] ?? id.split('-')[0]
     return GROUP_LABEL[head] ? head : 'eco'
   }
-  const RAIL_ORDER = ['enhance', 'agent', 'content', 'connect', 'dev', 'eco']
+  // 破甲 sits last, after the ordinary ecosystem group: it is a deliberate destination, not
+  // something a reader should meet while scanning the catalogue.
+  const RAIL_ORDER = ['enhance', 'agent', 'content', 'connect', 'dev', 'eco', 'unfilter']
   const railRank = (rail) => (RAIL_ORDER.indexOf(rail) === -1 ? RAIL_ORDER.length : RAIL_ORDER.indexOf(rail))
   const orderedIds = Object.keys(state.meta.categories ?? {})
     .map((id, index) => ({ id, index, rail: groupOf(id) }))

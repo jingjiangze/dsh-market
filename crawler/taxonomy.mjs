@@ -32,6 +32,8 @@ const RAILS = {
   connect: { en: 'Connections', zh: '连接与集成' },
   dev: { en: 'Development & ops', zh: '开发与运维' },
   eco: { en: 'Ecosystem', zh: '生态与资源' },
+  // A reader either wants this or does not; it is not a subset of "security".
+  unfilter: { en: 'Jailbreak', zh: '破甲与解锁' },
 }
 
 const CATEGORIES = {
@@ -71,6 +73,12 @@ const CATEGORIES = {
   // ── F. 生态与资源 ───────────────────────────────────────────────────────
   'eco-market': { en: 'Markets & managers', zh: '插件市场与管理' },
   'eco-resources': { en: 'Templates & packs', zh: '模板与合集' },
+  // ── G. 破甲与解锁 ───────────────────────────────────────────────────────
+  // Its own rail, not a leaf under dev/ops: these plugins do one specific thing that a
+  // reader either wants or does not, and burying them among "安全与权限" mixed them with
+  // the plugins that defend against the same thing. Measured before the split: 15
+  // jailbreak-related rows were spread across 8 different leaves.
+  'unfilter-jail': { en: 'Jailbreak & uncensoring', zh: '破甲与解锁' },
   other: { en: 'Other', zh: '其他' },
 }
 
@@ -83,6 +91,7 @@ const CATEGORY_GROUPS = {
   connect: ['connect-im', 'connect-web', 'connect-mcp', 'connect-remote', 'connect-wsl', 'connect-files'],
   dev: ['dev-git', 'dev-runtime', 'ops-security', 'ops-monitor'],
   eco: ['eco-market', 'eco-resources', 'other'],
+  unfilter: ['unfilter-jail'],
 }
 
 // ── 1. tag vocabulary (2BingLing carries these on every entry) ─────────────
@@ -118,6 +127,10 @@ const TAGS = {
   'ops-monitor': [['状态监控', 90], ['运行时诊断', 80], ['状态持久化', 60], ['监控', 70], ['诊断', 60], ['日志', 50], ['健康检查', 40]],
   'eco-market': [['插件管理', 90], ['插件市场', 90], ['dsh-plugin-market', 60], ['市场', 60], ['market', 40]],
   'eco-resources': [['模板', 50], ['合集', 50], ['资源', 40], ['awesome', 30]],
+  // The unambiguous vocabulary only. Plain `jailbreak` is deliberately LOW: the community
+  // registries also tag *defence* plugins with it (dsh-defend guards against jailbreaks), and
+  // a high weight would file a guard under the thing it guards against.
+  'unfilter-jail': [['harness-jailbreak', 95], ['llm-jailbreak', 95], ['破甲', 95], ['越狱', 90], ['去审查', 80], ['uncensored', 70], ['unfiltered', 60], ['jailbreak', 30]],
 }
 
 // ── 2. per-source category tables ─────────────────────────────────────────
@@ -156,6 +169,10 @@ const SOURCE_TABLES = {
 // in \b — `\b核对\b` silently never matched, and that alone put hundreds of
 // compliance plugins into `other`.
 const RULES = [
+  // Before the security rule on purpose: "破甲" and "jailbreak" describe what these plugins
+  // do, while 安全/audit describe what some of them fight. Ordered after, the generic security
+  // vocabulary would swallow them again.
+  ['unfilter-jail', /\b(jailbreak|harness-jailbreak|llm-jailbreak|uncensored|unfiltered)\b|破甲|越狱|去审查/],
   ['eco-market', /\b(plugin[- ]?market|marketplace|plugin[- ]?manager|plugin[- ]?hub|catalog|index[- ]of|registry)\b|插件市场|插件管理/],
   ['ops-security', /\b(audit|security|secret|secrets|guard|quarantine|permission|sandbox|vet|allowlist|oauth|vault|credential|redact)\b|安全|权限|审批|脱敏|权限规则|规则引擎|审批框架/],
   ['enhance-usage', /\b(usage|billing|quota|cost|spend|rate[- ]?limit|leaderboard|balance)\b|用量|计费|额度|成本|余额|花费|费用/],
@@ -240,6 +257,9 @@ const SPEC = {
   'ops-monitor': 6,
   'eco-market': 9,
   'eco-resources': 5,
+  // Highest specificity: "破甲/越狱/jailbreak" is a precise statement of purpose, so it should
+  // beat the coarse vocabulary of whatever rail the row arrived under.
+  'unfilter-jail': 12,
   'dev-runtime': 4,
 }
 
@@ -337,8 +357,14 @@ function fromTags(tags) {
 // how long the term that actually matched is.
 function fromText(...texts) {
   const haystack = texts.filter(Boolean).join(' ').toLowerCase()
+  // A plugin that DEFENDS against jailbreaks talks about them constantly, so the vocabulary
+  // alone cannot tell the two apart: `dsh-defend` (a guard) was filed under 破甲 with them.
+  // The defence words are the discriminator, and they are checked once here rather than
+  // encoded as a regex lookaround that would have to span the whole haystack.
+  const defensive = /\b(anti[- ]?jailbreak|defend|defence|defense|guard|guards|protect|prevent|shield|block)\b|防护|防御|拦截|阻止/.test(haystack)
   const hits = new Map()
   for (const { leaf, pattern, terms, base } of RULE_MATCHERS) {
+    if (leaf === 'unfilter-jail' && defensive) continue
     if (!pattern.test(haystack)) continue
     let longest = 0
     let count = 0
