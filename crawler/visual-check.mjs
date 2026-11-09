@@ -163,7 +163,15 @@ for (const vp of VIEWPORTS) {
       bodyBg: css('body', 'background-color'),
       cardCount: cards.length,
       railDisplay: rail ? getComputedStyle(rail).display : null,
-      favPosition: css('.fav', 'position'),
+      // inside the row, and clear of the numbers column
+      favInsideRow: (() => {
+        const card = document.querySelector('.card')
+        const fav = document.querySelector('.card .fav')
+        const meta = document.querySelector('.card .meta')
+        if (!card || !fav || !meta) return null
+        const c = card.getBoundingClientRect(), f = fav.getBoundingClientRect(), m = meta.getBoundingClientRect()
+        return f.right <= c.right + 1 && f.left >= c.left && f.left >= m.right - 1
+      })(),
       chipCount: document.querySelectorAll('#cats button').length,
       gridDisplay: css('.wrap', 'display'),
       maxBadges: badgeCounts.length ? Math.max(...badgeCounts) : 0,
@@ -238,7 +246,7 @@ for (const vp of VIEWPORTS) {
   if (probe.cardCount === 0) fail(`${vp.name}: no cards rendered`)
   // The recommendation shelves were retired, so `.rec-row` only exists inside the
   // quiz and similar strips — there is no rail to assert on first paint.
-  if (probe.favPosition !== 'absolute') fail(`${vp.name}: favourite position=${probe.favPosition}, expected absolute`)
+  if (probe.favInsideRow !== true) fail(`${vp.name}: the favourite is not a cell inside the row, clear of the numbers`)
   if (probe.chipCount === 0) fail(`${vp.name}: category rail empty`)
   if (probe.gridDisplay !== 'grid') fail(`${vp.name}: .wrap display=${probe.gridDisplay}, expected grid`)
   if (probe.maxBadges > 4) fail(`${vp.name}: a card carries ${probe.maxBadges} badges, expected <= 4`)
