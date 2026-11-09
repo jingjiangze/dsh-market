@@ -745,6 +745,7 @@ document.addEventListener('click', (event) => {
   if (event.target instanceof HTMLElement && event.target.tagName === 'DIALOG') { event.target.close(); return }
   // Opening an entry outranks every other handler: a card or a similar-row is only ever
   // clicked because the reader wants that entry.
+  const favButton = event.target.closest('[data-fav]')
   const openTarget = event.target.closest('[data-open]')
   if (openTarget) { openDetail(openTarget.dataset.open); return }
 

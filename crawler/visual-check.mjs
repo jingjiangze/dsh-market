@@ -119,6 +119,9 @@ for (const vp of VIEWPORTS) {
   const failedAssets = []
   const hits = []
   const consoleErrors = []
+  // An uncaught exception in a listener is a page error, not a console message. Recording
+  // only console output made a thrown ReferenceError in the click handler invisible.
+  page.on('pageerror', (error) => consoleErrors.push(`pageerror: ${error.message}`))
   page.on('console', (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text().slice(0, 200)) })
   page.on('requestfailed', (req) => {
     if (/\.(css|js)(\?|$)/.test(req.url())) failedAssets.push(`${req.failure()?.errorText} ${req.url()}`)
