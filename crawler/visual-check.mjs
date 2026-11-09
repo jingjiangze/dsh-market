@@ -270,6 +270,8 @@ for (const vp of VIEWPORTS) {
   await page.screenshot({ path: join(OUT, `${vp.name}-top.png`) })
   await page.screenshot({ path: join(OUT, `${vp.name}-full.png`), fullPage: true })
   if (vp.name === 'desktop') {
+    await page.evaluate(() => { const m = document.querySelector('#sort .overflow'); if (m) m.open = true })
+    await page.waitForTimeout(120)
     await page.click('[data-quiz]')
     await page.waitForTimeout(400)
     const chips = await page.locator('.quiz-chip').count()
