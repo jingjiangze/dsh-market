@@ -1,42 +1,30 @@
 {
-  "checkedAt": "2026-11-06T14:02:45.865Z",
+  "checkedAt": "2026-11-09T11:51:03.488Z",
   "source": "./dist/index.json",
   "repositories": 2500,
-  "probed": 2000,
-  "failedBatches": 5,
-  "errorSamples": [
-    "graphql 403",
-    "graphql 403",
-    "graphql 403",
-    "graphql 403",
-    "graphql 403"
-  ],
+  "probed": 2500,
+  "failedBatches": 0,
+  "errorSamples": [],
   "budgetExceeded": false,
   "counts": {
-    "notFound": 9,
-    "archived": 18,
-    "forks": 4,
+    "notFound": 7,
+    "archived": 22,
+    "forks": 6,
     "stale": 0,
     "unknown": 0
   },
-  "rateRemaining": 4756,
+  "rateRemaining": 4987,
   "unknownSamples": [],
   "notFound": [
-    "iwinoid/fakeip-compat",
-    "JasperPengC/dsh-agent-blackbox",
-    "JasperPengC/dsh-mcp-skills-board",
-    "jing-hy/dsh-task-runner",
-    "jryang1997/dsh-ascii-whales",
     "jryang1997/dsh-hold-to-dictate",
-    "loyalchiiina/dsh-lobsterai-daddy",
+    "lov0vo/dsh-whale-maid",
     "lsl1931/dsh-server-panel",
-    "MAOLEIJIN/dsh-mattpocock-skills"
+    "lunaship/dsh-links",
+    "MAOLEIJIN/dsh-mattpocock-skills",
+    "nanaaya98/dsh-scope-manager",
+    "NingYuanLee/dsh-real-ip"
   ],
   "archived": [
-    "IZRINO/dsh-token-stats",
-    "jianghu-lao-yao/sh-volume-knob",
-    "JohnXu22786/bookkeeping",
-    "JohnXu22786/rss-digest",
     "keleus/deepseek-pet",
     "KhalilYamber/dsh-prism",
     "knopki/dsh-prompt-profiles",
@@ -46,17 +34,27 @@
     "lerwa2025-a11y/dsh-conversation-avatar",
     "Lgv-H/dsh-maibot-plugin-writer",
     "LiangYin233/dsh-provider-model-configurator",
-    "lide4144/dsh-tidewatch",
     "liguobao/dsh-file-viewer",
     "liqichen/dsh-plugin-manager",
     "Ln1m/dsh-pane-browser",
-    "loster12520/dsh-btw"
+    "loster12520/dsh-btw",
+    "MariNanari/dsh-vulnsec-bridge",
+    "mc-lhz/dsh-add-headers-to-completions",
+    "MoonlitDropOfBlood/dsh-whale-pet",
+    "MoonSand/dsh-desktop-restart",
+    "MYCF711/dsh-websearch-direct",
+    "myg133/anspire-ai-search",
+    "NanmiCoder/dsh-auto-mode",
+    "nathannli/dsh-fish-shell",
+    "no1xsyzy/dsh-webview-wrapper"
   ],
   "forks": [
-    "JanEickholt/dsh-asc",
-    "JNNarrator/dsh-deckseek",
     "LiDeChi/dsh-claude-style",
-    "loyalchiiina/dsh-deepseek-web-free"
+    "ltmroberthk915/dsh-pet",
+    "meyaomiao/dsh-graphmemory",
+    "mimateinn/dsh-i18n",
+    "MoRanYue/dsh-winrm",
+    "NormanFxxkingRockwell/harmonyos-dev-mcp-for-dsh"
   ],
   "stale": []
 }
