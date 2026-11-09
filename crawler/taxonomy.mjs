@@ -11,12 +11,20 @@
 //     多智能体协作 1409, 数据分析 1232, 成本控制 1154, 消息通知 1041, 视觉理解 873
 //
 // v1 had 14 flat leaves and put 8.2% in `other`; v2 used the official 23 but still
-// leaned on keyword luck. v3 keeps the DSH-first rail the page renders, and decides
-// membership in this order:
-//   1. the entry's own tags (far richer than a single category)
-//   2. the source's category, mapped per source (the same word means different things)
-//   3. keyword rules over name/title/description
-//   4. `other`
+// leaned on keyword luck. v3 kept the DSH-first rail the page renders but still
+// *returned the first signal that matched*, so a coarse signal always beat a precise
+// one: a source bucket labelled `dev` won over the words "code review", 工具集成 (carried
+// by 5,495 of 18,327 entries) sent everything to enhance-tools, and `enhance-tools` /
+// `dev-runtime` / `enhance-memory` swallowed a third of the catalogue
+// (audited 2026-11-07: 37.3% of a 150-entry stratified sample was best-classified).
+//
+// v4 keeps the same leaves and rails, and treats the three signals as candidates:
+//   1. the entry's own tags, weighted by how rare the tag is in the corpus
+//   2. keyword rules over name/title/description, weighted by how specific the leaf's
+//      vocabulary is (SPEC) and how long the term that actually matched is
+//   3. the source's category, kept as a low-confidence candidate rather than a
+//      short-circuit
+// The most specific candidate wins; `other` only when nothing matches.
 const RAILS = {
   enhance: { en: 'DSH itself', zh: 'DSH 优化' },
   agent: { en: 'Agents & workflow', zh: '智能体与工作流' },
@@ -24,6 +32,8 @@ const RAILS = {
   connect: { en: 'Connections', zh: '连接与集成' },
   dev: { en: 'Development & ops', zh: '开发与运维' },
   eco: { en: 'Ecosystem', zh: '生态与资源' },
+  // A reader either wants this or does not; it is not a subset of "security".
+  unfilter: { en: 'Jailbreak', zh: '破甲与解锁' },
 }
 
 const CATEGORIES = {
@@ -63,6 +73,12 @@ const CATEGORIES = {
   // ── F. 生态与资源 ───────────────────────────────────────────────────────
   'eco-market': { en: 'Markets & managers', zh: '插件市场与管理' },
   'eco-resources': { en: 'Templates & packs', zh: '模板与合集' },
+  // ── G. 破甲与解锁 ───────────────────────────────────────────────────────
+  // Its own rail, not a leaf under dev/ops: these plugins do one specific thing that a
+  // reader either wants or does not, and burying them among "安全与权限" mixed them with
+  // the plugins that defend against the same thing. Measured before the split: 15
+  // jailbreak-related rows were spread across 8 different leaves.
+  'unfilter-jail': { en: 'Jailbreak & uncensoring', zh: '破甲与解锁' },
   other: { en: 'Other', zh: '其他' },
 }
 
@@ -75,6 +91,7 @@ const CATEGORY_GROUPS = {
   connect: ['connect-im', 'connect-web', 'connect-mcp', 'connect-remote', 'connect-wsl', 'connect-files'],
   dev: ['dev-git', 'dev-runtime', 'ops-security', 'ops-monitor'],
   eco: ['eco-market', 'eco-resources', 'other'],
+  unfilter: ['unfilter-jail'],
 }
 
 // ── 1. tag vocabulary (2BingLing carries these on every entry) ─────────────
@@ -110,6 +127,10 @@ const TAGS = {
   'ops-monitor': [['状态监控', 90], ['运行时诊断', 80], ['状态持久化', 60], ['监控', 70], ['诊断', 60], ['日志', 50], ['健康检查', 40]],
   'eco-market': [['插件管理', 90], ['插件市场', 90], ['dsh-plugin-market', 60], ['市场', 60], ['market', 40]],
   'eco-resources': [['模板', 50], ['合集', 50], ['资源', 40], ['awesome', 30]],
+  // The unambiguous vocabulary only. Plain `jailbreak` is deliberately LOW: the community
+  // registries also tag *defence* plugins with it (dsh-defend guards against jailbreaks), and
+  // a high weight would file a guard under the thing it guards against.
+  'unfilter-jail': [['harness-jailbreak', 95], ['llm-jailbreak', 95], ['破甲', 95], ['越狱', 90], ['去审查', 80], ['uncensored', 70], ['unfiltered', 60], ['jailbreak', 30]],
 }
 
 // ── 2. per-source category tables ─────────────────────────────────────────
@@ -148,37 +169,99 @@ const SOURCE_TABLES = {
 // in \b — `\b核对\b` silently never matched, and that alone put hundreds of
 // compliance plugins into `other`.
 const RULES = [
+  // Before the security rule on purpose: "破甲" and "jailbreak" describe what these plugins
+  // do, while 安全/audit describe what some of them fight. Ordered after, the generic security
+  // vocabulary would swallow them again.
+  ['unfilter-jail', /\b(jailbreak|harness-jailbreak|llm-jailbreak|uncensored|unfiltered)\b|破甲|越狱|去审查/],
   ['eco-market', /\b(plugin[- ]?market|marketplace|plugin[- ]?manager|plugin[- ]?hub|catalog|index[- ]of|registry)\b|插件市场|插件管理/],
-  ['ops-security', /\b(audit|security|secret|secrets|guard|quarantine|permission|sandbox|vet|allowlist|oauth|vault|credential|redact)\b|安全|权限|审批|脱敏/],
-  ['enhance-usage', /\b(usage|billing|quota|cost|spend|rate[- ]?limit|leaderboard)\b|用量|计费|额度|成本/],
+  ['ops-security', /\b(audit|security|secret|secrets|guard|quarantine|permission|sandbox|vet|allowlist|oauth|vault|credential|redact)\b|安全|权限|审批|脱敏|权限规则|规则引擎|审批框架/],
+  ['enhance-usage', /\b(usage|billing|quota|cost|spend|rate[- ]?limit|leaderboard|balance)\b|用量|计费|额度|成本|余额|花费|费用/],
   ['enhance-models', /\b(provider|providers|llm|api[- ]?key|openai|anthropic|claude|gemini|qoder|codex|subscription|free[- ]?model)\b|模型|供应商|账号接入/],
   ['media-voice', /\b(tts|voice|audio|speech|music|sound|podcast|whisper|asr)\b|语音|音频/],
-  ['media-vision', /\b(image|images|video|screenshot|vision|ocr|chart|canvas|blender|poster|genui|wallpaper|avatar|skin|pet)\b|视觉|图像|壁纸|皮肤/],
+  // `pet|wallpaper|skin|avatar|genui` used to live here and pulled every desktop pet,
+  // wallpaper and theme into "vision". Those are decoration (enhance-ui) or fun
+  // (media-fun); vision keeps only what actually looks at pixels.
+  ['media-vision', /\b(image|images|video|screenshot|vision|ocr|vqa|blender|poster)\b|视觉|图像|截图|识图|图片/],
   ['data-docs', /\b(pdf|docx|xlsx|ppt|slides|markdown|notion|latex|mermaid|diagram|export|render)\b|文档|渲染/],
   ['data-analysis', /\b(analytics|analysis|dashboard|metric|metrics|report|visuali[sz])\b|数据分析|可视化|报表/],
-  ['data-office', /\b(office|blog|post|copyright|translate|novel|writing|email|mail|calendar|todo|note|notes)\b|办公|创作|翻译|邮件|日程|小说/],
-  ['connect-im', /\b(feishu|lark|qq|telegram|discord|wechat|weixin|slack|dingtalk|bark|notify|notification|push|webhook)\b|通知|钉钉|飞书|消息推送|即时通讯/],
+  ['data-office', /\b(office|blog|post|copyright|translate|novel|writing|email|mail|calendar|todo|note|notes)\b|办公|创作|翻译|邮件|日程|小说|笔记|待办/],
+  // Bare `notify|push|通知` matched any plugin that mentions notifications in passing
+  // (a network monitor that *warns* ended up in "chat"). Keep the platforms and the
+  // delivery verbs that actually mean this is a messaging bridge.
+  ['connect-im', /\b(feishu|lark|qq|telegram|discord|wechat|weixin|slack|dingtalk|bark|notification|webhook|toast)\b|钉钉|飞书|即时通讯|消息推送|桌面通知|系统通知|通知收件箱/],
   ['connect-web', /\b(browser|chrome|playwright|puppeteer|cdp|webpage|scrape|scraper|crawler|rss|feed)\b|浏览器|网页|爬虫/],
   ['connect-remote', /\b(remote|mobile|tailscale|lan[- ]?proxy|ssh|tunnel|vpn|vps|relay)\b|远程|移动端|内网穿透/],
   ['connect-wsl', /\b(wsl|windows[- ]?interop|win32)\b|互操作/],
   ['connect-mcp', /\b(mcp|bridge|gateway|adapter|connector|integration|integrations|protocol)\b|集成|桥接|协议/],
   ['connect-files', /\b(file|files|workspace|directory|folder|attachment)\b|文件|工作区|本地/],
   ['dev-git', /\b(git|github|worktree|commit[- ]?graph|code[- ]?review|pull[- ]?request)\b|代码评审|代码审查/],
-  ['dev-runtime', /\b(dev|debug|lint|ide|editor|typescript|runtime|pnpm|npm|build|test|sdk|framework|cli|terminal|shell|toolkit)\b|开发|运行时|调试/],
+  // `dev|cli|terminal|shell|toolkit|build|test` made this the second dumping ground:
+  // "dev" is a substring of half the corpus's prose. Keep the words only a
+  // development-tooling plugin would use.
+  ['dev-runtime', /\b(debug|lint|ide|typescript|runtime|pnpm|npm|sdk|framework|esbuild|vite)\b|插件开发|运行时|调试/],
   ['ops-monitor', /\b(monitor|observ|health|diagnos|metrics?|logs?|status)\b|监控|诊断|日志|状态/],
-  ['agent-workflow', /\b(workflow|automation|scheduled|cron|subagent|ralph|kanban|pipeline|orchestrat|checklist)\b|工作流|自动化|定时|核对|预检|自洽|符合性|台账|要素齐备/],
+  ['agent-workflow', /\b(workflow|automation|scheduled|cron|subagent|ralph|kanban|pipeline|checklist)\b|工作流|自动化|定时|调度|核对|预检|自洽|符合性|台账|要素齐备|门禁/],
   ['agent-skills', /\b(skill|skills|prompt|prompts|preset|persona|agent[- ]?team|swarm)\b|技能|提示词|预设/],
-  ['agent-orchestration', /\b(agent|agents|multi-agent|agency|summonable)\b|智能体|编排|可召唤/],
-  ['enhance-session', /\b(session|message|messages|conversation|thread|chat[- ]?ui|history|navbar|annotation|sidebar|panel|badge|font|layout)\b|会话|消息|历史|导航/],
-  ['enhance-settings', /\b(setting|settings|config|configure|preferences|options)\b|设置|配置/],
-  ['enhance-memory', /\b(memory|knowledge|rag|recall|embedding|obsidian|archive|context|compress|compact|summar|token[- ]?budget|prune)\b|记忆|知识|上下文/],
+  ['agent-orchestration', /\b(agent|agents|multi-agent|agency|summonable|sub-?agents?)\b|智能体|编排|可召唤|子代理|多智能体/],
+  ['enhance-session', /\b(session|message|messages|conversation|thread|chat[- ]?ui|history|annotation)\b|会话|消息|历史|导航/],
+  ['enhance-settings', /\b(setting|settings|preferences|config[- ]?file)\b|设置面板|配置管理|配置文件/],
+  // Bare `context|知识|archive|compress` matched any long description once — a plugin
+  // that merely *mentions* context became "memory". Only phrases that name the
+  // capability count now.
+  ['enhance-memory', /\b(memory|knowledge[- ]?base|rag|recall|embedding|obsidian|compact|token[- ]?budget)\b|长期记忆|知识库|记忆|上下文压缩/],
   ['data-search', /\b(search|retrieval|query|fulltext|database|dataset)\b|搜索|检索/],
   ['enhance-perf', /\b(cache|caching|fast|faster|speed|latency|bench|benchmark|optimiz|accelerat)\b|缓存|加速|性能/],
   ['media-fun', /\b(fun|meme|game|joke|easter[- ]?egg|cat|fish|pet|washer)\b|娱乐|彩蛋|摸鱼/],
   ['eco-resources', /\b(template|starter|boilerplate|gallery|awesome|collection|bundle|pack)\b|模板|合集/],
-  ['enhance-ui', /\b(theme|themes|skin|appearance|layout|locale|localization|i18n|restart|dock|button|widget|harmoniz)\b|界面|主题|美化|侧边栏|语言包/],
+  // `dock|layout|restart` are structural words every UI plugin uses once; they pulled
+  // the whole dock-* family into "interface" regardless of what it does. Decoration
+  // words (wallpaper/skin/avatar/pet) moved here from media-vision.
+  ['enhance-ui', /\b(theme|themes|appearance|wallpaper|avatar|pet|skin|localization|i18n|language[- ]?pack|sidebar|button|badge|widget|panel|font|layout|navbar)\b|界面|主题|美化|桌宠|壁纸|语言包/],
   ['enhance-tools', /\b(tool|tools|utility|utilities|converter|formatter|clipboard|shortcut|command)\b|工具|快捷键/],
 ]
+
+// ── 2a. how specific each vocabulary is ─────────────────────────────────
+// Length is not specificity: `workspace` is longer than `wsl` and means far less.
+// So each leaf states how specific a *hit on its own vocabulary* is. Precise
+// vocabularies (git, MCP, WSL, providers, voice) sit high; the buckets that exist to
+// hold everything else (tools, files, dev-runtime, interface) sit low, which is what
+// stops them from absorbing the catalogue. A longer matched term adds a small bonus,
+// so `code-review` still outranks `git` inside the same rule.
+const SPEC = {
+  'dev-git': 8,
+  'connect-mcp': 7,
+  'connect-wsl': 9,
+  'connect-web': 7,
+  'connect-files': 4,
+  'connect-remote': 7,
+  'connect-im': 7,
+  'enhance-models': 7,
+  'enhance-usage': 8,
+  'enhance-session': 7,
+  'enhance-settings': 5,
+  'enhance-memory': 8,
+  'enhance-ui': 5,
+  'enhance-tools': 3,
+  'enhance-perf': 6,
+  'agent-orchestration': 5,
+  'agent-skills': 6,
+  'agent-workflow': 5,
+  'data-search': 7,
+  'data-analysis': 7,
+  'data-docs': 6,
+  'data-office': 5,
+  'media-vision': 7,
+  'media-voice': 8,
+  'media-fun': 7,
+  'ops-security': 9,
+  'ops-monitor': 6,
+  'eco-market': 9,
+  'eco-resources': 5,
+  // Highest specificity: "破甲/越狱/jailbreak" is a precise statement of purpose, so it should
+  // beat the coarse vocabulary of whatever rail the row arrived under.
+  'unfilter-jail': 12,
+  'dev-runtime': 4,
+}
 
 const TAG_INDEX = new Map()
 for (const [leaf, entries] of Object.entries(TAGS)) {
@@ -189,44 +272,144 @@ for (const [leaf, entries] of Object.entries(TAGS)) {
   }
 }
 
-// Score the entry's own tags. Weights decide ties, so a plugin tagged both
-// 界面美化 and 设置面板 still lands deterministically.
+// ── 2c. scoring ─────────────────────────────────────────────────────────
+// v3 returned the first signal that matched, so a coarse one always beat a precise
+// one: a source bucket labelled `dev` won over the words "code review", and any entry
+// carrying 工具集成 became a tool. v4 keeps every candidate, scores it, and lets the
+// most specific one win.
+const weightOf = (text) => [...text].reduce((n, ch) => n + (ch.codePointAt(0) > 0x2e80 ? 2 : 1), 0)
+
+// A rule combines alternatives (`\b(a|b)\b|中文`). Split the source into them so the
+// best alternative that actually matched can be measured; keeping the rule table
+// readable is worth this little parser.
+function termsOf(source) {
+  const pieces = []
+  let depth = 0
+  let buffer = ''
+  for (let i = 0; i < source.length; i++) {
+    const ch = source[i]
+    if (ch === '\\') { buffer += ch + (source[i + 1] ?? ''); i++; continue }
+    if (ch === '(' || ch === '[') depth++
+    if (ch === ')' || ch === ']') depth--
+    if (ch === '|' && depth === 0) { pieces.push(buffer); buffer = ''; continue }
+    buffer += ch
+  }
+  pieces.push(buffer)
+  const terms = []
+  for (const piece of pieces) {
+    // `\b(a|b|c)\b` is just an alternation wrapped for the word boundary.
+    const group = /^\\b\((.*)\)\\b$/s.exec(piece)
+    if (group) terms.push(...group[1].split('|'))
+    else terms.push(piece)
+  }
+  return terms
+    .filter(Boolean)
+    .map((term) => { try { return new RegExp(term, 'i') } catch { return null } })
+    .filter(Boolean)
+}
+
+const RULE_MATCHERS = RULES.map(([leaf, pattern]) => ({ leaf, pattern, terms: termsOf(pattern.source), base: SPEC[leaf] ?? 5 }))
+
+// Document frequency of every tag in the TAGS vocabulary, measured on the 2BingLing
+// corpus (18,327 entries, data/2bingling-cache.json). A tag half the catalogue carries
+// must not outvote a tag only a few plugins use, so the weight is divided by how common
+// the tag is; a tag below the threshold counts as rare.
+const DF = {
+  'dsh-plugin': 16845, 'deepseek-harness': 13104, dsh: 10526, '效率提升': 7974, '工具集成': 5495,
+  'AI 助手': 4517, '会话管理': 3844, '状态监控': 3620, '零配置': 3219, '工作流增强': 2870, '可视化': 2866,
+  '前端增强': 2705, '快捷操作': 2669, '插件管理': 2596, cordis: 2564, deepseek: 2409, '模型配置': 2397,
+  '状态持久化': 2074, '设置面板': 1959, '界面美化': 1861, plugin: 1846, 'dsh-plugins': 1667, '安全审查': 1628,
+  '工作区管理': 1607, '文件管理': 1487, '开发者体验': 1464, '多智能体协作': 1439, '命令行工具': 1404, '数据分析': 1263,
+  '成本控制': 1167, '本地处理': 1088, '消息通知': 1046, '娱乐互动': 1000, '视觉理解': 900,
+  'deepseek-harness-plugin': 893, 'ai-agent': 873, '交互体验': 835, typescript: 734, '插件开发': 699,
+  mcp: 682, llm: 662, '证据链': 652, 'ai-agents': 636, 'dsh-plugin-market': 558, '模型适配': 551,
+  'cordis-plugin': 544, windows: 521, agent: 466, '主题': 466, memory: 419, theme: 369,
+  '桌宠': 363, codex: 362, 'developer-tools': 343, 'agent-skills': 341, 'dsh-bundle': 339,
+  '代码审查': 323, sidebar: 323, 'claude-code': 309, '运行时诊断': 304, '多设备支持': 292, 'dsh-skill': 264,
+  skills: 257, 'deepseek-harness-plugins': 254, 'dsh-plugin-desktop': 253, 'multi-agent': 245,
+  'web-ui': 245, '提示词注入': 238, ui: 228, '多模态': 222, skill: 213, 'desktop-pet': 212,
+  electron: 211, nodejs: 211,
+}
+const rare = (tag) => {
+  const df = DF[tag]
+  return df ? 1 / (1 + df / 2000) : 1
+}
+const TAG_UNIT = 10 // a tag weight of 90 is a 9.0 before rarity
+const TAG_CAP = 8 // a pile of tags must still lose to one long, specific term
+const HINT_SCORE = 5.5 // a coarse source bucket: beats `dev`/`tool`, loses to `code-review`
+
 function fromTags(tags) {
   if (!Array.isArray(tags) || !tags.length) return null
   const score = new Map()
   for (const raw of tags) {
-    const hits = TAG_INDEX.get(String(raw).toLowerCase().trim())
+    const label = String(raw).trim()
+    const hits = TAG_INDEX.get(label.toLowerCase())
     if (!hits) continue
-    for (const [leaf, weight] of hits) score.set(leaf, (score.get(leaf) ?? 0) + weight)
+    const factor = rare(label)
+    for (const [leaf, weight] of hits) score.set(leaf, (score.get(leaf) ?? 0) + (weight / TAG_UNIT) * factor)
   }
   if (!score.size) return null
-  return [...score].sort((a, b) => b[1] - a[1])[0][0]
+  const [leaf, value] = [...score].sort((a, b) => b[1] - a[1])[0]
+  return { leaf, score: Math.min(value, TAG_CAP) }
 }
 
-function classifyText(...texts) {
+// Every leaf the free text supports, scored as "how specific is this vocabulary" plus
+// how long the term that actually matched is.
+function fromText(...texts) {
   const haystack = texts.filter(Boolean).join(' ').toLowerCase()
-  for (const [leaf, pattern] of RULES) if (pattern.test(haystack)) return leaf
-  return null
+  // A plugin that DEFENDS against jailbreaks talks about them constantly, so the vocabulary
+  // alone cannot tell the two apart: `dsh-defend` (a guard) was filed under 破甲 with them.
+  // The defence words are the discriminator, and they are checked once here rather than
+  // encoded as a regex lookaround that would have to span the whole haystack.
+  const defensive = /\b(anti[- ]?jailbreak|defend|defence|defense|guard|guards|protect|prevent|shield|block)\b|防护|防御|拦截|阻止/.test(haystack)
+  const hits = new Map()
+  for (const { leaf, pattern, terms, base } of RULE_MATCHERS) {
+    if (leaf === 'unfilter-jail' && defensive) continue
+    if (!pattern.test(haystack)) continue
+    let longest = 0
+    let count = 0
+    for (const term of terms) {
+      const match = term.exec(haystack)
+      if (!match) continue
+      count++
+      longest = Math.max(longest, weightOf(match[0]))
+    }
+    if (!longest) continue
+    const score = base + Math.min(2, Math.max(0, longest - 3) * 0.5) + Math.min(count - 1, 3) * 0.3
+    const previous = hits.get(leaf)
+    if (!previous || score > previous.score) hits.set(leaf, { leaf, score })
+  }
+  return hits
 }
 
-export function categoryFor(record, ...texts) {
-  // 1. the entry's own tags (2BingLing ships them on every entry)
-  const tagged = fromTags(record?.hintTags)
-  if (tagged) return tagged
-  // 2. the source's category, resolved with that source's own vocabulary
+function fromHint(record) {
   const hint = record?.hintCategory
-  if (hint) {
-    const table = SOURCE_TABLES[record?.hintSource]
-    const mapped = table ? table[hint] : undefined
-    if (mapped) return mapped
-    if (CATEGORIES[hint]) return hint
-  }
-  // 3. free text
-  return classifyText(...texts) ?? 'other'
+  if (!hint) return null
+  const table = SOURCE_TABLES[record?.hintSource]
+  const mapped = table ? table[hint] : undefined
+  const leaf = mapped ?? (CATEGORIES[hint] ? hint : null)
+  return leaf ? { leaf, score: HINT_SCORE } : null
+}
+
+// The three signals are candidates now, not a priority queue: whichever names the entry
+// most specifically wins. Ties keep v3's order (tags, then the source bucket, then the
+// earlier text rule), because authored tags deserve the benefit of the doubt.
+export function categoryFor(record, ...texts) {
+  const candidates = []
+  const tagged = fromTags(record?.hintTags)
+  if (tagged) candidates.push(tagged)
+  for (const hit of fromText(...texts).values()) candidates.push(hit)
+  const hinted = fromHint(record)
+  if (hinted) candidates.push(hinted)
+  if (!candidates.length) return 'other'
+  const scores = new Map()
+  for (const candidate of candidates) scores.set(candidate.leaf, Math.max(scores.get(candidate.leaf) ?? 0, candidate.score))
+  return [...scores].sort((a, b) => b[1] - a[1])[0][0]
 }
 
 export function classifyDomain(...texts) {
-  return classifyText(...texts) ?? 'other'
+  const hits = [...fromText(...texts).values()].sort((a, b) => b.score - a.score)
+  return hits[0]?.leaf ?? 'other'
 }
 
 export { CATEGORIES, CATEGORY_GROUPS, RAILS }
