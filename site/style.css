@@ -386,41 +386,32 @@ h1::before {
 .chip[aria-pressed=true] b { color: var(--blue-soft); }
 
 /* ── cards ──────────────────────────────────────────────────────────────── */
+/* One column: a catalogue is scanned row by row, and a row fits name, summary and both
+   numbers on a single line where a tile could only fit one of them. */
 #list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(286px, 1fr));
-  gap: clamp(12px, 1.5vw, 16px);
-  counter-reset: cardno;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
 }
 
 .card {
   position: relative;
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  /* icon · name · summary · numbers · favourite */
+  grid-template-columns: 34px minmax(0, 208px) minmax(0, 1fr) auto 26px;
+  align-items: center;
   gap: 12px;
-  padding: 15px 15px 13px;
-  background: var(--plate);
-  border: 1px solid var(--line);
-  counter-increment: cardno;
+  padding: 9px 14px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
   cursor: pointer;
-  transition: border-color .16s var(--ease), background .16s var(--ease), transform .16s var(--ease);
+  transition: background .14s var(--ease);
 }
-/* operator-card index number */
-.card::after {
-  content: counter(cardno, decimal-leading-zero);
-  position: absolute;
-  right: 12px;
-  bottom: 8px;
-  color: rgba(232, 234, 237, .1);
-  font: 700 20px/1 var(--font-mono);
-  letter-spacing: -.02em;
-  pointer-events: none;
-}
-.card:hover {
-  transform: translateY(-2px);
-  background: var(--plate-2);
-  border-color: rgba(77, 107, 254, .5);
-}
+/* The three text blocks are direct grid items, so the wrapper stops generating a box. */
+.card .body { display: contents; }
+.card:hover { background: var(--plate-2); }
+.card:hover h2 { color: var(--blue-soft); }
 .card::before {
   content: "";
   position: absolute;
@@ -438,8 +429,8 @@ h1::before {
 .hicon,
 .card > img {
   flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
   object-fit: cover;
   background: var(--plate-3);
   border: 1px solid var(--line-2);
@@ -459,38 +450,47 @@ h1::before {
 .card .body { flex: 1; min-width: 0; }
 
 .card h2 {
-  margin: 0 30px 5px 0;
-  font: 600 14.5px/1.32 var(--font-body);
+  margin: 0;
+  font: 600 13.5px/1.4 var(--font-body);
   color: var(--text);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.card:hover h2 { color: #fff; }
+/* The official-pick mark rides beside the name instead of occupying a badge row. */
+.card h2 .pick { margin-left: 6px; color: var(--amber); font-size: 11px; vertical-align: 1px; }
 
 .card .desc {
-  margin: 0 0 9px;
+  margin: 0;
+  min-width: 0;
   color: var(--dim);
   font-size: 12.5px;
-  line-height: 1.52;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  line-height: 1.5;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.card .meta { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 8px; }
-.card .meta span {
-  padding: 2px 6px;
-  color: var(--dim);
-  background: var(--plate-2);
-  border: 1px solid var(--line);
-  font: 500 10.5px/1.5 var(--font-mono);
-  letter-spacing: .03em;
+.card .meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 0;
+  color: var(--faint);
+  font: 500 11.5px/1 var(--font-mono);
+  white-space: nowrap;
 }
-/* the heat figure is the one number worth reading first */
-.card .meta span:first-child {
-  color: var(--blue-soft);
-  border-color: rgba(77, 107, 254, .35);
-  background: var(--blue-dim);
+.card .meta .own { color: var(--ok); }
+.card .meta .up { color: var(--amber); }
+/* The numbers are plain text in a row, not pills: a bordered chip per figure is exactly the
+   visual noise a list view is supposed to remove. */
+.card .meta span {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .badges { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; }
@@ -854,8 +854,19 @@ footer {
   h1::before { width: 24px; height: 24px; }
   #q { flex-basis: 100%; }
   #sort { margin-left: 0; width: 100%; }
-  .card { padding: 13px; }
-  .hicon, .dot { width: 38px; height: 38px; }
+  /* 390px cannot hold icon + name + summary + numbers on one line: the summary drops to a
+     second line while the numbers stay beside the name. */
+  .card {
+    grid-template-columns: 30px minmax(0, 1fr) auto 22px;
+    row-gap: 0;
+    padding: 9px 10px;
+    column-gap: 9px;
+  }
+  .card .hicon, .card > img, .card .dot { grid-column: 1; grid-row: 1 / span 2; width: 30px; height: 30px; }
+  .card h2 { grid-column: 2; grid-row: 1; }
+  .card .meta { grid-column: 3; grid-row: 1; font-size: 11px; gap: 7px; }
+  .card .fav { grid-column: 4; grid-row: 1 / span 2; }
+  .card .desc { grid-column: 2 / span 2; grid-row: 2; font-size: 11.5px; }
   .quiz-tags { max-height: 176px; }
   .quiz-results { grid-template-columns: 1fr; }
   :root { --cut: 8px; }
@@ -978,6 +989,17 @@ footer {
 #loadbar span { position: relative; }
 
 /* ── a card is a button ─────────────────────────────────────────────────── */
+.card .fav {
+  position: static;
+  grid-column: 5;
+  justify-self: end;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+}
+.card:hover .fav, .card:focus-within .fav, .fav[aria-pressed=true] { opacity: 1; }
+/* The chevron was the "this opens" cue on a tile; a full-width row already reads as clickable. */
+.card .go { display: none; }
 .card .go {
   position: absolute;
   right: 9px;
@@ -989,7 +1011,7 @@ footer {
   pointer-events: none;
   transition: opacity .16s var(--ease), transform .16s var(--ease);
 }
-.card:hover .go, .card:focus-visible .go { opacity: 1; transform: translate(0, -50%); }
+.card:hover .go, .card:focus-visible .go { display: none; }
 .card:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 
 .src-alt {
