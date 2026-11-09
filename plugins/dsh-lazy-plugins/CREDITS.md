@@ -43,6 +43,11 @@
 | 纯函数抽到 `lib/ranking.mjs`（分词、桥接、去重、同族判定） | `index.js` 涨到 2,245 行且打分逻辑一周内改了 5 次；抽出后 index.js 减 101 行，打分改动只碰一个文件 |
 | `list` 自报 `pluginVersion` 与索引缓存状态（url/age/etag/source/超时） | 本地 `link:` 安装只有重载后才换代码，需要能区分「当前跑的是哪个版本」 |
 
+| `verify` + 启动自查（engines.dsh 裁决、deps↔bundles↔lockfile↔node_modules 一致性、孤儿/悬空） | 2026-11-08 应用自动升级导致 `dsh-ops@0.4.4` 被拒、`ops_bash` 消失，而此前没有任何地方能提前发现 |
+| 自写 semver 子集（含 `-0` 上界与预发布比较），8/8 单测 | 插件不能被依赖额外包；`<0.2.2-0` 这类 npm 写法必须正确拒绝 `0.2.2-rc.1` |
+| profile 写操作串行化 + 非 applied 自动回滚 | 同一时段连装/连卸会让 pnpm 重写 profile 与 loader reconcile 重叠 |
+| `dist.tarball/integrity` 预取（sha512 校验），弃用自拼 URL | 自拼的 `<short>-<version>.tgz` 对改名/带 scope 的包会 404 |
+
 ## 数据边界
 
 插件只做三件事：读市场索引、调 profile 的插件管理服务、返回结果。

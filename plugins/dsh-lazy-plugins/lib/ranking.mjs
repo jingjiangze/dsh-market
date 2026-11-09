@@ -90,6 +90,35 @@ export const expandTerms = (terms) => {
   return { list: [...terms, ...bridged], bridged }
 }
 
+// Characters that carry no capability meaning. A bigram built only from these is filler:
+// it matches prose ("把这个…"), never a capability.
+export const CJK_STOP_CHARS = new Set('我你他她它们的了着过把被让给和与及或是在有没不很太更最都也就要会能可请帮想要个这那些么什怎哪谁如何为对从到向于其之而且但假如若虽然因此所以以为所将并且来去说做用上下中')
+
+export const CJK_GENERIC_VERBS = new Set([
+  '整理', '转成', '转换', '成文', '理成', '生成', '制作', '处理', '检查', '查看', '显示',
+  '支持', '提供', '实现', '完成', '创建', '添加', '删除', '修改', '更新', '使用', '管理',
+  '操作', '记录', '保存', '打开', '关闭', '发送', '接收', '导入', '合并', '拆分', '批量',
+  '一键', '自动', '帮我', '给我', '帮我做', '弄成', '搞成', '做个', '做一个', '汇总', '统计', '展示', '显示出来',
+])
+
+export const CJK_STOP_BIGRAMS = new Set(['帮我', '我把', '把这', '这个', '那个', '个月', '月的', '一下', '一些', '一个', '可以', '能够', '需要', '我们', '你们', '他们', '什么', '怎么', '如何', '如果', '因为', '所以', '但是', '而且', '然后', '现在', '今天', '明天', '昨天', '这个月', '整理一下', '做个', '能看'])
+
+const EN_STOP = new Set(['the', 'a', 'an', 'and', 'or', 'to', 'for', 'of', 'in', 'on', 'with', 'my', 'me', 'i', 'we', 'you', 'it', 'this', 'that', 'these', 'those', 'please', 'help', 'need', 'want', 'make', 'do', 'is', 'are', 'be'])
+
+// Capability words that contain a function character and must survive the filter.
+export const CAPABILITY_LEXICON = new Set(SYNONYM_GROUPS.flat().map((word) => word.toLowerCase()))
+
+export const isFillerTerm = (term) => {
+  const value = String(term ?? '')
+  if (!value) return true
+  if (/^[\u4e00-\u9fff]+$/.test(value)) {
+    if (CJK_STOP_BIGRAMS.has(value)) return true
+    const chars = [...value]
+    return chars.every((ch) => CJK_STOP_CHARS.has(ch))
+  }
+  return EN_STOP.has(value)
+}
+
 // A task sentence is not a keyword: split it into terms, keep CJK bigrams (the index is
 // mostly Chinese) and score a row by how many terms its name/title/description carry.
 export const termsOf = (text) => {
@@ -98,10 +127,20 @@ export const termsOf = (text) => {
   for (const word of value.split(/[^a-z0-9\u4e00-\u9fff]+/).filter(Boolean)) {
     // Long CJK runs are covered by the bigrams below; keeping them only adds noise.
     const cjkOnly = /^[一-鿿]+$/.test(word);
-    if (cjkOnly ? word.length <= 4 : word.length >= 2) terms.add(word)
+    if (/^[0-9]+$/.test(word)) continue
+    if (cjkOnly ? word.length <= 4 : word.length >= 3) terms.add(word)
   }
   const cjk = value.replace(/[^\u4e00-\u9fff]/g, '')
-  for (let i = 0; i + 1 < cjk.length; i += 1) terms.add(cjk.slice(i, i + 2))
-  return [...terms].slice(0, 24)
+  for (let i = 0; i + 1 < cjk.length; i += 1) {
+    const bigram = cjk.slice(i, i + 2)
+    if (isFillerTerm(bigram)) continue
+    const crossesWordBoundary = [...bigram].some((ch) => CJK_STOP_CHARS.has(ch))
+    if (crossesWordBoundary && !CAPABILITY_LEXICON.has(bigram)) continue
+    terms.add(bigram)
+  }
+  // Filler words never reach the scorer, so the cap only ever trims real terms.
+  return [...terms]
+    .filter((term) => !isFillerTerm(term) && !CJK_GENERIC_VERBS.has(term))
+    .slice(0, 24)
 }
 

@@ -1,9 +1,9 @@
 {
   "name": "@local/dsh-lazy-plugins",
-  "version": "3.22.1",
+  "version": "3.90.0",
   "private": true,
   "type": "module",
-  "description": "Load a plugin from the configured market index only when a task needs it, then release it.",
+  "description": "按需加载市场插件：一句话需求自动挑装、proxy 隐藏工具保持提示词缓存、已装插件也可纳入按需（adopt）、过期版本一键更新。",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -14,6 +14,7 @@
     "index.js",
     "client.js",
     "lib/*.mjs",
+    "data/*.json",
     "skills/**",
     "cordis.patch.yml",
     "locale/*.json",
@@ -29,5 +30,19 @@
       "platform": "web",
       "immediately": true
     }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "plugin-market",
+    "on-demand",
+    "lazy-load",
+    "prompt-cache",
+    "proxy-tools"
+  ],
+  "dependencies": {
+    "onnxruntime-node": "^1.20.1"
+  },
+  "optionalDependencies": {
+    "onnxruntime-node": "1.20.1"
   }
 }
