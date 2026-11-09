@@ -101,7 +101,7 @@ jobs:
           PART_OUT: dist/part-${{ matrix.shard }}.json
         run: node crawler/crawl.mjs
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: part-${{ matrix.shard }}
           path: dist/part-${{ matrix.shard }}.json
@@ -295,7 +295,7 @@ jobs:
       - name: Hand the catalogue to the gates
         # The gates and the publishers run in their own jobs so a failed publish can be
         # retried without repeating 2BingLing adapt, enrich, translate and the icon mirror.
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: catalog
           retention-days: 3
