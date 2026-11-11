@@ -1,0 +1,303 @@
+{
+  "generatedAt": "2026-11-11T13:55:29.755Z",
+  "total": 2572,
+  "installed": 195,
+  "enabled": 24,
+  "builtin": 17,
+  "risk": 70,
+  "withSha": 2327,
+  "markets": [
+    {
+      "id": "claude-community",
+      "count": 2282,
+      "kinds": {
+        "git": 1876,
+        "git-subdir": 401,
+        "path": 5
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 2282,
+      "installed": 0,
+      "risk": 2,
+      "blocked": 2088,
+      "ready": 4
+    },
+    {
+      "id": "claude-code-workflows",
+      "count": 94,
+      "kinds": {
+        "path": 92,
+        "git-subdir": 2
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 94,
+      "installed": 92,
+      "risk": 2,
+      "blocked": 2,
+      "ready": 92
+    },
+    {
+      "id": "zcode-plugins-official",
+      "count": 69,
+      "kinds": {
+        "zip": 52,
+        "builtin": 17
+      },
+      "cacheAgeDays": 0.1,
+      "onDisk": true,
+      "rowCount": 70,
+      "installed": 65,
+      "risk": 0,
+      "blocked": 0,
+      "ready": 70
+    },
+    {
+      "id": "claude-code-lsps",
+      "count": 38,
+      "kinds": {
+        "path": 38
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 38,
+      "installed": 0,
+      "risk": 38,
+      "blocked": 0,
+      "ready": 38
+    },
+    {
+      "id": "skills-curated",
+      "count": 29,
+      "kinds": {
+        "path": 29
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 29,
+      "installed": 27,
+      "risk": 1,
+      "blocked": 0,
+      "ready": 29
+    },
+    {
+      "id": "claude-code-hooks",
+      "count": 22,
+      "kinds": {
+        "path": 22
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 22,
+      "installed": 3,
+      "risk": 22,
+      "blocked": 0,
+      "ready": 22
+    },
+    {
+      "id": "gptaku-plugins",
+      "count": 19,
+      "kinds": {
+        "path": 19
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 19,
+      "installed": 0,
+      "risk": 0,
+      "blocked": 0,
+      "ready": 19
+    },
+    {
+      "id": "superpowers-marketplace",
+      "count": 10,
+      "kinds": {
+        "git": 10
+      },
+      "cacheAgeDays": 8.5,
+      "onDisk": true,
+      "rowCount": 10,
+      "installed": 8,
+      "risk": 0,
+      "blocked": 10,
+      "ready": 0
+    },
+    {
+      "id": "power-platform-skills",
+      "count": 8,
+      "kinds": {
+        "path": 8
+      },
+      "cacheAgeDays": 45.2,
+      "onDisk": true,
+      "rowCount": 8,
+      "installed": 0,
+      "risk": 5,
+      "blocked": 0,
+      "ready": 8
+    }
+  ],
+  "sourceKinds": {
+    "git": 1886,
+    "git-subdir": 403,
+    "path": 213,
+    "zip": 52,
+    "builtin": 17,
+    "local": 1
+  },
+  "installable": {
+    "blocked": 2100,
+    "unknown": 189,
+    "ready": 282,
+    "missing": 1
+  },
+  "hosts": [
+    {
+      "host": "github.com",
+      "ok": false
+    },
+    {
+      "host": "cdn-zcode.z.ai",
+      "ok": true
+    }
+  ],
+  "known": [
+    {
+      "id": "claude-plugins-official",
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      },
+      "name": "claude-plugins-official",
+      "description": "Directory of popular Claude Code extensions including development tools, productivity plugins, and MCP integrations",
+      "addedAt": "2026-07-16T04:58:05.300Z",
+      "pluginCount": 0,
+      "lastRefreshFailure": {
+        "code": "plugin_archive_fetch_failed",
+        "failedAt": "2026-09-27T08:42:09.658Z",
+        "message": "Claude marketplace refresh timed out after 30 seconds"
+      }
+    },
+    {
+      "id": "zcode-plugins-official",
+      "source": {
+        "source": "url",
+        "url": "https://cdn-zcode.z.ai/zcode/official-plugin/marketplace.json"
+      },
+      "name": "zcode-plugins-official",
+      "description": "Official ZCode plugins marketplace: built-in and community plugins for ZCode.",
+      "addedAt": "2026-09-06T08:17:12.722Z",
+      "pluginCount": 69,
+      "lastUpdated": "2026-11-11T11:50:54.472Z"
+    },
+    {
+      "id": "claude-code-workflows",
+      "source": {
+        "source": "github",
+        "repo": "wshobson/agents"
+      },
+      "name": "claude-code-workflows",
+      "description": "Production-ready workflow orchestration with 92 marketplace plugins, 202 local specialized agents, and 181 local skills - optimized for granular installation and minimal token usage",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 94,
+      "lastUpdated": "2026-09-27T08:42:42.717Z",
+      "cacheTransactionId": "e5b3701c-84f7-40fa-b6da-7f8a10dff6a1"
+    },
+    {
+      "id": "superpowers-marketplace",
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      },
+      "name": "superpowers-marketplace",
+      "description": "Skills, workflows, and productivity tools",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 10,
+      "lastUpdated": "2026-11-03T02:21:52.771Z",
+      "cacheTransactionId": "d198439f-89aa-4c3b-8139-4698c31bfc4e"
+    },
+    {
+      "id": "claude-community",
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
+      },
+      "name": "claude-community",
+      "description": "Anthropic community plugin marketplace for Claude Code and Claude Cowork",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 2282,
+      "lastUpdated": "2026-09-27T08:42:55.547Z",
+      "cacheTransactionId": "8df9d74e-de40-4501-a5ff-8545cb2449db"
+    },
+    {
+      "id": "gptaku-plugins",
+      "source": {
+        "source": "github",
+        "repo": "fivetaku/gptaku_plugins"
+      },
+      "name": "gptaku-plugins",
+      "description": "GPTaku plugins for Claude Code - documentation guides and developer tools",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 19,
+      "lastUpdated": "2026-09-27T08:43:09.542Z",
+      "cacheTransactionId": "be0a5692-4cd1-4460-81c8-74328ba8f432"
+    },
+    {
+      "id": "power-platform-skills",
+      "source": {
+        "source": "github",
+        "repo": "microsoft/power-platform-skills"
+      },
+      "name": "power-platform-skills",
+      "description": "Plugins for Power Platform development with Claude Code and GitHub Copilot",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 8,
+      "lastUpdated": "2026-09-27T08:44:08.981Z",
+      "cacheTransactionId": "40ef1145-1612-4421-a7a3-d4ec0aff255f"
+    },
+    {
+      "id": "claude-code-hooks",
+      "source": {
+        "source": "github",
+        "repo": "karanb192/claude-code-hooks"
+      },
+      "name": "claude-code-hooks",
+      "description": "Production-ready Claude Code hooks, each installable on its own as a plugin.",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 22,
+      "lastUpdated": "2026-09-27T08:44:19.693Z",
+      "cacheTransactionId": "7a192182-78fb-41c9-932e-f15f66f128ed"
+    },
+    {
+      "id": "claude-code-lsps",
+      "source": {
+        "source": "github",
+        "repo": "Piebald-AI/claude-code-lsps"
+      },
+      "name": "claude-code-lsps",
+      "description": "Claude Code marketplace providing language server integrations across popular programming languages.",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 38,
+      "lastUpdated": "2026-09-27T08:44:21.957Z",
+      "cacheTransactionId": "4eaa7ecc-f8ee-4944-b34e-2541bdbd7f8d"
+    },
+    {
+      "id": "skills-curated",
+      "source": {
+        "source": "github",
+        "repo": "trailofbits/skills-curated"
+      },
+      "name": "skills-curated",
+      "description": "Curated, community-vetted skills and security tooling (Trail of Bits)",
+      "addedAt": "2026-09-27T08:25:23.000Z",
+      "pluginCount": 29,
+      "lastUpdated": "2026-09-27T08:25:23.000Z",
+      "lastRefreshFailure": {
+        "code": "plugin_marketplace_invalid",
+        "failedAt": "2026-11-03T02:22:20.043Z",
+        "message": "UNKNOWN: unknown error, copyfile 'C:\\Users\\16891\\AppData\\Local\\Temp\\zcode-plugin-zip-K16lKp\\extract\\trailofbits-skills-curated-6d05be4\\plugins\\wooyun-legacy\\skills\\wooyun-legacy\\references\\command-execution.md' -> 'C:\\Users\\16891\\.zcode\\cli\\plugins\\marketplaces\\.skills-curated.stage-Uigcjx\\content\\plugins\\wooyun-legacy\\skills\\wooyun-legacy\\references\\command-execution.md'"
+      }
+    }
+  ]
+}

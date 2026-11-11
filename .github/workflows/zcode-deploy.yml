@@ -1,0 +1,32 @@
+name: zcode-site
+
+# Deploys the ZCode plugin registry (zcode/) to the Cloudflare Pages project `zcode-market`,
+# served at https://zcode.jiangjiangze.icu. Scoped to the zcode-market branch: the repository's
+# GitHub Pages site belongs to the DSH index on main, so this workflow never touches it.
+on:
+  push:
+    branches: [zcode-market]
+    paths:
+      - 'zcode/**'
+      - '.github/workflows/zcode-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zcode-site
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show payload
+        run: du -sh zcode/site && ls -la zcode/site
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy zcode/site --project-name=zcode-market --branch=main --commit-dirty=true

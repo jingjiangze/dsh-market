@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="zh-CN" data-zcode-design>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZCode 插件登记册 · ZC/REG</title>
+<meta name="description" content="ZCode 插件登记册：本地目录、官方市场与社区源的元数据登记，标注来源、校验与风险。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F4F4F0'/%3E%3Cpath d='M6 6h20v3H6zM6 23h20v3H6zM14 9h4v14h-4z' fill='%23060606'/%3E%3Crect x='24' y='14' width='5' height='5' fill='%23E61919'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#F4F4F0; --paper-2:#EAE8E3; --ink:#060606; --ink-soft:#3A3A35; --muted:#6A6A63;
+  --hazard:#E61919; --rule:#060606;
+  --display:"Arial Black","Helvetica Neue",Impact,"Segoe UI",sans-serif;
+  --sans:"Helvetica Neue",Arial,"Segoe UI","Microsoft YaHei",sans-serif;
+  --mono:"Cascadia Mono",Consolas,"SFMono-Regular","Courier New",monospace;
+  --pad:clamp(16px,3vw,28px); --scrim:rgba(6,6,6,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum"}
+a{color:inherit;text-decoration:none}
+a:hover{background:var(--ink);color:var(--paper)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:11px;line-height:1.4;text-transform:uppercase;letter-spacing:.1em}
+.mono-md{font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.red{color:var(--hazard)}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* register strip */
+.strip{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:7px var(--pad);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;overflow:hidden}
+.strip b{font-weight:600}
+.strip .cell{display:flex;gap:7px;align-items:baseline;overflow:hidden;text-overflow:ellipsis}
+.strip .cell span{color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis}
+
+/* nav */
+.nav{padding:12px var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:4px solid var(--ink)}
+.brand{font-family:var(--display);font-size:21px;letter-spacing:-.04em;line-height:1;text-transform:uppercase;white-space:nowrap}
+.brand sup{font-family:var(--mono);font-size:9px;font-weight:400;letter-spacing:.14em;color:var(--hazard);vertical-align:top;margin-left:3px}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.nav-links a,.nav-links button{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;border:1px solid var(--ink);display:block}
+.nav-links a:hover,.nav-links button:hover{background:var(--ink);color:var(--paper)}
+.lang{display:flex;border:1px solid var(--ink)}
+.lang button{padding:5px 8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,1fr);border-bottom:1px solid var(--ink)}
+.hero-num{position:relative;overflow:hidden;padding:18px 0 0 var(--pad);border-right:1px solid var(--ink);min-height:clamp(220px,34vw,420px);display:flex;flex-direction:column;justify-content:flex-end}
+.hero-num .digits{font-family:var(--display);font-size:clamp(88px,14vw,238px);line-height:.82;padding-bottom:.03em;margin-bottom:10px;letter-spacing:-.07em;font-feature-settings:"tnum";white-space:nowrap}
+.hero-num .digits sup{font-family:var(--mono);font-size:.10em;letter-spacing:0;vertical-align:top;color:var(--hazard);margin-left:.04em}
+.hero-num .cap{display:flex;justify-content:space-between;gap:12px;padding:8px 0 0;border-top:1px solid var(--ink);margin-top:14px;position:relative;z-index:1;background:var(--paper)}
+.hero-meta{padding:22px var(--pad);display:flex;flex-direction:column;gap:16px}
+.hero-meta h1{font-family:var(--display);font-size:clamp(30px,4vw,54px);line-height:.92;letter-spacing:-.035em;text-transform:uppercase;margin:0}
+.hero-meta .lede{font-size:15px;line-height:1.6;margin:0;max-width:44ch}
+.hero-meta .lede b{font-weight:600}
+.ascii{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;gap:6px;align-items:center}
+.ascii::before{content:"[";color:var(--hazard)}
+.ascii::after{content:"]";color:var(--hazard)}
+.meta-table{border-top:1px solid var(--ink)}
+.meta-row{display:grid;grid-template-columns:13ch 1fr;gap:10px;padding:7px 0;border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.meta-row b{font-weight:600}
+.meta-row span{text-align:right;font-feature-settings:"tnum"}
+
+/* controls */
+.controls{border-bottom:1px solid var(--ink)}
+.search-row{display:grid;grid-template-columns:1fr auto;align-items:end;gap:0;border-bottom:1px solid var(--ink)}
+.search{display:block;padding:12px var(--pad);}
+.search .mono{display:block;margin-bottom:6px;color:var(--ink-soft)}
+.search input{width:100%;border:0;border-bottom:2px solid var(--ink);background:transparent;font-family:var(--sans);font-size:clamp(20px,3vw,30px);font-weight:500;letter-spacing:-.01em;padding:2px 0 8px;color:var(--ink)}
+.search input::placeholder{color:var(--muted);opacity:1}
+.search input:focus{outline:0;border-bottom-color:var(--hazard)}
+.search-keys{display:flex;align-items:center;gap:8px;padding:0 var(--pad) 14px;color:var(--muted)}
+kbd{font-family:var(--mono);font-size:10px;border:1px solid var(--ink);padding:1px 5px}
+.facets{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink)}
+.facet{padding:10px var(--pad);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.facet:first-child{border-right:1px solid var(--ink)}
+.facet .label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border:1px solid var(--ink);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chip:hover{background:var(--paper-2)}
+.toggles{display:flex;flex-wrap:wrap;gap:6px;padding:10px var(--pad);border-bottom:1px solid var(--ink);align-items:center}
+.toggles .label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-right:4px}
+.toggle{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border:1px solid var(--ink)}
+.toggle[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.count{margin:0;padding:8px var(--pad);border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.count .reset{border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:0 2px}
+
+/* index table: 1px gaps over ink = exact rules */
+.thead,.row{display:grid;grid-template-columns:4.5ch minmax(14ch,2.1fr) minmax(10ch,1.1fr) 7ch 9ch minmax(9ch,1fr) 9ch;gap:1px;background:var(--ink)}
+.thead>div,.row>div{background:var(--paper);padding:6px 8px;min-width:0}
+.thead{position:sticky;top:0;z-index:3;border-bottom:1px solid var(--ink)}
+.thead>div:first-child{padding-left:var(--pad)}
+.thead>div:last-child{padding-right:var(--pad)}
+.thead>div{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding-top:5px;padding-bottom:5px;background:var(--paper-2)}
+.row{width:100%;text-align:left;border:0;padding:0;display:grid;border-bottom:1px solid var(--ink);font-size:13px;background:var(--ink)}
+.row:hover>div{background:var(--ink);color:var(--paper)}
+.row:hover .sub,.row:hover .tag{color:var(--paper)}
+.row:hover .tag{border-color:var(--paper)}
+.row>div{display:flex;align-items:baseline;gap:6px;min-width:0;padding:7px 8px}
+.row>div.namecell{display:block}
+.row>div:first-child{padding-left:var(--pad)}
+.row>div:last-child{padding-right:var(--pad)}
+.row .idx{font-family:var(--mono);font-size:10px;color:var(--muted);justify-content:flex-end;font-feature-settings:"tnum"}
+.row .nm{display:block;font-weight:600;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .sub{display:block;font-size:11.5px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .mkt,.row .ver,.row .src,.row .st{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.row .tags{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;overflow:hidden}
+.tag{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink-soft);padding:1px 4px;white-space:nowrap}
+.tag.risk{border-color:var(--hazard);color:var(--hazard)}
+.row:hover .tag.risk{color:var(--hazard)}
+.state-on{font-weight:700}
+.state-off{color:var(--muted)}
+.more-row{padding:14px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--ink)}
+.more-btn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink);padding:8px 12px}
+.more-btn:hover{background:var(--ink);color:var(--paper)}
+.empty{padding:40px var(--pad);border-bottom:1px solid var(--ink)}
+.empty h2{font-family:var(--display);font-size:clamp(24px,3vw,36px);line-height:1;letter-spacing:-.03em;text-transform:uppercase;margin:0 0 8px}
+.empty p{margin:0 0 14px;max-width:52ch}
+
+/* sources + method */
+.section{border-bottom:1px solid var(--ink)}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:10px var(--pad);border-bottom:1px solid var(--ink);background:var(--paper-2)}
+.section-head h2{font-family:var(--display);font-size:clamp(20px,2.4vw,30px);letter-spacing:-.03em;text-transform:uppercase;margin:0}
+.src-table{display:grid;grid-template-columns:minmax(12ch,1.4fr) 7ch 10ch 9ch 9ch 8ch 10ch;gap:1px;background:var(--ink)}
+.src-table>div{background:var(--paper);padding:7px 8px;min-width:0}
+.src-table .h{background:var(--paper-2);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.src-table .name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src-table .num{font-family:var(--mono);font-size:11px;font-feature-settings:"tnum";text-align:right}
+.src-table .kindlist{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)}
+.method{padding:24px var(--pad);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.method h2{font-family:var(--display);font-size:clamp(20px,2.4vw,30px);letter-spacing:-.03em;text-transform:uppercase;margin:0 0 10px}
+.method p,.method li{font-size:13.5px;line-height:1.65;margin:0 0 8px;max-width:58ch}
+.method ul{padding-left:16px;margin:0}
+.method li{margin-bottom:5px}
+.method .note{font-family:var(--mono);font-size:10.5px;line-height:1.7;text-transform:uppercase;letter-spacing:.06em;border-top:1px solid var(--ink);padding-top:10px;margin-top:14px;color:var(--ink-soft)}
+.colophon{border-top:4px solid var(--ink);padding:14px var(--pad);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.colophon a{border-bottom:1px solid var(--ink-soft)}
+
+/* detail drawer */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40}
+.detail[hidden],.scrim[hidden]{display:none}
+.detail{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--paper);border-left:4px solid var(--ink);z-index:50;display:flex;flex-direction:column;overflow:hidden}
+.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px var(--pad);border-bottom:1px solid var(--ink)}
+.detail-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.detail-head h2{font-family:var(--display);font-size:28px;line-height:.95;letter-spacing:-.03em;text-transform:uppercase;margin:0;overflow-wrap:anywhere}
+.close{border:1px solid var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;flex:none}
+.close:hover{background:var(--ink);color:var(--paper)}
+.detail-body{padding:16px var(--pad) 28px;overflow-y:auto}
+.detail-body .desc{font-size:14px;line-height:1.65;margin:0 0 14px;max-width:62ch}
+.detail-body .desc.en{color:var(--ink-soft);font-size:13px}
+.kv{display:grid;grid-template-columns:minmax(9ch,11ch) 1fr;gap:0;border-top:1px solid var(--ink);margin:14px 0}
+.kv dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding:6px 0;border-bottom:1px solid var(--ink)}
+.kv dd{margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.03em;padding:6px 0;border-bottom:1px solid var(--ink);overflow-wrap:anywhere}
+.cmd{display:grid;grid-template-columns:1fr auto;gap:1px;background:var(--ink);border:1px solid var(--ink);margin:12px 0}
+.cmd code{background:var(--paper);font-family:var(--mono);font-size:11px;padding:9px 10px;overflow-wrap:anywhere;word-break:break-all;white-space:pre-wrap}
+.cmd button{background:var(--paper);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:0 10px;border-left:1px solid var(--ink)}
+.cmd button:hover{background:var(--ink);color:var(--paper)}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 6px}
+.badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink);padding:2px 5px}
+.badge.risk{border-color:var(--hazard);color:var(--hazard)}
+
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .hero-num{border-right:0;border-bottom:1px solid var(--ink);min-height:190px}
+  .facets{grid-template-columns:1fr}
+  .facet:first-child{border-right:0;border-bottom:1px solid var(--ink)}
+  .method{grid-template-columns:1fr}
+  .src-table{grid-template-columns:minmax(11ch,1.3fr) 6ch 9ch 8ch 8ch}
+  .src-table .h:nth-child(6),.src-table .h:nth-child(7),.src-table>div:nth-child(6n),.src-table>div:nth-child(7n){display:none}
+}
+@media(max-width:760px){
+  .nav{flex-wrap:wrap;row-gap:10px}
+  .brand{flex:1 1 auto}
+  .nav-links{order:3;flex:1 0 100%;gap:6px}
+  .lang{order:2}
+  .strip{grid-template-columns:1fr 1fr;gap:6px 14px}
+  .strip .cell:nth-child(n+5){display:none}
+  .thead,.row{grid-template-columns:3.5ch minmax(0,1fr) 8.5ch}
+  .thead>div:nth-child(3),.thead>div:nth-child(4),.thead>div:nth-child(5),.thead>div:nth-child(6){display:none}
+  .row>div:nth-child(3),.row>div:nth-child(4),.row>div:nth-child(5),.row>div:nth-child(6){display:none}
+  .row .sub{white-space:normal;overflow:visible}
+  .search input{font-size:20px}
+  .search-keys{display:none}
+  .detail{width:100%;border-left:0;border-top:4px solid var(--ink)}
+  .detail-head h2{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="strip">
+  <div class="cell"><b>ZC/REG</b><span>PLUGIN REGISTRY</span></div>
+  <div class="cell"><b>ISSUE</b><span id="stripDate">—</span></div>
+  <div class="cell"><b>RECORDS</b><span id="stripTotal">—</span></div>
+  <div class="cell"><b>MARKETS</b><span id="stripMarkets">—</span></div>
+  <div class="cell"><b>SOURCE</b><span>LOCAL SNAPSHOT</span></div>
+</div>
+
+<header class="nav">
+  <div class="brand">ZCode<sup>®</sup></div>
+  <ul class="nav-links">
+    <li><a href="#index">[ 01 INDEX ]</a></li>
+    <li><a href="#sources">[ 02 SOURCES ]</a></li>
+    <li><a href="#method">[ 03 METHOD ]</a></li>
+  </ul>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="zh" aria-pressed="true">中</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-num">
+      <div class="digits"><span id="heroCount">—</span><sup>®</sup></div>
+      <div class="cap">
+        <span class="mono">REGISTERED ENTRIES</span>
+        <span class="mono" id="heroStamp">—</span>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span class="ascii">CATALOGUE / 目录</span>
+      <h1 data-i18n="title">ZCode 插件登记册</h1>
+      <p class="lede" data-i18n="lede">本机 ZCode 能看到的全部插件条目：官方市场、精选市场与社区源。每条登记来源、版本、校验信息与静态风险，装之前先看清。</p>
+      <div class="meta-table">
+        <div class="meta-row"><b>MARKETS</b><span id="metaMarkets">—</span></div>
+        <div class="meta-row"><b>INSTALLED</b><span id="metaInstalled">—</span></div>
+        <div class="meta-row"><b>RISK</b><span id="metaRisk">—</span></div>
+        <div class="meta-row"><b>READY NOW</b><span id="metaReady">—</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="controls" aria-label="搜索与筛选">
+    <div class="search-row">
+      <label class="search" for="q" data-full-bleed>
+        <span class="mono">SEARCH / 搜索名称、能力、关键字</span>
+        <input id="q" type="search" placeholder="cloudflare · 流程图 · pdf · zotero" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="search-keys"><kbd>/</kbd><span class="mono">FOCUS</span><kbd>ESC</kbd><span class="mono">CLEAR</span></div>
+    </div>
+    <div class="facets">
+      <div class="facet" id="marketFacet"><span class="label">MARKET</span></div>
+      <div class="facet" id="kindFacet"><span class="label">SOURCE</span></div>
+    </div>
+    <div class="toggles">
+      <span class="label">FILTER</span>
+      <button class="toggle" id="onlyReady" aria-pressed="false" data-i18n="readyNow">可安装</button>
+      <button class="toggle" id="onlyRisk" aria-pressed="false" data-i18n="onlyRisk">有风险</button>
+      <button class="toggle" id="onlyInstalled" aria-pressed="false" data-i18n="onlyInstalled">已安装</button>
+    </div>
+    <p class="count" data-full-bleed><span id="count" aria-live="polite">—</span><button class="reset" id="reset" data-i18n="reset">重置筛选</button></p>
+  </section>
+
+  <section id="index" aria-label="插件索引">
+    <div class="thead" role="row">
+      <div>IDX</div><div>NAME / 名称</div><div>MARKET</div><div>VER</div><div>SOURCE</div><div>FLAGS</div><div>STATE</div>
+    </div>
+    <div id="rows"></div>
+    <div class="more-row" id="moreRow" hidden>
+      <span class="mono" id="moreInfo">—</span>
+      <button class="more-btn" id="more" data-i18n="loadMore">加载更多</button>
+    </div>
+    <div class="empty" id="empty" hidden>
+      <h2 data-i18n="emptyTitle">没有匹配的条目</h2>
+      <p data-i18n="emptyBody">换一个关键词，或把筛选清零。这个登记册只收录本机目录里实际存在的条目。</p>
+      <button class="more-btn" id="emptyReset" data-i18n="reset">重置筛选</button>
+    </div>
+  </section>
+
+  <section class="section" id="sources">
+    <div class="section-head">
+      <h2 data-i18n="sourcesTitle">来源</h2>
+      <span class="mono" id="sourcesStamp">—</span>
+    </div>
+    <div class="src-table" id="srcTable"></div>
+  </section>
+
+  <section class="section" id="method">
+    <div class="section-head">
+      <h2 data-i18n="methodTitle">方法</h2>
+      <span class="mono">[ LOCAL / READ-ONLY ]</span>
+    </div>
+    <div class="method">
+      <div>
+        <p data-i18n="methodP1">登记数据来自本机 ZCode 的插件目录与各市场清单：名称、版本、来源类型、sha256、静态风险（hooks / MCP / LSP / npm 安装脚本）与启用状态。生成后随仓库提交，页面不联网。</p>
+        <ul>
+          <li data-i18n="methodL1">来源类型：path（本地缓存）、builtin（随客户端下发）、zip（官方 CDN 归档）、git / github / git-subdir（远端仓库）。</li>
+          <li data-i18n="methodL2">「可安装」按构建时的主机可达性判定；git 类源依赖 github.com，当前网络不可达时标为 blocked。</li>
+          <li data-i18n="methodL3">安装命令走本机 plugin-on-demand 技能：先 dry-run，--yes 才写入，远端源有 4 秒预检。</li>
+        </ul>
+      </div>
+      <div>
+        <p data-i18n="methodP2">这是元数据登记，不是代码托管，也不背书任何插件。插件行为以包本身为准；带 hooks / MCP / 安装脚本的条目在启用前应阅读其清单。</p>
+        <div class="note" data-i18n="methodNote">代码 GPL-3.0-or-later · 描述与元数据版权归各插件作者 · 页面无外部请求</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <span>ZC/REG · LOCAL SNAPSHOT · <span id="footStamp">—</span></span>
+  <span><a href="https://github.com/jingjiangze/dsh-market/tree/zcode-market/zcode">SOURCE</a> · GPL-3.0-or-later</span>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="detail" id="detail" hidden aria-modal="true" role="dialog" aria-labelledby="detailName">
+  <div class="detail-head">
+    <div>
+      <div class="eyebrow" id="detailEyebrow">—</div>
+      <h2 id="detailName">—</h2>
+    </div>
+    <button class="close" id="closeDetail" aria-label="Close">CLOSE ×</button>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</aside>
+
+<script>
+const DATA = /*__CATALOG__*/null;
+const STATS = /*__STATS__*/null;
+(function(){
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const zh = (n, f) => n;
+  const I18N = {
+    zh: { title:'ZCode 插件登记册', lede:'本机 ZCode 能看到的全部插件条目：官方市场、精选市场与社区源。每条登记来源、版本、校验信息与静态风险，装之前先看清。', readyNow:'可安装', onlyRisk:'有风险', onlyInstalled:'已安装', reset:'重置筛选', loadMore:'加载更多', emptyTitle:'没有匹配的条目', emptyBody:'换一个关键词，或把筛选清零。这个登记册只收录本机目录里实际存在的条目。', sourcesTitle:'来源', methodTitle:'方法', methodP1:'登记数据来自本机 ZCode 的插件目录与各市场清单：名称、版本、来源类型、sha256、静态风险（hooks / MCP / LSP / npm 安装脚本）与启用状态。生成后随仓库提交，页面不联网。', methodL1:'来源类型：path（本地缓存）、builtin（随客户端下发）、zip（官方 CDN 归档）、git / github / git-subdir（远端仓库）。', methodL2:'「可安装」按构建时的主机可达性判定；git 类源依赖 github.com，当前网络不可达时标为 blocked。', methodL3:'安装命令走本机 plugin-on-demand 技能：先 dry-run，--yes 才写入，远端源有 4 秒预检。', methodP2:'这是元数据登记，不是代码托管，也不背书任何插件。插件行为以包本身为准；带 hooks / MCP / 安装脚本的条目在启用前应阅读其清单。', methodNote:'代码 GPL-3.0-or-later · 描述与元数据版权归各插件作者 · 页面无外部请求', searching:'检索', all:'全部', sourceAll:'全部来源', noMore:'已到底', entries:'条' },
+    en: { title:'ZCode Plugin Registry', lede:'Every plugin entry this ZCode installation can see: the official market, curated markets and community sources. Each record lists its origin, version, verification data and static risk.', readyNow:'Installable now', onlyRisk:'Risk flagged', onlyInstalled:'Installed', reset:'Reset filters', loadMore:'Load more', emptyTitle:'No matching entries', emptyBody:'Try another keyword, or clear the filters. This register only lists entries present in the local catalogue.', sourcesTitle:'Sources', methodTitle:'Method', methodP1:'Records are derived from the local ZCode plugin catalogue and each marketplace manifest: name, version, source type, sha256, static risks (hooks / MCP / LSP / npm scripts) and enabled state. Committed with the repository; the page makes no network requests.', methodL1:'Source types: path (local cache), builtin (shipped with the client), zip (official CDN archive), git / github / git-subdir (remote repositories).', methodL2:'"Installable" reflects host reachability at build time; git sources need github.com and are marked blocked when it does not answer.', methodL3:'Install commands use the local plugin-on-demand skill: dry run first, --yes to write, a 4-second preflight for remote sources.', methodP2:'This is a metadata register, not a code host, and endorses nothing. The package decides its own behaviour; read the manifest before enabling anything that ships hooks / MCP / install scripts.', methodNote:'Code GPL-3.0-or-later · descriptions and metadata belong to their authors · no external requests', searching:'SEARCH', all:'All', sourceAll:'All sources', noMore:'END', entries:'entries' }
+  };
+  let lang = 'zh';
+  const state = { q:'', market:'ALL', kind:'ALL', ready:false, risk:false, installed:false, limit:120 };
+
+  function fmt(n){ return Number(n||0).toLocaleString('en-US'); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // header facts
+  $('#stripDate').textContent = (STATS.generatedAt || '').slice(0,10);
+  $('#stripTotal').textContent = fmt(STATS.total);
+  $('#stripMarkets').textContent = String(STATS.markets.length);
+  $('#heroCount').textContent = fmt(STATS.total);
+  $('#heroStamp').textContent = 'SET ' + (STATS.generatedAt || '').slice(0,10);
+  $('#metaMarkets').textContent = fmt(STATS.markets.length);
+  $('#metaInstalled').textContent = fmt(STATS.installed) + ' / ' + fmt(STATS.enabled) + ' ON';
+  $('#metaRisk').textContent = fmt(STATS.risk);
+  $('#metaReady').textContent = fmt((STATS.installable && STATS.installable.ready) || 0);
+  $('#footStamp').textContent = (STATS.generatedAt || '').slice(0,10);
+  $('#sourcesStamp').textContent = 'AUDITED ' + (STATS.generatedAt || '').slice(0,10);
+
+  // facets
+  const marketFacet = $('#marketFacet');
+  const kindFacet = $('#kindFacet');
+  function chip(text, active, on){
+    const b = document.createElement('button');
+    b.type='button'; b.className='chip'; b.textContent=text; b.setAttribute('aria-pressed', active?'true':'false');
+    b.addEventListener('click', on); return b;
+  }
+  function renderFacets(){
+    marketFacet.querySelectorAll('.chip').forEach(n=>n.remove());
+    marketFacet.appendChild(chip(lang==='zh'?'全部':I18N[lang].all, state.market==='ALL', ()=>{ state.market='ALL'; state.limit=120; renderFacets(); render(); }));
+    STATS.markets.forEach(m=>{
+      marketFacet.appendChild(chip(m.id + ' · ' + m.rowCount, state.market===m.id, ()=>{ state.market=m.id; state.limit=120; renderFacets(); render(); }));
+    });
+    kindFacet.querySelectorAll('.chip').forEach(n=>n.remove());
+    kindFacet.appendChild(chip(lang==='zh'?'全部':I18N[lang].sourceAll, state.kind==='ALL', ()=>{ state.kind='ALL'; state.limit=120; renderFacets(); render(); }));
+    Object.keys(STATS.sourceKinds).sort().forEach(k=>{
+      kindFacet.appendChild(chip(k + ' · ' + STATS.sourceKinds[k], state.kind===k, ()=>{ state.kind=k; state.limit=120; renderFacets(); render(); }));
+    });
+  }
+
+  // search
+  function words(q){
+    return String(q||'').toLowerCase().split(/[\s,，、]+/).map(s=>s.trim()).filter(Boolean);
+  }
+  function hay(r){
+    return (r.n + ' ' + r.m + ' ' + (r.d||'') + ' ' + (r.de||'') + ' ' + (r.cat||'') + ' ' + (r.kw||[]).join(' ')).toLowerCase();
+  }
+  // Chinese↔English capability bridge: a query word may reach the other language's wording.
+  const BRIDGE = {
+    "流程图":["flowchart","diagram","excalidraw","mermaid","draw"],
+    "图表":["chart","graph","plot","visualize","vega"],
+    "可视化":["visualize","visualization","chart","diagram"],
+    "表格":["spreadsheet","excel","xlsx","sheet","csv"],
+    "文档":["document","doc","docs","readme","markdown"],
+    "演示":["pptx","presentation","deck","slide"],
+    "部署":["deploy","deployment","publish","host"],
+    "云":["cloud","cloudflare","aws","workers"],
+    "安卓":["android","apk","emulator"],
+    "苹果":["ios","macos","swift"],
+    "翻译":["translate","translation","i18n","localization"],
+    "记忆":["memory","recall","remember"],
+    "搜索":["search","web","find"],
+    "语音":["voice","speech","tts","asr"],
+    "视频":["video","record"],
+    "图片":["image","photo","vision","picture"],
+    "截图":["screenshot","capture"],
+    "测试":["test","testing","tdd","unit"],
+    "安全":["security","audit","vulnerability","scan"],
+    "审查":["review","audit","lint"],
+    "监控":["monitor","observability","metrics"],
+    "日志":["log","logging"],
+    "数据库":["database","sql","postgres","mysql"],
+    "邮件":["email","mail","smtp"],
+    "日历":["calendar","schedule"],
+    "加密":["crypto","encrypt","cipher","secret"],
+    "性能":["performance","benchmark","profiling"],
+    "爬取":["scrape","crawl","fetch"],
+    "通知":["notify","notification","alert"],
+    "定时":["cron","schedule","timer"],
+    "代码":["code","review","refactor"],
+    "重构":["refactor","cleanup"],
+    "笔记":["note","notion","obsidian"],
+    "浏览器":["browser","playwright","chrome"],
+    "终端":["terminal","shell","bash"],
+    "数据":["data","dataset","csv"],
+    "设计":["design","ui","figma"],
+    "写作":["writing","prose","style"],
+    "中文":["chinese","zh","cjk"],
+  };
+  const BRIDGE_REV = (() => { const m = new Map(); for (const [k, vs] of Object.entries(BRIDGE)) for (const v of vs) { if (!m.has(v)) m.set(v, []); m.get(v).push(k); } return m; })();
+  function alts(w){ return [w, ...(BRIDGE[w]||[]), ...(BRIDGE_REV.get(w)||[])]; }
+  function match(r, ws){
+    if(!ws.length) return { ok:true, score:0 };
+    const h = hay(r); const n = r.n.toLowerCase();
+    let score = 0;
+    for(const w of ws){
+      let hit = null;
+      for(const a of alts(w)){
+        const inName = n.includes(a), inHay = h.includes(a);
+        if(inName || inHay){ hit = { inName }; break; }
+      }
+      if(!hit) return { ok:false, score:0 };
+      score += hit.inName ? 4 : 1;
+    }
+    return { ok:true, score };
+  }
+  function filtered(){
+    const ws = words(state.q);
+    const out = [];
+    for(const r of DATA){
+      if(state.market!=='ALL' && r.m!==state.market) continue;
+      if(state.kind!=='ALL' && r.k!==state.kind) continue;
+      if(state.ready && r.a!=='ready') continue;
+      if(state.risk && !(r.r && r.r.length)) continue;
+      if(state.installed && !r.i) continue;
+      const m = match(r, ws);
+      if(!m.ok) continue;
+      out.push({ r, score:m.score });
+    }
+    out.sort((a,b)=> b.score-a.score || a.r.n.localeCompare(b.r.n) || a.r.m.localeCompare(b.r.m));
+    return out;
+  }
+
+  const KIND_LABEL = { path:'PATH', builtin:'BUILTIN', zip:'ZIP', git:'GIT', github:'GITHUB', 'git-subdir':'GIT-SUB', url:'URL', local:'LOCAL', other:'OTHER', unknown:'UNKNOWN' };
+  function stateLabel(r){
+    if(r.i && r.e) return { text:'ON', cls:'state-on' };
+    if(r.i) return { text:'OFF', cls:'state-off' };
+    return { text:'—', cls:'' };
+  }
+  function rowHtml(r, i){
+    const st = stateLabel(r);
+    const tags = [];
+    if(r.b) tags.push('builtin');
+    if(r.r && r.r.length) for(const t of r.r) tags.push('<span class="tag risk">'+esc(t.toUpperCase())+'</span>');
+    if(r.sha) tags.push('SHA');
+    if(r.a==='blocked') tags.push('<span class="tag risk">BLOCKED</span>');
+    if(r.a==='missing') tags.push('<span class="tag risk">MISSING</span>');
+    return '<button class="row" data-full-bleed type="button" data-id="'+esc(r.id)+'" aria-haspopup="dialog">'
+      + '<div class="idx">'+String(i+1).padStart(3,'0')+'</div>'
+      + '<div class="namecell"><span class="nm">'+esc(r.n)+'</span><span class="sub">'+esc(r.d||r.de||'')+'</span></div>'
+      + '<div><span class="mkt">'+esc(r.m)+'</span></div>'
+      + '<div><span class="ver">'+esc(r.v||'—')+'</span></div>'
+      + '<div><span class="src">'+esc(KIND_LABEL[r.k]||r.k)+'</span></div>'
+      + '<div class="tags">'+tags.join('')+'</div>'
+      + '<div><span class="st '+st.cls+'">'+st.text+'</span></div>'
+      + '</button>';
+  }
+
+  const rowsEl = $('#rows');
+  function render(){
+    const list = filtered();
+    const shown = list.slice(0, state.limit);
+    rowsEl.innerHTML = shown.map((x,i)=>rowHtml(x.r,i)).join('');
+    $('#count').textContent = (lang==='zh'?'检索到 ':'') + fmt(list.length) + ' ' + I18N[lang].entries + (state.q ? ' · “'+state.q+'”' : '');
+    $('#empty').hidden = list.length !== 0;
+    $('#moreRow').hidden = list.length === 0;
+    if(list.length){
+      const more = list.length > shown.length;
+      $('#more').hidden = !more;
+      $('#moreInfo').textContent = more ? (shown.length + ' / ' + list.length) : I18N[lang].noMore;
+    }
+  }
+
+  // detail
+  const detail = $('#detail'), scrim = $('#scrim'), body = $('#detailBody');
+  let lastFocus = null;
+  function openDetail(r){
+    lastFocus = document.activeElement;
+    $('#detailName').textContent = r.n;
+    $('#detailEyebrow').textContent = r.m + ' · ' + (KIND_LABEL[r.k]||r.k) + ' · ' + (r.v||'VERSION UNKNOWN');
+    const cmd = 'node "C:/DDDD/Agent Work/.agents/skills/plugin-on-demand/load.mjs" ' + r.id + ' --yes';
+    const kv = [];
+    kv.push(['ID', r.id]);
+    kv.push(['MARKET', r.m]);
+    kv.push(['VERSION', r.v||'—']);
+    kv.push(['SOURCE', (KIND_LABEL[r.k]||r.k) + (r.host ? ' · '+r.host : '')]);
+    if(r.sha) kv.push(['SHA256', r.sha+'…']);
+    kv.push(['STATUS', (r.i ? (r.e?'ENABLED':'INSTALLED, DISABLED') : 'NOT INSTALLED') + (r.a==='blocked'?' · SOURCE BLOCKED':r.a==='ready'?' · READY':'')]);
+    if(r.c) kv.push(['COMPONENTS', 'SKILLS '+r.c[0]+' · COMMANDS '+r.c[1]+' · MCP '+r.c[2]+' · HOOKS '+r.c[3]]);
+    if(r.cat) kv.push(['CATEGORY', r.cat]);
+    if(r.kw && r.kw.length) kv.push(['KEYWORDS', r.kw.join(', ')]);
+    const badges = (r.r||[]).map(t=>'<span class="badge risk">'+esc(t.toUpperCase())+'</span>').join('')
+      + (r.b?'<span class="badge">BUILT-IN</span>':'')
+      + (r.a==='blocked'?'<span class="badge risk">SOURCE BLOCKED</span>':'')
+      + (r.sha?'<span class="badge">SHA256</span>':'');
+    body.innerHTML = '<div class="badges">'+badges+'</div>'
+      + '<p class="desc">'+esc(r.d||r.de||'')+'</p>'
+      + (r.de && r.de!==r.d ? '<p class="desc en">'+esc(r.de)+'</p>' : '')
+      + '<dl class="kv">'+kv.map(([k,v])=>'<dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd>').join('')+'</dl>'
+      + '<div class="mono" style="color:var(--ink-soft);margin-top:14px">INSTALL / 本机安装</div>'
+      + '<div class="cmd"><code>'+esc(cmd)+'</code><button type="button" id="copyCmd">COPY</button></div>';
+    detail.hidden = false; scrim.hidden = false;
+    body.scrollTop = 0;
+    $('#detailName').parentElement.parentElement.scrollTop = 0;
+    $('#closeDetail').focus();
+    $('#copyCmd').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(cmd); $('#copyCmd').textContent='COPIED'; }
+      catch(e){
+        const t=document.createElement('textarea'); t.value=cmd; document.body.appendChild(t); t.select();
+        try{ document.execCommand('copy'); $('#copyCmd').textContent='COPIED'; }catch(_){ $('#copyCmd').textContent='FAILED'; }
+        t.remove();
+      }
+      setTimeout(()=>{ const b=$('#copyCmd'); if(b) b.textContent='COPY'; }, 1600);
+    });
+  }
+  function closeDetail(){
+    if(detail.hidden) return;
+    detail.hidden = true; scrim.hidden = true;
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  rowsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.row'); if(!btn) return;
+    const r = DATA.find(x=>x.id===btn.dataset.id); if(r) openDetail(r);
+  });
+  $('#closeDetail').addEventListener('click', closeDetail);
+  scrim.addEventListener('click', closeDetail);
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){ if(!detail.hidden) closeDetail(); else if($('#q').value){ $('#q').value=''; state.q=''; render(); } }
+    if(e.key === '/' && document.activeElement !== $('#q')){ e.preventDefault(); $('#q').focus(); }
+  });
+
+  // controls
+  $('#q').addEventListener('input', (e)=>{ state.q = e.target.value; state.limit=120; render(); });
+  [['onlyReady','ready'],['onlyRisk','risk'],['onlyInstalled','installed']].forEach(([id,key])=>{
+    const b = $('#'+id);
+    b.addEventListener('click', ()=>{ state[key] = !state[key]; b.setAttribute('aria-pressed', state[key]?'true':'false'); state.limit=120; render(); });
+  });
+  function reset(){ state.q=''; $('#q').value=''; state.market='ALL'; state.kind='ALL'; state.ready=false; state.risk=false; state.installed=false; state.limit=120;
+    ['onlyReady','onlyRisk','onlyInstalled'].forEach(id=>$('#'+id).setAttribute('aria-pressed','false'));
+    renderFacets(); render(); }
+  $('#reset').addEventListener('click', reset);
+  $('#emptyReset').addEventListener('click', reset);
+  $('#more').addEventListener('click', ()=>{ state.limit += 120; render(); });
+
+  // sources table
+  const srcTable = $('#srcTable');
+  function renderSources(){
+    const head = '<div class="h">MARKET</div><div class="h">RECORDS</div><div class="h">KINDS</div><div class="h">RISK</div><div class="h">BLOCKED</div><div class="h">READY</div><div class="h">CACHE</div>';
+    const rows = STATS.markets.map(m=>{
+      const kinds = Object.entries(m.kinds).map(([k,v])=>k+' '+(v>0?v:'')).join(' · ');
+      return '<div class="name">'+esc(m.id)+'</div>'
+        + '<div class="num">'+fmt(m.rowCount)+'</div>'
+        + '<div class="kindlist">'+esc(kinds)+'</div>'
+        + '<div class="num">'+fmt(m.risk)+'</div>'
+        + '<div class="num">'+fmt(m.blocked)+'</div>'
+        + '<div class="num">'+fmt(m.ready)+'</div>'
+        + '<div class="num">'+m.cacheAgeDays+' d</div>';
+    }).join('');
+    srcTable.innerHTML = head + rows;
+  }
+
+  function applyLang(){
+    document.documentElement.lang = lang==='zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(n=>{
+      const k = n.dataset.i18n; if(I18N[lang][k]) n.textContent = I18N[lang][k];
+    });
+    document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===lang?'true':'false'));
+    $('#q').placeholder = lang==='zh' ? 'cloudflare · 流程图 · pdf · zotero' : 'cloudflare · diagram · pdf · zotero';
+    renderFacets(); render(); renderSources();
+  }
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click', ()=>{ lang=b.dataset.lang; applyLang(); }));
+
+  applyLang();
+})();
+</script>
+</body>
+</html>
