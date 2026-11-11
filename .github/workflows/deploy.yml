@@ -46,7 +46,7 @@ jobs:
             sleep 60
           done
           echo "::warning::deploying with a nearly exhausted API quota"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -57,7 +57,7 @@ jobs:
   cloudflare:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Assemble the Cloudflare bundle
         # The brand domain is the relay a DSH index source can actually use: the
         # ModelScope dataset answers 302 to its CDN and DSH rejects redirects, while
@@ -92,7 +92,7 @@ jobs:
     needs: [pages]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
