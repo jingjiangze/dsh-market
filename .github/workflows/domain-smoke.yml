@@ -1,0 +1,162 @@
+name: domain-smoke
+
+# Real installs for the domain library — in CI, never on a contributor's machine.
+#
+# plugin-domains.mjs filters candidates statically (index row, install-facts, engines.dsh).
+# Only an actual install proves a package activates, and doing that locally writes into a real
+# profile. Every job here installs into a throwaway DSH_HOME, checks that the profile declared
+# the dependency and that the package ships a bundle patch, then removes it again.
+#
+# No pnpm pin of our own: `dsh plugin` forwards to pnpm in the profile directory, so the runner
+# needs pnpm on PATH — measured in the first CI run, without it the canary dies with
+# "spawn pnpm ENOENT" (exit 127) before a single package is touched.
+#
+# Triggers, cheapest first:
+#   pull_request  3-package canary (~3 min): proves the pipeline before merge
+#   schedule      full nightly pass (~40 installs), commits the verdicts
+#   manual        a scoped run (per_domain / limit / only)
+on:
+  pull_request:
+    paths:
+      - crawler/plugin-domains.mjs
+      - crawler/plugin-smoke.mjs
+      - .github/workflows/domain-smoke.yml
+  schedule:
+    - cron: '37 19 * * *'   # 03:37 Asia/Shanghai, after the nightly crawl
+  workflow_dispatch:
+    inputs:
+      per_domain:
+        description: 'Candidates to test per domain'
+        default: '1'
+        required: false
+      limit:
+        description: 'Hard cap on packages this run'
+        default: '40'
+        required: false
+      only:
+        description: 'Comma-separated package names (leave empty for all)'
+        default: ''
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: domain-smoke-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'full' }}
+  cancel-in-progress: true
+
+jobs:
+  canary:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        # `dsh plugin` runs pnpm inside the profile; the runner image does not ship it.
+        run: |
+          npm i -g pnpm@11
+          pnpm --version
+
+      - name: Install the harness CLI
+        run: |
+          npm i -g @deepseek-ai/dsh@0.2.2-rc.1 --allow-scripts=@deepseek-ai/dsh-subprocess-local,koffi,node-pty,@google/genai,protobufjs || npm i -g @deepseek-ai/dsh@0.2.2-rc.1
+          dsh --version || true
+
+      - name: Canary — the CLI can manage a throwaway profile
+        run: |
+          export DSH_HOME="$RUNNER_TEMP/canary"
+          mkdir -p "$DSH_HOME/profiles/canary"
+          echo '{"name":"canary","private":true,"version":"0.0.0","dsh":{"profile":{"bundles":[]}}}' > "$DSH_HOME/profiles/canary/package.json"
+          dsh plugin --profile canary add dsh-ops@0.5.0
+          node -e "const m=require(process.env.DSH_HOME+'/profiles/canary/package.json');console.log('canary deps:',Object.keys(m.dependencies||{}).join(','));if(!m.dependencies?.['dsh-ops'])process.exit(1)"
+
+      - name: Generate the domain document
+        run: node crawler/plugin-domains.mjs
+
+      - name: Smoke three packages end to end
+        env:
+          SMOKE_PER: '1'
+          SMOKE_LIMIT: '3'
+          SMOKE_TIMEOUT_MS: '180000'
+        run: node crawler/plugin-smoke.mjs
+
+      - name: Report
+        if: always()
+        run: cat data/plugin-smoke.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plugin-smoke-canary
+          path: data/plugin-smoke.json
+          if-no-files-found: warn
+
+  smoke:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        run: |
+          npm i -g pnpm@11
+          pnpm --version
+
+      - name: Install the harness CLI
+        run: |
+          npm i -g @deepseek-ai/dsh@0.2.2-rc.1 --allow-scripts=@deepseek-ai/dsh-subprocess-local,koffi,node-pty,@google/genai,protobufjs || npm i -g @deepseek-ai/dsh@0.2.2-rc.1
+          dsh --version || true
+
+      - name: Canary — the CLI can manage a throwaway profile
+        # A failure here means the runner is broken, not the catalogue. Fail loudly so a red
+        # run is never read as "every plugin is broken".
+        run: |
+          export DSH_HOME="$RUNNER_TEMP/canary"
+          mkdir -p "$DSH_HOME/profiles/canary"
+          echo '{"name":"canary","private":true,"version":"0.0.0","dsh":{"profile":{"bundles":[]}}}' > "$DSH_HOME/profiles/canary/package.json"
+          dsh plugin --profile canary add dsh-ops@0.5.0
+          node -e "const m=require(process.env.DSH_HOME+'/profiles/canary/package.json');if(!m.dependencies?.['dsh-ops'])process.exit(1)"
+
+      - name: Generate the domain document
+        run: node crawler/plugin-domains.mjs
+
+      - name: Run the smoke pass
+        env:
+          SMOKE_PER: ${{ github.event.inputs.per_domain || '1' }}
+          SMOKE_LIMIT: ${{ github.event.inputs.limit || '40' }}
+          SMOKE_ONLY: ${{ github.event.inputs.only || '' }}
+          SMOKE_TIMEOUT_MS: '180000'
+        run: node crawler/plugin-smoke.mjs
+
+      - name: Publish the verdicts
+        # Only this one file, and only when it changed: the crawl owns everything else.
+        run: |
+          if git diff --quiet -- data/plugin-smoke.json; then
+            echo "no change"
+            exit 0
+          fi
+          git config user.name "dsh-domain-smoke"
+          git config user.email "noreply@github.com"
+          git add data/plugin-smoke.json
+          git commit -m "chore(smoke): refresh package install verdicts"
+          git push
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plugin-smoke
+          path: data/plugin-smoke.json
+          if-no-files-found: warn
