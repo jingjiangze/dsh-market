@@ -48,7 +48,7 @@ jobs:
           echo "::warning::deploying with a nearly exhausted API quota"
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
       - id: deployment
