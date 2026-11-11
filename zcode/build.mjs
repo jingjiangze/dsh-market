@@ -37,6 +37,24 @@ const outAt = args.indexOf('--out');
 const OUT = path.resolve(REPO, outAt >= 0 ? args[outAt + 1] : 'zcode/site');
 
 const readJson = (f, d = null) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return d; } };
+
+// Offline render: CI fills translations into catalog.json and re-renders the page from
+// that file. No ZCode installation is involved, so this branch must not touch the CLI.
+const fromAt = process.argv.indexOf('--from-catalog');
+if (fromAt >= 0) {
+  const src = path.resolve(REPO, process.argv[fromAt + 1] || 'zcode/site/catalog.json');
+  const j = JSON.parse(fs.readFileSync(src, 'utf8'));
+  const template = fs.readFileSync(path.join(HERE, 'template.html'), 'utf8');
+  const html = template
+    .replace('/*__CATALOG__*/null', () => JSON.stringify(j.plugins))
+    .replace('/*__STATS__*/null', () => JSON.stringify(j.stats));
+  fs.mkdirSync(OUT, { recursive: true });
+  fs.writeFileSync(path.join(OUT, 'index.html'), html, 'utf8');
+  fs.writeFileSync(path.join(OUT, 'catalog.json'), JSON.stringify(j), 'utf8');
+  fs.writeFileSync(path.join(OUT, 'stats.json'), JSON.stringify(j.stats, null, 2) + '\n', 'utf8');
+  console.log(JSON.stringify({ out: path.relative(REPO, OUT), rows: j.plugins.length, bytes: fs.statSync(path.join(OUT, 'index.html')).size, mode: 'from-catalog' }));
+  process.exit(0);
+}
 const exists = (p) => { try { return fs.existsSync(p); } catch { return false; } };
 
 const catalog = (() => {

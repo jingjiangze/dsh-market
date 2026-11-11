@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T14:41:11.301Z",
+  "generatedAt": "2026-11-11T18:48:43.324Z",
   "total": 2572,
   "installed": 195,
   "enabled": 24,
@@ -15,7 +15,7 @@
         "git-subdir": 401,
         "path": 5
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 2282,
       "installed": 0,
@@ -30,7 +30,7 @@
         "path": 92,
         "git-subdir": 2
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 94,
       "installed": 92,
@@ -45,7 +45,7 @@
         "zip": 52,
         "builtin": 17
       },
-      "cacheAgeDays": 0.2,
+      "cacheAgeDays": 0.4,
       "onDisk": true,
       "rowCount": 70,
       "installed": 65,
@@ -59,7 +59,7 @@
       "kinds": {
         "path": 38
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 38,
       "installed": 0,
@@ -73,7 +73,7 @@
       "kinds": {
         "path": 29
       },
-      "cacheAgeDays": 45.3,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 29,
       "installed": 27,
@@ -87,7 +87,7 @@
       "kinds": {
         "path": 22
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 22,
       "installed": 3,
@@ -101,7 +101,7 @@
       "kinds": {
         "path": 19
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 19,
       "installed": 0,
@@ -115,7 +115,7 @@
       "kinds": {
         "git": 10
       },
-      "cacheAgeDays": 8.5,
+      "cacheAgeDays": 8.7,
       "onDisk": true,
       "rowCount": 10,
       "installed": 8,
@@ -129,7 +129,7 @@
       "kinds": {
         "path": 8
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.4,
       "onDisk": true,
       "rowCount": 8,
       "installed": 0,

@@ -3,6 +3,10 @@ name: zcode-site
 # Deploys the ZCode plugin registry (zcode/) to the Cloudflare Pages project `zcode-market`,
 # served at https://zcode.jiangjiangze.icu. Scoped to the zcode-market branch: the repository's
 # GitHub Pages site belongs to the DSH index on main, so this workflow never touches it.
+#
+# Deploy = translate what is missing, re-render, publish. The catalogue is committed with
+# English descriptions for community rows; the translation pass fills Chinese, bounded by a
+# content-hash cache so the first run pays and the rest are cheap.
 on:
   push:
     branches: [zcode-market]
@@ -10,6 +14,10 @@ on:
       - 'zcode/**'
       - '.github/workflows/zcode-deploy.yml'
   workflow_dispatch:
+  schedule:
+    # Weekly, so upstream descriptions that changed after a rebuild get translated without
+    # a human push. Runs Sunday 03:23 UTC.
+    - cron: '23 3 * * 0'
 
 permissions:
   contents: read
@@ -21,10 +29,35 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore the translation cache
+        uses: actions/cache@v4
+        with:
+          path: zcode/.i18n-cache.json
+          key: zcode-i18n-${{ hashFiles('zcode/site/catalog.json') }}
+          restore-keys: |
+            zcode-i18n-
+
+      - name: Fill missing Chinese descriptions
+        env:
+          TRANSLATE_CONCURRENCY: '16'
+          TRANSLATE_MAX_STRINGS: '4000'
+          TRANSLATE_BUDGET_MS: '480000'
+        run: node zcode/i18n/translate.mjs
+
+      - name: Re-render with the translations
+        run: node zcode/build.mjs --from-catalog zcode/site/catalog.json --out zcode/site
+
       - name: Show payload
         run: du -sh zcode/site && ls -la zcode/site
+
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}

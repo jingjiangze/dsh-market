@@ -31,3 +31,5 @@ data/2bingling-records.json
 
 data/2bingling-npm.json
 
+# Translation cache (CI uses actions/cache; local runs may write it)
+zcode/.i18n-cache.json
