@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T14:14:48.138Z",
+  "generatedAt": "2026-11-11T14:41:11.301Z",
   "total": 2572,
   "installed": 195,
   "enabled": 24,
@@ -73,7 +73,7 @@
       "kinds": {
         "path": 29
       },
-      "cacheAgeDays": 45.2,
+      "cacheAgeDays": 45.3,
       "onDisk": true,
       "rowCount": 29,
       "installed": 27,
