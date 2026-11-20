@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-20T20:33:57.339Z",
+  "at": "2026-11-20T22:08:06.458Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "queries": [
@@ -29,7 +29,7 @@
     "src-dshso": 1306
   },
   "budget": {
-    "ms": 15506,
+    "ms": 13485,
     "exhausted": false,
     "skippedCandidates": 0,
     "skippedShortlist": 0
@@ -39,6 +39,6 @@
     "to": 16600,
     "pool": 33001
   },
-  "bytes": 13409580,
-  "ms": 15598
+  "bytes": 13146165,
+  "ms": 13571
 }
