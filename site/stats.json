@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-22T13:35:09.809Z",
+  "at": "2026-11-22T16:35:47.198Z",
   "registry": "https://registry.npmjs.org",
   "dshRuntime": "0.2.1-rc.5",
   "queries": [
@@ -7,7 +7,7 @@
     "keywords:deepseek-harness",
     "keywords:dsh"
   ],
-  "candidates": 33157,
+  "candidates": 33184,
   "shortlisted": 0,
   "kept": 1500,
   "rejected": 0,
@@ -29,7 +29,7 @@
     "src-dshso": 1309
   },
   "budget": {
-    "ms": 10081,
+    "ms": 25341,
     "exhausted": false,
     "skippedCandidates": 0,
     "skippedShortlist": 0
@@ -37,8 +37,8 @@
   "cursor": {
     "from": 12600,
     "to": 16600,
-    "pool": 33157
+    "pool": 33184
   },
-  "bytes": 13507409,
-  "ms": 10181
+  "bytes": 13242479,
+  "ms": 25426
 }
